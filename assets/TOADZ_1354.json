@@ -1,0 +1,24 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1354.png",
+   "name": "CrypToadz #1354",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Bubblegum"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Toadbot"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Judgment"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 3
+      }
+   ]
+}

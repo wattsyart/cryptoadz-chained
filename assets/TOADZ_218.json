@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/218.png",
+   "name": "CrypToadz #218",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Middlegrey"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Albino"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Pink Bucktooth"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Round Shades"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

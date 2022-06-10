@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6958.png",
+   "name": "CrypToadz #6958",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Damp"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gargoyle"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Bandit Smile"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Aqua Mohawk"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Watch"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

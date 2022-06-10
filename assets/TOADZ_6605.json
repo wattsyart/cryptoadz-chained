@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6605.png",
+   "name": "CrypToadz #6605",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Greige"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Sleepy"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Vampire"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Judgment"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Shackles"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

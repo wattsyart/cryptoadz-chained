@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/88.png",
+   "name": "CrypToadz #88",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Greyteal"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gummy Slime"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Sad"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Blush"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

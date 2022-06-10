@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3505.png",
+   "name": "CrypToadz #3505",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Blanket"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gremplin Blue"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Wild White"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Shackles"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4.png",
+   "name": "CrypToadz #4",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Damp"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gorilla"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Pink Bucktooth"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Wizard"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Vampire"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

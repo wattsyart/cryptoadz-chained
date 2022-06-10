@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5854.png",
+   "name": "CrypToadz #5854",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Greyteal"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Alien"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Swampy Double Bun"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Blush"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

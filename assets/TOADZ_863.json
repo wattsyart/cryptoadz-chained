@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/863.png",
+   "name": "CrypToadz #863",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Bruise"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Chimp"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Peach Smile"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Swept Purple"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

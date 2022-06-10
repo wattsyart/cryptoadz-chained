@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3384.png",
+   "name": "CrypToadz #3384",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Greyteal"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Sleepy"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Blue Smile"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Aqua Mohawk"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Judgment"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

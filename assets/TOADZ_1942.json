@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1942.png",
+   "name": "CrypToadz #1942",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Middlegrey"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Alien"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Lincoln"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Rusty Cap"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Shackles"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1922.png",
+   "name": "CrypToadz #1922",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "95"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Pasty"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Blue Smile"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Short Cigarette"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

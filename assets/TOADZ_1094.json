@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1094.png",
+   "name": "CrypToadz #1094",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Grey Foam"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Booger"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Green Bucktooth"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Just for the Looks"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

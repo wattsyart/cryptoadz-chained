@@ -1,0 +1,36 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6914.png",
+   "name": "CrypToadz #6914",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Violet"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Chimp"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Green Bucktooth"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Super Stringy"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Green Eyeshadow"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Short Cigarette"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 6
+      }
+   ]
+}

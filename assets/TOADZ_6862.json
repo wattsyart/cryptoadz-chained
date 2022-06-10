@@ -1,0 +1,36 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6862.png",
+   "name": "CrypToadz #6862",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Violet"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Normal"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Croak"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Wizard"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Croaked"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Earring"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 6
+      }
+   ]
+}

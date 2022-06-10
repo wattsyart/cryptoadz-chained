@@ -1,0 +1,36 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1713.png",
+   "name": "CrypToadz #1713",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Greige"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Toadbot"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Croak"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Dark Pigtails"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Gold Specs"
+      },
+      {
+         "trait_type": "Accessory I",
+         "value": "Three Flies"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 6
+      }
+   ]
+}

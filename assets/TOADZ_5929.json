@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5929.png",
+   "name": "CrypToadz #5929",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Dark"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Toadbot"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Peach Smile"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Big Yellow Side-eye"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Chocolate"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

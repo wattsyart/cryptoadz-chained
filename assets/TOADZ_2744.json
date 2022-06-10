@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2744.png",
+   "name": "CrypToadz #2744",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Universe Foam"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gorilla"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Croak"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Big Crazy Orange"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Blush"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

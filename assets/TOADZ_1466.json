@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1466.png",
+   "name": "CrypToadz #1466",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Mold"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Blue Cat"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Teal Knit Hat"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Blue Eyeshadow"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

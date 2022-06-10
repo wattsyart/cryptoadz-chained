@@ -1,0 +1,20 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/38000000.png",
+   "name": "CrypToadz #38000000",
+   "attributes": [
+      {
+         "trait_type": "Custom",
+         "value": "1/1"
+      },
+      {
+         "trait_type": "Name",
+         "value": "Nourtoad"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 2
+      }
+   ]
+}

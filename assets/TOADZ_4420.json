@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4420.png",
+   "name": "CrypToadz #4420",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Violet"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Sleepy"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Red Gnome"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Big Crazy Red"
+      },
+      {
+         "trait_type": "Accessory I",
+         "value": "Fly Lick"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

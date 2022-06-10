@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3156.png",
+   "name": "CrypToadz #3156",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Mold"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gummy Raspberry"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Floppy Hat"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Vampire"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

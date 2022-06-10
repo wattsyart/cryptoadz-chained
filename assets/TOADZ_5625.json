@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5625.png",
+   "name": "CrypToadz #5625",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Salmon"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Berry"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Croak"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Toadstool"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

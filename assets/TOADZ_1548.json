@@ -1,0 +1,20 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1548.png",
+   "name": "CrypToadz #1548",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Salmon"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Dog"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 2
+      }
+   ]
+}

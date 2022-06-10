@@ -1,0 +1,28 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6969.png",
+   "name": "CrypToadz #6969",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "95"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gorilla"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Teal Wide"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Blonde Pigtails"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 4
+      }
+   ]
+}

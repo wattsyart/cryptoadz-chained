@@ -1,0 +1,40 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1273.png",
+   "name": "CrypToadz #1273",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "95"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Blue Cat"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Shifty"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Red Gnome"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Croaked"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Long Cigarette"
+      },
+      {
+         "trait_type": "Accessory I",
+         "value": "Four Flies"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 7
+      }
+   ]
+}

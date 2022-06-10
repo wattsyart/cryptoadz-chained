@@ -1,0 +1,24 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1569.png",
+   "name": "CrypToadz #1569",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Bruise"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Gummy Peach"
+      },
+      {
+         "trait_type": "Accessory I",
+         "value": "Four Flies"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 3
+      }
+   ]
+}

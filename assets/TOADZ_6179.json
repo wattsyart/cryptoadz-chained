@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6179.png",
+   "name": "CrypToadz #6179",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Greyteal"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Undead"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Lincoln"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Tophat"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Nounish Red"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

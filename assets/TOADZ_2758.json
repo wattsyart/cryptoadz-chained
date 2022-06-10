@@ -1,0 +1,32 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2758.png",
+   "name": "CrypToadz #2758",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "95"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Only Socks"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Bandit Wide"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Fez"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Awake"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 5
+      }
+   ]
+}

@@ -1,0 +1,20 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4911.gif",
+   "name": "CrypToadz #4911",
+   "attributes": [
+      {
+         "trait_type": "Custom",
+         "value": "Legendary"
+      },
+      {
+         "trait_type": "Name",
+         "value": "Little Sister"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 2
+      }
+   ]
+}

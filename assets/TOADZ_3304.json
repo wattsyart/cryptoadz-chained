@@ -1,0 +1,36 @@
+﻿{
+   "description": "A small, warty, amphibious creature that resides in the metaverse.",
+   "external_url": "https://cryptoadz.io",
+   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3304.png",
+   "name": "CrypToadz #3304",
+   "attributes": [
+      {
+         "trait_type": "Background",
+         "value": "Grey Foam"
+      },
+      {
+         "trait_type": "Body",
+         "value": "Toadbot"
+      },
+      {
+         "trait_type": "Mouth",
+         "value": "Bandit Wide"
+      },
+      {
+         "trait_type": "Head",
+         "value": "Tophat"
+      },
+      {
+         "trait_type": "Eyes",
+         "value": "Big Crazy Red"
+      },
+      {
+         "trait_type": "Accessory II",
+         "value": "Long Cigarette"
+      },
+      {
+         "trait_type": "# Traits",
+         "value": 6
+      }
+   ]
+}
