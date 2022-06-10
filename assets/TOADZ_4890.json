@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4890.png",
-   "name": "CrypToadz #4890",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Salmon"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Raspberry"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Slimy"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Swampy Double Bun"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4890.png",
+  "name": "CrypToadz #4890",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Salmon"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Raspberry"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Slimy"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Swampy Double Bun"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

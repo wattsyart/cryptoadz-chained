@@ -1,40 +1,44 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6641.png",
-   "name": "CrypToadz #6641",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Violet"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gremplin Green"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Pink Bucktooth"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Short Feathered Hat"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Big Crazy Orange"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Toxic Lumps"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 7
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6641.png",
+  "name": "CrypToadz #6641",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Violet"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gremplin Green"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Pink Bucktooth"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Short Feathered Hat"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Big Crazy Orange"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Toxic Lumps"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 7
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

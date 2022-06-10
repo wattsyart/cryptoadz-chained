@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/793.png",
-   "name": "CrypToadz #793",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Violet"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Raspberry"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Pink Bucktooth"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Fez"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Round Shades"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Explorer"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/793.png",
+  "name": "CrypToadz #793",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Violet"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Raspberry"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Pink Bucktooth"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Fez"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Round Shades"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Explorer"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

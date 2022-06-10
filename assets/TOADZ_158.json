@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/158.png",
-   "name": "CrypToadz #158",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Universe Foam"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Blue Cat"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Blue Smile"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Black & Blue Goggles"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/158.png",
+  "name": "CrypToadz #158",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Universe Foam"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Blue Cat"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Blue Smile"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Black \u0026 Blue Goggles"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3501.png",
-   "name": "CrypToadz #3501",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Greige"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Blue"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Lincoln"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Wild Black"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Thick Square"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3501.png",
+  "name": "CrypToadz #3501",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Greige"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Blue"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Lincoln"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wild Black"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Thick Square"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

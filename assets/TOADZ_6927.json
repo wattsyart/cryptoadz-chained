@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6927.png",
-   "name": "CrypToadz #6927",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Salmon"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Dog"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Lincoln"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Swept Orange"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Dilated"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6927.png",
+  "name": "CrypToadz #6927",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Salmon"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Dog"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Lincoln"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Swept Orange"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Dilated"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

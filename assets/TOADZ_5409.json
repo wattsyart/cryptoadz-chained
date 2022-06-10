@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5409.png",
-   "name": "CrypToadz #5409",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Greige"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Tropical"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Green Bucktooth"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Swept Purple"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "White & Red Goggles"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Shackles"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5409.png",
+  "name": "CrypToadz #5409",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Greige"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Tropical"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Green Bucktooth"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Swept Purple"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "White \u0026 Red Goggles"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Shackles"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

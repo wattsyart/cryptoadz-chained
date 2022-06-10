@@ -1,40 +1,44 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6371.png",
-   "name": "CrypToadz #6371",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Violet"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Slime"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Peach Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Periwinkle Cap"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Nice Shades"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Blush"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Explorer"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 7
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6371.png",
+  "name": "CrypToadz #6371",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Violet"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Slime"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Peach Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Periwinkle Cap"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Nice Shades"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Blush"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Explorer"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 7
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

@@ -1,40 +1,44 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4404.png",
-   "name": "CrypToadz #4404",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Grey Foam"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Only Socks"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Ribbit Blue"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Dark Single Bun"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "White & Red Goggles"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "One Fly"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 7
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4404.png",
+  "name": "CrypToadz #4404",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Grey Foam"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Only Socks"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Ribbit Blue"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Dark Single Bun"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "White \u0026 Red Goggles"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "One Fly"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 7
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

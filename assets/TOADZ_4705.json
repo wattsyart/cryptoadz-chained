@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4705.png",
-   "name": "CrypToadz #4705",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Blanket"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Toadenza"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Teal Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Short Feathered Hat"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Big Crazy Orange"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Long Cigarette"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4705.png",
+  "name": "CrypToadz #4705",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Blanket"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Toadenza"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Teal Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Short Feathered Hat"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Big Crazy Orange"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Long Cigarette"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

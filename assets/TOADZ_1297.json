@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1297.png",
-   "name": "CrypToadz #1297",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Dark"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Tropical"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Periwinkle Cap"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Cool Shades"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Just for the Looks"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Four Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1297.png",
+  "name": "CrypToadz #1297",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dark"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Tropical"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Periwinkle Cap"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Cool Shades"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Just for the Looks"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Four Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

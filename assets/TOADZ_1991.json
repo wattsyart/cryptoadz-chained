@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1991.png",
-   "name": "CrypToadz #1991",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Universe Foam"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Hypnotic"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Just for the Looks"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Two Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1991.png",
+  "name": "CrypToadz #1991",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Universe Foam"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Hypnotic"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Just for the Looks"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Two Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

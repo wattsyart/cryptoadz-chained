@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5771.png",
-   "name": "CrypToadz #5771",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "95"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Blue Cat"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Swept Teal"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Anime"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Earring"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5771.png",
+  "name": "CrypToadz #5771",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "95"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Blue Cat"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Swept Teal"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Anime"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Earring"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

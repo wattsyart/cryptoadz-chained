@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1976.png",
-   "name": "CrypToadz #1976",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Greige"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Slime"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Shifty"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Chocolate"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1976.png",
+  "name": "CrypToadz #1976",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Greige"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Slime"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Shifty"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Chocolate"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

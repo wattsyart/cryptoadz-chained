@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5488.png",
-   "name": "CrypToadz #5488",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Matrix"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gargoyle"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Slimy"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Glowing Blue"
-      },
-      {
-         "trait_type": "Clothes",
-         "value": "Grey Hoodie"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5488.png",
+  "name": "CrypToadz #5488",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Matrix"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gargoyle"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Slimy"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glowing Blue"
+    },
+    {
+      "trait_type": "Clothes",
+      "value": "Grey Hoodie"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

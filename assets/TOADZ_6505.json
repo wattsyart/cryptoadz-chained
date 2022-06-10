@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6505.png",
-   "name": "CrypToadz #6505",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Salmon"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Toadbot"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Bandit Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Wild Black"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Shackles"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6505.png",
+  "name": "CrypToadz #6505",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Salmon"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Toadbot"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Bandit Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wild Black"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Shackles"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

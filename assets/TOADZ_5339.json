@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5339.png",
-   "name": "CrypToadz #5339",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Mold"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Peach"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Teal Gnome"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Three Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5339.png",
+  "name": "CrypToadz #5339",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Mold"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Peach"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Teal Gnome"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Three Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

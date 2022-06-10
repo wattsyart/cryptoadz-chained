@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3601.png",
-   "name": "CrypToadz #3601",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Grey Foam"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gremplin Blue"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Lincoln"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3601.png",
+  "name": "CrypToadz #3601",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Grey Foam"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gremplin Blue"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Lincoln"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1824.png",
-   "name": "CrypToadz #1824",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Dark"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Normal"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Blue Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Orange Shave"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Croaked"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Long Cigarette"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1824.png",
+  "name": "CrypToadz #1824",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dark"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Normal"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Blue Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Orange Shave"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Croaked"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Long Cigarette"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

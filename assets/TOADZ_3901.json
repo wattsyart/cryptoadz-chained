@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3901.png",
-   "name": "CrypToadz #3901",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Mold"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Normal"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Lincoln"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Dark Single Bun"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3901.png",
+  "name": "CrypToadz #3901",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Mold"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Normal"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Lincoln"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Dark Single Bun"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

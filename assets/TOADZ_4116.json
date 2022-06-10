@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4116.png",
-   "name": "CrypToadz #4116",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Blanket"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gorilla"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Teal Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Black Sidepart"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Shackles"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4116.png",
+  "name": "CrypToadz #4116",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Blanket"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gorilla"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Teal Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Black Sidepart"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Shackles"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

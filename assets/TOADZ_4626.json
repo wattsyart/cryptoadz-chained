@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4626.png",
-   "name": "CrypToadz #4626",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Grey Foam"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Lasagna"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Green Bucktooth"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Teal Knit Hat"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Gold Specs"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Just for the Looks"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4626.png",
+  "name": "CrypToadz #4626",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Grey Foam"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Lasagna"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Green Bucktooth"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Teal Knit Hat"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gold Specs"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Just for the Looks"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

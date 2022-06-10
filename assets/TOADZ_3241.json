@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3241.png",
-   "name": "CrypToadz #3241",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Bubblegum"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Sleepy"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Bandit Wide"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Pink Puff"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3241.png",
+  "name": "CrypToadz #3241",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Bubblegum"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Sleepy"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Bandit Wide"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Pink Puff"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

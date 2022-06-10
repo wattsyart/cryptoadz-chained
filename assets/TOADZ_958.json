@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/958.png",
-   "name": "CrypToadz #958",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Dark"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Toadbot"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Short Feathered Hat"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Earring"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/958.png",
+  "name": "CrypToadz #958",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dark"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Toadbot"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Short Feathered Hat"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Earring"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6233.png",
-   "name": "CrypToadz #6233",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Greyteal"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gremplin Green"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Dark Single Bun"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Three Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6233.png",
+  "name": "CrypToadz #6233",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Greyteal"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gremplin Green"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Dark Single Bun"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Three Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

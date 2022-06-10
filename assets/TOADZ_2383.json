@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2383.png",
-   "name": "CrypToadz #2383",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "95"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Pox"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Croak"
-      },
-      {
-         "trait_type": "Clothes",
-         "value": "Force Hoodie"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2383.png",
+  "name": "CrypToadz #2383",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "95"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Pox"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Croak"
+    },
+    {
+      "trait_type": "Clothes",
+      "value": "Force Hoodie"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2728.png",
-   "name": "CrypToadz #2728",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Damp"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Blue Cat"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Wild White"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Gold Specs"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Chocolate"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2728.png",
+  "name": "CrypToadz #2728",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Damp"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Blue Cat"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wild White"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gold Specs"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Chocolate"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

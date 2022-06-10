@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1946.png",
-   "name": "CrypToadz #1946",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Mold"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Dog"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Sad"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Wild Black"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Thick Round"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1946.png",
+  "name": "CrypToadz #1946",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Mold"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Dog"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Sad"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wild Black"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Thick Round"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

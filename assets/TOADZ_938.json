@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/938.png",
-   "name": "CrypToadz #938",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Violet"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Booger"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Beard"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Super Stringy"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Judgment"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Toxic Lumps"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/938.png",
+  "name": "CrypToadz #938",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Violet"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Booger"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Beard"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Super Stringy"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Judgment"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Toxic Lumps"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

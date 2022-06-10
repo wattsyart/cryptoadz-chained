@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2862.png",
-   "name": "CrypToadz #2862",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Greige"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Only Socks"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Dark Single Bun"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "3D"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2862.png",
+  "name": "CrypToadz #2862",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Greige"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Only Socks"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Dark Single Bun"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "3D"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

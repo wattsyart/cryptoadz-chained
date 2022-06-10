@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6443.png",
-   "name": "CrypToadz #6443",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Grey Foam"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gorilla"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Swept Orange"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Undead"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6443.png",
+  "name": "CrypToadz #6443",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Grey Foam"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gorilla"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Swept Orange"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Undead"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

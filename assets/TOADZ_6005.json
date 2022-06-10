@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6005.png",
-   "name": "CrypToadz #6005",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Damp"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Booger"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Blue Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Orange Knit Hat"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Shackles"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6005.png",
+  "name": "CrypToadz #6005",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Damp"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Booger"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Blue Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Orange Knit Hat"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Shackles"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

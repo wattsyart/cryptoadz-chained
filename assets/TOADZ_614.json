@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/614.png",
-   "name": "CrypToadz #614",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Dark"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Chimp"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Ribbit Blue"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Glowing Red"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Shackles"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/614.png",
+  "name": "CrypToadz #614",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dark"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Chimp"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Ribbit Blue"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glowing Red"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Shackles"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

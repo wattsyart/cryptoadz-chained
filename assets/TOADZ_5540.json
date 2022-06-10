@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5540.png",
-   "name": "CrypToadz #5540",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "95"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Normal"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Green Bucktooth"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Floppy Hat"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Undead"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5540.png",
+  "name": "CrypToadz #5540",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "95"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Normal"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Green Bucktooth"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Floppy Hat"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Undead"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

@@ -1,28 +1,32 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2848.png",
-   "name": "CrypToadz #2848",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Bruise"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Peach"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Glowing Blue"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Chocolate"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 4
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2848.png",
+  "name": "CrypToadz #2848",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Bruise"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Peach"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glowing Blue"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Chocolate"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 4
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

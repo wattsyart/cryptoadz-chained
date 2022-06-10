@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4323.png",
-   "name": "CrypToadz #4323",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Salmon"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Booger"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Blue Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Teal Knit Hat"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Patch"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Just for the Looks"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4323.png",
+  "name": "CrypToadz #4323",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Salmon"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Booger"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Blue Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Teal Knit Hat"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Patch"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Just for the Looks"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

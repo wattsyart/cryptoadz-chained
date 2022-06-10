@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2251.png",
-   "name": "CrypToadz #2251",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Bruise"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Toadenza"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Super Stringy"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Round Shades"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Four Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/2251.png",
+  "name": "CrypToadz #2251",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Bruise"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Toadenza"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Super Stringy"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Round Shades"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Four Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5046.png",
-   "name": "CrypToadz #5046",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Greyteal"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Ape"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Croak"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Brain"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Croaked"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Shackles"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5046.png",
+  "name": "CrypToadz #5046",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Greyteal"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Ape"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Croak"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Brain"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Croaked"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Shackles"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

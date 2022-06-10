@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1121.png",
-   "name": "CrypToadz #1121",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Middlegrey"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Slime"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Pink Bucktooth"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Plaid Cap"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Red & Black Goggles"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Chocolate"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1121.png",
+  "name": "CrypToadz #1121",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Middlegrey"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Slime"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Pink Bucktooth"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Plaid Cap"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Red \u0026 Black Goggles"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Chocolate"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

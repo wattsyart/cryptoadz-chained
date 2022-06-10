@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6742.png",
-   "name": "CrypToadz #6742",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "95"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gummy Slime"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Wild Orange"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Gold Specs"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Fly Lick"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6742.png",
+  "name": "CrypToadz #6742",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "95"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gummy Slime"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Wild Orange"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gold Specs"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Fly Lick"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

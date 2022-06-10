@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6585.png",
-   "name": "CrypToadz #6585",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Bubblegum"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gorilla"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Lincoln"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Truffle"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Glowing Blue"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Two Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6585.png",
+  "name": "CrypToadz #6585",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Bubblegum"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gorilla"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Lincoln"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Truffle"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glowing Blue"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Two Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

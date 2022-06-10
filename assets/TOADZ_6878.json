@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6878.png",
-   "name": "CrypToadz #6878",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Bubblegum"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gargoyle"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Swampy Flattop"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Gremplin"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Chocolate"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Two Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6878.png",
+  "name": "CrypToadz #6878",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Bubblegum"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gargoyle"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Swampy Flattop"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gremplin"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Chocolate"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Two Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

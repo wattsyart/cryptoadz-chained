@@ -1,40 +1,44 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/379.png",
-   "name": "CrypToadz #379",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "95"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Alien"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Teal Smile"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Grey Knit Hat"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Violet Goggles"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Earring"
-      },
-      {
-         "trait_type": "Accessory I",
-         "value": "Three Flies"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 7
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/379.png",
+  "name": "CrypToadz #379",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "95"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Alien"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Teal Smile"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Grey Knit Hat"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Violet Goggles"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Earring"
+    },
+    {
+      "trait_type": "Accessory I",
+      "value": "Three Flies"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 7
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3492.png",
-   "name": "CrypToadz #3492",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Mold"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Booger"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Croak"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Aqua Mohawk"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "3D"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3492.png",
+  "name": "CrypToadz #3492",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Mold"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Booger"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Croak"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Aqua Mohawk"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "3D"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

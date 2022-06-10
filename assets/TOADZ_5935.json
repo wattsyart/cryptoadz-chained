@@ -1,32 +1,36 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5935.png",
-   "name": "CrypToadz #5935",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Bubblegum"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Undead"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Bandit Wide"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Nounish Red"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Just for the Looks"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 5
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/5935.png",
+  "name": "CrypToadz #5935",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Bubblegum"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Undead"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Bandit Wide"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Nounish Red"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Just for the Looks"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 5
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

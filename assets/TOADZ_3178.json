@@ -1,20 +1,24 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3178.png",
-   "name": "CrypToadz #3178",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Greyteal"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Bones"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 2
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/3178.png",
+  "name": "CrypToadz #3178",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Greyteal"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Bones"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 2
+    },
+    {
+      "trait_type": "Size",
+      "value": "Short"
+    }
+  ]
 }

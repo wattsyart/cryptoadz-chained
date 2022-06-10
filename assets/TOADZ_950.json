@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/950.png",
-   "name": "CrypToadz #950",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Damp"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Gremplin Green"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Bandit Wide"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Swampy Double Bun"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Glowing Red"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Watch"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/950.png",
+  "name": "CrypToadz #950",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Damp"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Gremplin Green"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Bandit Wide"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Swampy Double Bun"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glowing Red"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Watch"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }

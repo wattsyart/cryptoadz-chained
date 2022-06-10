@@ -1,36 +1,40 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/841.png",
-   "name": "CrypToadz #841",
-   "attributes": [
-      {
-         "trait_type": "Background",
-         "value": "Middlegrey"
-      },
-      {
-         "trait_type": "Body",
-         "value": "Alien"
-      },
-      {
-         "trait_type": "Mouth",
-         "value": "Beard"
-      },
-      {
-         "trait_type": "Head",
-         "value": "Rainbow Mohawk"
-      },
-      {
-         "trait_type": "Eyes",
-         "value": "Nounish Red"
-      },
-      {
-         "trait_type": "Accessory II",
-         "value": "Chocolate"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 6
-      }
-   ]
+{
+  "description": "A small, warty, amphibious creature that resides in the metaverse.",
+  "external_url": "https://cryptoadz.io",
+  "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/841.png",
+  "name": "CrypToadz #841",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Middlegrey"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Alien"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Beard"
+    },
+    {
+      "trait_type": "Head",
+      "value": "Rainbow Mohawk"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Nounish Red"
+    },
+    {
+      "trait_type": "Accessory II",
+      "value": "Chocolate"
+    },
+    {
+      "trait_type": "# Traits",
+      "value": 6
+    },
+    {
+      "trait_type": "Size",
+      "value": "Tall"
+    }
+  ]
 }
