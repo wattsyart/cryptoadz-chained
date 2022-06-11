@@ -12,6 +12,10 @@ const pixelmatch = require('pixelmatch');
 
 async function main() {
   var toadz = await deploy();
+
+  createDirectoryIfNotExists('./scripts/output');
+  createDirectoryIfNotExists('./scripts/output/images');
+  createDirectoryIfNotExists('./scripts/output/metadata');
   
   const logPath = './scripts/output/errors.txt';
   deleteFileIfExists(logPath);
@@ -55,8 +59,9 @@ async function collect(contract, tokenId, logger) {
     let json = jsonBuffer.toString('utf8');
 
     // write metadata for comparison
-    fs.writeFileSync(`./scripts/output/metadata/${tokenId}.json`, json);
-    console.log(`./scripts/output/metadata/${tokenId}.json`);
+    const metadataPath = `./scripts/output/metadata/${tokenId}.json`;
+    fs.writeFileSync(metadataPath, json);
+    console.log(gutil.colors.green(metadataPath));
 
     // convert image URI to GIF buffer
     var imageDataUri = JSON.parse(json).image;
@@ -64,9 +69,9 @@ async function collect(contract, tokenId, logger) {
     let imageBuffer = Buffer.from(imageData, 'base64');
 
     // write GIF buffer to disk for comparison
-    var imagePath = `./scripts/output/images/${tokenId}.gif`;
+    const imagePath = `./scripts/output/images/${tokenId}.gif`;
     fs.writeFileSync(imagePath, imageBuffer);
-    console.log(`./scripts/output/images/${tokenId}.gif`);
+    console.log(gutil.colors.green(imagePath));
 
     // convert GIF to PNG frames for deltas
     const framePath = `./scripts/output/images/frames/${tokenId}`;
@@ -85,10 +90,9 @@ async function collect(contract, tokenId, logger) {
     var deltaPath = `./scripts/output/images/${tokenId}_delta.png`;
     if (badPixels != 0) {
       fs.writeFileSync(deltaPath, PNG.sync.write(diff));
-      console.log(gutil.colors.red(`${tokenId}`));
+      console.log(gutil.colors.red(deltaPath));
       logger.write(`${tokenId}` + os.EOL);
     } else {
-      console.log(gutil.colors.green(`${tokenId}`));      
       deleteFileIfExists(deltaPath);
     }
 
