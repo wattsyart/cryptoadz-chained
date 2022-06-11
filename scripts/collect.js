@@ -3,6 +3,8 @@ const ethers = hre.ethers;
 
 const fs = require('fs');
 const readline = require('readline');
+const os = require("os");
+const gutil = require('gulp-util');
 
 const gifToPng = require('gif-to-png');
 const PNG = require('pngjs').PNG;
@@ -10,14 +12,26 @@ const pixelmatch = require('pixelmatch');
 
 async function main() {
   var toadz = await deploy();
-  const fileStream = fs.createReadStream('./scripts/tokenIds.txt');
-  const lines = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity
-  });
-  for await (const line of lines) {
-    await collect(toadz, parseInt(line));
+  
+  const logPath = './scripts/output/errors.txt';
+  deleteFileIfExists(logPath);
+  var logger = fs.createWriteStream(logPath);
+
+  try {
+    const fileStream = fs.createReadStream('./scripts/tokenIds.txt');
+    const lines = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+
+    for await (const line of lines) {
+      await collect(toadz, parseInt(line), logger);
+    }
+  } catch (error) {
+    console.log(error);
   }
+
+  fs.closeSync(logger);
 }
 
 async function deploy() {
@@ -28,7 +42,7 @@ async function deploy() {
   return toadz;
 }
 
-async function collect(contract, tokenId) {
+async function collect(contract, tokenId, logger) {
   try {
     const pattern = /^data:.+\/(.+);base64,(.*)$/;
 
@@ -43,7 +57,7 @@ async function collect(contract, tokenId) {
     // write metadata for comparison
     fs.writeFileSync(`./scripts/output/metadata/${tokenId}.json`, json);
     console.log(`./scripts/output/metadata/${tokenId}.json`);
-    
+
     // convert image URI to GIF buffer
     var imageDataUri = JSON.parse(json).image;
     var imageData = imageDataUri.match(pattern)[2];
@@ -56,11 +70,11 @@ async function collect(contract, tokenId) {
 
     // convert GIF to PNG frames for deltas
     const framePath = `./scripts/output/images/frames/${tokenId}`;
-    createIfNotExists(framePath);
+    createDirectoryIfNotExists(framePath);
     await gifToPng(imagePath, framePath);
 
     // load PNGs for comparison images
-    const asset = PNG.sync.read(fs.readFileSync(`./assets/TOADZ_${tokenId}.png`));        
+    const asset = PNG.sync.read(fs.readFileSync(`./assets/TOADZ_${tokenId}.png`));
     const generated = PNG.sync.read(fs.readFileSync(`./scripts/output/images/frames/${tokenId}/frame1.png`));
 
     // compare images for exact match
@@ -68,11 +82,14 @@ async function collect(contract, tokenId) {
     const diff = new PNG({ width, height });
     const badPixels = pixelmatch(asset.data, generated.data, diff.data, width, height, { threshold: 0 });
 
+    var deltaPath = `./scripts/output/images/${tokenId}_delta.png`;
     if (badPixels != 0) {
-      fs.writeFileSync(`./scripts/output/images/${tokenId}_delta.png`, PNG.sync.write(diff));
-      console.log(`${tokenId} is not exact!`);
+      fs.writeFileSync(deltaPath, PNG.sync.write(diff));
+      console.log(gutil.colors.red(`${tokenId}`));
+      logger.write(`${tokenId}` + os.EOL);
     } else {
-      console.log(`${tokenId} is exact!`);
+      console.log(gutil.colors.green(`${tokenId}`));      
+      deleteFileIfExists(deltaPath);
     }
 
   } catch (error) {
@@ -80,11 +97,21 @@ async function collect(contract, tokenId) {
   }
 }
 
-function createIfNotExists (path) {
+function createDirectoryIfNotExists(path) {
   try {
     return fs.mkdirSync(path)
   } catch (error) {
     if (error.code !== 'EEXIST') throw error
+  }
+}
+
+function deleteFileIfExists(path) {
+  try {
+    if (fs.existsSync(path)) {
+      fs.unlinkSync(path);  
+    }    
+  } catch(error) {
+    console.error(error);
   }
 }
 
