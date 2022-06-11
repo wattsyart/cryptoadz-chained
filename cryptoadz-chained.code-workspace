@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/node_modules": true,
+			"assets/**": true,
+			"builder/**": true,
+			"builder_unused/**": true,
+			"artifacts/**": true,
+			"cache/**": true,
+		}
+	}
+}

@@ -17,7 +17,9 @@ interface IERC721 {
 contract WaxBase is IERC721 {
 
     bytes constant private JSON_URI_PREFIX = "data:application/json;base64,"; 
-    
+    bytes constant private DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
+    bytes constant private EXTERNAL_URL = "https://cryptoadz.io";
+
     mapping(uint8 => string) strings;
     mapping(uint8 => address) metadataData;
     mapping(uint8 => uint16) metadataLengths;
@@ -33,9 +35,9 @@ contract WaxBase is IERC721 {
         string memory json = string(
             abi.encodePacked(
                 '{"description":"',
-                "DESCRIPTION_HERE",
+                DESCRIPTION,
                 '","external_url":"',
-                "EXTERNAL_URL_HERE",
+                EXTERNAL_URL,
                 '","image":"',
                 imageUri,
                 '",',
@@ -135,7 +137,6 @@ contract WaxBase is IERC721 {
 
     function getMetadataFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
     function getTraitName(uint8 traitValue) internal virtual pure returns (string memory) { revert(); }
-    function getImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }        
-    function getAnimationFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
+    function getImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }            
     function getImage(uint8[] memory metadata, uint tokenId, uint8 file) internal virtual view returns (GIFEncoder.GIF memory gif) { revert(); }
 }

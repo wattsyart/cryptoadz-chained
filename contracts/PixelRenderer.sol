@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 
-import "./GIFEncoder.sol";
-
 pragma solidity ^0.8.13;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import "./GIFEncoder.sol";
 
 error UnsupportedDrawInstruction(uint8 instructionType);
 error DoNotAddBlackToColorTable();

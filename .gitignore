@@ -7,3 +7,5 @@ typechain
 #Hardhat files
 cache
 artifacts
+scripts/output/images/**
+scripts/output/metadata/**

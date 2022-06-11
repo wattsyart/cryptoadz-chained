@@ -91,9 +91,11 @@ contract CrypToadzBase is WaxBase {
                 }
             }
         }
-        
+
         gif.frames[gif.frameCount++] = frame;
     }
 
     function isTall(uint tokenId) public virtual view returns (bool) { revert(); }
+    function getAnimationFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
+    function getCustomImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
 }
