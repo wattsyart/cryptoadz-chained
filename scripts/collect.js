@@ -15,6 +15,7 @@ async function main() {
 
   createDirectoryIfNotExists('./scripts/output');
   createDirectoryIfNotExists('./scripts/output/images');
+  createDirectoryIfNotExists('./scripts/output/images/frames');
   createDirectoryIfNotExists('./scripts/output/metadata');
   
   const logPath = './scripts/output/errors.txt';
