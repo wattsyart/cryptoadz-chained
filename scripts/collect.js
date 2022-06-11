@@ -1,9 +1,9 @@
-const hre = require("hardhat");
+const hre = require('hardhat');
 const ethers = hre.ethers;
 
 const fs = require('fs');
 const readline = require('readline');
-const os = require("os");
+const os = require('os');
 const gutil = require('gulp-util');
 
 const gifToPng = require('gif-to-png');
@@ -33,17 +33,17 @@ async function main() {
       await collect(toadz, parseInt(line), logger);
     }
   } catch (error) {
-    console.log(error);
+    console.error(gutil.colors.red(error));
   }
 
   fs.closeSync(logger);
 }
 
 async function deploy() {
-  const CrypToadz = await ethers.getContractFactory("CrypToadz");
+  const CrypToadz = await ethers.getContractFactory('CrypToadz');
   const toadz = await CrypToadz.deploy();
   await toadz.deployed();
-  console.log("CrypToadz deployed to: " + toadz.address);
+  console.log(gutil.colors.blue(`CrypToadz deployed to: '${toadz.address}'`));
   return toadz;
 }
 
@@ -99,7 +99,7 @@ async function collect(contract, tokenId, logger) {
     }
 
   } catch (error) {
-    console.log(error);
+    console.error(gutil.colors.red(error));
   }
 }
 
@@ -117,13 +117,13 @@ function deleteFileIfExists(path) {
       fs.unlinkSync(path);  
     }    
   } catch(error) {
-    console.error(error);
+    console.error(gutil.colors.red(error));
   }
 }
 
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error);
+    console.error(gutil.colors.red(error));
     process.exit(1);
   });
