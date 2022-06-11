@@ -87,6 +87,7 @@ async function collect(contract, tokenId, logger) {
     const diff = new PNG({ width, height });
     const badPixels = pixelmatch(asset.data, generated.data, diff.data, width, height, { threshold: 0 });
 
+    // create delta image if there isn't an exact match, for inspection
     var deltaPath = `./scripts/output/images/${tokenId}_delta.png`;
     if (badPixels != 0) {
       fs.writeFileSync(deltaPath, PNG.sync.write(diff));
