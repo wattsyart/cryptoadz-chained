@@ -3,6 +3,8 @@ require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
 
+require("./tasks/tasks.js");
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -23,7 +25,7 @@ require("solidity-coverage");
     settings: {
       optimizer: {
         enabled: true,
-        runs: 1000
+        runs: 1
       }
     }
   },

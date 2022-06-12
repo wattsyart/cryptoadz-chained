@@ -64,11 +64,11 @@ contract CrypToadzBase is WaxBase {
                             uint8 featureId = uint8(buffer[position++]);
                             ox = uint8(buffer[position++]);
                             oy = uint8(buffer[position++]);
-                            if(featureId == value) {
+                            if(featureId == value) {                                                            
                                 break;
                             } else {
                                 ox = 0;
-                                oy = 0;
+                                oy = 0;                                
                             }
                         } else {
                             revert UnsupportedDrawInstruction(instructionType);
