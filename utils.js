@@ -9,6 +9,12 @@ const pixelmatch = require('pixelmatch');
 module.exports = {    
     collect:
         async function collect(contract, tokenId, logger) {
+
+            createDirectoryIfNotExists('./scripts/output');
+            createDirectoryIfNotExists('./scripts/output/images');
+            createDirectoryIfNotExists('./scripts/output/images/frames');
+            createDirectoryIfNotExists('./scripts/output/metadata');
+
             try {
                 const pattern = /^data:.+\/(.+);base64,(.*)$/;
 

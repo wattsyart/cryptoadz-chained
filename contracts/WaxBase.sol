@@ -56,7 +56,7 @@ contract WaxBase is IERC721 {
         (uint position, uint8 length) = advanceToTokenPosition(tokenId, buffer);
 
         metadata = new uint8[](length);
-        for (uint256 i = 1; i < length; i++) {
+        for (uint256 i = 0; i < length; i++) {
             uint8 value;
             (value, position) = readByte(position, buffer);
             metadata[i] = value;
@@ -68,6 +68,9 @@ contract WaxBase is IERC721 {
         uint8 numberOfTraits;
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
+            if(value == 119 || value == 120) {
+                continue;
+            }
             (string memory a, uint8 t) = appendTrait(
                 attributes,
                 getTraitName(value),
