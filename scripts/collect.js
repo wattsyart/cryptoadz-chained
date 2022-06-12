@@ -1,10 +1,12 @@
+const { ethers } = require("hardhat");
+
 const fs = require('fs');
 const readline = require('readline');
 const gutil = require('gulp-util');
 const utils = require('../utils.js');
 
 async function main() {
-  var toadz = await utils.deploy();
+  var toadz = await deploy();
 
   createDirectoryIfNotExists('./scripts/output');
   createDirectoryIfNotExists('./scripts/output/images');
@@ -32,7 +34,31 @@ async function main() {
   fs.closeSync(logger);
 }
 
+async function deploy() {
+  const CrypToadz = await ethers.getContractFactory('CrypToadz');
+  const toadz = await CrypToadz.deploy();
+  await toadz.deployed();
+  console.log(gutil.colors.blue(`CrypToadz deployed to: '${toadz.address}'`));
+  return toadz;
+}
 
+function createDirectoryIfNotExists(path) {
+  try {
+      return fs.mkdirSync(path)
+  } catch (error) {
+      if (error.code !== 'EEXIST') throw error
+  }
+}
+
+function deleteFileIfExists(path) {
+  try {
+      if (fs.existsSync(path)) {
+          fs.unlinkSync(path);
+      }
+  } catch (error) {
+      console.error(gutil.colors.red(error));
+  }
+}
 
 main()
   .then(() => process.exit(0))
