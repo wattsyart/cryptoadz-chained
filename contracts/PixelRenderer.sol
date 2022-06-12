@@ -93,11 +93,12 @@ library PixelRenderer {
         colors[0] = 0xFF000000;
         
         for(uint8 i = 0; i < colorCount; i++) {
+            uint32 a = uint32(uint8(buffer[position++]));
             uint32 r = uint32(uint8(buffer[position++]));
             uint32 g = uint32(uint8(buffer[position++]));
             uint32 b = uint32(uint8(buffer[position++]));
             uint32 color = 0;
-            color |= 255 << 24;
+            color |= a << 24;
             color |= r << 16;
             color |= g << 8;
             color |= b << 0;
