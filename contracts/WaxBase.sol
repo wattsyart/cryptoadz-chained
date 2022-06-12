@@ -56,12 +56,11 @@ contract WaxBase is IERC721 {
         (uint position, uint8 length) = advanceToTokenPosition(tokenId, buffer);
 
         metadata = new uint8[](length);
-        for (uint256 i = 0; i < length; i++) {
+        for (uint256 i = 1; i < length; i++) {
             uint8 value;
             (value, position) = readByte(position, buffer);
             metadata[i] = value;
         }
-        quickSort(metadata, 0, metadata.length - 1);
     }
 
     function getAttributes(uint8[] memory metadata) private view returns (string memory attributes) {
@@ -87,27 +86,6 @@ contract WaxBase is IERC721 {
             attributes = string(abi.encodePacked(attributes, numberOfTraits > 1 ? ',' : '', '{"trait_type":"', trait_type, '","value":"', value, '"}'));
         }
         return (attributes, numberOfTraits);
-    }
-
-    function quickSort(uint8[] memory data, uint256 left, uint256 right) private pure {
-        uint256 i = left;
-        uint256 j = right;
-        if (i == j) return;
-        uint256 pivot = data[uint256(left + (right - left) / 2)];
-        while (i <= j) {
-            while (data[uint256(i)] < pivot) i++;
-            while (pivot < data[uint256(j)]) j--;
-            if (i <= j) {
-                (data[uint256(i)], data[uint256(j)]) = (
-                    data[uint256(j)],
-                    data[uint256(i)]
-                );
-                i++;
-                j--;
-            }
-        }
-        if (left < j) quickSort(data, left, j);
-        if (i < right) quickSort(data, i, right);
     }
 
     function readInt32(uint position, bytes memory buffer) private pure returns (int32, uint) {
