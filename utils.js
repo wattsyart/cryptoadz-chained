@@ -57,14 +57,13 @@ module.exports = {
 
                 // create delta image if there isn't an exact match, for inspection
                 var deltaPath = `./scripts/output/images/${tokenId}_delta.png`;
+                deleteFileIfExists(deltaPath);
                 if (badPixels != 0) {
                     fs.writeFileSync(deltaPath, PNG.sync.write(diff));
                     console.log(gutil.colors.red(deltaPath));
                     if(logger) {
                         logger.write(`${tokenId}` + os.EOL);
                     }                    
-                } else {
-                    deleteFileIfExists(deltaPath);
                 }
 
             } catch (error) {
