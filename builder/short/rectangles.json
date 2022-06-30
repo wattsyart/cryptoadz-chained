@@ -1,1 +1,3257 @@
-{"3D":{"Location":{"IsEmpty":false,"X":10,"Y":17},"Size":{"IsEmpty":false,"Width":15,"Height":3},"X":10,"Y":17,"Width":15,"Height":3,"Left":10,"Top":17,"Right":25,"Bottom":20,"IsEmpty":false},"Albino":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Alien":{"Location":{"IsEmpty":false,"X":7,"Y":11},"Size":{"IsEmpty":false,"Width":22,"Height":18},"X":7,"Y":11,"Width":22,"Height":18,"Left":7,"Top":11,"Right":29,"Bottom":29,"IsEmpty":false},"Angry":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Anime":{"Location":{"IsEmpty":false,"X":11,"Y":15},"Size":{"IsEmpty":false,"Width":11,"Height":5},"X":11,"Y":15,"Width":11,"Height":5,"Left":11,"Top":15,"Right":22,"Bottom":20,"IsEmpty":false},"Ape":{"Location":{"IsEmpty":false,"X":5,"Y":13},"Size":{"IsEmpty":false,"Width":26,"Height":16},"X":5,"Y":13,"Width":26,"Height":16,"Left":5,"Top":13,"Right":31,"Bottom":29,"IsEmpty":false},"Aqua Mohawk":{"Location":{"IsEmpty":false,"X":8,"Y":9},"Size":{"IsEmpty":false,"Width":15,"Height":5},"X":8,"Y":9,"Width":15,"Height":5,"Left":8,"Top":9,"Right":23,"Bottom":14,"IsEmpty":false},"Aqua Puff":{"Location":{"IsEmpty":false,"X":14,"Y":9},"Size":{"IsEmpty":false,"Width":8,"Height":5},"X":14,"Y":9,"Width":8,"Height":5,"Left":14,"Top":9,"Right":22,"Bottom":14,"IsEmpty":false},"Aqua Shave":{"Location":{"IsEmpty":false,"X":5,"Y":7},"Size":{"IsEmpty":false,"Width":23,"Height":11},"X":5,"Y":7,"Width":23,"Height":11,"Left":5,"Top":7,"Right":28,"Bottom":18,"IsEmpty":false},"Aqua Sidepart":{"Location":{"IsEmpty":false,"X":8,"Y":10},"Size":{"IsEmpty":false,"Width":19,"Height":7},"X":8,"Y":10,"Width":19,"Height":7,"Left":8,"Top":10,"Right":27,"Bottom":17,"IsEmpty":false},"Awake":{"Location":{"IsEmpty":false,"X":11,"Y":16},"Size":{"IsEmpty":false,"Width":11,"Height":4},"X":11,"Y":16,"Width":11,"Height":4,"Left":11,"Top":16,"Right":22,"Bottom":20,"IsEmpty":false},"Backward Cap":{"Location":{"IsEmpty":false,"X":11,"Y":8},"Size":{"IsEmpty":false,"Width":18,"Height":7},"X":11,"Y":8,"Width":18,"Height":7,"Left":11,"Top":8,"Right":29,"Bottom":15,"IsEmpty":false},"Bandit Smile":{"Location":{"IsEmpty":false,"X":8,"Y":19},"Size":{"IsEmpty":false,"Width":17,"Height":4},"X":8,"Y":19,"Width":17,"Height":4,"Left":8,"Top":19,"Right":25,"Bottom":23,"IsEmpty":false},"Bandit Wide":{"Location":{"IsEmpty":false,"X":7,"Y":20},"Size":{"IsEmpty":false,"Width":21,"Height":3},"X":7,"Y":20,"Width":21,"Height":3,"Left":7,"Top":20,"Right":28,"Bottom":23,"IsEmpty":false},"Bandit":{"Location":{"IsEmpty":false,"X":7,"Y":16},"Size":{"IsEmpty":false,"Width":21,"Height":4},"X":7,"Y":16,"Width":21,"Height":4,"Left":7,"Top":16,"Right":28,"Bottom":20,"IsEmpty":false},"Beard":{"Location":{"IsEmpty":false,"X":7,"Y":19},"Size":{"IsEmpty":false,"Width":20,"Height":6},"X":7,"Y":19,"Width":20,"Height":6,"Left":7,"Top":19,"Right":27,"Bottom":25,"IsEmpty":false},"Berry":{"Location":{"IsEmpty":false,"X":4,"Y":14},"Size":{"IsEmpty":false,"Width":28,"Height":15},"X":4,"Y":14,"Width":28,"Height":15,"Left":4,"Top":14,"Right":32,"Bottom":29,"IsEmpty":false},"Big Crazy Orange":{"Location":{"IsEmpty":false,"X":11,"Y":17},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":11,"Y":17,"Width":11,"Height":2,"Left":11,"Top":17,"Right":22,"Bottom":19,"IsEmpty":false},"Big Crazy Red":{"Location":{"IsEmpty":false,"X":11,"Y":17},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":11,"Y":17,"Width":11,"Height":2,"Left":11,"Top":17,"Right":22,"Bottom":19,"IsEmpty":false},"Big Ghost":{"Location":{"IsEmpty":false,"X":4,"Y":14},"Size":{"IsEmpty":false,"Width":28,"Height":15},"X":4,"Y":14,"Width":28,"Height":15,"Left":4,"Top":14,"Right":32,"Bottom":29,"IsEmpty":false},"Big Yellow Side-eye":{"Location":{"IsEmpty":false,"X":11,"Y":17},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":11,"Y":17,"Width":11,"Height":2,"Left":11,"Top":17,"Right":22,"Bottom":19,"IsEmpty":false},"Black and Blue Goggles":{"Location":{"IsEmpty":false,"X":10,"Y":16},"Size":{"IsEmpty":false,"Width":16,"Height":4},"X":10,"Y":16,"Width":16,"Height":4,"Left":10,"Top":16,"Right":26,"Bottom":20,"IsEmpty":false},"Black Sidepart":{"Location":{"IsEmpty":false,"X":8,"Y":10},"Size":{"IsEmpty":false,"Width":19,"Height":7},"X":8,"Y":10,"Width":19,"Height":7,"Left":8,"Top":10,"Right":27,"Bottom":17,"IsEmpty":false},"Blonde Pigtails":{"Location":{"IsEmpty":false,"X":12,"Y":9},"Size":{"IsEmpty":false,"Width":14,"Height":5},"X":12,"Y":9,"Width":14,"Height":5,"Left":12,"Top":9,"Right":26,"Bottom":14,"IsEmpty":false},"Blood Bones":{"Location":{"IsEmpty":false,"X":6,"Y":14},"Size":{"IsEmpty":false,"Width":23,"Height":15},"X":6,"Y":14,"Width":23,"Height":15,"Left":6,"Top":14,"Right":29,"Bottom":29,"IsEmpty":false},"Blue Cat":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Blue Eyeshadow":{"Location":{"IsEmpty":false,"X":11,"Y":17},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":11,"Y":17,"Width":11,"Height":2,"Left":11,"Top":17,"Right":22,"Bottom":19,"IsEmpty":false},"Blue Pigtails":{"Location":{"IsEmpty":false,"X":14,"Y":9},"Size":{"IsEmpty":false,"Width":11,"Height":5},"X":14,"Y":9,"Width":11,"Height":5,"Left":14,"Top":9,"Right":25,"Bottom":14,"IsEmpty":false},"Blue Shave":{"Location":{"IsEmpty":false,"X":5,"Y":7},"Size":{"IsEmpty":false,"Width":23,"Height":11},"X":5,"Y":7,"Width":23,"Height":11,"Left":5,"Top":7,"Right":28,"Bottom":18,"IsEmpty":false},"Blue Smile":{"Location":{"IsEmpty":false,"X":8,"Y":19},"Size":{"IsEmpty":false,"Width":17,"Height":4},"X":8,"Y":19,"Width":17,"Height":4,"Left":8,"Top":19,"Right":25,"Bottom":23,"IsEmpty":false},"Blush":{"Location":{"IsEmpty":false,"X":10,"Y":19},"Size":{"IsEmpty":false,"Width":13,"Height":1},"X":10,"Y":19,"Width":13,"Height":1,"Left":10,"Top":19,"Right":23,"Bottom":20,"IsEmpty":false},"Bones":{"Location":{"IsEmpty":false,"X":6,"Y":14},"Size":{"IsEmpty":false,"Width":23,"Height":15},"X":6,"Y":14,"Width":23,"Height":15,"Left":6,"Top":14,"Right":29,"Bottom":29,"IsEmpty":false},"Booger":{"Location":{"IsEmpty":false,"X":4,"Y":14},"Size":{"IsEmpty":false,"Width":28,"Height":15},"X":4,"Y":14,"Width":28,"Height":15,"Left":4,"Top":14,"Right":32,"Bottom":29,"IsEmpty":false},"Bowlcut":{"Location":{"IsEmpty":false,"X":7,"Y":7},"Size":{"IsEmpty":false,"Width":23,"Height":10},"X":7,"Y":7,"Width":23,"Height":10,"Left":7,"Top":7,"Right":30,"Bottom":17,"IsEmpty":false},"Brain":{"Location":{"IsEmpty":false,"X":11,"Y":12},"Size":{"IsEmpty":false,"Width":15,"Height":4},"X":11,"Y":12,"Width":15,"Height":4,"Left":11,"Top":12,"Right":26,"Bottom":16,"IsEmpty":false},"Butthole":{"Location":{"IsEmpty":false,"X":11,"Y":17},"Size":{"IsEmpty":false,"Width":11,"Height":3},"X":11,"Y":17,"Width":11,"Height":3,"Left":11,"Top":17,"Right":22,"Bottom":20,"IsEmpty":false},"Chimp":{"Location":{"IsEmpty":false,"X":5,"Y":12},"Size":{"IsEmpty":false,"Width":26,"Height":17},"X":5,"Y":12,"Width":26,"Height":17,"Left":5,"Top":12,"Right":31,"Bottom":29,"IsEmpty":false},"Chocolate":{"Location":{"IsEmpty":false,"X":10,"Y":20},"Size":{"IsEmpty":false,"Width":13,"Height":12},"X":10,"Y":20,"Width":13,"Height":12,"Left":10,"Top":20,"Right":23,"Bottom":32,"IsEmpty":false},"Cool Shades":{"Location":{"IsEmpty":false,"X":9,"Y":17},"Size":{"IsEmpty":false,"Width":17,"Height":3},"X":9,"Y":17,"Width":17,"Height":3,"Left":9,"Top":17,"Right":26,"Bottom":20,"IsEmpty":false},"Crazy Blonde":{"Location":{"IsEmpty":false,"X":6,"Y":6},"Size":{"IsEmpty":false,"Width":25,"Height":11},"X":6,"Y":6,"Width":25,"Height":11,"Left":6,"Top":6,"Right":31,"Bottom":17,"IsEmpty":false},"Creep":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Croak":{"Location":{"IsEmpty":false,"X":9,"Y":20},"Size":{"IsEmpty":false,"Width":15,"Height":3},"X":9,"Y":20,"Width":15,"Height":3,"Left":9,"Top":20,"Right":24,"Bottom":23,"IsEmpty":false},"Croaked":{"Location":{"IsEmpty":false,"X":11,"Y":17},"Size":{"IsEmpty":false,"Width":11,"Height":3},"X":11,"Y":17,"Width":11,"Height":3,"Left":11,"Top":17,"Right":22,"Bottom":20,"IsEmpty":false},"Dark Pigtails":{"Location":{"IsEmpty":false,"X":12,"Y":9},"Size":{"IsEmpty":false,"Width":14,"Height":5},"X":12,"Y":9,"Width":14,"Height":5,"Left":12,"Top":9,"Right":26,"Bottom":14,"IsEmpty":false},"Dark Single Bun":{"Location":{"IsEmpty":false,"X":18,"Y":9},"Size":{"IsEmpty":false,"Width":7,"Height":5},"X":18,"Y":9,"Width":7,"Height":5,"Left":18,"Top":9,"Right":25,"Bottom":14,"IsEmpty":false},"Dark Tall Hat":{"Location":{"IsEmpty":false,"X":11,"Y":5},"Size":{"IsEmpty":false,"Width":14,"Height":10},"X":11,"Y":5,"Width":14,"Height":10,"Left":11,"Top":5,"Right":25,"Bottom":15,"IsEmpty":false},"Dilated":{"Location":{"IsEmpty":false,"X":11,"Y":15},"Size":{"IsEmpty":false,"Width":11,"Height":4},"X":11,"Y":15,"Width":11,"Height":4,"Left":11,"Top":15,"Right":22,"Bottom":19,"IsEmpty":false},"Dog":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Drive-thru":{"Location":{"IsEmpty":false,"X":6,"Y":12},"Size":{"IsEmpty":false,"Width":21,"Height":5},"X":6,"Y":12,"Width":21,"Height":5,"Left":6,"Top":12,"Right":27,"Bottom":17,"IsEmpty":false},"Earring":{"Location":{"IsEmpty":false,"X":25,"Y":18},"Size":{"IsEmpty":false,"Width":3,"Height":3},"X":25,"Y":18,"Width":3,"Height":3,"Left":25,"Top":18,"Right":28,"Bottom":21,"IsEmpty":false},"Explorer":{"Location":{"IsEmpty":false,"X":4,"Y":4},"Size":{"IsEmpty":false,"Width":28,"Height":25},"X":4,"Y":4,"Width":28,"Height":25,"Left":4,"Top":4,"Right":32,"Bottom":29,"IsEmpty":false},"Fez":{"Location":{"IsEmpty":false,"X":15,"Y":8},"Size":{"IsEmpty":false,"Width":13,"Height":6},"X":15,"Y":8,"Width":13,"Height":6,"Left":15,"Top":8,"Right":28,"Bottom":14,"IsEmpty":false},"Floppy Hat":{"Location":{"IsEmpty":false,"X":7,"Y":10},"Size":{"IsEmpty":false,"Width":21,"Height":6},"X":7,"Y":10,"Width":21,"Height":6,"Left":7,"Top":10,"Right":28,"Bottom":16,"IsEmpty":false},"Fly Lick":{"Location":{"IsEmpty":false,"X":7,"Y":19},"Size":{"IsEmpty":false,"Width":18,"Height":13},"X":7,"Y":19,"Width":18,"Height":13,"Left":7,"Top":19,"Right":25,"Bottom":32,"IsEmpty":false},"Force Hoodie":{"Location":{"IsEmpty":false,"X":4,"Y":9},"Size":{"IsEmpty":false,"Width":28,"Height":19},"X":4,"Y":9,"Width":28,"Height":19,"Left":4,"Top":9,"Right":32,"Bottom":28,"IsEmpty":false},"Four Flies":{"Location":{"IsEmpty":false,"X":2,"Y":3},"Size":{"IsEmpty":false,"Width":33,"Height":16},"X":2,"Y":3,"Width":33,"Height":16,"Left":2,"Top":3,"Right":35,"Bottom":19,"IsEmpty":false},"Fun Cap":{"Location":{"IsEmpty":false,"X":10,"Y":9},"Size":{"IsEmpty":false,"Width":14,"Height":6},"X":10,"Y":9,"Width":14,"Height":6,"Left":10,"Top":9,"Right":24,"Bottom":15,"IsEmpty":false},"Gargoyle":{"Location":{"IsEmpty":false,"X":5,"Y":13},"Size":{"IsEmpty":false,"Width":26,"Height":16},"X":5,"Y":13,"Width":26,"Height":16,"Left":5,"Top":13,"Right":31,"Bottom":29,"IsEmpty":false},"Ghost Bones":{"Location":{"IsEmpty":false,"X":6,"Y":14},"Size":{"IsEmpty":false,"Width":23,"Height":15},"X":6,"Y":14,"Width":23,"Height":15,"Left":6,"Top":14,"Right":29,"Bottom":29,"IsEmpty":false},"Ghost":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Glowing Blue":{"Location":{"IsEmpty":false,"X":10,"Y":16},"Size":{"IsEmpty":false,"Width":13,"Height":4},"X":10,"Y":16,"Width":13,"Height":4,"Left":10,"Top":16,"Right":23,"Bottom":20,"IsEmpty":false},"Glowing Red":{"Location":{"IsEmpty":false,"X":10,"Y":16},"Size":{"IsEmpty":false,"Width":13,"Height":4},"X":10,"Y":16,"Width":13,"Height":4,"Left":10,"Top":16,"Right":23,"Bottom":20,"IsEmpty":false},"Gold Specs":{"Location":{"IsEmpty":false,"X":10,"Y":17},"Size":{"IsEmpty":false,"Width":16,"Height":3},"X":10,"Y":17,"Width":16,"Height":3,"Left":10,"Top":17,"Right":26,"Bottom":20,"IsEmpty":false},"Gorilla":{"Location":{"IsEmpty":false,"X":5,"Y":13},"Size":{"IsEmpty":false,"Width":26,"Height":16},"X":5,"Y":13,"Width":26,"Height":16,"Left":5,"Top":13,"Right":31,"Bottom":29,"IsEmpty":false},"Green Bucktooth":{"Location":{"IsEmpty":false,"X":9,"Y":20},"Size":{"IsEmpty":false,"Width":15,"Height":3},"X":9,"Y":20,"Width":15,"Height":3,"Left":9,"Top":20,"Right":24,"Bottom":23,"IsEmpty":false},"Green Eyeshadow":{"Location":{"IsEmpty":false,"X":11,"Y":17},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":11,"Y":17,"Width":11,"Height":2,"Left":11,"Top":17,"Right":22,"Bottom":19,"IsEmpty":false},"Gremplin Blue":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Gremplin Green":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Gremplin":{"Location":{"IsEmpty":false,"X":10,"Y":15},"Size":{"IsEmpty":false,"Width":13,"Height":5},"X":10,"Y":15,"Width":13,"Height":5,"Left":10,"Top":15,"Right":23,"Bottom":20,"IsEmpty":false},"Grey Hoodie":{"Location":{"IsEmpty":false,"X":4,"Y":9},"Size":{"IsEmpty":false,"Width":28,"Height":19},"X":4,"Y":9,"Width":28,"Height":19,"Left":4,"Top":9,"Right":32,"Bottom":28,"IsEmpty":false},"Grey Knit Hat":{"Location":{"IsEmpty":false,"X":10,"Y":8},"Size":{"IsEmpty":false,"Width":16,"Height":8},"X":10,"Y":8,"Width":16,"Height":8,"Left":10,"Top":8,"Right":26,"Bottom":16,"IsEmpty":false},"Gummy Blue":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Gummy Peach":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Gummy Raspberry":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Gummy Slime":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Gummy Tropical":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Hypnotic":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Judgment":{"Location":{"IsEmpty":false,"X":10,"Y":15},"Size":{"IsEmpty":false,"Width":13,"Height":5},"X":10,"Y":15,"Width":13,"Height":5,"Left":10,"Top":15,"Right":23,"Bottom":20,"IsEmpty":false},"Just for the Looks":{"Location":{"IsEmpty":false,"X":4,"Y":20},"Size":{"IsEmpty":false,"Width":10,"Height":3},"X":4,"Y":20,"Width":10,"Height":3,"Left":4,"Top":20,"Right":14,"Bottom":23,"IsEmpty":false},"Lasagna":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Lincoln":{"Location":{"IsEmpty":false,"X":7,"Y":19},"Size":{"IsEmpty":false,"Width":19,"Height":6},"X":7,"Y":19,"Width":19,"Height":6,"Left":7,"Top":19,"Right":26,"Bottom":25,"IsEmpty":false},"Long Cigarette":{"Location":{"IsEmpty":false,"X":4,"Y":13},"Size":{"IsEmpty":false,"Width":10,"Height":10},"X":4,"Y":13,"Width":10,"Height":10,"Left":4,"Top":13,"Right":14,"Bottom":23,"IsEmpty":false},"Mysterious Hoodie":{"Location":{"IsEmpty":false,"X":1,"Y":7},"Size":{"IsEmpty":false,"Width":34,"Height":24},"X":1,"Y":7,"Width":34,"Height":24,"Left":1,"Top":7,"Right":35,"Bottom":31,"IsEmpty":false},"Nerd":{"Location":{"IsEmpty":false,"X":9,"Y":16},"Size":{"IsEmpty":false,"Width":17,"Height":4},"X":9,"Y":16,"Width":17,"Height":4,"Left":9,"Top":16,"Right":26,"Bottom":20,"IsEmpty":false},"Nice Shades":{"Location":{"IsEmpty":false,"X":9,"Y":17},"Size":{"IsEmpty":false,"Width":17,"Height":3},"X":9,"Y":17,"Width":17,"Height":3,"Left":9,"Top":17,"Right":26,"Bottom":20,"IsEmpty":false},"Normal":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Nounish Blue":{"Location":{"IsEmpty":false,"X":9,"Y":15},"Size":{"IsEmpty":false,"Width":15,"Height":5},"X":9,"Y":15,"Width":15,"Height":5,"Left":9,"Top":15,"Right":24,"Bottom":20,"IsEmpty":false},"Nounish Red":{"Location":{"IsEmpty":false,"X":9,"Y":15},"Size":{"IsEmpty":false,"Width":15,"Height":5},"X":9,"Y":15,"Width":15,"Height":5,"Left":9,"Top":15,"Right":24,"Bottom":20,"IsEmpty":false},"One Fly":{"Location":{"IsEmpty":false,"X":3,"Y":11},"Size":{"IsEmpty":false,"Width":4,"Height":3},"X":3,"Y":11,"Width":4,"Height":3,"Left":3,"Top":11,"Right":7,"Bottom":14,"IsEmpty":false},"Only Socks":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Orange Bumps":{"Location":{"IsEmpty":false,"X":10,"Y":9},"Size":{"IsEmpty":false,"Width":17,"Height":11},"X":10,"Y":9,"Width":17,"Height":11,"Left":10,"Top":9,"Right":27,"Bottom":20,"IsEmpty":false},"Orange Double Buns":{"Location":{"IsEmpty":false,"X":14,"Y":9},"Size":{"IsEmpty":false,"Width":11,"Height":5},"X":14,"Y":9,"Width":11,"Height":5,"Left":14,"Top":9,"Right":25,"Bottom":14,"IsEmpty":false},"Orange Knit Hat":{"Location":{"IsEmpty":false,"X":10,"Y":8},"Size":{"IsEmpty":false,"Width":16,"Height":8},"X":10,"Y":8,"Width":16,"Height":8,"Left":10,"Top":8,"Right":26,"Bottom":16,"IsEmpty":false},"Orange Shave":{"Location":{"IsEmpty":false,"X":5,"Y":7},"Size":{"IsEmpty":false,"Width":23,"Height":11},"X":5,"Y":7,"Width":23,"Height":11,"Left":5,"Top":7,"Right":28,"Bottom":18,"IsEmpty":false},"Orange Tall Hat":{"Location":{"IsEmpty":false,"X":11,"Y":5},"Size":{"IsEmpty":false,"Width":14,"Height":10},"X":11,"Y":5,"Width":14,"Height":10,"Left":11,"Top":5,"Right":25,"Bottom":15,"IsEmpty":false},"Pasty":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Patch":{"Location":{"IsEmpty":false,"X":9,"Y":16},"Size":{"IsEmpty":false,"Width":17,"Height":4},"X":9,"Y":16,"Width":17,"Height":4,"Left":9,"Top":16,"Right":26,"Bottom":20,"IsEmpty":false},"Peach Smile":{"Location":{"IsEmpty":false,"X":8,"Y":19},"Size":{"IsEmpty":false,"Width":17,"Height":4},"X":8,"Y":19,"Width":17,"Height":4,"Left":8,"Top":19,"Right":25,"Bottom":23,"IsEmpty":false},"Periwinkle Cap":{"Location":{"IsEmpty":false,"X":7,"Y":8},"Size":{"IsEmpty":false,"Width":18,"Height":7},"X":7,"Y":8,"Width":18,"Height":7,"Left":7,"Top":8,"Right":25,"Bottom":15,"IsEmpty":false},"Pink Bucktooth":{"Location":{"IsEmpty":false,"X":9,"Y":20},"Size":{"IsEmpty":false,"Width":15,"Height":3},"X":9,"Y":20,"Width":15,"Height":3,"Left":9,"Top":20,"Right":24,"Bottom":23,"IsEmpty":false},"Pink Puff":{"Location":{"IsEmpty":false,"X":14,"Y":9},"Size":{"IsEmpty":false,"Width":8,"Height":5},"X":14,"Y":9,"Width":8,"Height":5,"Left":14,"Top":9,"Right":22,"Bottom":14,"IsEmpty":false},"Plaid Cap":{"Location":{"IsEmpty":false,"X":10,"Y":9},"Size":{"IsEmpty":false,"Width":14,"Height":6},"X":10,"Y":9,"Width":14,"Height":6,"Left":10,"Top":9,"Right":24,"Bottom":15,"IsEmpty":false},"Pox":{"Location":{"IsEmpty":false,"X":4,"Y":14},"Size":{"IsEmpty":false,"Width":28,"Height":15},"X":4,"Y":14,"Width":28,"Height":15,"Left":4,"Top":14,"Right":32,"Bottom":29,"IsEmpty":false},"Purple Wide":{"Location":{"IsEmpty":false,"X":7,"Y":20},"Size":{"IsEmpty":false,"Width":21,"Height":3},"X":7,"Y":20,"Width":21,"Height":3,"Left":7,"Top":20,"Right":28,"Bottom":23,"IsEmpty":false},"Rainbow Mohawk":{"Location":{"IsEmpty":false,"X":8,"Y":9},"Size":{"IsEmpty":false,"Width":15,"Height":5},"X":8,"Y":9,"Width":15,"Height":5,"Left":8,"Top":9,"Right":23,"Bottom":14,"IsEmpty":false},"Red and Black Goggles":{"Location":{"IsEmpty":false,"X":10,"Y":16},"Size":{"IsEmpty":false,"Width":16,"Height":4},"X":10,"Y":16,"Width":16,"Height":4,"Left":10,"Top":16,"Right":26,"Bottom":20,"IsEmpty":false},"Red Gnome":{"Location":{"IsEmpty":false,"X":11,"Y":5},"Size":{"IsEmpty":false,"Width":18,"Height":13},"X":11,"Y":5,"Width":18,"Height":13,"Left":11,"Top":5,"Right":29,"Bottom":18,"IsEmpty":false},"Ribbit Blue":{"Location":{"IsEmpty":false,"X":8,"Y":19},"Size":{"IsEmpty":false,"Width":17,"Height":5},"X":8,"Y":19,"Width":17,"Height":5,"Left":8,"Top":19,"Right":25,"Bottom":24,"IsEmpty":false},"Round Shades":{"Location":{"IsEmpty":false,"X":9,"Y":16},"Size":{"IsEmpty":false,"Width":17,"Height":4},"X":9,"Y":16,"Width":17,"Height":4,"Left":9,"Top":16,"Right":26,"Bottom":20,"IsEmpty":false},"Rusty Cap":{"Location":{"IsEmpty":false,"X":11,"Y":8},"Size":{"IsEmpty":false,"Width":18,"Height":7},"X":11,"Y":8,"Width":18,"Height":7,"Left":11,"Top":8,"Right":29,"Bottom":15,"IsEmpty":false},"Sad":{"Location":{"IsEmpty":false,"X":9,"Y":20},"Size":{"IsEmpty":false,"Width":16,"Height":4},"X":9,"Y":20,"Width":16,"Height":4,"Left":9,"Top":20,"Right":25,"Bottom":24,"IsEmpty":false},"Shackles":{"Location":{"IsEmpty":false,"X":14,"Y":26},"Size":{"IsEmpty":false,"Width":7,"Height":1},"X":14,"Y":26,"Width":7,"Height":1,"Left":14,"Top":26,"Right":21,"Bottom":27,"IsEmpty":false},"Shifty":{"Location":{"IsEmpty":false,"X":9,"Y":20},"Size":{"IsEmpty":false,"Width":16,"Height":4},"X":9,"Y":20,"Width":16,"Height":4,"Left":9,"Top":20,"Right":25,"Bottom":24,"IsEmpty":false},"Short Cigarette":{"Location":{"IsEmpty":false,"X":5,"Y":12},"Size":{"IsEmpty":false,"Width":9,"Height":11},"X":5,"Y":12,"Width":9,"Height":11,"Left":5,"Top":12,"Right":14,"Bottom":23,"IsEmpty":false},"Short Feathered Hat":{"Location":{"IsEmpty":false,"X":11,"Y":11},"Size":{"IsEmpty":false,"Width":14,"Height":3},"X":11,"Y":11,"Width":14,"Height":3,"Left":11,"Top":11,"Right":25,"Bottom":14,"IsEmpty":false},"Sleepy":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Slime Hoodie":{"Location":{"IsEmpty":false,"X":4,"Y":9},"Size":{"IsEmpty":false,"Width":28,"Height":19},"X":4,"Y":9,"Width":28,"Height":19,"Left":4,"Top":9,"Right":32,"Bottom":28,"IsEmpty":false},"Slimy":{"Location":{"IsEmpty":false,"X":8,"Y":18},"Size":{"IsEmpty":false,"Width":17,"Height":5},"X":8,"Y":18,"Width":17,"Height":5,"Left":8,"Top":18,"Right":25,"Bottom":23,"IsEmpty":false},"Stringy":{"Location":{"IsEmpty":false,"X":7,"Y":9},"Size":{"IsEmpty":false,"Width":21,"Height":8},"X":7,"Y":9,"Width":21,"Height":8,"Left":7,"Top":9,"Right":28,"Bottom":17,"IsEmpty":false},"Super Stringy":{"Location":{"IsEmpty":false,"X":3,"Y":10},"Size":{"IsEmpty":false,"Width":30,"Height":18},"X":3,"Y":10,"Width":30,"Height":18,"Left":3,"Top":10,"Right":33,"Bottom":28,"IsEmpty":false},"Swampy Bumps":{"Location":{"IsEmpty":false,"X":10,"Y":9},"Size":{"IsEmpty":false,"Width":17,"Height":11},"X":10,"Y":9,"Width":17,"Height":11,"Left":10,"Top":9,"Right":27,"Bottom":20,"IsEmpty":false},"Swampy Crazy":{"Location":{"IsEmpty":false,"X":6,"Y":6},"Size":{"IsEmpty":false,"Width":25,"Height":11},"X":6,"Y":6,"Width":25,"Height":11,"Left":6,"Top":6,"Right":31,"Bottom":17,"IsEmpty":false},"Swampy Double Bun":{"Location":{"IsEmpty":false,"X":14,"Y":9},"Size":{"IsEmpty":false,"Width":11,"Height":5},"X":14,"Y":9,"Width":11,"Height":5,"Left":14,"Top":9,"Right":25,"Bottom":14,"IsEmpty":false},"Swampy Flattop":{"Location":{"IsEmpty":false,"X":13,"Y":12},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":13,"Y":12,"Width":11,"Height":2,"Left":13,"Top":12,"Right":24,"Bottom":14,"IsEmpty":false},"Swampy Sidepart":{"Location":{"IsEmpty":false,"X":8,"Y":10},"Size":{"IsEmpty":false,"Width":19,"Height":7},"X":8,"Y":10,"Width":19,"Height":7,"Left":8,"Top":10,"Right":27,"Bottom":17,"IsEmpty":false},"Swampy Single Bun":{"Location":{"IsEmpty":false,"X":18,"Y":9},"Size":{"IsEmpty":false,"Width":7,"Height":5},"X":18,"Y":9,"Width":7,"Height":5,"Left":18,"Top":9,"Right":25,"Bottom":14,"IsEmpty":false},"Swept Orange":{"Location":{"IsEmpty":false,"X":10,"Y":7},"Size":{"IsEmpty":false,"Width":22,"Height":14},"X":10,"Y":7,"Width":22,"Height":14,"Left":10,"Top":7,"Right":32,"Bottom":21,"IsEmpty":false},"Swept Purple":{"Location":{"IsEmpty":false,"X":10,"Y":7},"Size":{"IsEmpty":false,"Width":22,"Height":14},"X":10,"Y":7,"Width":22,"Height":14,"Left":10,"Top":7,"Right":32,"Bottom":21,"IsEmpty":false},"Teal Gnome":{"Location":{"IsEmpty":false,"X":11,"Y":5},"Size":{"IsEmpty":false,"Width":18,"Height":13},"X":11,"Y":5,"Width":18,"Height":13,"Left":11,"Top":5,"Right":29,"Bottom":18,"IsEmpty":false},"Teal Knit Hat":{"Location":{"IsEmpty":false,"X":10,"Y":8},"Size":{"IsEmpty":false,"Width":16,"Height":8},"X":10,"Y":8,"Width":16,"Height":8,"Left":10,"Top":8,"Right":26,"Bottom":16,"IsEmpty":false},"Teal Smile":{"Location":{"IsEmpty":false,"X":8,"Y":19},"Size":{"IsEmpty":false,"Width":17,"Height":4},"X":8,"Y":19,"Width":17,"Height":4,"Left":8,"Top":19,"Right":25,"Bottom":23,"IsEmpty":false},"Teal Wide":{"Location":{"IsEmpty":false,"X":7,"Y":20},"Size":{"IsEmpty":false,"Width":21,"Height":3},"X":7,"Y":20,"Width":21,"Height":3,"Left":7,"Top":20,"Right":28,"Bottom":23,"IsEmpty":false},"Thick Round":{"Location":{"IsEmpty":false,"X":9,"Y":15},"Size":{"IsEmpty":false,"Width":18,"Height":5},"X":9,"Y":15,"Width":18,"Height":5,"Left":9,"Top":15,"Right":27,"Bottom":20,"IsEmpty":false},"Thick Square":{"Location":{"IsEmpty":false,"X":9,"Y":15},"Size":{"IsEmpty":false,"Width":18,"Height":5},"X":9,"Y":15,"Width":18,"Height":5,"Left":9,"Top":15,"Right":27,"Bottom":20,"IsEmpty":false},"Three Flies":{"Location":{"IsEmpty":false,"X":9,"Y":2},"Size":{"IsEmpty":false,"Width":20,"Height":6},"X":9,"Y":2,"Width":20,"Height":6,"Left":9,"Top":2,"Right":29,"Bottom":8,"IsEmpty":false},"Toadbot":{"Location":{"IsEmpty":false,"X":5,"Y":12},"Size":{"IsEmpty":false,"Width":26,"Height":17},"X":5,"Y":12,"Width":26,"Height":17,"Left":5,"Top":12,"Right":31,"Bottom":29,"IsEmpty":false},"Toadenza":{"Location":{"IsEmpty":false,"X":4,"Y":14},"Size":{"IsEmpty":false,"Width":28,"Height":15},"X":4,"Y":14,"Width":28,"Height":15,"Left":4,"Top":14,"Right":32,"Bottom":29,"IsEmpty":false},"Toadstool":{"Location":{"IsEmpty":false,"X":8,"Y":6},"Size":{"IsEmpty":false,"Width":21,"Height":11},"X":8,"Y":6,"Width":21,"Height":11,"Left":8,"Top":6,"Right":29,"Bottom":17,"IsEmpty":false},"Tophat":{"Location":{"IsEmpty":false,"X":8,"Y":2},"Size":{"IsEmpty":false,"Width":20,"Height":14},"X":8,"Y":2,"Width":20,"Height":14,"Left":8,"Top":2,"Right":28,"Bottom":16,"IsEmpty":false},"Toxic Lumps":{"Location":{"IsEmpty":false,"X":7,"Y":12},"Size":{"IsEmpty":false,"Width":18,"Height":17},"X":7,"Y":12,"Width":18,"Height":17,"Left":7,"Top":12,"Right":25,"Bottom":29,"IsEmpty":false},"Truffle":{"Location":{"IsEmpty":false,"X":8,"Y":6},"Size":{"IsEmpty":false,"Width":21,"Height":11},"X":8,"Y":6,"Width":21,"Height":11,"Left":8,"Top":6,"Right":29,"Bottom":17,"IsEmpty":false},"Two Flies":{"Location":{"IsEmpty":false,"X":12,"Y":2},"Size":{"IsEmpty":false,"Width":11,"Height":6},"X":12,"Y":2,"Width":11,"Height":6,"Left":12,"Top":2,"Right":23,"Bottom":8,"IsEmpty":false},"Undead":{"Location":{"IsEmpty":false,"X":5,"Y":14},"Size":{"IsEmpty":false,"Width":26,"Height":15},"X":5,"Y":14,"Width":26,"Height":15,"Left":5,"Top":14,"Right":31,"Bottom":29,"IsEmpty":false},"Vampire":{"Location":{"IsEmpty":false,"X":9,"Y":20},"Size":{"IsEmpty":false,"Width":15,"Height":3},"X":9,"Y":20,"Width":15,"Height":3,"Left":9,"Top":20,"Right":24,"Bottom":23,"IsEmpty":false},"Violet Goggles":{"Location":{"IsEmpty":false,"X":10,"Y":16},"Size":{"IsEmpty":false,"Width":16,"Height":4},"X":10,"Y":16,"Width":16,"Height":4,"Left":10,"Top":16,"Right":26,"Bottom":20,"IsEmpty":false},"Watch":{"Location":{"IsEmpty":false,"X":18,"Y":26},"Size":{"IsEmpty":false,"Width":3,"Height":1},"X":18,"Y":26,"Width":3,"Height":1,"Left":18,"Top":26,"Right":21,"Bottom":27,"IsEmpty":false},"Well Actually":{"Location":{"IsEmpty":false,"X":9,"Y":19},"Size":{"IsEmpty":false,"Width":15,"Height":4},"X":9,"Y":19,"Width":15,"Height":4,"Left":9,"Top":19,"Right":24,"Bottom":23,"IsEmpty":false},"White and Red Goggles":{"Location":{"IsEmpty":false,"X":10,"Y":16},"Size":{"IsEmpty":false,"Width":16,"Height":4},"X":10,"Y":16,"Width":16,"Height":4,"Left":10,"Top":16,"Right":26,"Bottom":20,"IsEmpty":false},"Wild Black":{"Location":{"IsEmpty":false,"X":5,"Y":7},"Size":{"IsEmpty":false,"Width":27,"Height":14},"X":5,"Y":7,"Width":27,"Height":14,"Left":5,"Top":7,"Right":32,"Bottom":21,"IsEmpty":false},"Wild Orange":{"Location":{"IsEmpty":false,"X":5,"Y":7},"Size":{"IsEmpty":false,"Width":27,"Height":14},"X":5,"Y":7,"Width":27,"Height":14,"Left":5,"Top":7,"Right":32,"Bottom":21,"IsEmpty":false},"Wild White":{"Location":{"IsEmpty":false,"X":5,"Y":7},"Size":{"IsEmpty":false,"Width":27,"Height":14},"X":5,"Y":7,"Width":27,"Height":14,"Left":5,"Top":7,"Right":32,"Bottom":21,"IsEmpty":false},"Wizard":{"Location":{"IsEmpty":false,"X":11,"Y":5},"Size":{"IsEmpty":false,"Width":18,"Height":13},"X":11,"Y":5,"Width":18,"Height":13,"Left":11,"Top":5,"Right":29,"Bottom":18,"IsEmpty":false},"Yellow Flattop":{"Location":{"IsEmpty":false,"X":13,"Y":12},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":13,"Y":12,"Width":11,"Height":2,"Left":13,"Top":12,"Right":24,"Bottom":14,"IsEmpty":false}}
+{
+    "3D": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 3
+        },
+        "X": 10,
+        "Y": 17,
+        "Width": 15,
+        "Height": 3,
+        "Left": 10,
+        "Top": 17,
+        "Right": 25,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Albino": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Alien": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 11
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 22,
+            "Height": 18
+        },
+        "X": 7,
+        "Y": 11,
+        "Width": 22,
+        "Height": 18,
+        "Left": 7,
+        "Top": 11,
+        "Right": 29,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Angry": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Anime": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 5
+        },
+        "X": 11,
+        "Y": 15,
+        "Width": 11,
+        "Height": 5,
+        "Left": 11,
+        "Top": 15,
+        "Right": 22,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Ape": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 13
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 16
+        },
+        "X": 5,
+        "Y": 13,
+        "Width": 26,
+        "Height": 16,
+        "Left": 5,
+        "Top": 13,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Aqua Mohawk": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 5
+        },
+        "X": 8,
+        "Y": 9,
+        "Width": 15,
+        "Height": 5,
+        "Left": 8,
+        "Top": 9,
+        "Right": 23,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Aqua Puff": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 14,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 8,
+            "Height": 5
+        },
+        "X": 14,
+        "Y": 9,
+        "Width": 8,
+        "Height": 5,
+        "Left": 14,
+        "Top": 9,
+        "Right": 22,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Aqua Shave": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 23,
+            "Height": 11
+        },
+        "X": 5,
+        "Y": 7,
+        "Width": 23,
+        "Height": 11,
+        "Left": 5,
+        "Top": 7,
+        "Right": 28,
+        "Bottom": 18,
+        "IsEmpty": false
+    },
+    "Aqua Sidepart": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 10
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 19,
+            "Height": 7
+        },
+        "X": 8,
+        "Y": 10,
+        "Width": 19,
+        "Height": 7,
+        "Left": 8,
+        "Top": 10,
+        "Right": 27,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Awake": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 4
+        },
+        "X": 11,
+        "Y": 16,
+        "Width": 11,
+        "Height": 4,
+        "Left": 11,
+        "Top": 16,
+        "Right": 22,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Backward Cap": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 8
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 7
+        },
+        "X": 11,
+        "Y": 8,
+        "Width": 18,
+        "Height": 7,
+        "Left": 11,
+        "Top": 8,
+        "Right": 29,
+        "Bottom": 15,
+        "IsEmpty": false
+    },
+    "Bandit Smile": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 4
+        },
+        "X": 8,
+        "Y": 19,
+        "Width": 17,
+        "Height": 4,
+        "Left": 8,
+        "Top": 19,
+        "Right": 25,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Bandit Wide": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 3
+        },
+        "X": 7,
+        "Y": 20,
+        "Width": 21,
+        "Height": 3,
+        "Left": 7,
+        "Top": 20,
+        "Right": 28,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Bandit": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 4
+        },
+        "X": 7,
+        "Y": 16,
+        "Width": 21,
+        "Height": 4,
+        "Left": 7,
+        "Top": 16,
+        "Right": 28,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Beard": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 20,
+            "Height": 6
+        },
+        "X": 7,
+        "Y": 19,
+        "Width": 20,
+        "Height": 6,
+        "Left": 7,
+        "Top": 19,
+        "Right": 27,
+        "Bottom": 25,
+        "IsEmpty": false
+    },
+    "Berry": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 15
+        },
+        "X": 4,
+        "Y": 14,
+        "Width": 28,
+        "Height": 15,
+        "Left": 4,
+        "Top": 14,
+        "Right": 32,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Big Crazy Orange": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 2
+        },
+        "X": 11,
+        "Y": 17,
+        "Width": 11,
+        "Height": 2,
+        "Left": 11,
+        "Top": 17,
+        "Right": 22,
+        "Bottom": 19,
+        "IsEmpty": false
+    },
+    "Big Crazy Red": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 2
+        },
+        "X": 11,
+        "Y": 17,
+        "Width": 11,
+        "Height": 2,
+        "Left": 11,
+        "Top": 17,
+        "Right": 22,
+        "Bottom": 19,
+        "IsEmpty": false
+    },
+    "Big Ghost": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 15
+        },
+        "X": 4,
+        "Y": 14,
+        "Width": 28,
+        "Height": 15,
+        "Left": 4,
+        "Top": 14,
+        "Right": 32,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Big Yellow Side-eye": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 2
+        },
+        "X": 11,
+        "Y": 17,
+        "Width": 11,
+        "Height": 2,
+        "Left": 11,
+        "Top": 17,
+        "Right": 22,
+        "Bottom": 19,
+        "IsEmpty": false
+    },
+    "Black and Blue Goggles": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 4
+        },
+        "X": 10,
+        "Y": 16,
+        "Width": 16,
+        "Height": 4,
+        "Left": 10,
+        "Top": 16,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Black Sidepart": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 10
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 19,
+            "Height": 7
+        },
+        "X": 8,
+        "Y": 10,
+        "Width": 19,
+        "Height": 7,
+        "Left": 8,
+        "Top": 10,
+        "Right": 27,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Blonde Pigtails": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 12,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 14,
+            "Height": 5
+        },
+        "X": 12,
+        "Y": 9,
+        "Width": 14,
+        "Height": 5,
+        "Left": 12,
+        "Top": 9,
+        "Right": 26,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Blood Bones": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 6,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 23,
+            "Height": 15
+        },
+        "X": 6,
+        "Y": 14,
+        "Width": 23,
+        "Height": 15,
+        "Left": 6,
+        "Top": 14,
+        "Right": 29,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Blue Cat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Blue Eyeshadow": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 2
+        },
+        "X": 11,
+        "Y": 17,
+        "Width": 11,
+        "Height": 2,
+        "Left": 11,
+        "Top": 17,
+        "Right": 22,
+        "Bottom": 19,
+        "IsEmpty": false
+    },
+    "Blue Pigtails": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 14,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 5
+        },
+        "X": 14,
+        "Y": 9,
+        "Width": 11,
+        "Height": 5,
+        "Left": 14,
+        "Top": 9,
+        "Right": 25,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Blue Shave": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 23,
+            "Height": 11
+        },
+        "X": 5,
+        "Y": 7,
+        "Width": 23,
+        "Height": 11,
+        "Left": 5,
+        "Top": 7,
+        "Right": 28,
+        "Bottom": 18,
+        "IsEmpty": false
+    },
+    "Blue Smile": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 4
+        },
+        "X": 8,
+        "Y": 19,
+        "Width": 17,
+        "Height": 4,
+        "Left": 8,
+        "Top": 19,
+        "Right": 25,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Blush": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 13,
+            "Height": 1
+        },
+        "X": 10,
+        "Y": 19,
+        "Width": 13,
+        "Height": 1,
+        "Left": 10,
+        "Top": 19,
+        "Right": 23,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Bones": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 6,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 23,
+            "Height": 15
+        },
+        "X": 6,
+        "Y": 14,
+        "Width": 23,
+        "Height": 15,
+        "Left": 6,
+        "Top": 14,
+        "Right": 29,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Booger": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 15
+        },
+        "X": 4,
+        "Y": 14,
+        "Width": 28,
+        "Height": 15,
+        "Left": 4,
+        "Top": 14,
+        "Right": 32,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Bowlcut": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 23,
+            "Height": 10
+        },
+        "X": 7,
+        "Y": 7,
+        "Width": 23,
+        "Height": 10,
+        "Left": 7,
+        "Top": 7,
+        "Right": 30,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Brain": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 4
+        },
+        "X": 11,
+        "Y": 12,
+        "Width": 15,
+        "Height": 4,
+        "Left": 11,
+        "Top": 12,
+        "Right": 26,
+        "Bottom": 16,
+        "IsEmpty": false
+    },
+    "Butthole": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 3
+        },
+        "X": 11,
+        "Y": 17,
+        "Width": 11,
+        "Height": 3,
+        "Left": 11,
+        "Top": 17,
+        "Right": 22,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Chimp": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 17
+        },
+        "X": 5,
+        "Y": 12,
+        "Width": 26,
+        "Height": 17,
+        "Left": 5,
+        "Top": 12,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Chocolate": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 13,
+            "Height": 12
+        },
+        "X": 10,
+        "Y": 20,
+        "Width": 13,
+        "Height": 12,
+        "Left": 10,
+        "Top": 20,
+        "Right": 23,
+        "Bottom": 32,
+        "IsEmpty": false
+    },
+    "Cool Shades": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 3
+        },
+        "X": 9,
+        "Y": 17,
+        "Width": 17,
+        "Height": 3,
+        "Left": 9,
+        "Top": 17,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Crazy Blonde": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 6,
+            "Y": 6
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 25,
+            "Height": 11
+        },
+        "X": 6,
+        "Y": 6,
+        "Width": 25,
+        "Height": 11,
+        "Left": 6,
+        "Top": 6,
+        "Right": 31,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Creep": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Croak": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 3
+        },
+        "X": 9,
+        "Y": 20,
+        "Width": 15,
+        "Height": 3,
+        "Left": 9,
+        "Top": 20,
+        "Right": 24,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Croaked": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 3
+        },
+        "X": 11,
+        "Y": 17,
+        "Width": 11,
+        "Height": 3,
+        "Left": 11,
+        "Top": 17,
+        "Right": 22,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Dark Pigtails": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 12,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 14,
+            "Height": 5
+        },
+        "X": 12,
+        "Y": 9,
+        "Width": 14,
+        "Height": 5,
+        "Left": 12,
+        "Top": 9,
+        "Right": 26,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Dark Single Bun": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 18,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 7,
+            "Height": 5
+        },
+        "X": 18,
+        "Y": 9,
+        "Width": 7,
+        "Height": 5,
+        "Left": 18,
+        "Top": 9,
+        "Right": 25,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Dark Tall Hat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 5
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 14,
+            "Height": 10
+        },
+        "X": 11,
+        "Y": 5,
+        "Width": 14,
+        "Height": 10,
+        "Left": 11,
+        "Top": 5,
+        "Right": 25,
+        "Bottom": 15,
+        "IsEmpty": false
+    },
+    "Dilated": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 4
+        },
+        "X": 11,
+        "Y": 15,
+        "Width": 11,
+        "Height": 4,
+        "Left": 11,
+        "Top": 15,
+        "Right": 22,
+        "Bottom": 19,
+        "IsEmpty": false
+    },
+    "Dog": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Drive-thru": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 6,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 5
+        },
+        "X": 6,
+        "Y": 12,
+        "Width": 21,
+        "Height": 5,
+        "Left": 6,
+        "Top": 12,
+        "Right": 27,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Earring": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 25,
+            "Y": 18
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 3,
+            "Height": 3
+        },
+        "X": 25,
+        "Y": 18,
+        "Width": 3,
+        "Height": 3,
+        "Left": 25,
+        "Top": 18,
+        "Right": 28,
+        "Bottom": 21,
+        "IsEmpty": false
+    },
+    "Explorer": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 4
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 25
+        },
+        "X": 4,
+        "Y": 4,
+        "Width": 28,
+        "Height": 25,
+        "Left": 4,
+        "Top": 4,
+        "Right": 32,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Fez": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 15,
+            "Y": 8
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 13,
+            "Height": 6
+        },
+        "X": 15,
+        "Y": 8,
+        "Width": 13,
+        "Height": 6,
+        "Left": 15,
+        "Top": 8,
+        "Right": 28,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Floppy Hat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 10
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 6
+        },
+        "X": 7,
+        "Y": 10,
+        "Width": 21,
+        "Height": 6,
+        "Left": 7,
+        "Top": 10,
+        "Right": 28,
+        "Bottom": 16,
+        "IsEmpty": false
+    },
+    "Fly Lick": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 13
+        },
+        "X": 7,
+        "Y": 19,
+        "Width": 18,
+        "Height": 13,
+        "Left": 7,
+        "Top": 19,
+        "Right": 25,
+        "Bottom": 32,
+        "IsEmpty": false
+    },
+    "Force Hoodie": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 19
+        },
+        "X": 4,
+        "Y": 9,
+        "Width": 28,
+        "Height": 19,
+        "Left": 4,
+        "Top": 9,
+        "Right": 32,
+        "Bottom": 28,
+        "IsEmpty": false
+    },
+    "Four Flies": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 2,
+            "Y": 3
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 33,
+            "Height": 16
+        },
+        "X": 2,
+        "Y": 3,
+        "Width": 33,
+        "Height": 16,
+        "Left": 2,
+        "Top": 3,
+        "Right": 35,
+        "Bottom": 19,
+        "IsEmpty": false
+    },
+    "Fun Cap": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 14,
+            "Height": 6
+        },
+        "X": 10,
+        "Y": 9,
+        "Width": 14,
+        "Height": 6,
+        "Left": 10,
+        "Top": 9,
+        "Right": 24,
+        "Bottom": 15,
+        "IsEmpty": false
+    },
+    "Gargoyle": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 13
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 16
+        },
+        "X": 5,
+        "Y": 13,
+        "Width": 26,
+        "Height": 16,
+        "Left": 5,
+        "Top": 13,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Ghost Bones": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 6,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 23,
+            "Height": 15
+        },
+        "X": 6,
+        "Y": 14,
+        "Width": 23,
+        "Height": 15,
+        "Left": 6,
+        "Top": 14,
+        "Right": 29,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Ghost": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Glowing Blue": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 13,
+            "Height": 4
+        },
+        "X": 10,
+        "Y": 16,
+        "Width": 13,
+        "Height": 4,
+        "Left": 10,
+        "Top": 16,
+        "Right": 23,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Glowing Red": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 13,
+            "Height": 4
+        },
+        "X": 10,
+        "Y": 16,
+        "Width": 13,
+        "Height": 4,
+        "Left": 10,
+        "Top": 16,
+        "Right": 23,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Gold Specs": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 3
+        },
+        "X": 10,
+        "Y": 17,
+        "Width": 16,
+        "Height": 3,
+        "Left": 10,
+        "Top": 17,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Gorilla": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 13
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 16
+        },
+        "X": 5,
+        "Y": 13,
+        "Width": 26,
+        "Height": 16,
+        "Left": 5,
+        "Top": 13,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Green Bucktooth": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 3
+        },
+        "X": 9,
+        "Y": 20,
+        "Width": 15,
+        "Height": 3,
+        "Left": 9,
+        "Top": 20,
+        "Right": 24,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Green Eyeshadow": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 2
+        },
+        "X": 11,
+        "Y": 17,
+        "Width": 11,
+        "Height": 2,
+        "Left": 11,
+        "Top": 17,
+        "Right": 22,
+        "Bottom": 19,
+        "IsEmpty": false
+    },
+    "Gremplin Blue": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Gremplin Green": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Gremplin": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 13,
+            "Height": 5
+        },
+        "X": 10,
+        "Y": 15,
+        "Width": 13,
+        "Height": 5,
+        "Left": 10,
+        "Top": 15,
+        "Right": 23,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Grey Hoodie": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 19
+        },
+        "X": 4,
+        "Y": 9,
+        "Width": 28,
+        "Height": 19,
+        "Left": 4,
+        "Top": 9,
+        "Right": 32,
+        "Bottom": 28,
+        "IsEmpty": false
+    },
+    "Grey Knit Hat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 8
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 8
+        },
+        "X": 10,
+        "Y": 8,
+        "Width": 16,
+        "Height": 8,
+        "Left": 10,
+        "Top": 8,
+        "Right": 26,
+        "Bottom": 16,
+        "IsEmpty": false
+    },
+    "Gummy Blue": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Gummy Peach": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Gummy Raspberry": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Gummy Slime": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Gummy Tropical": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Hypnotic": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Judgment": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 13,
+            "Height": 5
+        },
+        "X": 10,
+        "Y": 15,
+        "Width": 13,
+        "Height": 5,
+        "Left": 10,
+        "Top": 15,
+        "Right": 23,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Just for the Looks": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 10,
+            "Height": 3
+        },
+        "X": 4,
+        "Y": 20,
+        "Width": 10,
+        "Height": 3,
+        "Left": 4,
+        "Top": 20,
+        "Right": 14,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Lasagna": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Lincoln": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 19,
+            "Height": 6
+        },
+        "X": 7,
+        "Y": 19,
+        "Width": 19,
+        "Height": 6,
+        "Left": 7,
+        "Top": 19,
+        "Right": 26,
+        "Bottom": 25,
+        "IsEmpty": false
+    },
+    "Long Cigarette": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 13
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 10,
+            "Height": 10
+        },
+        "X": 4,
+        "Y": 13,
+        "Width": 10,
+        "Height": 10,
+        "Left": 4,
+        "Top": 13,
+        "Right": 14,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Mysterious Hoodie": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 1,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 34,
+            "Height": 24
+        },
+        "X": 1,
+        "Y": 7,
+        "Width": 34,
+        "Height": 24,
+        "Left": 1,
+        "Top": 7,
+        "Right": 35,
+        "Bottom": 31,
+        "IsEmpty": false
+    },
+    "Nerd": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 4
+        },
+        "X": 9,
+        "Y": 16,
+        "Width": 17,
+        "Height": 4,
+        "Left": 9,
+        "Top": 16,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Nice Shades": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 17
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 3
+        },
+        "X": 9,
+        "Y": 17,
+        "Width": 17,
+        "Height": 3,
+        "Left": 9,
+        "Top": 17,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Normal": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "NormalLeft": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Nounish Blue": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 5
+        },
+        "X": 9,
+        "Y": 15,
+        "Width": 15,
+        "Height": 5,
+        "Left": 9,
+        "Top": 15,
+        "Right": 24,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Nounish Red": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 5
+        },
+        "X": 9,
+        "Y": 15,
+        "Width": 15,
+        "Height": 5,
+        "Left": 9,
+        "Top": 15,
+        "Right": 24,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "One Fly": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 3,
+            "Y": 11
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 4,
+            "Height": 3
+        },
+        "X": 3,
+        "Y": 11,
+        "Width": 4,
+        "Height": 3,
+        "Left": 3,
+        "Top": 11,
+        "Right": 7,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Only Socks": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Orange Bumps": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 11
+        },
+        "X": 10,
+        "Y": 9,
+        "Width": 17,
+        "Height": 11,
+        "Left": 10,
+        "Top": 9,
+        "Right": 27,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Orange Double Buns": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 14,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 5
+        },
+        "X": 14,
+        "Y": 9,
+        "Width": 11,
+        "Height": 5,
+        "Left": 14,
+        "Top": 9,
+        "Right": 25,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Orange Knit Hat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 8
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 8
+        },
+        "X": 10,
+        "Y": 8,
+        "Width": 16,
+        "Height": 8,
+        "Left": 10,
+        "Top": 8,
+        "Right": 26,
+        "Bottom": 16,
+        "IsEmpty": false
+    },
+    "Orange Shave": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 23,
+            "Height": 11
+        },
+        "X": 5,
+        "Y": 7,
+        "Width": 23,
+        "Height": 11,
+        "Left": 5,
+        "Top": 7,
+        "Right": 28,
+        "Bottom": 18,
+        "IsEmpty": false
+    },
+    "Orange Tall Hat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 5
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 14,
+            "Height": 10
+        },
+        "X": 11,
+        "Y": 5,
+        "Width": 14,
+        "Height": 10,
+        "Left": 11,
+        "Top": 5,
+        "Right": 25,
+        "Bottom": 15,
+        "IsEmpty": false
+    },
+    "Pasty": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Patch": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 4
+        },
+        "X": 9,
+        "Y": 16,
+        "Width": 17,
+        "Height": 4,
+        "Left": 9,
+        "Top": 16,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Peach Smile": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 4
+        },
+        "X": 8,
+        "Y": 19,
+        "Width": 17,
+        "Height": 4,
+        "Left": 8,
+        "Top": 19,
+        "Right": 25,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Periwinkle Cap": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 8
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 7
+        },
+        "X": 7,
+        "Y": 8,
+        "Width": 18,
+        "Height": 7,
+        "Left": 7,
+        "Top": 8,
+        "Right": 25,
+        "Bottom": 15,
+        "IsEmpty": false
+    },
+    "Pink Bucktooth": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 3
+        },
+        "X": 9,
+        "Y": 20,
+        "Width": 15,
+        "Height": 3,
+        "Left": 9,
+        "Top": 20,
+        "Right": 24,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Pink Puff": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 14,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 8,
+            "Height": 5
+        },
+        "X": 14,
+        "Y": 9,
+        "Width": 8,
+        "Height": 5,
+        "Left": 14,
+        "Top": 9,
+        "Right": 22,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Plaid Cap": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 14,
+            "Height": 6
+        },
+        "X": 10,
+        "Y": 9,
+        "Width": 14,
+        "Height": 6,
+        "Left": 10,
+        "Top": 9,
+        "Right": 24,
+        "Bottom": 15,
+        "IsEmpty": false
+    },
+    "Pox": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 15
+        },
+        "X": 4,
+        "Y": 14,
+        "Width": 28,
+        "Height": 15,
+        "Left": 4,
+        "Top": 14,
+        "Right": 32,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Purple Wide": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 3
+        },
+        "X": 7,
+        "Y": 20,
+        "Width": 21,
+        "Height": 3,
+        "Left": 7,
+        "Top": 20,
+        "Right": 28,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Rainbow Mohawk": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 5
+        },
+        "X": 8,
+        "Y": 9,
+        "Width": 15,
+        "Height": 5,
+        "Left": 8,
+        "Top": 9,
+        "Right": 23,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Red and Black Goggles": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 4
+        },
+        "X": 10,
+        "Y": 16,
+        "Width": 16,
+        "Height": 4,
+        "Left": 10,
+        "Top": 16,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Red Gnome": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 5
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 13
+        },
+        "X": 11,
+        "Y": 5,
+        "Width": 18,
+        "Height": 13,
+        "Left": 11,
+        "Top": 5,
+        "Right": 29,
+        "Bottom": 18,
+        "IsEmpty": false
+    },
+    "Ribbit Blue": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 5
+        },
+        "X": 8,
+        "Y": 19,
+        "Width": 17,
+        "Height": 5,
+        "Left": 8,
+        "Top": 19,
+        "Right": 25,
+        "Bottom": 24,
+        "IsEmpty": false
+    },
+    "Round Shades": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 4
+        },
+        "X": 9,
+        "Y": 16,
+        "Width": 17,
+        "Height": 4,
+        "Left": 9,
+        "Top": 16,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Rusty Cap": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 8
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 7
+        },
+        "X": 11,
+        "Y": 8,
+        "Width": 18,
+        "Height": 7,
+        "Left": 11,
+        "Top": 8,
+        "Right": 29,
+        "Bottom": 15,
+        "IsEmpty": false
+    },
+    "Sad": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 4
+        },
+        "X": 9,
+        "Y": 20,
+        "Width": 16,
+        "Height": 4,
+        "Left": 9,
+        "Top": 20,
+        "Right": 25,
+        "Bottom": 24,
+        "IsEmpty": false
+    },
+    "Shackles": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 14,
+            "Y": 26
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 7,
+            "Height": 1
+        },
+        "X": 14,
+        "Y": 26,
+        "Width": 7,
+        "Height": 1,
+        "Left": 14,
+        "Top": 26,
+        "Right": 21,
+        "Bottom": 27,
+        "IsEmpty": false
+    },
+    "Shifty": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 4
+        },
+        "X": 9,
+        "Y": 20,
+        "Width": 16,
+        "Height": 4,
+        "Left": 9,
+        "Top": 20,
+        "Right": 25,
+        "Bottom": 24,
+        "IsEmpty": false
+    },
+    "Short Cigarette": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 9,
+            "Height": 11
+        },
+        "X": 5,
+        "Y": 12,
+        "Width": 9,
+        "Height": 11,
+        "Left": 5,
+        "Top": 12,
+        "Right": 14,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Short Feathered Hat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 11
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 14,
+            "Height": 3
+        },
+        "X": 11,
+        "Y": 11,
+        "Width": 14,
+        "Height": 3,
+        "Left": 11,
+        "Top": 11,
+        "Right": 25,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Sleepy": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Slime Hoodie": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 19
+        },
+        "X": 4,
+        "Y": 9,
+        "Width": 28,
+        "Height": 19,
+        "Left": 4,
+        "Top": 9,
+        "Right": 32,
+        "Bottom": 28,
+        "IsEmpty": false
+    },
+    "Slimy": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 18
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 5
+        },
+        "X": 8,
+        "Y": 18,
+        "Width": 17,
+        "Height": 5,
+        "Left": 8,
+        "Top": 18,
+        "Right": 25,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Stringy": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 8
+        },
+        "X": 7,
+        "Y": 9,
+        "Width": 21,
+        "Height": 8,
+        "Left": 7,
+        "Top": 9,
+        "Right": 28,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Super Stringy": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 3,
+            "Y": 10
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 30,
+            "Height": 18
+        },
+        "X": 3,
+        "Y": 10,
+        "Width": 30,
+        "Height": 18,
+        "Left": 3,
+        "Top": 10,
+        "Right": 33,
+        "Bottom": 28,
+        "IsEmpty": false
+    },
+    "Swampy Bumps": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 11
+        },
+        "X": 10,
+        "Y": 9,
+        "Width": 17,
+        "Height": 11,
+        "Left": 10,
+        "Top": 9,
+        "Right": 27,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Swampy Crazy": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 6,
+            "Y": 6
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 25,
+            "Height": 11
+        },
+        "X": 6,
+        "Y": 6,
+        "Width": 25,
+        "Height": 11,
+        "Left": 6,
+        "Top": 6,
+        "Right": 31,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Swampy Double Bun": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 14,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 5
+        },
+        "X": 14,
+        "Y": 9,
+        "Width": 11,
+        "Height": 5,
+        "Left": 14,
+        "Top": 9,
+        "Right": 25,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Swampy Flattop": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 13,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 2
+        },
+        "X": 13,
+        "Y": 12,
+        "Width": 11,
+        "Height": 2,
+        "Left": 13,
+        "Top": 12,
+        "Right": 24,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Swampy Sidepart": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 10
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 19,
+            "Height": 7
+        },
+        "X": 8,
+        "Y": 10,
+        "Width": 19,
+        "Height": 7,
+        "Left": 8,
+        "Top": 10,
+        "Right": 27,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Swampy Single Bun": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 18,
+            "Y": 9
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 7,
+            "Height": 5
+        },
+        "X": 18,
+        "Y": 9,
+        "Width": 7,
+        "Height": 5,
+        "Left": 18,
+        "Top": 9,
+        "Right": 25,
+        "Bottom": 14,
+        "IsEmpty": false
+    },
+    "Swept Orange": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 22,
+            "Height": 14
+        },
+        "X": 10,
+        "Y": 7,
+        "Width": 22,
+        "Height": 14,
+        "Left": 10,
+        "Top": 7,
+        "Right": 32,
+        "Bottom": 21,
+        "IsEmpty": false
+    },
+    "Swept Purple": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 22,
+            "Height": 14
+        },
+        "X": 10,
+        "Y": 7,
+        "Width": 22,
+        "Height": 14,
+        "Left": 10,
+        "Top": 7,
+        "Right": 32,
+        "Bottom": 21,
+        "IsEmpty": false
+    },
+    "Teal Gnome": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 5
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 13
+        },
+        "X": 11,
+        "Y": 5,
+        "Width": 18,
+        "Height": 13,
+        "Left": 11,
+        "Top": 5,
+        "Right": 29,
+        "Bottom": 18,
+        "IsEmpty": false
+    },
+    "Teal Knit Hat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 8
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 8
+        },
+        "X": 10,
+        "Y": 8,
+        "Width": 16,
+        "Height": 8,
+        "Left": 10,
+        "Top": 8,
+        "Right": 26,
+        "Bottom": 16,
+        "IsEmpty": false
+    },
+    "Teal Smile": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 17,
+            "Height": 4
+        },
+        "X": 8,
+        "Y": 19,
+        "Width": 17,
+        "Height": 4,
+        "Left": 8,
+        "Top": 19,
+        "Right": 25,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Teal Wide": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 3
+        },
+        "X": 7,
+        "Y": 20,
+        "Width": 21,
+        "Height": 3,
+        "Left": 7,
+        "Top": 20,
+        "Right": 28,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "Thick Round": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 5
+        },
+        "X": 9,
+        "Y": 15,
+        "Width": 18,
+        "Height": 5,
+        "Left": 9,
+        "Top": 15,
+        "Right": 27,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Thick Square": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 15
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 5
+        },
+        "X": 9,
+        "Y": 15,
+        "Width": 18,
+        "Height": 5,
+        "Left": 9,
+        "Top": 15,
+        "Right": 27,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Three Flies": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 2
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 20,
+            "Height": 6
+        },
+        "X": 9,
+        "Y": 2,
+        "Width": 20,
+        "Height": 6,
+        "Left": 9,
+        "Top": 2,
+        "Right": 29,
+        "Bottom": 8,
+        "IsEmpty": false
+    },
+    "Toadbot": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 17
+        },
+        "X": 5,
+        "Y": 12,
+        "Width": 26,
+        "Height": 17,
+        "Left": 5,
+        "Top": 12,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Toadenza": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 4,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 28,
+            "Height": 15
+        },
+        "X": 4,
+        "Y": 14,
+        "Width": 28,
+        "Height": 15,
+        "Left": 4,
+        "Top": 14,
+        "Right": 32,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Toadstool": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 6
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 11
+        },
+        "X": 8,
+        "Y": 6,
+        "Width": 21,
+        "Height": 11,
+        "Left": 8,
+        "Top": 6,
+        "Right": 29,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Tophat": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 2
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 20,
+            "Height": 14
+        },
+        "X": 8,
+        "Y": 2,
+        "Width": 20,
+        "Height": 14,
+        "Left": 8,
+        "Top": 2,
+        "Right": 28,
+        "Bottom": 16,
+        "IsEmpty": false
+    },
+    "Toxic Lumps": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 7,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 17
+        },
+        "X": 7,
+        "Y": 12,
+        "Width": 18,
+        "Height": 17,
+        "Left": 7,
+        "Top": 12,
+        "Right": 25,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Truffle": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 8,
+            "Y": 6
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 21,
+            "Height": 11
+        },
+        "X": 8,
+        "Y": 6,
+        "Width": 21,
+        "Height": 11,
+        "Left": 8,
+        "Top": 6,
+        "Right": 29,
+        "Bottom": 17,
+        "IsEmpty": false
+    },
+    "Two Flies": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 12,
+            "Y": 2
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 6
+        },
+        "X": 12,
+        "Y": 2,
+        "Width": 11,
+        "Height": 6,
+        "Left": 12,
+        "Top": 2,
+        "Right": 23,
+        "Bottom": 8,
+        "IsEmpty": false
+    },
+    "Undead": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 14
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 26,
+            "Height": 15
+        },
+        "X": 5,
+        "Y": 14,
+        "Width": 26,
+        "Height": 15,
+        "Left": 5,
+        "Top": 14,
+        "Right": 31,
+        "Bottom": 29,
+        "IsEmpty": false
+    },
+    "Vampire Head": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 13,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 10,
+            "Height": 4
+        },
+        "X": 13,
+        "Y": 12,
+        "Width": 10,
+        "Height": 4,
+        "Left": 13,
+        "Top": 12,
+        "Right": 22,
+        "Bottom": 16,
+        "IsEmpty": false
+    },
+    "Vampire Mouth": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 20
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 3
+        },
+        "X": 9,
+        "Y": 20,
+        "Width": 15,
+        "Height": 3,
+        "Left": 9,
+        "Top": 20,
+        "Right": 24,
+        "Bottom": 23,
+        "IsEmpty": false
+    },    
+    "Violet Goggles": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 4
+        },
+        "X": 10,
+        "Y": 16,
+        "Width": 16,
+        "Height": 4,
+        "Left": 10,
+        "Top": 16,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Watch": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 18,
+            "Y": 26
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 3,
+            "Height": 1
+        },
+        "X": 18,
+        "Y": 26,
+        "Width": 3,
+        "Height": 1,
+        "Left": 18,
+        "Top": 26,
+        "Right": 21,
+        "Bottom": 27,
+        "IsEmpty": false
+    },
+    "Well Actually": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 9,
+            "Y": 19
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 15,
+            "Height": 4
+        },
+        "X": 9,
+        "Y": 19,
+        "Width": 15,
+        "Height": 4,
+        "Left": 9,
+        "Top": 19,
+        "Right": 24,
+        "Bottom": 23,
+        "IsEmpty": false
+    },
+    "White and Red Goggles": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 10,
+            "Y": 16
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 16,
+            "Height": 4
+        },
+        "X": 10,
+        "Y": 16,
+        "Width": 16,
+        "Height": 4,
+        "Left": 10,
+        "Top": 16,
+        "Right": 26,
+        "Bottom": 20,
+        "IsEmpty": false
+    },
+    "Wild Black": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 27,
+            "Height": 14
+        },
+        "X": 5,
+        "Y": 7,
+        "Width": 27,
+        "Height": 14,
+        "Left": 5,
+        "Top": 7,
+        "Right": 32,
+        "Bottom": 21,
+        "IsEmpty": false
+    },
+    "Wild Orange": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 27,
+            "Height": 14
+        },
+        "X": 5,
+        "Y": 7,
+        "Width": 27,
+        "Height": 14,
+        "Left": 5,
+        "Top": 7,
+        "Right": 32,
+        "Bottom": 21,
+        "IsEmpty": false
+    },
+    "Wild White": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 5,
+            "Y": 7
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 27,
+            "Height": 14
+        },
+        "X": 5,
+        "Y": 7,
+        "Width": 27,
+        "Height": 14,
+        "Left": 5,
+        "Top": 7,
+        "Right": 32,
+        "Bottom": 21,
+        "IsEmpty": false
+    },
+    "Wizard": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 11,
+            "Y": 5
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 18,
+            "Height": 13
+        },
+        "X": 11,
+        "Y": 5,
+        "Width": 18,
+        "Height": 13,
+        "Left": 11,
+        "Top": 5,
+        "Right": 29,
+        "Bottom": 18,
+        "IsEmpty": false
+    },
+    "Yellow Flattop": {
+        "Location": {
+            "IsEmpty": false,
+            "X": 13,
+            "Y": 12
+        },
+        "Size": {
+            "IsEmpty": false,
+            "Width": 11,
+            "Height": 2
+        },
+        "X": 13,
+        "Y": 12,
+        "Width": 11,
+        "Height": 2,
+        "Left": 13,
+        "Top": 12,
+        "Right": 24,
+        "Bottom": 14,
+        "IsEmpty": false
+    }
+}
