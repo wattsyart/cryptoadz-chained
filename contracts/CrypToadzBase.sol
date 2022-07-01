@@ -32,9 +32,18 @@ contract CrypToadzBase is WaxBase {
 
         bool isTallToken = isTall(tokenId);
 
-        for (uint8 i = 0; i < metadata.length; i++) {
-            uint8 value = metadata[i];
+        uint8 flag;
 
+        for (uint8 i = 0; i < metadata.length; i++) {
+            uint8 value = metadata[i];            
+
+            if(value != 55 && value >= 51 && value < 104) {
+                flag = 1;
+            } else if(value == 55 && flag == 0) {
+                value = 249;
+                flag = 1;
+            }
+            
             address feature;
             if(isTallToken) {
                 if(tall[value] != address(0)) {
@@ -64,11 +73,11 @@ contract CrypToadzBase is WaxBase {
                             uint8 featureId = uint8(buffer[position++]);
                             ox = uint8(buffer[position++]);
                             oy = uint8(buffer[position++]);
-                            if(featureId == value) {                                                            
+                            if(featureId == value) {            
                                 break;
                             } else {
                                 ox = 0;
-                                oy = 0;                                
+                                oy = 0;
                             }
                         } else {
                             revert UnsupportedDrawInstruction(instructionType);
@@ -77,17 +86,17 @@ contract CrypToadzBase is WaxBase {
                 }
 
                 {
-                     bytes memory featureData = SSTORE2.read(feature);
+                    bytes memory featureData = SSTORE2.read(feature);
 
-                     uint position;
-                     (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(featureData, position);
-                     position = p;
+                    uint position;
+                    (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(featureData, position);
+                    position = p;
 
-                     PixelRenderer.DrawFrame memory f = PixelRenderer.DrawFrame(featureData, position, frame, colors);
-                     PixelRenderer.drawFrameWithOffsets(f, ox, oy);
-                     position = f.position;
+                    PixelRenderer.DrawFrame memory f = PixelRenderer.DrawFrame(featureData, position, frame, colors);
+                    PixelRenderer.drawFrameWithOffsets(f, ox, oy);
+                    position = f.position;
 
-                     if(position != featureData.length) revert UnexpectedBufferSize();
+                    if(position != featureData.length) revert UnexpectedBufferSize();
                 }
             }
         }
