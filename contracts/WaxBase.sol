@@ -7,6 +7,7 @@ pragma solidity ^0.8.13;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import "./GIFEncoder.sol";
+import "./BufferUtils.sol";
 import "./lib/InflateLib.sol";
 import "./lib/SSTORE2.sol";
 
@@ -58,7 +59,7 @@ contract WaxBase is IERC721 {
         metadata = new uint8[](length);
         for (uint256 i = 0; i < length; i++) {
             uint8 value;
-            (value, position) = readByte(position, buffer);
+            (value, position) = BufferUtils.readByte(position, buffer);
             metadata[i] = value;
         }
     }
@@ -91,29 +92,22 @@ contract WaxBase is IERC721 {
         return (attributes, numberOfTraits);
     }
 
-    function readInt32(uint position, bytes memory buffer) private pure returns (int32, uint) {
-        int32 value;
-        value |= int32(uint32(uint8(buffer[position++]))) <<  0;
-        value |= int32(uint32(uint8(buffer[position++]))) <<  8;
-        value |= int32(uint32(uint8(buffer[position++]))) << 16;
-        value |= int32(uint32(uint8(buffer[position++]))) << 32;
-        return (value, position);
-    }
-
-    function readByte(uint position, bytes memory buffer) private pure returns (uint8, uint) {
-        uint8 value = uint8(buffer[position++]);
-        return (value, position);
-    }
-
     function advanceToTokenPosition(uint tokenId, bytes memory buffer) internal pure returns (uint position, uint8 length) {
         int32 id;
         while(id != int32(uint32(tokenId))) {
-            (id, position) = readInt32(position, buffer);
-            (length, position) = readByte(position, buffer);
+            (id, position) = BufferUtils.readInt32(position, buffer);
+            (length, position) = BufferUtils.readByte(position, buffer);
             if(id != int32(uint32(tokenId))) {
                 position += length;
             }
         }
+    }
+
+    function decompress(address compressed, uint decompressedLength) internal view returns (bytes memory) {
+        (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(compressed), decompressedLength);
+        require(code == InflateLib.ErrorCode.ERR_NONE);
+        require(buffer.length == decompressedLength);
+        return buffer;
     }
 
     function getMetadataFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }

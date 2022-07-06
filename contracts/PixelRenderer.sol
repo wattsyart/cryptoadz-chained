@@ -7,6 +7,7 @@ pragma solidity ^0.8.13;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import "./GIFEncoder.sol";
+import "./BufferUtils.sol";
 
 error UnsupportedDrawInstruction(uint8 instructionType);
 error DoNotAddBlackToColorTable();
@@ -32,8 +33,8 @@ library PixelRenderer {
         uint32[255] colors;
     }
 
-    function drawFrameWithOffsets(DrawFrame memory f, uint8 ox, uint8 oy) internal pure {       
-        (uint32 instructionCount, uint position) = readUInt32(f.buffer, f.position);
+    function drawFrameWithOffsets(DrawFrame memory f, uint8 ox, uint8 oy) external pure returns (DrawFrame memory) {       
+        (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.buffer, f.position);
         f.position = position;
 
         for(uint32 i = 0; i < instructionCount; i++) {
@@ -81,12 +82,10 @@ library PixelRenderer {
                 revert UnsupportedDrawInstruction(instructionType);
             }
         }
+
+        return f;
     }
     
-    function drawFrame(DrawFrame memory f) internal pure {       
-        drawFrameWithOffsets(f, 0, 0);
-    }    
-
     function getColorTable(bytes memory buffer, uint position) internal pure returns(uint32[255] memory colors, uint) {
         
         uint8 colorCount = uint8(buffer[position++]);
@@ -132,8 +131,8 @@ library PixelRenderer {
         int256 y0 = f.v0.y;
         int256 y1 = f.v1.y;
 
-        int256 dx = abs(x1 - x0);
-        int256 dy = abs(y1 - y0);
+        int256 dx = BufferUtils.abs(x1 - x0);
+        int256 dy = BufferUtils.abs(y1 - y0);
 
         int256 err = (dx > dy ? dx : -dy) / 2;
 
@@ -185,17 +184,5 @@ library PixelRenderer {
         rgb |= b;
 
         return rgb;
-    }
-
-    function readUInt32(bytes memory buffer, uint position) internal pure returns (uint32, uint) {
-        uint8 d1 = uint8(buffer[position++]);
-        uint8 d2 = uint8(buffer[position++]);
-        uint8 d3 = uint8(buffer[position++]);
-        uint8 d4 = uint8(buffer[position++]);
-        return ((16777216 * d4) + (65536 * d3) + (256 * d2) + d1, position);
-    }
-
-    function abs(int256 x) private pure returns (int256) {
-        return x >= 0 ? x : -x;
     }
 }

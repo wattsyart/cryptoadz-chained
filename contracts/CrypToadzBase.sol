@@ -16,10 +16,11 @@ contract CrypToadzBase is WaxBase {
     mapping(uint8 => address) imageData;
     mapping(uint8 => uint16) imageLengths;
 
+    mapping(uint8 => address) deltaData;
+    mapping(uint8 => uint16) deltaLengths;
+
     function getImage(uint8[] memory metadata, uint tokenId, uint8 file) internal override view returns (GIFEncoder.GIF memory gif) {
-        (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(imageData[file]), imageLengths[file]);
-        require(code == InflateLib.ErrorCode.ERR_NONE);
-        require(buffer.length == imageLengths[file]);
+        bytes memory buffer = decompress(imageData[file], imageLengths[file]);
 
         gif.width = 36;
         gif.height = 36;
@@ -64,7 +65,7 @@ contract CrypToadzBase is WaxBase {
                 uint8 oy;
                 {
                     uint position = start;
-                    (uint32 instructionCount, uint p) = PixelRenderer.readUInt32(buffer, position);
+                    (uint32 instructionCount, uint p) = BufferUtils.readUInt32(buffer, position);
                     position = p;
 
                     for(uint32 z = 0; z < instructionCount; z++) {
@@ -87,24 +88,39 @@ contract CrypToadzBase is WaxBase {
 
                 {
                     bytes memory featureData = SSTORE2.read(feature);
-
-                    uint position;
-                    (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(featureData, position);
-                    position = p;
-
-                    PixelRenderer.DrawFrame memory f = PixelRenderer.DrawFrame(featureData, position, frame, colors);
-                    PixelRenderer.drawFrameWithOffsets(f, ox, oy);
-                    position = f.position;
-
-                    if(position != featureData.length) revert UnexpectedBufferSize();
+                    draw(frame, featureData, ox, oy);
                 }
+
+                drawDelta(frame, tokenId);
             }
         }
 
         gif.frames[gif.frameCount++] = frame;
     }
 
+    function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) private view {
+        uint8 deltaFile = getDeltaFileForToken(tokenId);
+        if(deltaData[deltaFile] != address(0))
+        {
+            bytes memory deltaData = decompress(deltaData[deltaFile], deltaLengths[deltaFile]);
+            draw(frame, deltaData, 0, 0);
+        }
+    }
+
+    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint8 ox, uint8 oy) private pure {
+        uint position;
+        (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
+        position = p;
+
+        PixelRenderer.DrawFrame memory f = PixelRenderer.DrawFrame(buffer, position, frame, colors);
+        f = PixelRenderer.drawFrameWithOffsets(f, ox, oy);
+        position = f.position;
+
+        if(position != buffer.length) revert UnexpectedBufferSize();
+    }
+
     function isTall(uint tokenId) public virtual view returns (bool) { revert(); }
     function getAnimationFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
     function getCustomImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
+    function getDeltaFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
 }

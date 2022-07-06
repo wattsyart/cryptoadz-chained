@@ -59,7 +59,7 @@ library GIFEncoder {
         uint16 height;
     }
 
-    function getDataUri(GIF memory gif) internal pure returns (string memory) {
+    function getDataUri(GIF memory gif) external pure returns (string memory) {
         (bytes memory buffer, uint length) = encode(gif);
         string memory base64 = Base64.encode(buffer, length);
         return string(abi.encodePacked(GIF_URI_PREFIX, base64));
