@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "./GIFEncoder.sol";
 import "./BufferUtils.sol";
+import "hardhat/console.sol";
 
 error UnsupportedDrawInstruction(uint8 instructionType);
 error DoNotAddBlackToColorTable();
@@ -31,11 +32,17 @@ library PixelRenderer {
         uint position;
         GIFEncoder.GIFFrame frame;
         uint32[255] colors;
+        uint8 ox;
+        uint8 oy;
+        bool blend;
     }
 
-    function drawFrameWithOffsets(DrawFrame memory f, uint8 ox, uint8 oy) external pure returns (DrawFrame memory) {       
+    function drawFrameWithOffsets(DrawFrame memory f) external view returns (uint32[1296] memory buffer, uint position) {       
+        
         (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.buffer, f.position);
         f.position = position;
+
+        console.log("instruction count = %s", instructionCount);
 
         for(uint32 i = 0; i < instructionCount; i++) {
 
@@ -58,15 +65,15 @@ library PixelRenderer {
                 int32 x1 = int8(uint8(f.buffer[f.position++]));
                 int32 y1 = int8(uint8(f.buffer[f.position++]));
 
-                x0 += int8(ox);
-                y0 += int8(oy);
-                x1 += int8(ox);
-                y1 += int8(oy);
+                x0 += int8(f.ox);
+                y0 += int8(f.oy);
+                x1 += int8(f.ox);
+                y1 += int8(f.oy);
 
                 line(f.frame, PixelRenderer.Line2D(
                     PixelRenderer.Point2D(x0, y0), 
                     PixelRenderer.Point2D(x1, y1),
-                    color));
+                    color), f.blend);
             }
             else if(instructionType == 2)
             {   
@@ -74,19 +81,19 @@ library PixelRenderer {
                 
                 int32 x = int8(uint8(f.buffer[f.position++]));
                 int32 y = int8(uint8(f.buffer[f.position++]));
-                x += int8(ox);
-                y += int8(oy);
+                x += int8(f.ox);
+                y += int8(f.oy);
 
-                dot(f.frame, x, y, color);
+                dot(f.frame, x, y, color, f.blend);
             } else {
                 revert UnsupportedDrawInstruction(instructionType);
             }
         }
 
-        return f;
+        return (f.frame.buffer, f.position);
     }
     
-    function getColorTable(bytes memory buffer, uint position) internal pure returns(uint32[255] memory colors, uint) {
+    function getColorTable(bytes memory buffer, uint position) external pure returns(uint32[255] memory colors, uint) {
         
         uint8 colorCount = uint8(buffer[position++]);
         colors[0] = 0xFF000000;
@@ -116,13 +123,14 @@ library PixelRenderer {
         GIFEncoder.GIFFrame memory frame,
         int32 x,
         int32 y,
-        uint32 color
+        uint32 color,
+        bool blend
     ) private pure {
         uint32 p = uint32(int16(frame.width) * y + x);
-        frame.buffer[p] = blend(frame.buffer[p], color);
+        frame.buffer[p] = blend ? blendPixel(frame.buffer[p], color) : color;
     }
 
-    function line(GIFEncoder.GIFFrame memory frame, Line2D memory f)
+    function line(GIFEncoder.GIFFrame memory frame, Line2D memory f, bool blend)
         private
         pure
     {
@@ -144,7 +152,7 @@ library PixelRenderer {
                 y0 >= int32(0)
             ) {
                 uint256 p = uint256(int16(frame.width) * y0 + x0);
-                frame.buffer[p] = blend(frame.buffer[p], f.color);
+                frame.buffer[p] = blend ? blendPixel(frame.buffer[p], f.color) : f.color;
             }
 
             if (x0 == x1 && y0 == y1) break;
@@ -160,7 +168,7 @@ library PixelRenderer {
         }
     }
 
-    function blend(uint32 bg, uint32 fg) private pure returns (uint32) {
+    function blendPixel(uint32 bg, uint32 fg) private pure returns (uint32) {
         uint32 r1 = bg >> 16;
         uint32 g1 = bg >> 8;
         uint32 b1 = bg;

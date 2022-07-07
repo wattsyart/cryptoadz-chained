@@ -4,8 +4,9 @@ pragma solidity ^0.8.13;
 
 import "./PixelRenderer.sol";
 import "./WaxBase.sol";
+import "hardhat/console.sol";
 
-error UnexpectedBufferSize();
+error UnexpectedBufferSize(uint position, uint length);
 
 contract CrypToadzBase is WaxBase {
 
@@ -86,11 +87,8 @@ contract CrypToadzBase is WaxBase {
                     }
                 }
 
-                {
-                    bytes memory featureData = SSTORE2.read(feature);
-                    draw(frame, featureData, ox, oy);
-                }
-
+                bytes memory featureData = SSTORE2.read(feature);
+                draw(frame, featureData, ox, oy, true);
                 drawDelta(frame, tokenId);
             }
         }
@@ -103,20 +101,27 @@ contract CrypToadzBase is WaxBase {
         if(deltaData[deltaFile] != address(0))
         {
             bytes memory deltaData = decompress(deltaData[deltaFile], deltaLengths[deltaFile]);
-            draw(frame, deltaData, 0, 0);
+            draw(frame, deltaData, 0, 0, false);
         }
     }
 
-    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint8 ox, uint8 oy) private pure {
+    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint8 ox, uint8 oy, bool blend) private view {
         uint position;
         (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
         position = p;
+        
+        (uint32[1296] memory newBuffer, uint newPosition) = PixelRenderer.drawFrameWithOffsets(
+            PixelRenderer.DrawFrame(buffer, position, frame, colors, ox, oy, blend)
+        );
 
-        PixelRenderer.DrawFrame memory f = PixelRenderer.DrawFrame(buffer, position, frame, colors);
-        f = PixelRenderer.drawFrameWithOffsets(f, ox, oy);
-        position = f.position;
+        frame.buffer = newBuffer;
+        position = newPosition;
 
-        if(position != buffer.length) revert UnexpectedBufferSize();
+        if(position != buffer.length)
+        {
+            //revert UnexpectedBufferSize(position, buffer.length);
+            console.log("position = %s, buffer length = %s", position, buffer.length);
+        }
     }
 
     function isTall(uint tokenId) public virtual view returns (bool) { revert(); }
