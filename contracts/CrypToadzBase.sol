@@ -85,7 +85,7 @@ contract CrypToadzBase is WaxBase {
             }
         }
 
-        drawDelta(frame, tokenId);
+        // drawDelta(frame, tokenId);
 
         gif.frames[gif.frameCount++] = frame;
     }
@@ -100,7 +100,7 @@ contract CrypToadzBase is WaxBase {
         }
     }
 
-    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint position, uint8 ox, uint8 oy, bool blend) private view {
+    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint position, uint8 ox, uint8 oy, bool blend) private pure {
         (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
         position = p;
         

@@ -36,7 +36,7 @@ library PixelRenderer {
         bool blend;
     }
 
-    function drawFrameWithOffsets(DrawFrame memory f) external view returns (uint32[1296] memory buffer, uint position) {       
+    function drawFrameWithOffsets(DrawFrame memory f) external pure returns (uint32[1296] memory buffer, uint position) {       
         
         (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.buffer, f.position);
         f.position = position;
