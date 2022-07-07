@@ -47,7 +47,7 @@ library GIFEncoder {
 
     struct GIF {
         uint32 frameCount;
-        GIFFrame[10] frames;
+        GIFFrame[] frames;
         uint16 width;
         uint16 height;
     }

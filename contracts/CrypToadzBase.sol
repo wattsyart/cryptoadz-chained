@@ -22,6 +22,7 @@ contract CrypToadzBase is WaxBase {
 
         gif.width = 36;
         gif.height = 36;
+        gif.frames = new GIFEncoder.GIFFrame[](1);
 
         GIFEncoder.GIFFrame memory frame;
         frame.width = gif.width;

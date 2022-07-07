@@ -7,7 +7,7 @@ import "./PixelRenderer.sol";
 
 library GIFDraw {
     function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint position, uint8 offsetX, uint8 offsetY, bool blend) internal pure returns(uint) {
-        (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
+        (uint32[] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
         position = p;
         
         (uint32[] memory newBuffer, uint newPosition) = PixelRenderer.drawFrameWithOffsets(

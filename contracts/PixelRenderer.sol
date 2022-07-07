@@ -30,7 +30,7 @@ library PixelRenderer {
         bytes buffer;
         uint position;
         GIFEncoder.GIFFrame frame;
-        uint32[255] colors;
+        uint32[] colors;
         uint8 ox;
         uint8 oy;
         bool blend;
@@ -90,9 +90,10 @@ library PixelRenderer {
         return (f.frame.buffer, f.position);
     }
     
-    function getColorTable(bytes memory buffer, uint position) external pure returns(uint32[255] memory colors, uint) {
+    function getColorTable(bytes memory buffer, uint position) external pure returns(uint32[] memory colors, uint) {
         
         uint8 colorCount = uint8(buffer[position++]);
+        colors = new uint32[](1 + colorCount);
         colors[0] = 0xFF000000;
         
         for(uint8 i = 0; i < colorCount; i++) {
