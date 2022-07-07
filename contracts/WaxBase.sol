@@ -54,7 +54,7 @@ contract WaxBase is IERC721 {
         require(code == InflateLib.ErrorCode.ERR_NONE);
         require(buffer.length == metadataLengths[file]);
 
-        (uint position, uint8 length) = advanceToTokenPosition(tokenId, buffer);
+        (uint position, uint8 length) = BufferUtils.advanceToTokenPosition(tokenId, buffer);
         isTall = buffer[position] == bytes1(uint8(120));
 
         metadata = new uint8[](length);
@@ -91,24 +91,6 @@ contract WaxBase is IERC721 {
             attributes = string(abi.encodePacked(attributes, numberOfTraits > 1 ? ',' : '', '{"trait_type":"', trait_type, '","value":"', value, '"}'));
         }
         return (attributes, numberOfTraits);
-    }
-
-    function advanceToTokenPosition(uint tokenId, bytes memory buffer) internal pure returns (uint position, uint8 length) {
-        int32 id;
-        while(id != int32(uint32(tokenId))) {
-            (id, position) = BufferUtils.readInt32(position, buffer);
-            (length, position) = BufferUtils.readByte(position, buffer);
-            if(id != int32(uint32(tokenId))) {
-                position += length;
-            }
-        }
-    }
-
-    function decompress(address compressed, uint decompressedLength) internal view returns (bytes memory) {
-        (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(compressed), decompressedLength);
-        require(code == InflateLib.ErrorCode.ERR_NONE);
-        require(buffer.length == decompressedLength);
-        return buffer;
     }
 
     function getMetadataFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }

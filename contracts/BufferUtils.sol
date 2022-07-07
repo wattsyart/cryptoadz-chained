@@ -2,7 +2,29 @@
 
 pragma solidity ^0.8.13;
 
+import "./lib/InflateLib.sol";
+import "./lib/SSTORE2.sol";
+
 library BufferUtils {
+
+    function decompress(address compressed, uint decompressedLength) internal view returns (bytes memory) {
+        (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(compressed), decompressedLength);
+        require(code == InflateLib.ErrorCode.ERR_NONE);
+        require(buffer.length == decompressedLength);
+        return buffer;
+    }
+
+    function advanceToTokenPosition(uint tokenId, bytes memory buffer) internal pure returns (uint position, uint8 length) {
+        int32 id;
+        while(id != int32(uint32(tokenId))) {
+            (id, position) = BufferUtils.readInt32(position, buffer);
+            (length, position) = BufferUtils.readByte(position, buffer);
+            if(id != int32(uint32(tokenId))) {
+                position += length;
+            }
+        }
+    }
+
     function readUInt32(bytes memory buffer, uint position) internal pure returns (uint32, uint) {
         uint8 d1 = uint8(buffer[position++]);
         uint8 d2 = uint8(buffer[position++]);

@@ -2,9 +2,478 @@
 
 pragma solidity ^0.8.13;
 
-import "./CrypToadzBase.sol";
+import "./GIFEncoder.sol";
+import "./GIFDraw.sol";
+import "./BufferUtils.sol";
+import "./lib/SSTORE2.sol";
 
-contract CrypToadzDeltas is CrypToadzBase {
+interface IDeltaCompositor {
+    function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[1296] memory buffer, uint position);
+    function getDeltaFileForToken(uint tokenId) external view returns (uint8);
+}
+
+contract CrypToadzDeltas is IDeltaCompositor {
+
+    mapping(uint8 => address) deltaData;
+    mapping(uint8 => uint16) deltaLengths;
+    
+    function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[1296] memory buffer, uint position) {
+        uint8 deltaFile = getDeltaFileForToken(tokenId);
+        uint position;
+        if(deltaData[deltaFile] != address(0))
+        {
+            bytes memory deltaBuffer = BufferUtils.decompress(deltaData[deltaFile], deltaLengths[deltaFile]);
+            (position,) = BufferUtils.advanceToTokenPosition(tokenId, deltaBuffer);
+            position = GIFDraw.draw(frame, deltaBuffer, position, 0, 0, false);
+        }
+        return (frame.buffer, position);
+    }
+
+    function getDeltaFileForToken(uint tokenId) public override pure returns (uint8) {
+        if(tokenId >= 1 && tokenId < 122) {
+            return 0;
+        }
+        if(tokenId >= 123 && tokenId < 125) {
+            return 1;
+        }
+        if(tokenId >= 126 && tokenId < 176) {
+            return 2;
+        }
+        if(tokenId >= 177 && tokenId < 267) {
+            return 3;
+        }
+        if(tokenId >= 268 && tokenId < 319) {
+            return 4;
+        }
+        if(tokenId >= 320 && tokenId < 356) {
+            return 5;
+        }
+        if(tokenId >= 357 && tokenId < 439) {
+            return 6;
+        }
+        if(tokenId >= 440 && tokenId < 471) {
+            return 7;
+        }
+        if(tokenId >= 472 && tokenId < 490) {
+            return 8;
+        }
+        if(tokenId >= 491 && tokenId < 518) {
+            return 9;
+        }
+        if(tokenId >= 519 && tokenId < 600) {
+            return 10;
+        }
+        if(tokenId >= 601 && tokenId < 706) {
+            return 11;
+        }
+        if(tokenId >= 708 && tokenId < 792) {
+            return 12;
+        }
+        if(tokenId >= 793 && tokenId < 863) {
+            return 13;
+        }
+        if(tokenId >= 864 && tokenId < 881) {
+            return 14;
+        }
+        if(tokenId >= 882 && tokenId < 965) {
+            return 15;
+        }
+        if(tokenId >= 966 && tokenId < 983) {
+            return 16;
+        }
+        if(tokenId >= 984 && tokenId < 1016) {
+            return 17;
+        }
+        if(tokenId >= 1017 && tokenId < 1104) {
+            return 18;
+        }
+        if(tokenId >= 1105 && tokenId < 1164) {
+            return 19;
+        }
+        if(tokenId >= 1165 && tokenId < 1192) {
+            return 20;
+        }
+        if(tokenId >= 1193 && tokenId < 1270) {
+            return 21;
+        }
+        if(tokenId >= 1271 && tokenId < 1361) {
+            return 22;
+        }
+        if(tokenId >= 1362 && tokenId < 1422) {
+            return 23;
+        }
+        if(tokenId >= 1423 && tokenId < 1433) {
+            return 24;
+        }
+        if(tokenId >= 1434 && tokenId < 1526) {
+            return 25;
+        }
+        if(tokenId >= 1527 && tokenId < 1558) {
+            return 26;
+        }
+        if(tokenId >= 1559 && tokenId < 1565) {
+            return 27;
+        }
+        if(tokenId >= 1566 && tokenId < 1636) {
+            return 28;
+        }
+        if(tokenId >= 1637 && tokenId < 1656) {
+            return 29;
+        }
+        if(tokenId >= 1657 && tokenId < 1690) {
+            return 30;
+        }
+        if(tokenId >= 1691 && tokenId < 1729) {
+            return 31;
+        }
+        if(tokenId >= 1730 && tokenId < 1754) {
+            return 32;
+        }
+        if(tokenId >= 1755 && tokenId < 1822) {
+            return 33;
+        }
+        if(tokenId >= 1823 && tokenId < 1892) {
+            return 34;
+        }
+        if(tokenId >= 1893 && tokenId < 1934) {
+            return 35;
+        }
+        if(tokenId >= 1935 && tokenId < 1962) {
+            return 36;
+        }
+        if(tokenId >= 1963 && tokenId < 2074) {
+            return 37;
+        }
+        if(tokenId >= 2075 && tokenId < 2123) {
+            return 38;
+        }
+        if(tokenId >= 2124 && tokenId < 2154) {
+            return 39;
+        }
+        if(tokenId >= 2155 && tokenId < 2221) {
+            return 40;
+        }
+        if(tokenId >= 2222 && tokenId < 2270) {
+            return 41;
+        }
+        if(tokenId >= 2271 && tokenId < 2347) {
+            return 42;
+        }
+        if(tokenId >= 2348 && tokenId < 2459) {
+            return 43;
+        }
+        if(tokenId >= 2460 && tokenId < 2468) {
+            return 44;
+        }
+        if(tokenId >= 2469 && tokenId < 2470) {
+            return 45;
+        }
+        if(tokenId >= 2471 && tokenId < 2473) {
+            return 46;
+        }
+        if(tokenId >= 2474 && tokenId < 2481) {
+            return 47;
+        }
+        if(tokenId >= 2482 && tokenId < 2503) {
+            return 48;
+        }
+        if(tokenId >= 2504 && tokenId < 2568) {
+            return 49;
+        }
+        if(tokenId >= 2569 && tokenId < 2578) {
+            return 50;
+        }
+        if(tokenId >= 2579 && tokenId < 2593) {
+            return 51;
+        }
+        if(tokenId >= 2594 && tokenId < 2711) {
+            return 52;
+        }
+        if(tokenId >= 2712 && tokenId < 2752) {
+            return 53;
+        }
+        if(tokenId >= 2753 && tokenId < 2838) {
+            return 54;
+        }
+        if(tokenId >= 2839 && tokenId < 2864) {
+            return 55;
+        }
+        if(tokenId >= 2865 && tokenId < 2886) {
+            return 56;
+        }
+        if(tokenId >= 2887 && tokenId < 2915) {
+            return 57;
+        }
+        if(tokenId >= 2916 && tokenId < 2985) {
+            return 58;
+        }
+        if(tokenId >= 2986 && tokenId < 3014) {
+            return 59;
+        }
+        if(tokenId >= 3015 && tokenId < 3142) {
+            return 60;
+        }
+        if(tokenId >= 3143 && tokenId < 3216) {
+            return 61;
+        }
+        if(tokenId >= 3217 && tokenId < 3304) {
+            return 62;
+        }
+        if(tokenId >= 3305 && tokenId < 3399) {
+            return 63;
+        }
+        if(tokenId >= 3400 && tokenId < 3552) {
+            return 64;
+        }
+        if(tokenId >= 3553 && tokenId < 3635) {
+            return 65;
+        }
+        if(tokenId >= 3636 && tokenId < 3699) {
+            return 66;
+        }
+        if(tokenId >= 3700 && tokenId < 3702) {
+            return 67;
+        }
+        if(tokenId >= 3703 && tokenId < 3751) {
+            return 68;
+        }
+        if(tokenId >= 3752 && tokenId < 3842) {
+            return 69;
+        }
+        if(tokenId >= 3843 && tokenId < 4005) {
+            return 70;
+        }
+        if(tokenId >= 4006 && tokenId < 4112) {
+            return 71;
+        }
+        if(tokenId >= 4113 && tokenId < 4125) {
+            return 72;
+        }
+        if(tokenId >= 4126 && tokenId < 4132) {
+            return 73;
+        }
+        if(tokenId >= 4133 && tokenId < 4191) {
+            return 74;
+        }
+        if(tokenId >= 4192 && tokenId < 4195) {
+            return 75;
+        }
+        if(tokenId >= 4196 && tokenId < 4200) {
+            return 76;
+        }
+        if(tokenId >= 4201 && tokenId < 4216) {
+            return 77;
+        }
+        if(tokenId >= 4217 && tokenId < 4220) {
+            return 78;
+        }
+        if(tokenId >= 4221 && tokenId < 4241) {
+            return 79;
+        }
+        if(tokenId >= 4242 && tokenId < 4320) {
+            return 80;
+        }
+        if(tokenId >= 4321 && tokenId < 4349) {
+            return 81;
+        }
+        if(tokenId >= 4350 && tokenId < 4367) {
+            return 82;
+        }
+        if(tokenId >= 4368 && tokenId < 4381) {
+            return 83;
+        }
+        if(tokenId >= 4382 && tokenId < 4468) {
+            return 84;
+        }
+        if(tokenId >= 4469 && tokenId < 4572) {
+            return 85;
+        }
+        if(tokenId >= 4573 && tokenId < 4597) {
+            return 86;
+        }
+        if(tokenId >= 4598 && tokenId < 4605) {
+            return 87;
+        }
+        if(tokenId >= 4606 && tokenId < 4658) {
+            return 88;
+        }
+        if(tokenId >= 4659 && tokenId < 4733) {
+            return 89;
+        }
+        if(tokenId >= 4734 && tokenId < 4830) {
+            return 90;
+        }
+        if(tokenId >= 4831 && tokenId < 4844) {
+            return 91;
+        }
+        if(tokenId >= 4845 && tokenId < 4853) {
+            return 92;
+        }
+        if(tokenId >= 4854 && tokenId < 4990) {
+            return 93;
+        }
+        if(tokenId >= 4991 && tokenId < 5052) {
+            return 94;
+        }
+        if(tokenId >= 5053 && tokenId < 5104) {
+            return 95;
+        }
+        if(tokenId >= 5105 && tokenId < 5149) {
+            return 96;
+        }
+        if(tokenId >= 5150 && tokenId < 5181) {
+            return 97;
+        }
+        if(tokenId >= 5182 && tokenId < 5261) {
+            return 98;
+        }
+        if(tokenId >= 5262 && tokenId < 5269) {
+            return 99;
+        }
+        if(tokenId >= 5270 && tokenId < 5367) {
+            return 100;
+        }
+        if(tokenId >= 5368 && tokenId < 5413) {
+            return 101;
+        }
+        if(tokenId >= 5414 && tokenId < 5440) {
+            return 102;
+        }
+        if(tokenId >= 5441 && tokenId < 5463) {
+            return 103;
+        }
+        if(tokenId >= 5464 && tokenId < 5529) {
+            return 104;
+        }
+        if(tokenId >= 5530 && tokenId < 5551) {
+            return 105;
+        }
+        if(tokenId >= 5552 && tokenId < 5676) {
+            return 106;
+        }
+        if(tokenId >= 5677 && tokenId < 5727) {
+            return 107;
+        }
+        if(tokenId >= 5728 && tokenId < 5752) {
+            return 108;
+        }
+        if(tokenId >= 5753 && tokenId < 5835) {
+            return 109;
+        }
+        if(tokenId >= 5836 && tokenId < 5841) {
+            return 110;
+        }
+        if(tokenId >= 5842 && tokenId < 5847) {
+            return 111;
+        }
+        if(tokenId >= 5848 && tokenId < 5854) {
+            return 112;
+        }
+        if(tokenId >= 5855 && tokenId < 5948) {
+            return 113;
+        }
+        if(tokenId >= 5949 && tokenId < 6034) {
+            return 114;
+        }
+        if(tokenId >= 6035 && tokenId < 6169) {
+            return 115;
+        }
+        if(tokenId >= 6170 && tokenId < 6260) {
+            return 116;
+        }
+        if(tokenId >= 6261 && tokenId < 6392) {
+            return 117;
+        }
+        if(tokenId >= 6393 && tokenId < 6475) {
+            return 118;
+        }
+        if(tokenId >= 6476 && tokenId < 6559) {
+            return 119;
+        }
+        if(tokenId >= 6560 && tokenId < 6577) {
+            return 120;
+        }
+        if(tokenId >= 6578 && tokenId < 6614) {
+            return 121;
+        }
+        if(tokenId >= 6615 && tokenId < 6718) {
+            return 122;
+        }
+        if(tokenId >= 6719 && tokenId < 6735) {
+            return 123;
+        }
+        if(tokenId >= 6736 && tokenId < 6739) {
+            return 124;
+        }
+        if(tokenId >= 6740 && tokenId < 6833) {
+            return 125;
+        }
+        if(tokenId >= 6834 && tokenId < 6891) {
+            return 126;
+        }
+        if(tokenId >= 6892 && tokenId < 6896) {
+            return 127;
+        }
+        if(tokenId >= 6897 && tokenId < 6915) {
+            return 128;
+        }
+        if(tokenId >= 6916 && tokenId < 6960) {
+            return 129;
+        }
+        if(tokenId >= 6961 && tokenId < 6969) {
+            return 130;
+        }
+        if(tokenId >= 1000000 && tokenId < 1000000) {
+            return 131;
+        }
+        if(tokenId >= 2000000 && tokenId < 2000000) {
+            return 132;
+        }
+        if(tokenId >= 3000000 && tokenId < 3000000) {
+            return 133;
+        }
+        if(tokenId >= 4000000 && tokenId < 4000000) {
+            return 134;
+        }
+        if(tokenId >= 5000000 && tokenId < 5000000) {
+            return 135;
+        }
+        if(tokenId >= 6000000 && tokenId < 6000000) {
+            return 136;
+        }
+        if(tokenId >= 7000000 && tokenId < 7000000) {
+            return 137;
+        }
+        if(tokenId >= 8000000 && tokenId < 8000000) {
+            return 138;
+        }
+        if(tokenId >= 9000000 && tokenId < 9000000) {
+            return 139;
+        }
+        if(tokenId >= 10000000 && tokenId < 10000000) {
+            return 140;
+        }
+        if(tokenId >= 11000000 && tokenId < 11000000) {
+            return 141;
+        }
+        if(tokenId >= 12000000 && tokenId < 12000000) {
+            return 142;
+        }
+        if(tokenId >= 13000000 && tokenId < 13000000) {
+            return 143;
+        }
+        if(tokenId >= 14000000 && tokenId < 14000000) {
+            return 144;
+        }
+        if(tokenId >= 15000000 && tokenId < 15000000) {
+            return 145;
+        }
+        if(tokenId >= 16000000 && tokenId < 16000000) {
+            return 146;
+        }
+        revert();
+    }
+
     constructor() {
         deltaLengths[0] = 4494;
         deltaLengths[1] = 5530;
