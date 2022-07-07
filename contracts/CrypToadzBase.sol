@@ -4,9 +4,6 @@ pragma solidity ^0.8.13;
 
 import "./PixelRenderer.sol";
 import "./WaxBase.sol";
-import "hardhat/console.sol";
-
-error UnexpectedBufferSize(uint position, uint length);
 
 contract CrypToadzBase is WaxBase {
 
@@ -30,7 +27,7 @@ contract CrypToadzBase is WaxBase {
         frame.width = gif.width;
         frame.height = gif.height;
 
-        (uint start,) = advanceToTokenPosition(tokenId, buffer);
+        (uint start, uint length) = advanceToTokenPosition(tokenId, buffer);
         uint8 flag;
 
         for (uint8 i = 0; i < metadata.length; i++) {
@@ -83,12 +80,12 @@ contract CrypToadzBase is WaxBase {
                         }
                     }
                 }
-
-                bytes memory featureData = SSTORE2.read(feature);
-                draw(frame, featureData, ox, oy, true);
-                drawDelta(frame, tokenId);
+         
+                draw(frame, SSTORE2.read(feature), 0, ox, oy, true);
             }
         }
+
+        drawDelta(frame, tokenId);
 
         gif.frames[gif.frameCount++] = frame;
     }
@@ -97,13 +94,13 @@ contract CrypToadzBase is WaxBase {
         uint8 deltaFile = getDeltaFileForToken(tokenId);
         if(deltaData[deltaFile] != address(0))
         {
-            bytes memory deltaData = decompress(deltaData[deltaFile], deltaLengths[deltaFile]);
-            draw(frame, deltaData, 0, 0, false);
+            bytes memory deltaBuffer = decompress(deltaData[deltaFile], deltaLengths[deltaFile]);
+            (uint start,) = advanceToTokenPosition(tokenId, deltaBuffer);
+            draw(frame, deltaBuffer, start, 0, 0, false);
         }
     }
 
-    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint8 ox, uint8 oy, bool blend) private view {
-        uint position;
+    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint position, uint8 ox, uint8 oy, bool blend) private view {
         (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
         position = p;
         
@@ -112,16 +109,8 @@ contract CrypToadzBase is WaxBase {
         );
 
         frame.buffer = newBuffer;
-        position = newPosition;
-
-        if(position != buffer.length)
-        {
-            //revert UnexpectedBufferSize(position, buffer.length);
-            console.log("position = %s, buffer length = %s", position, buffer.length);
-        }
     }
 
-    function isTall(uint tokenId) public virtual view returns (bool) { revert(); }
     function getAnimationFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
     function getCustomImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
     function getDeltaFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }

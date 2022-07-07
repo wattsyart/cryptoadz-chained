@@ -1506,7 +1506,7 @@ contract CrypToadz is CrypToadzBase {
         revert();
     }
 
-    function isTall(uint tokenId) public override view returns (bool) {
+    function isTall(uint tokenId) external view returns (bool) {
         uint8 metadataFile = getMetadataFileForToken(tokenId);
 
         (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(metadataData[metadataFile]), metadataLengths[metadataFile]);

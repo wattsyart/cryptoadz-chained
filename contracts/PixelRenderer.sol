@@ -8,7 +8,6 @@ pragma solidity ^0.8.13;
 
 import "./GIFEncoder.sol";
 import "./BufferUtils.sol";
-import "hardhat/console.sol";
 
 error UnsupportedDrawInstruction(uint8 instructionType);
 error DoNotAddBlackToColorTable();
@@ -41,8 +40,6 @@ library PixelRenderer {
         
         (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.buffer, f.position);
         f.position = position;
-
-        console.log("instruction count = %s", instructionCount);
 
         for(uint32 i = 0; i < instructionCount; i++) {
 
