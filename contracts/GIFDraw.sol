@@ -10,7 +10,7 @@ library GIFDraw {
         (uint32[255] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
         position = p;
         
-        (uint32[1296] memory newBuffer, uint newPosition) = PixelRenderer.drawFrameWithOffsets(
+        (uint32[] memory newBuffer, uint newPosition) = PixelRenderer.drawFrameWithOffsets(
             PixelRenderer.DrawFrame(buffer, position, frame, colors, offsetX, offsetY, blend)
         );
 

@@ -2,22 +2,17 @@
 
 pragma solidity ^0.8.13;
 
-import "./GIFEncoder.sol";
+import "./interfaces/IDeltaCompositor.sol";
 import "./GIFDraw.sol";
 import "./BufferUtils.sol";
 import "./lib/SSTORE2.sol";
-
-interface IDeltaCompositor {
-    function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[1296] memory buffer, uint position);
-    function getDeltaFileForToken(uint tokenId) external view returns (uint8);
-}
 
 contract CrypToadzDeltas is IDeltaCompositor {
 
     mapping(uint8 => address) deltaData;
     mapping(uint8 => uint16) deltaLengths;
     
-    function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[1296] memory buffer, uint position) {
+    function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[] memory buffer, uint position) {
         uint8 deltaFile = getDeltaFileForToken(tokenId);
         uint position;
         if(deltaData[deltaFile] != address(0))

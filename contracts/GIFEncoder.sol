@@ -53,7 +53,7 @@ library GIFEncoder {
     }
 
     struct GIFFrame {
-        uint32[1296] buffer;
+        uint32[] buffer;
         uint16 delay;
         uint16 width;
         uint16 height;

@@ -26,6 +26,7 @@ contract CrypToadzBase is WaxBase {
         GIFEncoder.GIFFrame memory frame;
         frame.width = gif.width;
         frame.height = gif.height;
+        frame.buffer = new uint32[](frame.width * frame.height);
 
         (uint position, uint length) = BufferUtils.advanceToTokenPosition(tokenId, buffer);
         uint8 flag;
@@ -82,5 +83,4 @@ contract CrypToadzBase is WaxBase {
 
     function getAnimationFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
     function getCustomImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
-    function getDeltaFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
 }
