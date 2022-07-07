@@ -20,7 +20,7 @@ contract CrypToadzBase is WaxBase {
     mapping(uint8 => address) deltaData;
     mapping(uint8 => uint16) deltaLengths;
 
-    function getImage(uint8[] memory metadata, uint tokenId, uint8 file) internal override view returns (GIFEncoder.GIF memory gif) {
+    function getImage(uint8[] memory metadata, uint tokenId, uint8 file, bool isTallToken) internal override view returns (GIFEncoder.GIF memory gif) {
         bytes memory buffer = decompress(imageData[file], imageLengths[file]);
 
         gif.width = 36;
@@ -31,9 +31,6 @@ contract CrypToadzBase is WaxBase {
         frame.height = gif.height;
 
         (uint start,) = advanceToTokenPosition(tokenId, buffer);
-
-        bool isTallToken = isTall(tokenId);
-
         uint8 flag;
 
         for (uint8 i = 0; i < metadata.length; i++) {
