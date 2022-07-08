@@ -24,9 +24,12 @@ async function main() {
       crlfDelay: Infinity
     });
 
+    var tasks = [];
     for await (const line of lines) {
-      await utils.collect(toadz, parseInt(line), logger);
+      tasks.push(new Promise(() => utils.collect(toadz, parseInt(line), logger)));
     }
+    await Promise.all(tasks);
+    
   } catch (error) {
     console.error(gutil.colors.red(error));
   }
