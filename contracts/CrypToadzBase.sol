@@ -44,6 +44,13 @@ contract CrypToadzBase is WaxBase {
                 flag = 1;
             }
             
+            if(value != 55 && value >= 121 && value < 139) {
+                flag = 2;
+            } else if(value == 55 && flag == 1) {
+                value = 250;
+                flag = 2;
+            }
+            
             address feature;
             if(isTallToken) {
                 if(tall[value] != address(0)) {
@@ -72,7 +79,7 @@ contract CrypToadzBase is WaxBase {
                     oy = uint8(buffer[position++]);                    
                 } else {
                     revert UnsupportedDrawInstruction(instructionType);
-                }         
+                }
                 GIFDraw.draw(frame, SSTORE2.read(feature), 0, ox, oy, true);
             }
         }
