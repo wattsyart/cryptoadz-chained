@@ -8,3 +8,4 @@ typechain
 cache
 artifacts
 scripts/output/**
+/assets/*.bin

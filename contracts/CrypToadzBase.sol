@@ -2,9 +2,12 @@
 
 pragma solidity ^0.8.13;
 
+import "./lib/DynamicBuffer.sol";
 import "./PixelRenderer.sol";
 import "./WaxBase.sol";
 import "./GIFDraw.sol";
+
+import "hardhat/console.sol";
 
 error InvalidDrawOrder(uint8 featureId);
 
@@ -16,6 +19,45 @@ contract CrypToadzBase is WaxBase {
 
     mapping(uint8 => address) imageData;
     mapping(uint8 => uint16) imageLengths;
+
+    function getAnimation(uint tokenId) override internal view returns (GIFEncoder.GIF memory gif) {
+
+        uint size;
+        uint8 count;
+        while(animationLengths[tokenId][count] != 0) {
+            size += animationLengths[tokenId][count++];
+        }
+
+        console.log("total buffer size is %s", size);
+
+        bytes memory buffer = DynamicBuffer.allocate(size);
+        for(uint8 i = 0; i < count; i++) {
+            bytes memory chunk = BufferUtils.decompress(animationData[tokenId][i], animationLengths[tokenId][i]);
+            DynamicBuffer.appendUnchecked(buffer, chunk);
+        }
+
+        uint position;
+        uint8 frameCount;
+        (frameCount, position) = BufferUtils.readByte(position, buffer);
+
+        gif.width = 36;
+        gif.height = 36;
+        gif.frames = new GIFEncoder.GIFFrame[](frameCount);
+
+        console.log("initialized %s frames", frameCount);
+
+        // for(uint8 i = 0; i < frameCount; i++)
+        // {
+        //     GIFEncoder.GIFFrame memory frame;
+        //     frame.width = gif.width;
+        //     frame.height = gif.height;
+        //     frame.buffer = new uint32[](frame.width * frame.height);
+
+        //     // position = GIFDraw.draw(frame, buffer, position, 0, 0, false);
+
+        //     gif.frames[gif.frameCount++] = frame;
+        // }        
+    }
 
     function getImage(uint8[] memory metadata, uint tokenId, uint8 file, bool isTallToken) internal override view returns (GIFEncoder.GIF memory gif) {
         bytes memory buffer = BufferUtils.decompress(imageData[file], imageLengths[file]);

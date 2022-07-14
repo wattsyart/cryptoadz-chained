@@ -11,6 +11,8 @@ import "./BufferUtils.sol";
 import "./lib/InflateLib.sol";
 import "./lib/SSTORE2.sol";
 
+import "hardhat/console.sol";
+
 interface IERC721 {
     function tokenURI(uint256 tokenId) external view returns(string memory);
 }
@@ -22,15 +24,26 @@ contract WaxBase is IERC721 {
     bytes constant private EXTERNAL_URL = "https://cryptoadz.io";
 
     mapping(uint8 => string) strings;
+    
     mapping(uint8 => address) metadataData;
     mapping(uint8 => uint16) metadataLengths;
+
+    mapping(uint => mapping(uint8 => address)) animationData;
+    mapping(uint => mapping(uint8 => uint16)) animationLengths;
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {   
         uint8 metadataFile = getMetadataFileForToken(tokenId);
         (uint8[] memory metadata, bool isTallToken) = getMetadata(tokenId, metadataFile);
 
-        uint8 imageFile = getImageFileForToken(tokenId);
-        GIFEncoder.GIF memory gif = getImage(metadata, tokenId, imageFile, isTallToken);
+        GIFEncoder.GIF memory gif;
+        if(animationData[tokenId][0] != address(0)) {
+            console.log("getting animation for %s", tokenId);
+            gif = getAnimation(tokenId);
+        } else {
+            console.log("getting image for %s", tokenId);
+            gif = getImage(metadata, tokenId, getImageFileForToken(tokenId), isTallToken);            
+        }
+
         string memory imageUri = GIFEncoder.getDataUri(gif);
 
         string memory json = string(
@@ -96,5 +109,7 @@ contract WaxBase is IERC721 {
     function getMetadataFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
     function getTraitName(uint8 traitValue) internal virtual pure returns (string memory) { revert(); }
     function getImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }            
+
     function getImage(uint8[] memory metadata, uint tokenId, uint8 file, bool isTallToken) internal virtual view returns (GIFEncoder.GIF memory gif) { revert(); }
+    function getAnimation(uint tokenId) internal virtual view returns (GIFEncoder.GIF memory gif) { revert(); }
 }
