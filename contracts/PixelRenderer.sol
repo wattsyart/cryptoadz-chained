@@ -9,6 +9,8 @@ pragma solidity ^0.8.13;
 import "./GIFEncoder.sol";
 import "./BufferUtils.sol";
 
+import "hardhat/console.sol";
+
 error UnsupportedDrawInstruction(uint8 instructionType);
 error DoNotAddBlackToColorTable();
 
@@ -36,11 +38,15 @@ library PixelRenderer {
         bool blend;
     }
 
-    function drawFrameWithOffsets(DrawFrame memory f) external pure returns (uint32[] memory buffer, uint position) {       
+    function drawFrameWithOffsets(DrawFrame memory f) external view returns (uint32[] memory buffer, uint) {       
         
+        console.log("position before instructionCount = %s", f.position);
+
         (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.buffer, f.position);
         f.position = position;
 
+        console.log("position after instructionCount = %s with %s instructions", f.position, instructionCount);
+        
         for(uint32 i = 0; i < instructionCount; i++) {
 
             uint8 instructionType = uint8(f.buffer[f.position++]);                   

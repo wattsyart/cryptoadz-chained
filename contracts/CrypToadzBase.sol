@@ -39,6 +39,7 @@ contract CrypToadzBase is WaxBase {
         uint position;
         uint8 frameCount;
         (frameCount, position) = BufferUtils.readByte(position, buffer);
+        console.log("position after frameCount = %s", position);
 
         gif.width = 36;
         gif.height = 36;
@@ -46,17 +47,19 @@ contract CrypToadzBase is WaxBase {
 
         console.log("initialized %s frames", frameCount);
 
-        // for(uint8 i = 0; i < frameCount; i++)
-        // {
-        //     GIFEncoder.GIFFrame memory frame;
-        //     frame.width = gif.width;
-        //     frame.height = gif.height;
-        //     frame.buffer = new uint32[](frame.width * frame.height);
+        for(uint8 i = 0; i < frameCount; i++)
+        {
+            GIFEncoder.GIFFrame memory frame;
+            frame.width = gif.width;
+            frame.height = gif.height;
+            frame.buffer = new uint32[](frame.width * frame.height);
 
-        //     // position = GIFDraw.draw(frame, buffer, position, 0, 0, false);
-
-        //     gif.frames[gif.frameCount++] = frame;
-        // }        
+            console.log("position before frame = %s", position);
+            position = GIFDraw.draw(frame, buffer, position, 0, 0, false);
+            
+            gif.frames[gif.frameCount++] = frame;
+            console.log("position after frame = %s", position);
+        }        
     }
 
     function getImage(uint8[] memory metadata, uint tokenId, uint8 file, bool isTallToken) internal override view returns (GIFEncoder.GIF memory gif) {
