@@ -39,6 +39,28 @@ contract CrypToadzBase is WaxBase {
         }
     }
 
+     function getCustomAnimation(uint256 tokenId)
+        internal
+        view
+        override
+        returns (bytes memory buffer)
+    {
+        uint256 size;
+        uint8 count;
+        while (customAnimationLengths[tokenId][count] != 0) {
+            size += customAnimationLengths[tokenId][count++];
+        }
+
+        buffer = DynamicBuffer.allocate(size);
+        for (uint8 i = 0; i < count; i++) {
+            bytes memory chunk = BufferUtils.decompress(
+                customAnimationData[tokenId][i],
+                customAnimationLengths[tokenId][i]
+            );
+            DynamicBuffer.appendUnchecked(buffer, chunk);
+        }
+    }
+
     function getAnimation(uint256 tokenId)
         internal
         view

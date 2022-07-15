@@ -18,7 +18,8 @@ interface IERC721 {
 contract WaxBase is IERC721 {
 
     bytes constant private JSON_URI_PREFIX = "data:application/json;base64,"; 
-    bytes constant private PNG_URI_PREFIX = "data:image/png;base64,"; 
+    bytes constant private PNG_URI_PREFIX = "data:image/png;base64,";
+    bytes constant private GIF_URI_PREFIX = "data:image/gif;base64,";
     bytes constant private DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes constant private EXTERNAL_URL = "https://cryptoadz.io";
 
@@ -33,6 +34,9 @@ contract WaxBase is IERC721 {
     mapping(uint => mapping(uint8 => uint16)) customImageLengths;
     mapping(uint => mapping(uint8 => address)) customImageData;    
 
+    mapping(uint => mapping(uint8 => uint16)) customAnimationLengths;
+    mapping(uint => mapping(uint8 => address)) customAnimationData;
+
     function tokenURI(uint256 tokenId) external view returns (string memory) {   
         uint8 metadataFile = getMetadataFileForToken(tokenId);
         (uint8[] memory metadata, bool isTallToken) = getMetadata(tokenId, metadataFile);
@@ -42,9 +46,11 @@ contract WaxBase is IERC721 {
             GIFEncoder.GIF memory gif = getAnimation(tokenId);
             imageUri = GIFEncoder.getDataUri(gif);
         } else if(customImageData[tokenId][0] != address(0)) {
-            bytes memory customImage;
-            customImage = getCustomImage(tokenId);
+            bytes memory customImage = getCustomImage(tokenId);
             imageUri = string(abi.encodePacked(PNG_URI_PREFIX, Base64.encode(customImage, customImage.length)));
+        } else if(customAnimationData[tokenId][0] != address(0)) {
+            bytes memory customAnimation = getCustomAnimation(tokenId);
+            imageUri = string(abi.encodePacked(GIF_URI_PREFIX, Base64.encode(customAnimation, customAnimation.length)));
         } else {
             GIFEncoder.GIF memory gif = getImage(metadata, tokenId, getImageFileForToken(tokenId), isTallToken);            
             imageUri = GIFEncoder.getDataUri(gif);
@@ -116,5 +122,6 @@ contract WaxBase is IERC721 {
 
     function getImage(uint8[] memory metadata, uint tokenId, uint8 file, bool isTallToken) internal virtual view returns (GIFEncoder.GIF memory gif) { revert(); }
     function getAnimation(uint tokenId) internal virtual view returns (GIFEncoder.GIF memory gif) { revert(); }
-    function getCustomImage(uint tokenId) internal virtual view returns (bytes memory buffer) { revert(); }
+    function getCustomImage(uint256 tokenId) internal virtual view returns (bytes memory buffer) { revert(); }
+    function getCustomAnimation(uint256 tokenId) internal virtual view returns (bytes memory buffer) { revert(); }
 }
