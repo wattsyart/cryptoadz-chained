@@ -7,8 +7,6 @@ import "./PixelRenderer.sol";
 import "./WaxBase.sol";
 import "./GIFDraw.sol";
 
-import "hardhat/console.sol";
-
 error InvalidDrawOrder(uint8 featureId);
 
 contract CrypToadzBase is WaxBase {
@@ -28,8 +26,6 @@ contract CrypToadzBase is WaxBase {
             size += animationLengths[tokenId][count++];
         }
 
-        console.log("total buffer size is %s", size);
-
         bytes memory buffer = DynamicBuffer.allocate(size);
         for(uint8 i = 0; i < count; i++) {
             bytes memory chunk = BufferUtils.decompress(animationData[tokenId][i], animationLengths[tokenId][i]);
@@ -39,13 +35,10 @@ contract CrypToadzBase is WaxBase {
         uint position;
         uint8 frameCount;
         (frameCount, position) = BufferUtils.readByte(position, buffer);
-        console.log("position after frameCount = %s", position);
 
         gif.width = 36;
         gif.height = 36;
         gif.frames = new GIFEncoder.GIFFrame[](frameCount);
-
-        console.log("initialized %s frames", frameCount);
 
         for(uint8 i = 0; i < frameCount; i++)
         {
@@ -54,11 +47,9 @@ contract CrypToadzBase is WaxBase {
             frame.height = gif.height;
             frame.buffer = new uint32[](frame.width * frame.height);
 
-            console.log("position before frame = %s", position);
             position = GIFDraw.draw(frame, buffer, position, 0, 0, false);
             
             gif.frames[gif.frameCount++] = frame;
-            console.log("position after frame = %s", position);
         }        
     }
 
