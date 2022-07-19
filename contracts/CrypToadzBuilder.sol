@@ -18,12 +18,14 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
     function getImage(
         uint8[] memory metadata,
         uint256 tokenId,
-        uint8 file,
         bool isTallToken
     ) external override view returns (GIFEncoder.GIF memory gif) {
+
+        uint8 imageFile = getImageFileForToken(tokenId);
+
         bytes memory buffer = BufferUtils.decompress(
-            imageData[file],
-            imageLengths[file]
+            imageData[imageFile],
+            imageLengths[imageFile]
         );
 
         gif.width = 36;
@@ -96,6 +98,100 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         // drawDelta(frame, tokenId);
 
         gif.frames[gif.frameCount++] = frame;
+    }
+
+    function getImageFileForToken(uint tokenId) private pure returns (uint8) {
+        if(tokenId >= 1 && tokenId < 235) {
+            return 0;
+        }
+        if(tokenId >= 236 && tokenId < 473) {
+            return 1;
+        }
+        if(tokenId >= 474 && tokenId < 707) {
+            return 2;
+        }
+        if(tokenId >= 708 && tokenId < 943) {
+            return 3;
+        }
+        if(tokenId >= 944 && tokenId < 1176) {
+            return 4;
+        }
+        if(tokenId >= 1177 && tokenId < 1411) {
+            return 5;
+        }
+        if(tokenId >= 1412 && tokenId < 1653) {
+            return 6;
+        }
+        if(tokenId >= 1654 && tokenId < 1890) {
+            return 7;
+        }
+        if(tokenId >= 1891 && tokenId < 2125) {
+            return 8;
+        }
+        if(tokenId >= 2126 && tokenId < 2363) {
+            return 9;
+        }
+        if(tokenId >= 2364 && tokenId < 2602) {
+            return 10;
+        }
+        if(tokenId >= 2603 && tokenId < 2841) {
+            return 11;
+        }
+        if(tokenId >= 2842 && tokenId < 3075) {
+            return 12;
+        }
+        if(tokenId >= 3076 && tokenId < 3310) {
+            return 13;
+        }
+        if(tokenId >= 3311 && tokenId < 3543) {
+            return 14;
+        }
+        if(tokenId >= 3544 && tokenId < 3779) {
+            return 15;
+        }
+        if(tokenId >= 3780 && tokenId < 4016) {
+            return 16;
+        }
+        if(tokenId >= 4017 && tokenId < 4255) {
+            return 17;
+        }
+        if(tokenId >= 4256 && tokenId < 4489) {
+            return 18;
+        }
+        if(tokenId >= 4490 && tokenId < 4725) {
+            return 19;
+        }
+        if(tokenId >= 4726 && tokenId < 4963) {
+            return 20;
+        }
+        if(tokenId >= 4964 && tokenId < 5201) {
+            return 21;
+        }
+        if(tokenId >= 5202 && tokenId < 5436) {
+            return 22;
+        }
+        if(tokenId >= 5437 && tokenId < 5670) {
+            return 23;
+        }
+        if(tokenId >= 5671 && tokenId < 5908) {
+            return 24;
+        }
+        if(tokenId >= 5909 && tokenId < 6143) {
+            return 25;
+        }
+        if(tokenId >= 6144 && tokenId < 6379) {
+            return 26;
+        }
+        if(tokenId >= 6380 && tokenId < 6617) {
+            return 27;
+        }
+        if(tokenId >= 6618 && tokenId < 6852) {
+            return 28;
+        }
+        if(tokenId >= 6853 && tokenId < 56000000) {
+            return 29;
+        }
+        revert();
     }
 
     constructor() {

@@ -166,7 +166,6 @@ contract CrypToadzBase is IERC721, IERC165 {
             GIFEncoder.GIF memory gif = builder.getImage(
                 metadata,
                 tokenId,
-                getImageFileForToken(tokenId),
                 isTallToken
             );
             imageUri = GIFEncoder.getDataUri(gif);
@@ -341,8 +340,7 @@ contract CrypToadzBase is IERC721, IERC165 {
         revert();
     }
 
-    function getTraitName(uint8 traitValue) internal virtual pure returns (string memory) { revert(); }
-    function getImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }          
+    function getTraitName(uint8 traitValue) internal virtual pure returns (string memory) { revert(); }      
 
     /**
     @notice Adds ERC2981 interface to the set of already-supported interfaces.

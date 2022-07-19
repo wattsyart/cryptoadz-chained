@@ -7,8 +7,7 @@ import "./GIFEncoder.sol";
 interface ICrypToadzBuilder {
     function getImage(
         uint8[] memory metadata,
-        uint256 tokenId,
-        uint8 file,
+        uint256 tokenId,        
         bool isTallToken
     ) external view returns (GIFEncoder.GIF memory gif);
 }
