@@ -22,12 +22,13 @@ library CrypToadzCustomImageBank {
 
         buffer = DynamicBuffer.allocate(size);
         for (uint8 i = 0; i < count; i++) {
+            console.log("chunk length = %s, address = %s", data[i], lengths[i]);
             bytes memory chunk = BufferUtils.decompress(
                 data[i],
                 lengths[i]
-            );
-            console.log("decompressed chunk %s", i);
+            );            
             DynamicBuffer.appendUnchecked(buffer, chunk);
+            console.log("decompressed chunk %s", i);
         }
         
         console.log("buffer with size %s was allocated", size);
