@@ -37,7 +37,7 @@ describe("CrypToadz", function () {
             "PixelRenderer": PixelRendererDeployed.address
           }
         });
-        var CrypToadzDeployed = await CrypToadz.deploy(CrypToadzStringsDeployed.address, CrypToadzBuilderDeployed.address, CrypToadzMetadataDeployed.address);
+        CrypToadzDeployed = await CrypToadz.deploy(CrypToadzStringsDeployed.address, CrypToadzBuilderDeployed.address, CrypToadzMetadataDeployed.address);
         await CrypToadzDeployed.deployed();
     });
     
