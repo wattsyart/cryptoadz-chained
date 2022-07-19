@@ -2,10 +2,6 @@
 
 pragma solidity ^0.8.13;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                        //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 import "./lib/Base64.sol";
 
 /** @notice Encodes image data in GIF format. GIF is much more compact than SVG, allows for animation (SVG does as well), and also represents images that are already rastered. 

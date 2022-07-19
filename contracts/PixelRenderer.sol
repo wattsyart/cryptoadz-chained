@@ -2,15 +2,9 @@
 
 pragma solidity ^0.8.13;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                        //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 import "./GIFEncoder.sol";
 import "./BufferUtils.sol";
-
-error UnsupportedDrawInstruction(uint8 instructionType);
-error DoNotAddBlackToColorTable();
+import "./Errors.sol";
 
 /** @notice Pixel renderer using basic drawing instructions: fill, line, and dot. */
 library PixelRenderer {
@@ -36,11 +30,11 @@ library PixelRenderer {
         bool blend;
     }
 
-    function drawFrameWithOffsets(DrawFrame memory f) external pure returns (uint32[] memory buffer, uint position) {       
+    function drawFrameWithOffsets(DrawFrame memory f) external pure returns (uint32[] memory buffer, uint) {       
         
         (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.buffer, f.position);
         f.position = position;
-
+        
         for(uint32 i = 0; i < instructionCount; i++) {
 
             uint8 instructionType = uint8(f.buffer[f.position++]);                   

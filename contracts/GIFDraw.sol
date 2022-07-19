@@ -6,15 +6,32 @@ import "./GIFEncoder.sol";
 import "./PixelRenderer.sol";
 
 library GIFDraw {
-    function draw(GIFEncoder.GIFFrame memory frame, bytes memory buffer, uint position, uint8 offsetX, uint8 offsetY, bool blend) internal pure returns(uint) {
-        (uint32[] memory colors, uint p) = PixelRenderer.getColorTable(buffer, position);
-        position = p;
-        
-        (uint32[] memory newBuffer, uint newPosition) = PixelRenderer.drawFrameWithOffsets(
-            PixelRenderer.DrawFrame(buffer, position, frame, colors, offsetX, offsetY, blend)
-        );
+    function draw(
+        GIFEncoder.GIFFrame memory frame,
+        bytes memory buffer,
+        uint256 position,
+        uint8 offsetX,
+        uint8 offsetY,
+        bool blend
+    ) internal pure returns (uint256) {
+        (uint32[] memory colors, uint256 positionAfterColor) = PixelRenderer
+            .getColorTable(buffer, position);
+        position = positionAfterColor;
+
+        (uint32[] memory newBuffer, uint256 positionAfterDraw) = PixelRenderer
+            .drawFrameWithOffsets(
+                PixelRenderer.DrawFrame(
+                    buffer,
+                    position,
+                    frame,
+                    colors,
+                    offsetX,
+                    offsetY,
+                    blend
+                )
+            );
 
         frame.buffer = newBuffer;
-        return position;
+        return positionAfterDraw;
     }
 }

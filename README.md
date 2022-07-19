@@ -1,6 +1,23 @@
 # cryptoadz-chained
 The same CrypToadz you know and love, preserved on-chain.
 
+# Setting up
+
+The following code will compile the project and build the tokenURI for CrypToadz #1.
+
+```bash
+npm install
+npx hardhat compile
+npx hardhat toad --id 1
+```
+
+The following code will run a test pass across all toads, building delta images of any errors. 
+_WARNING: This takes a long time..._
+
+```bash
+node scripts/collect.js
+```
+
 # How are images created?
 
 Each toad feature is represented in an intermediate format that is compressed with INFLATE and stored via SSTORE2.
@@ -58,4 +75,3 @@ The intermediate format for draw instructions is:
 |  PixelRenderer         ·          -  ·          -  ·    1187439  ·            0 %  ·         0.07  │
 ·------------------------|-------------|-------------|-------------|-----------------|---------------·
 ```
-
