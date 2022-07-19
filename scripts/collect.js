@@ -50,12 +50,24 @@ async function deploy() {
   var CrypToadzStringsDeployed = await CrypToadzStrings.deploy();
   await CrypToadzStringsDeployed.deployed();
 
+  const CrypToadzBuilderAny = await ethers.getContractFactory("CrypToadzBuilderAny");
+  var CrypToadzBuilderAnyDeployed = await CrypToadzBuilderAny.deploy();
+  await CrypToadzBuilderAnyDeployed.deployed();
+
+  const CrypToadzBuilderShort = await ethers.getContractFactory("CrypToadzBuilderShort");
+  var CrypToadzBuilderShortDeployed = await CrypToadzBuilderShort.deploy();
+  await CrypToadzBuilderShortDeployed.deployed();
+
+  const CrypToadzBuilderTall = await ethers.getContractFactory("CrypToadzBuilderTall");
+  var CrypToadzBuilderTallDeployed = await CrypToadzBuilderTall.deploy();
+  await CrypToadzBuilderTallDeployed.deployed();
+
   const CrypToadzBuilder = await ethers.getContractFactory("CrypToadzBuilder", {
     libraries: {
       PixelRenderer: PixelRendererDeployed.address
     }
   });
-  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy();
+  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(CrypToadzBuilderAnyDeployed.address, CrypToadzBuilderShortDeployed.address, CrypToadzBuilderTallDeployed.address);
   await CrypToadzBuilderDeployed.deployed();
 
   const CrypToadzMetadata = await ethers.getContractFactory("CrypToadzMetadata");
