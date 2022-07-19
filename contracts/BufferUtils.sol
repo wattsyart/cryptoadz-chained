@@ -9,8 +9,8 @@ library BufferUtils {
 
     function decompress(address compressed, uint decompressedLength) internal view returns (bytes memory) {
         (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(compressed), decompressedLength);
-        require(code == InflateLib.ErrorCode.ERR_NONE);
-        require(buffer.length == decompressedLength);
+        require(code == InflateLib.ErrorCode.ERR_NONE, "error during puff!");
+        require(buffer.length == decompressedLength, "invalid decompressed length!");
         return buffer;
     }
 
