@@ -132,8 +132,18 @@ async function main() {
     await CrypToadzCustomImage3196Deployed.deployed();
     console.log("CrypToadzCustomImage3196 deployed to " + CrypToadzCustomImage3196Deployed.address);
 
-    const CrypToadzCustomImage3309 = await ethers.getContractFactory("CrypToadzCustomImage3309", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address }});
-    var CrypToadzCustomImage3309Deployed = await CrypToadzCustomImage3309.deploy();
+    const CrypToadzCustomImage3309A = await ethers.getContractFactory("CrypToadzCustomImage3309A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address }});
+    var CrypToadzCustomImage3309ADeployed = await CrypToadzCustomImage3309A.deploy();
+    await CrypToadzCustomImage3309ADeployed.deployed();
+    console.log("CrypToadzCustomImage3309A deployed to " + CrypToadzCustomImage3309ADeployed.address);
+
+    const CrypToadzCustomImage3309B = await ethers.getContractFactory("CrypToadzCustomImage3309B", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address }});
+    var CrypToadzCustomImage3309BDeployed = await CrypToadzCustomImage3309B.deploy();
+    await CrypToadzCustomImage3309BDeployed.deployed();
+    console.log("CrypToadzCustomImage3309B deployed to " + CrypToadzCustomImage3309BDeployed.address);
+
+    const CrypToadzCustomImage3309 = await ethers.getContractFactory("CrypToadzCustomImage3309");
+    var CrypToadzCustomImage3309Deployed = await CrypToadzCustomImage3309.deploy(CrypToadzCustomImage3309ADeployed.address, CrypToadzCustomImage3309BDeployed.address);
     await CrypToadzCustomImage3309Deployed.deployed();
     console.log("CrypToadzCustomImage3309 deployed to " + CrypToadzCustomImage3309Deployed.address);
 
