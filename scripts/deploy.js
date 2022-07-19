@@ -212,7 +212,7 @@ async function main() {
     await CrypToadzCustomImage5471BDeployed.deployed();
     console.log("CrypToadzCustomImage5471B deployed to " + CrypToadzCustomImage5471BDeployed.address);
 
-    const CrypToadzCustomImage5471 = await ethers.getContractFactory("CrypToadzCustomImage5471", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address }});
+    const CrypToadzCustomImage5471 = await ethers.getContractFactory("CrypToadzCustomImage5471");
     var CrypToadzCustomImage5471Deployed = await CrypToadzCustomImage5471.deploy(CrypToadzCustomImage5471ADeployed.address, CrypToadzCustomImage5471BDeployed.address);
     await CrypToadzCustomImage5471Deployed.deployed();
     console.log("CrypToadzCustomImage5471 deployed to " + CrypToadzCustomImage5471Deployed.address);

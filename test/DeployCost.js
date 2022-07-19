@@ -172,7 +172,7 @@ describe("DeployCost", function () {
       var CrypToadzCustomImage5471BDeployed = await CrypToadzCustomImage5471B.deploy();
       await CrypToadzCustomImage5471BDeployed.deployed();
   
-      const CrypToadzCustomImage5471 = await ethers.getContractFactory("CrypToadzCustomImage5471", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address }});
+      const CrypToadzCustomImage5471 = await ethers.getContractFactory("CrypToadzCustomImage5471");
       var CrypToadzCustomImage5471Deployed = await CrypToadzCustomImage5471.deploy(CrypToadzCustomImage5471ADeployed.address, CrypToadzCustomImage5471BDeployed.address);
       await CrypToadzCustomImage5471Deployed.deployed();
   
