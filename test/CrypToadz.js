@@ -50,9 +50,13 @@ describe("CrypToadz", function () {
         });
         var CrypToadzAnimationsDeployed = await CrypToadzAnimations.deploy();
         await CrypToadzAnimationsDeployed.deployed();
+        
+        const CrypToadzCustomImage1005 = await ethers.getContractFactory("CrypToadzCustomImage1005");
+        var CrypToadzCustomImage1005Deployed = await CrypToadzCustomImage1005.deploy();
+        await CrypToadzCustomImage1005Deployed.deployed();
       
         const CrypToadzCustomImages = await ethers.getContractFactory("CrypToadzCustomImages");
-        var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy();
+        var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy(CrypToadzCustomImage1005Deployed.address);
         await CrypToadzCustomImagesDeployed.deployed();
       
         const CrypToadzCustomAnimations = await ethers.getContractFactory("CrypToadzCustomAnimations");

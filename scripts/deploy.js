@@ -56,8 +56,13 @@ async function main() {
   await CrypToadzAnimationsDeployed.deployed();
   console.log("CrypToadzAnimations deployed to " + CrypToadzAnimationsDeployed.address);
 
+  const CrypToadzCustomImage1005 = await ethers.getContractFactory("CrypToadzCustomImage1005");
+  var CrypToadzCustomImage1005Deployed = await CrypToadzCustomImage1005.deploy();
+  await CrypToadzCustomImage1005Deployed.deployed();
+  console.log("CrypToadzCustomImage1005 deployed to " + CrypToadzCustomImage1005Deployed.address);
+
   const CrypToadzCustomImages = await ethers.getContractFactory("CrypToadzCustomImages");
-  var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy();
+  var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy(CrypToadzCustomImage1005Deployed.address);
   await CrypToadzCustomImagesDeployed.deployed();
   console.log("CrypToadzCustomImages deployed to " + CrypToadzCustomImagesDeployed.address);
 

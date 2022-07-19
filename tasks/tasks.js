@@ -13,7 +13,7 @@ task("toad", "Validates correctness of a single CrypToad")
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
       });   
-      var contract = await factory.attach("0x6eD27f8c81ab23d492dA47ba1fEAdcE0e7Ac84e5");
+      var contract = await factory.attach("0x74b56Aaa999b34fE66086fB2663560eA3360DCf8");
       toadz = contract;
       await utils.collect(toadz, parseInt(taskArgs.id));
     });
