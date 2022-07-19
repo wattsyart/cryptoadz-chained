@@ -224,7 +224,7 @@ describe("CrypToadz", function () {
         _6631: CrypToadzCustomImage6631Deployed.address,
         _703: CrypToadzCustomImage703Deployed.address,
         _916: CrypToadzCustomImage916Deployed.address,
-        _936: CrypToadzCustomImage9365Deployed.address
+        _936: CrypToadzCustomImage936Deployed.address
       });
       await CrypToadzCustomImagesDeployed.deployed();
     }
