@@ -1,0 +1,29 @@
+{
+  "$source": "https://github.com/ethereum/go-ethereum/blob/9a188c975dfae0b138a6553389f875a0c173f59f/params/config.go#L297-L329",
+  "$mnemonic": "awful negative waste juice love truth nose coffee top legend method imitate",
+  "config": {
+    "chainId": 8134646,
+    "homesteadBlock": 0,
+    "eip150Block": 0,
+    "eip155Block": 0,
+    "eip158Block": 0,
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0
+  },
+  "nonce": "0x0000000000000042",
+  "difficulty": "0x0",
+  "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "timestamp": "0x0",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "extraData": "0x",
+  "gasLimit": "0xE0000000",
+  "minGasLimit": "0xE0000000",
+  "coinbase": "0x5aa4c644554d07FEbAfEA3267A252BD1eEbDD4A8",
+  "alloc": {
+    "0x5aa4c644554d07FEbAfEA3267A252BD1eEbDD4A8": {
+      "balance": "10000000000000000000000"
+    }
+  }
+}

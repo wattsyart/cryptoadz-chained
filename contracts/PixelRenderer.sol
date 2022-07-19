@@ -2,15 +2,9 @@
 
 pragma solidity ^0.8.13;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                        //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 import "./GIFEncoder.sol";
 import "./BufferUtils.sol";
-
-error UnsupportedDrawInstruction(uint8 instructionType);
-error DoNotAddBlackToColorTable();
+import "./Errors.sol";
 
 /** @notice Pixel renderer using basic drawing instructions: fill, line, and dot. */
 library PixelRenderer {
