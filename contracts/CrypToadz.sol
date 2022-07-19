@@ -9,44 +9,64 @@ pragma solidity ^0.8.13;
 import "./CrypToadzBase.sol";
 
 contract CrypToadz is CrypToadzBase {
+    constructor(
+        address _stringProvider,
+        address _builder,
+        address _metadataProvider,
+        address _animations,
+        address _customImages,
+        address _customAnimations
+    )
+        CrypToadzBase(
+            _stringProvider,
+            _builder,
+            _metadataProvider,
+            _animations,
+            _customImages,
+            _customAnimations
+        )
+    {}
 
-    constructor(address _stringProvider, address _builder, address _metadataProvider) CrypToadzBase(_stringProvider, _builder, _metadataProvider) { }
-    
-    function getTraitName(uint8 traitValue) internal override pure returns (string memory) {
-        if(traitValue >= 0 && traitValue < 17) {
+    function getTraitName(uint8 traitValue)
+        internal
+        pure
+        override
+        returns (string memory)
+    {
+        if (traitValue >= 0 && traitValue < 17) {
             return "Background";
         }
-        if(traitValue >= 17 && traitValue < 51) {
+        if (traitValue >= 17 && traitValue < 51) {
             return "Body";
         }
-        if(traitValue >= 51 && traitValue < 104) {
+        if (traitValue >= 51 && traitValue < 104) {
             return "Head";
         }
-        if(traitValue >= 104 && traitValue < 112) {
+        if (traitValue >= 104 && traitValue < 112) {
             return "Accessory II";
         }
-        if(traitValue >= 112 && traitValue < 119) {
+        if (traitValue >= 112 && traitValue < 119) {
             return "# Traits";
         }
-        if(traitValue >= 119 && traitValue < 121) {
+        if (traitValue >= 119 && traitValue < 121) {
             return "Size";
         }
-        if(traitValue >= 121 && traitValue < 139) {
+        if (traitValue >= 121 && traitValue < 139) {
             return "Mouth";
         }
-        if(traitValue >= 139 && traitValue < 172) {
+        if (traitValue >= 139 && traitValue < 172) {
             return "Eyes";
         }
-        if(traitValue >= 172 && traitValue < 178) {
+        if (traitValue >= 172 && traitValue < 178) {
             return "Custom";
         }
-        if(traitValue >= 178 && traitValue < 241) {
+        if (traitValue >= 178 && traitValue < 241) {
             return "Name";
         }
-        if(traitValue >= 241 && traitValue < 250) {
+        if (traitValue >= 241 && traitValue < 250) {
             return "Accessory I";
         }
-        if(traitValue >= 250 && traitValue < 253) {
+        if (traitValue >= 250 && traitValue < 253) {
             return "Clothes";
         }
         revert();

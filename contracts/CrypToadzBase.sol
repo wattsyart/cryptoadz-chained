@@ -11,6 +11,8 @@ import "./ICrypToadzStrings.sol";
 import "./ICrypToadzBuilder.sol";
 import "./ICrypToadzMetadata.sol";
 import "./ICrypToadzAnimations.sol";
+import "./ICrypToadzCustomImages.sol";
+import "./ICrypToadzCustomAnimations.sol";
 import "./PixelRenderer.sol";
 import "./GIFDraw.sol";
 
@@ -22,14 +24,6 @@ contract CrypToadzBase is IERC721, IERC165 {
     bytes private constant GIF_URI_PREFIX = "data:image/gif;base64,";
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";    
-
-    
-
-    mapping(uint256 => mapping(uint8 => uint16)) customImageLengths;
-    mapping(uint256 => mapping(uint8 => address)) customImageData;
-
-    mapping(uint256 => mapping(uint8 => uint16)) customAnimationLengths;
-    mapping(uint256 => mapping(uint8 => address)) customAnimationData;
 
     /** @notice Contract responsible for looking up strings. */
     ICrypToadzStrings public stringProvider;
@@ -165,12 +159,81 @@ contract CrypToadzBase is IERC721, IERC165 {
         animations = ICrypToadzAnimations(_animations);
     }
 
+    /** @notice Contract responsible for rendering custom images. */
+    ICrypToadzCustomImages public customImages;
+
+    /**
+    @notice Flag to disable use of setAnimations().
+     */
+    bool public customImagesLocked = false;
+
+    /**
+    @notice Permanently sets the customImagesLocked flag to true.
+     */
+    function lockCustomImages() external {
+        require(msg.sender == owner, "only owner");
+        require(
+            address(metadataProvider).supportsInterface(
+                type(ICrypToadzCustomImages).interfaceId
+            ),
+            "Not ICrypToadzCustomImages"
+        );
+        customImagesLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the custom images contract.
+    @dev No checks are performed when setting, but lockCustomImages() ensures that
+    the final address implements the ICrypToadzCustomImages interface.
+     */
+    function setCustomImages(address _customImages) public {
+        require(msg.sender == owner, "only owner");
+        require(!customImagesLocked, "CustomImages locked");
+        customImages = ICrypToadzCustomImages(_customImages);
+    }
+
+    /** @notice Contract responsible for rendering custom animations. */
+    ICrypToadzCustomAnimations public customAnimations;
+
+    /**
+    @notice Flag to disable use of setCustomAnimations().
+     */
+    bool public customAnimationsLocked = false;
+
+    /**
+    @notice Permanently sets the customAnimationsLocked flag to true.
+     */
+    function lockCustomAnimations() external {
+        require(msg.sender == owner, "only owner");
+        require(
+            address(metadataProvider).supportsInterface(
+                type(ICrypToadzCustomAnimations).interfaceId
+            ),
+            "Not ICrypToadzCustomAnimations"
+        );
+        customAnimationsLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the custom animations contract.
+    @dev No checks are performed when setting, but lockCustomAnimations() ensures that
+    the final address implements the ICrypToadzCustomAnimations interface.
+     */
+    function setCustomAnimations(address _customAnimations) public {
+        require(msg.sender == owner, "only owner");
+        require(!customAnimationsLocked, "CustomAnimations locked");
+        customAnimations = ICrypToadzCustomAnimations(_customAnimations);
+    }
+
     address owner;
 
-    constructor(address _stringProvider, address _builder, address _metadataProvider) {
+    constructor(address _stringProvider, address _builder, address _metadataProvider, address _animations, address _customImages, address _customAnimations) {
         stringProvider = ICrypToadzStrings(_stringProvider);
         builder = ICrypToadzBuilder(_builder);
         metadataProvider = ICrypToadzMetadata(_metadataProvider);
+        animations = ICrypToadzAnimations(_animations);
+        customImages = ICrypToadzCustomImages(_customImages);
+        customAnimations = ICrypToadzCustomAnimations(_customAnimations);
         owner = msg.sender;
     }
 
@@ -181,16 +244,16 @@ contract CrypToadzBase is IERC721, IERC165 {
         if (animations.isAnimation(tokenId)) {
             GIFEncoder.GIF memory gif = animations.getAnimation(tokenId);
             imageUri = GIFEncoder.getDataUri(gif);
-        } else if (customImageData[tokenId][0] != address(0)) {
-            bytes memory customImage = getCustomImage(tokenId);
+        } else if (customImages.isCustomImage(tokenId)) {
+            bytes memory customImage = customImages.getCustomImage(tokenId);
             imageUri = string(
                 abi.encodePacked(
                     PNG_URI_PREFIX,
                     Base64.encode(customImage, customImage.length)
                 )
             );
-        } else if (customAnimationData[tokenId][0] != address(0)) {
-            bytes memory customAnimation = getCustomAnimation(tokenId);
+        } else if (customAnimations.isCustomAnimation(tokenId)) {
+            bytes memory customAnimation = customAnimations.getCustomAnimation(tokenId);
             imageUri = string(
                 abi.encodePacked(
                     GIF_URI_PREFIX,
@@ -273,57 +336,6 @@ contract CrypToadzBase is IERC721, IERC165 {
             );
         }
         return (attributes, numberOfTraits);
-    }
-
-    function getCustomImage(uint256 tokenId)
-        internal
-        view
-        returns (bytes memory buffer)
-    {
-        uint256 size;
-        uint8 count;
-        while (customImageLengths[tokenId][count] != 0) {
-            size += customImageLengths[tokenId][count++];
-        }
-
-        buffer = DynamicBuffer.allocate(size);
-        for (uint8 i = 0; i < count; i++) {
-            bytes memory chunk = BufferUtils.decompress(
-                customImageData[tokenId][i],
-                customImageLengths[tokenId][i]
-            );
-            DynamicBuffer.appendUnchecked(buffer, chunk);
-        }
-    }
-
-    function getCustomAnimation(uint256 tokenId)
-        internal
-        view
-        returns (bytes memory buffer)
-    {
-        uint256 size;
-        uint8 count;
-        while (customAnimationLengths[tokenId][count] != 0) {
-            size += customAnimationLengths[tokenId][count++];
-        }
-
-        buffer = DynamicBuffer.allocate(size);
-        for (uint8 i = 0; i < count; i++) {
-            bytes memory chunk = BufferUtils.decompress(
-                customAnimationData[tokenId][i],
-                customAnimationLengths[tokenId][i]
-            );
-            DynamicBuffer.appendUnchecked(buffer, chunk);
-        }
-    }    
-
-    function getCustomImageFileForToken(uint256 tokenId)
-        internal
-        pure
-        virtual
-        returns (uint8)
-    {
-        revert();
     }
 
     function getTraitName(uint8 traitValue) internal virtual pure returns (string memory) { revert(); }      
