@@ -4,81 +4,16 @@ const utils = require('../utils.js');
 const gutil = require('gulp-util');
 
 task("toad", "Validates correctness of a single CrypToad")
-    .addParam("id", "The CrypToadz token ID to validate")
-    .setAction(
-        async (taskArgs) => {
-            var toadz = await deploy();
-            await utils.collect(toadz, parseInt(taskArgs.id));
-        });
-
-async function deploy() {
-    const GIFEncoder = await ethers.getContractFactory("GIFEncoder");
-    var GIFEncoderDeployed = await GIFEncoder.deploy();
-    await GIFEncoderDeployed.deployed();
-  
-    const PixelRenderer = await ethers.getContractFactory("PixelRenderer");
-    var PixelRendererDeployed = await PixelRenderer.deploy();
-    await PixelRendererDeployed.deployed();
-  
-    const CrypToadzStrings = await ethers.getContractFactory("CrypToadzStrings");
-    var CrypToadzStringsDeployed = await CrypToadzStrings.deploy();
-    await CrypToadzStringsDeployed.deployed();
-  
-    const CrypToadzBuilderAny = await ethers.getContractFactory("CrypToadzBuilderAny");
-    var CrypToadzBuilderAnyDeployed = await CrypToadzBuilderAny.deploy();
-    await CrypToadzBuilderAnyDeployed.deployed();
-  
-    const CrypToadzBuilderShort = await ethers.getContractFactory("CrypToadzBuilderShort");
-    var CrypToadzBuilderShortDeployed = await CrypToadzBuilderShort.deploy();
-    await CrypToadzBuilderShortDeployed.deployed();
-  
-    const CrypToadzBuilderTall = await ethers.getContractFactory("CrypToadzBuilderTall");
-    var CrypToadzBuilderTallDeployed = await CrypToadzBuilderTall.deploy();
-    await CrypToadzBuilderTallDeployed.deployed();
-  
-    const CrypToadzBuilder = await ethers.getContractFactory("CrypToadzBuilder", {
-      libraries: {
-        PixelRenderer: PixelRendererDeployed.address
-      }
+  .addParam("id", "The CrypToadz token ID to validate")
+  .setAction(
+    async (taskArgs) => {
+      var toadz;      
+      var factory = await ethers.getContractFactory("CrypToadz", {
+        libraries: {
+          GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
+        }
+      });   
+      var contract = await factory.attach("0x6eD27f8c81ab23d492dA47ba1fEAdcE0e7Ac84e5");
+      toadz = contract;
+      await utils.collect(toadz, parseInt(taskArgs.id));
     });
-    var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(CrypToadzBuilderAnyDeployed.address, CrypToadzBuilderShortDeployed.address, CrypToadzBuilderTallDeployed.address);
-    await CrypToadzBuilderDeployed.deployed();
-  
-    const CrypToadzMetadata = await ethers.getContractFactory("CrypToadzMetadata");
-    var CrypToadzMetadataDeployed = await CrypToadzMetadata.deploy();
-    await CrypToadzMetadataDeployed.deployed();
-  
-    const CrypToadzAnimations = await ethers.getContractFactory("CrypToadzAnimations", {
-      libraries: {
-        PixelRenderer: PixelRendererDeployed.address
-      }
-    });
-    var CrypToadzAnimationsDeployed = await CrypToadzAnimations.deploy();
-    await CrypToadzAnimationsDeployed.deployed();
-  
-    const CrypToadzCustomImages = await ethers.getContractFactory("CrypToadzCustomImages");
-    var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy();
-    await CrypToadzCustomImagesDeployed.deployed();
-  
-    const CrypToadzCustomAnimations = await ethers.getContractFactory("CrypToadzCustomAnimations");
-    var CrypToadzCustomAnimationsDeployed = await CrypToadzCustomAnimations.deploy();
-    await CrypToadzCustomAnimationsDeployed.deployed();
-  
-    const CrypToadz = await ethers.getContractFactory("CrypToadz", {
-      libraries: {
-        "GIFEncoder": GIFEncoderDeployed.address
-      }
-    });
-    var CrypToadzDeployed = await CrypToadz.deploy(
-      CrypToadzStringsDeployed.address,
-      CrypToadzBuilderDeployed.address,
-      CrypToadzMetadataDeployed.address,
-      CrypToadzAnimationsDeployed.address,
-      CrypToadzCustomImagesDeployed.address,
-      CrypToadzCustomAnimationsDeployed.address
-    );
-  
-    await CrypToadzDeployed.deployed();
-    console.log(gutil.colors.blue(`CrypToadz deployed to: '${CrypToadzDeployed.address}'`));
-    return CrypToadzDeployed;
-}

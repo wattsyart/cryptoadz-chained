@@ -38,6 +38,8 @@ services:
       - "0xE0000000"      
       - --rpc.gascap
       - "0xE0000000"
+      - --rpc.evmtimeout
+      - "0"
       - --verbosity
       - "4"      
       - --nousb
