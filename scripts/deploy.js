@@ -15,9 +15,11 @@ async function main() {
   var CrypToadzStringsDeployed = await CrypToadzStrings.deploy();
   await CrypToadzStringsDeployed.deployed();
 
-  const CrypToadzBuilder = await ethers.getContractFactory("CrypToadzBuilder", { libraries: {
-    PixelRenderer: PixelRendererDeployed.address
-  }});
+  const CrypToadzBuilder = await ethers.getContractFactory("CrypToadzBuilder", {
+    libraries: {
+      PixelRenderer: PixelRendererDeployed.address
+    }
+  });
   var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy();
   await CrypToadzBuilderDeployed.deployed();
 
@@ -25,11 +27,36 @@ async function main() {
   var CrypToadzMetadataDeployed = await CrypToadzMetadata.deploy();
   await CrypToadzMetadataDeployed.deployed();
 
-  const CrypToadz = await ethers.getContractFactory("CrypToadz", { libraries: {
-      "GIFEncoder": GIFEncoderDeployed.address,
-      "PixelRenderer": PixelRendererDeployed.address
-  }});
-  var CrypToadzDeployed = await CrypToadz.deploy(CrypToadzStringsDeployed.address, CrypToadzBuilderDeployed.address, CrypToadzMetadataDeployed.address);
+  const CrypToadzAnimations = await ethers.getContractFactory("CrypToadzAnimations", {
+    libraries: {
+      PixelRenderer: PixelRendererDeployed.address
+    }
+  });
+  var CrypToadzAnimationsDeployed = await CrypToadzAnimations.deploy();
+  await CrypToadzAnimationsDeployed.deployed();
+
+  const CrypToadzCustomImages = await ethers.getContractFactory("CrypToadzCustomImages");
+  var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy();
+  await CrypToadzCustomImagesDeployed.deployed();
+
+  const CrypToadzCustomAnimations = await ethers.getContractFactory("CrypToadzCustomAnimations");
+  var CrypToadzCustomAnimationsDeployed = await CrypToadzCustomAnimations.deploy();
+  await CrypToadzCustomAnimationsDeployed.deployed();
+
+  const CrypToadz = await ethers.getContractFactory("CrypToadz", {
+    libraries: {
+      "GIFEncoder": GIFEncoderDeployed.address
+    }
+  });
+  var CrypToadzDeployed = await CrypToadz.deploy(
+    CrypToadzStringsDeployed.address,
+    CrypToadzBuilderDeployed.address,
+    CrypToadzMetadataDeployed.address,
+    CrypToadzAnimationsDeployed.address,
+    CrypToadzCustomImagesDeployed.address,
+    CrypToadzCustomAnimationsDeployed.address
+  );
+
   await CrypToadzDeployed.deployed();
 }
 
