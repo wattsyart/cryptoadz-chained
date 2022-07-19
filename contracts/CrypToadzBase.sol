@@ -10,6 +10,7 @@ import "./IERC721.sol";
 import "./ICrypToadzStrings.sol";
 import "./ICrypToadzBuilder.sol";
 import "./ICrypToadzMetadata.sol";
+import "./ICrypToadzAnimations.sol";
 import "./PixelRenderer.sol";
 import "./GIFDraw.sol";
 
@@ -22,8 +23,7 @@ contract CrypToadzBase is IERC721, IERC165 {
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";    
 
-    mapping(uint256 => mapping(uint8 => uint16)) animationLengths;
-    mapping(uint256 => mapping(uint8 => address)) animationData;
+    
 
     mapping(uint256 => mapping(uint8 => uint16)) customImageLengths;
     mapping(uint256 => mapping(uint8 => address)) customImageData;
@@ -131,6 +131,40 @@ contract CrypToadzBase is IERC721, IERC165 {
         metadataProvider = ICrypToadzMetadata(_metadataProvider);
     }
 
+
+    /** @notice Contract responsible for rendering non-custom GIF animations. */
+    ICrypToadzAnimations public animations;
+
+    /**
+    @notice Flag to disable use of setAnimations().
+     */
+    bool public animationsLocked = false;
+
+    /**
+    @notice Permanently sets the animationsLocked flag to true.
+     */
+    function lockAnimations() external {
+        require(msg.sender == owner, "only owner");
+        require(
+            address(metadataProvider).supportsInterface(
+                type(ICrypToadzAnimations).interfaceId
+            ),
+            "Not ICrypToadzAnimations"
+        );
+        animationsLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the animations contract.
+    @dev No checks are performed when setting, but lockAnimations() ensures that
+    the final address implements the ICrypToadzAnimations interface.
+     */
+    function setAnimations(address _animations) public {
+        require(msg.sender == owner, "only owner");
+        require(!animationsLocked, "Animations locked");
+        animations = ICrypToadzAnimations(_animations);
+    }
+
     address owner;
 
     constructor(address _stringProvider, address _builder, address _metadataProvider) {
@@ -144,8 +178,8 @@ contract CrypToadzBase is IERC721, IERC165 {
         (uint8[] memory metadata, bool isTallToken) = metadataProvider.getMetadata(tokenId);
 
         string memory imageUri;
-        if (animationData[tokenId][0] != address(0)) {
-            GIFEncoder.GIF memory gif = getAnimation(tokenId);
+        if (animations.isAnimation(tokenId)) {
+            GIFEncoder.GIF memory gif = animations.getAnimation(tokenId);
             imageUri = GIFEncoder.getDataUri(gif);
         } else if (customImageData[tokenId][0] != address(0)) {
             bytes memory customImage = getCustomImage(tokenId);
@@ -281,56 +315,7 @@ contract CrypToadzBase is IERC721, IERC165 {
             );
             DynamicBuffer.appendUnchecked(buffer, chunk);
         }
-    }
-
-    function getAnimation(uint256 tokenId)
-        internal
-        view
-        returns (GIFEncoder.GIF memory gif)
-    {
-        uint256 size;
-        uint8 count;
-        while (animationLengths[tokenId][count] != 0) {
-            size += animationLengths[tokenId][count++];
-        }
-
-        bytes memory buffer = DynamicBuffer.allocate(size);
-        for (uint8 i = 0; i < count; i++) {
-            bytes memory chunk = BufferUtils.decompress(
-                animationData[tokenId][i],
-                animationLengths[tokenId][i]
-            );
-            DynamicBuffer.appendUnchecked(buffer, chunk);
-        }
-
-        uint256 position;
-        uint8 frameCount;
-        (frameCount, position) = BufferUtils.readByte(position, buffer);
-
-        gif.width = 36;
-        gif.height = 36;
-        gif.frames = new GIFEncoder.GIFFrame[](frameCount);
-
-        for (uint8 i = 0; i < frameCount; i++) {
-            GIFEncoder.GIFFrame memory frame;
-            frame.width = gif.width;
-            frame.height = gif.height;
-            frame.buffer = new uint32[](frame.width * frame.height);
-
-            position = GIFDraw.draw(frame, buffer, position, 0, 0, false);
-
-            gif.frames[gif.frameCount++] = frame;
-        }
     }    
-
-    function getAnimationFileForToken(uint256 tokenId)
-        internal
-        pure
-        virtual
-        returns (uint8)
-    {
-        revert();
-    }
 
     function getCustomImageFileForToken(uint256 tokenId)
         internal

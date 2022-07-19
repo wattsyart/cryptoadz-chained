@@ -11,7 +11,6 @@ import "./CrypToadzBase.sol";
 contract CrypToadz is CrypToadzBase {
 
     constructor(address _stringProvider, address _builder, address _metadataProvider) CrypToadzBase(_stringProvider, _builder, _metadataProvider) { }
-
     
     function getTraitName(uint8 traitValue) internal override pure returns (string memory) {
         if(traitValue >= 0 && traitValue < 17) {
@@ -52,7 +51,4 @@ contract CrypToadz is CrypToadzBase {
         }
         revert();
     }
-
-    
 }
-
