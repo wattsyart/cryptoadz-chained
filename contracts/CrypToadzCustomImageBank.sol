@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 
 import "@divergencetech/ethier/contracts/utils/DynamicBuffer.sol";
 import "./BufferUtils.sol";
+import "hardhat/console.sol";
 
 library CrypToadzCustomImageBank {
     function getCustomImage(mapping(uint8 => uint16) storage lengths, mapping(uint8 => address) storage data)
@@ -17,13 +18,18 @@ library CrypToadzCustomImageBank {
             size += lengths[count++];
         }
 
+        console.log("size should be %s, across %s buckets", size, count);
+
         buffer = DynamicBuffer.allocate(size);
         for (uint8 i = 0; i < count; i++) {
             bytes memory chunk = BufferUtils.decompress(
                 data[i],
                 lengths[i]
             );
+            console.log("decompressed chunk %s", i);
             DynamicBuffer.appendUnchecked(buffer, chunk);
         }
+        
+        console.log("buffer with size %s was allocated", size);
     }
 }
