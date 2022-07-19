@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.13;
 
-import "../GIFEncoder.sol";
+import "./GIFEncoder.sol";
 
-interface IDeltaCompositor {
+interface ICrypToadzDeltas {
     function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[] memory buffer, uint position);
     function getDeltaFileForToken(uint tokenId) external view returns (uint8);
 }

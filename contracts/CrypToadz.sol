@@ -10,9 +10,7 @@ import "./CrypToadzBase.sol";
 
 contract CrypToadz is CrypToadzBase {
 
-    constructor(address _stringProvider, address _builder) CrypToadzBase(_stringProvider, _builder) {
-
-    }
+    constructor(address _stringProvider, address _builder, address _metadataProvider) CrypToadzBase(_stringProvider, _builder, _metadataProvider) { }
 
     
     function getTraitName(uint8 traitValue) internal override pure returns (string memory) {

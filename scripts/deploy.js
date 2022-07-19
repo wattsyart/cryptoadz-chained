@@ -25,12 +25,12 @@ async function main() {
   var CrypToadzMetadataDeployed = await CrypToadzMetadata.deploy();
   await CrypToadzMetadataDeployed.deployed();
 
-  // const CrypToadz = await ethers.getContractFactory("CrypToadz", { libraries: {
-  //     "GIFEncoder": GIFEncoderDeployed.address,
-  //     "PixelRenderer": PixelRendererDeployed.address
-  // }});
-  // var CrypToadzDeployed = await CrypToadz.deploy(CryptoadzStringsDeployed.address);
-  // await CrypToadzDeployed.deployed();
+  const CrypToadz = await ethers.getContractFactory("CrypToadz", { libraries: {
+      "GIFEncoder": GIFEncoderDeployed.address,
+      "PixelRenderer": PixelRendererDeployed.address
+  }});
+  var CrypToadzDeployed = await CrypToadz.deploy(CrypToadzStringsDeployed.address, CrypToadzBuilderDeployed.address, CrypToadzMetadataDeployed.address);
+  await CrypToadzDeployed.deployed();
 }
 
 main()

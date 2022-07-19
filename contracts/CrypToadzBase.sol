@@ -133,9 +133,10 @@ contract CrypToadzBase is IERC721, IERC165 {
 
     address owner;
 
-    constructor(address _stringProvider, address _builder) {
+    constructor(address _stringProvider, address _builder, address _metadataProvider) {
         stringProvider = ICrypToadzStrings(_stringProvider);
         builder = ICrypToadzBuilder(_builder);
+        metadataProvider = ICrypToadzMetadata(_metadataProvider);
         owner = msg.sender;
     }
 
