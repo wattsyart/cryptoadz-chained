@@ -10,7 +10,11 @@ import "./ICrypToadzStrings.sol";
 
 contract CrypToadzStrings is ICrypToadzStrings {
 
-    mapping(uint8 => string) strings;
+    mapping(uint8 => string) strings;    
+
+    function getString(uint8 key) external override view returns (string memory) {
+        return strings[key];
+    }
 
     constructor() {
         strings[0] = "95";
@@ -262,9 +266,5 @@ contract CrypToadzStrings is ICrypToadzStrings {
         strings[246] = "Grey Hoodie";
         strings[247] = "Slime Hoodie";
         strings[248] = "Force Hoodie";
-    }
-
-    function getString(uint8 key) external override view returns (string memory) {
-        return strings[key];
     }
 }
