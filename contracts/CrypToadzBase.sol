@@ -140,11 +140,7 @@ contract CrypToadzBase is IERC721, IERC165 {
     }
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
-        uint8 metadataFile = getMetadataFileForToken(tokenId);
-        (uint8[] memory metadata, bool isTallToken) = metadataProvider.getMetadata(
-            tokenId,
-            metadataFile
-        );
+        (uint8[] memory metadata, bool isTallToken) = metadataProvider.getMetadata(tokenId);
 
         string memory imageUri;
         if (animationData[tokenId][0] != address(0)) {
@@ -196,9 +192,7 @@ contract CrypToadzBase is IERC721, IERC165 {
                     Base64.encode(bytes(json), bytes(json).length)
                 )
             );
-    }
-
-    
+    }    
 
     function getAttributes(uint8[] memory metadata)
         private
@@ -327,9 +321,7 @@ contract CrypToadzBase is IERC721, IERC165 {
 
             gif.frames[gif.frameCount++] = frame;
         }
-    }
-
-    
+    }    
 
     function getAnimationFileForToken(uint256 tokenId)
         internal
@@ -349,7 +341,6 @@ contract CrypToadzBase is IERC721, IERC165 {
         revert();
     }
 
-    function getMetadataFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }
     function getTraitName(uint8 traitValue) internal virtual pure returns (string memory) { revert(); }
     function getImageFileForToken(uint tokenId) internal virtual pure returns (uint8) { revert(); }          
 
@@ -363,7 +354,5 @@ contract CrypToadzBase is IERC721, IERC165 {
         returns (bool)
     {
         return interfaceId == type(IERC721).interfaceId;
-    }
-
-    
+    }   
 }

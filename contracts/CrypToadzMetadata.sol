@@ -20,23 +20,24 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
         return buffer[position] == bytes1(uint8(120));
     }    
 
-    function getMetadata(uint256 tokenId, uint8 file)
+    function getMetadata(uint256 tokenId)
         external
         view
-        returns (uint8[] memory metadata, bool isTall)
+        returns (uint8[] memory metadata, bool isTallToken)
     {
+        uint8 metadataFile = getMetadataFileForToken(tokenId);
         (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(
-            SSTORE2.read(metadataData[file]),
-            metadataLengths[file]
+            SSTORE2.read(metadataData[metadataFile]),
+            metadataLengths[metadataFile]
         );
         require(code == InflateLib.ErrorCode.ERR_NONE);
-        require(buffer.length == metadataLengths[file]);
+        require(buffer.length == metadataLengths[metadataFile]);
 
         (uint256 position, uint8 length) = BufferUtils.advanceToTokenPosition(
             tokenId,
             buffer
         );
-        isTall = buffer[position] == bytes1(uint8(120));
+        isTallToken = buffer[position] == bytes1(uint8(120));
 
         metadata = new uint8[](length);
         for (uint256 i = 0; i < length; i++) {
