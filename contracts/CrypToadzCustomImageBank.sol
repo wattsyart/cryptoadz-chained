@@ -22,7 +22,7 @@ library CrypToadzCustomImageBank {
 
         buffer = DynamicBuffer.allocate(size);
         for (uint8 i = 0; i < count; i++) {
-            console.log("chunk length = %s, address = %s", data[i], lengths[i]);
+            console.log("chunk length = %s, address = %s", lengths[i], data[i]);
             bytes memory chunk = BufferUtils.decompress(
                 data[i],
                 lengths[i]
