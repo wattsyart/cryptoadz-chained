@@ -24,28 +24,41 @@ module.exports = {
 
                 // convert base64 tokenURI to JSON
                 var jsonData = tokenDataUri.match(pattern)[2];
-                let jsonBuffer = Buffer.from(jsonData, 'base64');
-                let json = jsonBuffer.toString('utf8');
+                var jsonBuffer = Buffer.from(jsonData, 'base64');
+                var json = jsonBuffer.toString('utf8');
 
                 // write metadata for comparison
                 const metadataPath = `./scripts/output/metadata/${tokenId}.json`;
                 fs.writeFileSync(metadataPath, json);
-                console.log(gutil.colors.green(metadataPath));
-
+                
                 // compare metadata
-                var jsonA = JSON.parse(json);
-                delete jsonA["image"];
-                console.log(jsonA);
+                {
+                    var jsonA = JSON.parse(json);
+                    delete jsonA["image"];
 
-                 var jsonB = JSON.parse(fs.readFileSync(`./assets/TOADZ_${tokenId}.json`).toString());
-                delete jsonB["image"];
-                jsonB.attributes = jsonB.attributes.slice(0, 5);
-                console.log(jsonB);
+                    // some arweave assets have junk symbols in the first byte, we have to cleanse
+                    var assetJson = fs.readFileSync(`./assets/TOADZ_${tokenId}.json`, 'utf8').slice(1).toString('utf8');
+                    if(!assetJson.startsWith("{")) {
+                        assetJson = "{" + assetJson;
+                    }
 
-                //var metaDiff = jsonDiff.diffString(jsonA, jsonB);
+                    var jsonB = JSON.parse(assetJson);                    
+                    delete jsonB["image"];
+                    jsonB.attributes = jsonB.attributes.slice(0, 5);
+
+                    var metaDiff = jsonDiff.diff(jsonA, jsonB);
+                    if(metaDiff) {
+                        // create delta image if there isn't an exact match, for inspection
+                        var metaDeltaPath = `./scripts/output/metadata/${tokenId}_delta.json`;
+                        fs.writeFileSync(metaDeltaPath, JSON.stringify(metaDiff));
+                        console.log(gutil.colors.red(metaDeltaPath));
+                    } else {
+                        console.log(gutil.colors.green(metadataPath));
+                    }
+                }                
                 
                 // convert image URI to GIF buffer
-                var imageDataUri = JSON.parse(json).image;
+                var imageDataUri = JSON.parse(json).image;                
                 var imageFormat = imageDataUri.match(pattern)[1];
                 var imageData = imageDataUri.match(pattern)[2];
                 let imageBuffer = Buffer.from(imageData, 'base64');
@@ -74,7 +87,7 @@ module.exports = {
                     await gifToPng(imagePath, framePath);
                 }
 
-                if(imageFormat === 'gif') {
+                if(fs.existsSync(`./assets/TOADZ_${tokenId}.gif`)) {
                     // convert asset GIF to PNG frames for deltas
                     const framePath = `./scripts/output/images/frames/${tokenId}`;
                     await gifToPng(`./assets/TOADZ_${tokenId}.gif`, framePath);
@@ -92,16 +105,15 @@ module.exports = {
                 const badPixels = pixelmatch(asset.data, generated.data, diff.data, width, height, { threshold: 0 });
 
                 // create delta image if there isn't an exact match, for inspection
-                var deltaPath = `./scripts/output/images/${tokenId}_delta.png`;
-                deleteFileIfExists(deltaPath);
+                var imageDeltaPath = `./scripts/output/images/${tokenId}_delta.png`;
+                deleteFileIfExists(imageDeltaPath);
                 if (badPixels != 0) {
-                    fs.writeFileSync(deltaPath, PNG.sync.write(diff));
-                    console.log(gutil.colors.red(deltaPath));
+                    fs.writeFileSync(imageDeltaPath, PNG.sync.write(diff));
+                    console.log(gutil.colors.red(imageDeltaPath));
                     if(logger) {
                         logger.write(`${tokenId}` + os.EOL);
                     }                    
                 }
-
             } catch (error) {
                 console.error(gutil.colors.red(error));
             }

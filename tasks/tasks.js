@@ -4,7 +4,7 @@ const utils = require('../utils.js');
 const fs = require('fs');
 const readline = require('readline');
 
-task("toad", "Validates correctness of a single CrypToad")
+task("toadz", "Validates correctness of a single CrypToad")
   .addParam("id", "The CrypToadz token ID to validate")
   .setAction(
     async (taskArgs) => {
@@ -18,7 +18,7 @@ task("toad", "Validates correctness of a single CrypToad")
       await utils.collect(toadz, parseInt(taskArgs.id));
     });
 
-task("toad-custom-images", "Validates correctness of a CrypToadz custom images")
+task("toadz-custom-images", "Validates correctness of a CrypToadz custom images")
   .setAction(
     async (taskArgs) => {
       var toadz;
@@ -40,7 +40,7 @@ task("toad-custom-images", "Validates correctness of a CrypToadz custom images")
       }
     });
 
-task("toad-custom-animations", "Validates correctness of a CrypToadz animations")
+task("toadz-custom-animations", "Validates correctness of a CrypToadz animations")
   .setAction(
     async (taskArgs) => {
       var toadz;
@@ -62,7 +62,7 @@ task("toad-custom-animations", "Validates correctness of a CrypToadz animations"
       }
     });
 
-    task("toad-all", "Validates correctness of all CrypToadz tokens")
+    task("toadz-all", "Validates correctness of all CrypToadz tokens")
   .setAction(
     async (taskArgs) => {
       var toadz;
