@@ -1,13 +1,37 @@
 const fs = require('fs');
+const readline = require('readline');
+
 const os = require('os');
 const gutil = require('gulp-util');
+const superagent = require('superagent');
 
 const jsonDiff = require('json-diff')
 const gifToPng = require('gif-to-png');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
 
-module.exports = {    
+module.exports = {
+
+    crush:
+        async function crush() {            
+            const fileStream = fs.createReadStream('./scripts/customImageIds.txt');
+            const lines = readline.createInterface({
+                input: fileStream,
+                crlfDelay: Infinity
+            });
+
+            for await (const line of lines) {        
+                console.log(`crushing ./assets/TOADZ_${line}.png`);
+                superagent.post('https://www.toptal.com/developers/pngcrush/crush').attach('input', `./assets/TOADZ_${line}.png`).end(function(res) {                 
+                    var tempFilePath = `./assets/TOADZ_${line}_crushed.png`;   
+                    var tempFile = fs.createWriteStream(tempFilePath);
+                    res.pipe(tempFile);
+                    fs.copyFileSync(tempFilePath, `./assets/${line}.png`);
+                    deleteFileIfExists(tempFilePath);
+                });                
+            }
+        },
+
     collect:
         async function collect(contract, tokenId, logger) {
 
@@ -30,7 +54,7 @@ module.exports = {
                 // write metadata for comparison
                 const metadataPath = `./scripts/output/metadata/${tokenId}.json`;
                 fs.writeFileSync(metadataPath, json);
-                
+
                 // compare metadata
                 {
                     var jsonA = JSON.parse(json);
@@ -38,16 +62,16 @@ module.exports = {
 
                     // some arweave assets have junk symbols in the first byte, we have to cleanse
                     var assetJson = fs.readFileSync(`./assets/TOADZ_${tokenId}.json`, 'utf8').slice(1).toString('utf8');
-                    if(!assetJson.startsWith("{")) {
+                    if (!assetJson.startsWith("{")) {
                         assetJson = "{" + assetJson;
                     }
 
-                    var jsonB = JSON.parse(assetJson);                    
+                    var jsonB = JSON.parse(assetJson);
                     delete jsonB["image"];
                     jsonB.attributes = jsonB.attributes.slice(0, 5);
 
                     var metaDiff = jsonDiff.diff(jsonA, jsonB);
-                    if(metaDiff) {
+                    if (metaDiff) {
                         // create delta image if there isn't an exact match, for inspection
                         var metaDeltaPath = `./scripts/output/metadata/${tokenId}_delta.json`;
                         fs.writeFileSync(metaDeltaPath, JSON.stringify(metaDiff));
@@ -55,15 +79,15 @@ module.exports = {
                     } else {
                         console.log(gutil.colors.green(metadataPath));
                     }
-                }                
-                
+                }
+
                 // convert image URI to GIF buffer
-                var imageDataUri = JSON.parse(json).image;                
+                var imageDataUri = JSON.parse(json).image;
                 var imageFormat = imageDataUri.match(pattern)[1];
                 var imageData = imageDataUri.match(pattern)[2];
                 let imageBuffer = Buffer.from(imageData, 'base64');
 
-                if(imageFormat === 'png') {
+                if (imageFormat === 'png') {
                     // save as PNG
                     const imagePath = `./scripts/output/images/${tokenId}.png`;
                     fs.writeFileSync(imagePath, imageBuffer);
@@ -74,8 +98,7 @@ module.exports = {
                     createDirectoryIfNotExists(framePath);
                     fs.writeFileSync(`./scripts/output/images/frames/${tokenId}/frame1.png`, imageBuffer);
                 }
-                else
-                {
+                else {
                     // write GIF buffer to disk for comparison
                     const imagePath = `./scripts/output/images/${tokenId}.gif`;
                     fs.writeFileSync(imagePath, imageBuffer);
@@ -87,7 +110,7 @@ module.exports = {
                     await gifToPng(imagePath, framePath);
                 }
 
-                if(fs.existsSync(`./assets/TOADZ_${tokenId}.gif`)) {
+                if (fs.existsSync(`./assets/TOADZ_${tokenId}.gif`)) {
                     // convert asset GIF to PNG frames for deltas
                     const framePath = `./scripts/output/images/frames/${tokenId}`;
                     await gifToPng(`./assets/TOADZ_${tokenId}.gif`, framePath);
@@ -110,9 +133,9 @@ module.exports = {
                 if (badPixels != 0) {
                     fs.writeFileSync(imageDeltaPath, PNG.sync.write(diff));
                     console.log(gutil.colors.red(imageDeltaPath));
-                    if(logger) {
+                    if (logger) {
                         logger.write(`${tokenId}` + os.EOL);
-                    }                    
+                    }
                 }
             } catch (error) {
                 console.error(gutil.colors.red(error));
