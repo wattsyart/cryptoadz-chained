@@ -586,6 +586,8 @@ async function main() {
     await CrypToadzCustomImage6131Deployed.deployed();
     console.log("CrypToadzCustomImage6131 deployed to " + CrypToadzCustomImage6131Deployed.address);
 
+    const CrypToadzCustomAnimations = await ethers.getContractFactory("CrypToadzCustomAnimations");
+
     var CrypToadzCustomAnimationsDeployed = await CrypToadzCustomAnimations.deploy({
       _37: CrypToadzCustomImage37Deployed.address,
       _318: CrypToadzCustomImage318Deployed.address,
