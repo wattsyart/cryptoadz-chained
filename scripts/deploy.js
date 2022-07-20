@@ -2,7 +2,10 @@ const hre = require("hardhat");
 const ethers = hre.ethers;
 
 async function main() {
+  await deployContracts();
+}
 
+async function deployContracts() {
   const GIFEncoder = await ethers.getContractFactory("GIFEncoder");
   var GIFEncoderDeployed = await GIFEncoder.deploy();
   await GIFEncoderDeployed.deployed();
