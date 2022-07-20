@@ -43,14 +43,6 @@ describe("CrypToadz", function () {
     var CrypToadzMetadataDeployed = await CrypToadzMetadata.deploy();
     await CrypToadzMetadataDeployed.deployed();
 
-    const CrypToadzAnimations = await ethers.getContractFactory("CrypToadzAnimations", {
-      libraries: {
-        PixelRenderer: PixelRendererDeployed.address
-      }
-    });
-    var CrypToadzAnimationsDeployed = await CrypToadzAnimations.deploy();
-    await CrypToadzAnimationsDeployed.deployed();
-
     {
         const CrypToadzCustomImageBank = await ethers.getContractFactory("CrypToadzCustomImageBank");
         var CrypToadzCustomImageBankDeployed = await CrypToadzCustomImageBank.deploy();
@@ -271,7 +263,6 @@ describe("CrypToadz", function () {
       CrypToadzStringsDeployed.address,
       CrypToadzBuilderDeployed.address,
       CrypToadzMetadataDeployed.address,
-      CrypToadzAnimationsDeployed.address,
       CrypToadzCustomImagesDeployed.address,
       CrypToadzCustomAnimationsDeployed.address
     );

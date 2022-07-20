@@ -10,7 +10,6 @@ import "./IERC721.sol";
 import "./ICrypToadzStrings.sol";
 import "./ICrypToadzBuilder.sol";
 import "./ICrypToadzMetadata.sol";
-import "./ICrypToadzAnimations.sol";
 import "./ICrypToadzCustomImages.sol";
 import "./ICrypToadzCustomAnimations.sol";
 
@@ -126,39 +125,6 @@ contract CrypToadz is IERC721, IERC165 {
         metadataProvider = ICrypToadzMetadata(_metadataProvider);
     }
 
-    /** @notice Contract responsible for rendering pixel-based GIF animations. */
-    ICrypToadzAnimations public animations;
-
-    /**
-    @notice Flag to disable use of setAnimations().
-     */
-    bool public animationsLocked = false;
-
-    /**
-    @notice Permanently sets the animationsLocked flag to true.
-     */
-    function lockAnimations() external {
-        require(msg.sender == owner, "only owner");
-        require(
-            address(metadataProvider).supportsInterface(
-                type(ICrypToadzAnimations).interfaceId
-            ),
-            "Not ICrypToadzAnimations"
-        );
-        animationsLocked = true;
-    }
-
-    /**
-    @notice Sets the address of the animations contract.
-    @dev No checks are performed when setting, but lockAnimations() ensures that
-    the final address implements the ICrypToadzAnimations interface.
-     */
-    function setAnimations(address _animations) public {
-        require(msg.sender == owner, "only owner");
-        require(!animationsLocked, "Animations locked");
-        animations = ICrypToadzAnimations(_animations);
-    }
-
     /** @notice Contract responsible for rendering custom images. */
     ICrypToadzCustomImages public customImages;
 
@@ -227,11 +193,10 @@ contract CrypToadz is IERC721, IERC165 {
 
     address owner;
 
-    constructor(address _stringProvider, address _builder, address _metadataProvider, address _animations, address _customImages, address _customAnimations) {
+    constructor(address _stringProvider, address _builder, address _metadataProvider, address _customImages, address _customAnimations) {
         stringProvider = ICrypToadzStrings(_stringProvider);
         builder = ICrypToadzBuilder(_builder);
         metadataProvider = ICrypToadzMetadata(_metadataProvider);
-        animations = ICrypToadzAnimations(_animations);
         customImages = ICrypToadzCustomImages(_customImages);
         customAnimations = ICrypToadzCustomAnimations(_customAnimations);
         owner = msg.sender;
@@ -241,13 +206,7 @@ contract CrypToadz is IERC721, IERC165 {
         (uint8[] memory metadata, bool isTallToken) = metadataProvider.getMetadata(tokenId);
 
         string memory imageUri;
-        if (animations.isAnimation(tokenId)) {
-
-            console.log("%s is an animation", tokenId);
-            GIFEncoder.GIF memory gif = animations.getAnimation(tokenId);
-            imageUri = GIFEncoder.getDataUri(gif);
-
-        } else if (customImages.isCustomImage(tokenId)) {
+        if (customImages.isCustomImage(tokenId)) {
             bytes memory customImage = customImages.getCustomImage(tokenId);
             imageUri = string(
                 abi.encodePacked(

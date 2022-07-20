@@ -47,15 +47,6 @@ async function main() {
   await CrypToadzMetadataDeployed.deployed();
   console.log("CrypToadzMetadata deployed to " + CrypToadzMetadataDeployed.address);
 
-  const CrypToadzAnimations = await ethers.getContractFactory("CrypToadzAnimations", {
-    libraries: {
-      PixelRenderer: PixelRendererDeployed.address
-    }
-  });
-  var CrypToadzAnimationsDeployed = await CrypToadzAnimations.deploy();
-  await CrypToadzAnimationsDeployed.deployed();
-  console.log("CrypToadzAnimations deployed to " + CrypToadzAnimationsDeployed.address);
-
   {
     const CrypToadzCustomImageBank = await ethers.getContractFactory("CrypToadzCustomImageBank");
     var CrypToadzCustomImageBankDeployed = await CrypToadzCustomImageBank.deploy();
@@ -318,7 +309,6 @@ async function main() {
     CrypToadzStringsDeployed.address,
     CrypToadzBuilderDeployed.address,
     CrypToadzMetadataDeployed.address,
-    CrypToadzAnimationsDeployed.address,
     CrypToadzCustomImagesDeployed.address,
     CrypToadzCustomAnimationsDeployed.address
   );
