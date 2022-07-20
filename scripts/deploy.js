@@ -118,11 +118,6 @@ async function main() {
     await CrypToadzCustomImage15000000Deployed.deployed();
     console.log("CrypToadzCustomImage15000000 deployed to " + CrypToadzCustomImage15000000Deployed.address);
 
-    const CrypToadzCustomImage1519 = await ethers.getContractFactory("CrypToadzCustomImage1519", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage1519Deployed = await CrypToadzCustomImage1519.deploy();
-    await CrypToadzCustomImage1519Deployed.deployed();
-    console.log("CrypToadzCustomImage1519 deployed to " + CrypToadzCustomImage1519Deployed.address);
-
     const CrypToadzCustomImage1559 = await ethers.getContractFactory("CrypToadzCustomImage1559", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage1559Deployed = await CrypToadzCustomImage1559.deploy();
     await CrypToadzCustomImage1559Deployed.deployed();
@@ -188,36 +183,6 @@ async function main() {
     await CrypToadzCustomImage1935Deployed.deployed();
     console.log("CrypToadzCustomImage1935 deployed to " + CrypToadzCustomImage1935Deployed.address);
 
-    const CrypToadzCustomImage1943A = await ethers.getContractFactory("CrypToadzCustomImage1943A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage1943ADeployed = await CrypToadzCustomImage1943A.deploy();
-    await CrypToadzCustomImage1943ADeployed.deployed();
-    console.log("CrypToadzCustomImage1943A deployed to " + CrypToadzCustomImage1943ADeployed.address);
-
-    const CrypToadzCustomImage1943B = await ethers.getContractFactory("CrypToadzCustomImage1943B", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage1943BDeployed = await CrypToadzCustomImage1943B.deploy();
-    await CrypToadzCustomImage1943BDeployed.deployed();
-    console.log("CrypToadzCustomImage1943B deployed to " + CrypToadzCustomImage1943BDeployed.address);
-
-    const CrypToadzCustomImage1943C = await ethers.getContractFactory("CrypToadzCustomImage1943C", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage1943CDeployed = await CrypToadzCustomImage1943C.deploy();
-    await CrypToadzCustomImage1943CDeployed.deployed();
-    console.log("CrypToadzCustomImage1943C deployed to " + CrypToadzCustomImage1943CDeployed.address);
-
-    const CrypToadzCustomImage1943D = await ethers.getContractFactory("CrypToadzCustomImage1943D", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage1943DDeployed = await CrypToadzCustomImage1943D.deploy();
-    await CrypToadzCustomImage1943DDeployed.deployed();
-    console.log("CrypToadzCustomImage1943D deployed to " + CrypToadzCustomImage1943DDeployed.address);
-
-    const CrypToadzCustomImage1943E = await ethers.getContractFactory("CrypToadzCustomImage1943E", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage1943EDeployed = await CrypToadzCustomImage1943E.deploy();
-    await CrypToadzCustomImage1943EDeployed.deployed();
-    console.log("CrypToadzCustomImage1943E deployed to " + CrypToadzCustomImage1943EDeployed.address);
-
-    const CrypToadzCustomImage1943 = await ethers.getContractFactory("CrypToadzCustomImage1943");
-    var CrypToadzCustomImage1943Deployed = await CrypToadzCustomImage1943.deploy(CrypToadzCustomImage1943ADeployed.address, CrypToadzCustomImage1943BDeployed.address, CrypToadzCustomImage1943CDeployed.address, CrypToadzCustomImage1943DDeployed.address, CrypToadzCustomImage1943EDeployed.address);
-    await CrypToadzCustomImage1943Deployed.deployed();
-    console.log("CrypToadzCustomImage1943 deployed to " + CrypToadzCustomImage1943Deployed.address);
-
     const CrypToadzCustomImage1975A = await ethers.getContractFactory("CrypToadzCustomImage1975A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage1975ADeployed = await CrypToadzCustomImage1975A.deploy();
     await CrypToadzCustomImage1975ADeployed.deployed();
@@ -257,11 +222,6 @@ async function main() {
     var CrypToadzCustomImage22000000Deployed = await CrypToadzCustomImage22000000.deploy();
     await CrypToadzCustomImage22000000Deployed.deployed();
     console.log("CrypToadzCustomImage22000000 deployed to " + CrypToadzCustomImage22000000Deployed.address);
-
-    const CrypToadzCustomImage2208 = await ethers.getContractFactory("CrypToadzCustomImage2208", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage2208Deployed = await CrypToadzCustomImage2208.deploy();
-    await CrypToadzCustomImage2208Deployed.deployed();
-    console.log("CrypToadzCustomImage2208 deployed to " + CrypToadzCustomImage2208Deployed.address);
 
     const CrypToadzCustomImage2232A = await ethers.getContractFactory("CrypToadzCustomImage2232A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage2232ADeployed = await CrypToadzCustomImage2232A.deploy();
@@ -448,36 +408,6 @@ async function main() {
     await CrypToadzCustomImage316Deployed.deployed();
     console.log("CrypToadzCustomImage316 deployed to " + CrypToadzCustomImage316Deployed.address);
 
-    const CrypToadzCustomImage318A = await ethers.getContractFactory("CrypToadzCustomImage318A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage318ADeployed = await CrypToadzCustomImage318A.deploy();
-    await CrypToadzCustomImage318ADeployed.deployed();
-    console.log("CrypToadzCustomImage318A deployed to " + CrypToadzCustomImage318ADeployed.address);
-
-    const CrypToadzCustomImage318B = await ethers.getContractFactory("CrypToadzCustomImage318B", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage318BDeployed = await CrypToadzCustomImage318B.deploy();
-    await CrypToadzCustomImage318BDeployed.deployed();
-    console.log("CrypToadzCustomImage318B deployed to " + CrypToadzCustomImage318BDeployed.address);
-
-    const CrypToadzCustomImage318C = await ethers.getContractFactory("CrypToadzCustomImage318C", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage318CDeployed = await CrypToadzCustomImage318C.deploy();
-    await CrypToadzCustomImage318CDeployed.deployed();
-    console.log("CrypToadzCustomImage318C deployed to " + CrypToadzCustomImage318CDeployed.address);
-
-    const CrypToadzCustomImage318D = await ethers.getContractFactory("CrypToadzCustomImage318D", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage318DDeployed = await CrypToadzCustomImage318D.deploy();
-    await CrypToadzCustomImage318DDeployed.deployed();
-    console.log("CrypToadzCustomImage318D deployed to " + CrypToadzCustomImage318DDeployed.address);
-
-    const CrypToadzCustomImage318E = await ethers.getContractFactory("CrypToadzCustomImage318E", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage318EDeployed = await CrypToadzCustomImage318E.deploy();
-    await CrypToadzCustomImage318EDeployed.deployed();
-    console.log("CrypToadzCustomImage318E deployed to " + CrypToadzCustomImage318EDeployed.address);
-
-    const CrypToadzCustomImage318 = await ethers.getContractFactory("CrypToadzCustomImage318");
-    var CrypToadzCustomImage318Deployed = await CrypToadzCustomImage318.deploy(CrypToadzCustomImage318ADeployed.address, CrypToadzCustomImage318BDeployed.address, CrypToadzCustomImage318CDeployed.address, CrypToadzCustomImage318DDeployed.address, CrypToadzCustomImage318EDeployed.address);
-    await CrypToadzCustomImage318Deployed.deployed();
-    console.log("CrypToadzCustomImage318 deployed to " + CrypToadzCustomImage318Deployed.address);
-
     const CrypToadzCustomImage3196A = await ethers.getContractFactory("CrypToadzCustomImage3196A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage3196ADeployed = await CrypToadzCustomImage3196A.deploy();
     await CrypToadzCustomImage3196ADeployed.deployed();
@@ -497,11 +427,6 @@ async function main() {
     var CrypToadzCustomImage32000000Deployed = await CrypToadzCustomImage32000000.deploy();
     await CrypToadzCustomImage32000000Deployed.deployed();
     console.log("CrypToadzCustomImage32000000 deployed to " + CrypToadzCustomImage32000000Deployed.address);
-
-    const CrypToadzCustomImage3250 = await ethers.getContractFactory("CrypToadzCustomImage3250", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage3250Deployed = await CrypToadzCustomImage3250.deploy();
-    await CrypToadzCustomImage3250Deployed.deployed();
-    console.log("CrypToadzCustomImage3250 deployed to " + CrypToadzCustomImage3250Deployed.address);
 
     const CrypToadzCustomImage33000000 = await ethers.getContractFactory("CrypToadzCustomImage33000000", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage33000000Deployed = await CrypToadzCustomImage33000000.deploy();
@@ -558,71 +483,6 @@ async function main() {
     await CrypToadzCustomImage36000000Deployed.deployed();
     console.log("CrypToadzCustomImage36000000 deployed to " + CrypToadzCustomImage36000000Deployed.address);
 
-    const CrypToadzCustomImage3661A = await ethers.getContractFactory("CrypToadzCustomImage3661A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage3661ADeployed = await CrypToadzCustomImage3661A.deploy();
-    await CrypToadzCustomImage3661ADeployed.deployed();
-    console.log("CrypToadzCustomImage3661A deployed to " + CrypToadzCustomImage3661ADeployed.address);
-
-    const CrypToadzCustomImage3661B = await ethers.getContractFactory("CrypToadzCustomImage3661B", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage3661BDeployed = await CrypToadzCustomImage3661B.deploy();
-    await CrypToadzCustomImage3661BDeployed.deployed();
-    console.log("CrypToadzCustomImage3661B deployed to " + CrypToadzCustomImage3661BDeployed.address);
-
-    const CrypToadzCustomImage3661C = await ethers.getContractFactory("CrypToadzCustomImage3661C", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage3661CDeployed = await CrypToadzCustomImage3661C.deploy();
-    await CrypToadzCustomImage3661CDeployed.deployed();
-    console.log("CrypToadzCustomImage3661C deployed to " + CrypToadzCustomImage3661CDeployed.address);
-
-    const CrypToadzCustomImage3661D = await ethers.getContractFactory("CrypToadzCustomImage3661D", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage3661DDeployed = await CrypToadzCustomImage3661D.deploy();
-    await CrypToadzCustomImage3661DDeployed.deployed();
-    console.log("CrypToadzCustomImage3661D deployed to " + CrypToadzCustomImage3661DDeployed.address);
-
-    const CrypToadzCustomImage3661E = await ethers.getContractFactory("CrypToadzCustomImage3661E", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage3661EDeployed = await CrypToadzCustomImage3661E.deploy();
-    await CrypToadzCustomImage3661EDeployed.deployed();
-    console.log("CrypToadzCustomImage3661E deployed to " + CrypToadzCustomImage3661EDeployed.address);
-
-    const CrypToadzCustomImage3661F = await ethers.getContractFactory("CrypToadzCustomImage3661F", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage3661FDeployed = await CrypToadzCustomImage3661F.deploy();
-    await CrypToadzCustomImage3661FDeployed.deployed();
-    console.log("CrypToadzCustomImage3661F deployed to " + CrypToadzCustomImage3661FDeployed.address);
-
-    const CrypToadzCustomImage3661 = await ethers.getContractFactory("CrypToadzCustomImage3661");
-    var CrypToadzCustomImage3661Deployed = await CrypToadzCustomImage3661.deploy(CrypToadzCustomImage3661ADeployed.address, CrypToadzCustomImage3661BDeployed.address, CrypToadzCustomImage3661CDeployed.address, CrypToadzCustomImage3661DDeployed.address, CrypToadzCustomImage3661EDeployed.address, CrypToadzCustomImage3661FDeployed.address);
-    await CrypToadzCustomImage3661Deployed.deployed();
-    console.log("CrypToadzCustomImage3661 deployed to " + CrypToadzCustomImage3661Deployed.address);
-
-    const CrypToadzCustomImage37A = await ethers.getContractFactory("CrypToadzCustomImage37A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage37ADeployed = await CrypToadzCustomImage37A.deploy();
-    await CrypToadzCustomImage37ADeployed.deployed();
-    console.log("CrypToadzCustomImage37A deployed to " + CrypToadzCustomImage37ADeployed.address);
-
-    const CrypToadzCustomImage37B = await ethers.getContractFactory("CrypToadzCustomImage37B", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage37BDeployed = await CrypToadzCustomImage37B.deploy();
-    await CrypToadzCustomImage37BDeployed.deployed();
-    console.log("CrypToadzCustomImage37B deployed to " + CrypToadzCustomImage37BDeployed.address);
-
-    const CrypToadzCustomImage37C = await ethers.getContractFactory("CrypToadzCustomImage37C", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage37CDeployed = await CrypToadzCustomImage37C.deploy();
-    await CrypToadzCustomImage37CDeployed.deployed();
-    console.log("CrypToadzCustomImage37C deployed to " + CrypToadzCustomImage37CDeployed.address);
-
-    const CrypToadzCustomImage37D = await ethers.getContractFactory("CrypToadzCustomImage37D", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage37DDeployed = await CrypToadzCustomImage37D.deploy();
-    await CrypToadzCustomImage37DDeployed.deployed();
-    console.log("CrypToadzCustomImage37D deployed to " + CrypToadzCustomImage37DDeployed.address);
-
-    const CrypToadzCustomImage37E = await ethers.getContractFactory("CrypToadzCustomImage37E", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage37EDeployed = await CrypToadzCustomImage37E.deploy();
-    await CrypToadzCustomImage37EDeployed.deployed();
-    console.log("CrypToadzCustomImage37E deployed to " + CrypToadzCustomImage37EDeployed.address);
-
-    const CrypToadzCustomImage37 = await ethers.getContractFactory("CrypToadzCustomImage37");
-    var CrypToadzCustomImage37Deployed = await CrypToadzCustomImage37.deploy(CrypToadzCustomImage37ADeployed.address, CrypToadzCustomImage37BDeployed.address, CrypToadzCustomImage37CDeployed.address, CrypToadzCustomImage37DDeployed.address, CrypToadzCustomImage37EDeployed.address);
-    await CrypToadzCustomImage37Deployed.deployed();
-    console.log("CrypToadzCustomImage37 deployed to " + CrypToadzCustomImage37Deployed.address);
-
     const CrypToadzCustomImage37000000 = await ethers.getContractFactory("CrypToadzCustomImage37000000", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage37000000Deployed = await CrypToadzCustomImage37000000.deploy();
     await CrypToadzCustomImage37000000Deployed.deployed();
@@ -652,36 +512,6 @@ async function main() {
     var CrypToadzCustomImage40000000Deployed = await CrypToadzCustomImage40000000.deploy();
     await CrypToadzCustomImage40000000Deployed.deployed();
     console.log("CrypToadzCustomImage40000000 deployed to " + CrypToadzCustomImage40000000Deployed.address);
-
-    const CrypToadzCustomImage4035A = await ethers.getContractFactory("CrypToadzCustomImage4035A", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage4035ADeployed = await CrypToadzCustomImage4035A.deploy();
-    await CrypToadzCustomImage4035ADeployed.deployed();
-    console.log("CrypToadzCustomImage4035A deployed to " + CrypToadzCustomImage4035ADeployed.address);
-
-    const CrypToadzCustomImage4035B = await ethers.getContractFactory("CrypToadzCustomImage4035B", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage4035BDeployed = await CrypToadzCustomImage4035B.deploy();
-    await CrypToadzCustomImage4035BDeployed.deployed();
-    console.log("CrypToadzCustomImage4035B deployed to " + CrypToadzCustomImage4035BDeployed.address);
-
-    const CrypToadzCustomImage4035C = await ethers.getContractFactory("CrypToadzCustomImage4035C", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage4035CDeployed = await CrypToadzCustomImage4035C.deploy();
-    await CrypToadzCustomImage4035CDeployed.deployed();
-    console.log("CrypToadzCustomImage4035C deployed to " + CrypToadzCustomImage4035CDeployed.address);
-
-    const CrypToadzCustomImage4035D = await ethers.getContractFactory("CrypToadzCustomImage4035D", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage4035DDeployed = await CrypToadzCustomImage4035D.deploy();
-    await CrypToadzCustomImage4035DDeployed.deployed();
-    console.log("CrypToadzCustomImage4035D deployed to " + CrypToadzCustomImage4035DDeployed.address);
-
-    const CrypToadzCustomImage4035E = await ethers.getContractFactory("CrypToadzCustomImage4035E", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
-    var CrypToadzCustomImage4035EDeployed = await CrypToadzCustomImage4035E.deploy();
-    await CrypToadzCustomImage4035EDeployed.deployed();
-    console.log("CrypToadzCustomImage4035E deployed to " + CrypToadzCustomImage4035EDeployed.address);
-
-    const CrypToadzCustomImage4035 = await ethers.getContractFactory("CrypToadzCustomImage4035");
-    var CrypToadzCustomImage4035Deployed = await CrypToadzCustomImage4035.deploy(CrypToadzCustomImage4035ADeployed.address, CrypToadzCustomImage4035BDeployed.address, CrypToadzCustomImage4035CDeployed.address, CrypToadzCustomImage4035DDeployed.address, CrypToadzCustomImage4035EDeployed.address);
-    await CrypToadzCustomImage4035Deployed.deployed();
-    console.log("CrypToadzCustomImage4035 deployed to " + CrypToadzCustomImage4035Deployed.address);
 
     const CrypToadzCustomImage4096 = await ethers.getContractFactory("CrypToadzCustomImage4096", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage4096Deployed = await CrypToadzCustomImage4096.deploy();
