@@ -2,6 +2,7 @@ const fs = require('fs');
 const os = require('os');
 const gutil = require('gulp-util');
 
+const jsonDiff = require('json-diff')
 const gifToPng = require('gif-to-png');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
@@ -31,6 +32,18 @@ module.exports = {
                 fs.writeFileSync(metadataPath, json);
                 console.log(gutil.colors.green(metadataPath));
 
+                // compare metadata
+                var jsonA = JSON.parse(json);
+                delete jsonA["image"];
+                console.log(jsonA);
+
+                 var jsonB = JSON.parse(fs.readFileSync(`./assets/TOADZ_${tokenId}.json`).toString());
+                delete jsonB["image"];
+                jsonB.attributes = jsonB.attributes.slice(0, 5);
+                console.log(jsonB);
+
+                //var metaDiff = jsonDiff.diffString(jsonA, jsonB);
+                
                 // convert image URI to GIF buffer
                 var imageDataUri = JSON.parse(json).image;
                 var imageFormat = imageDataUri.match(pattern)[1];
@@ -59,6 +72,14 @@ module.exports = {
                     const framePath = `./scripts/output/images/frames/${tokenId}`;
                     createDirectoryIfNotExists(framePath);
                     await gifToPng(imagePath, framePath);
+                }
+
+                if(imageFormat === 'gif') {
+                    // convert asset GIF to PNG frames for deltas
+                    const framePath = `./scripts/output/images/frames/${tokenId}`;
+                    await gifToPng(`./assets/TOADZ_${tokenId}.gif`, framePath);
+                    var firstFrameBuffer = fs.readFileSync(`./scripts/output/images/frames/${tokenId}/frame1.png`);
+                    fs.writeFileSync(`./assets/TOADZ_${tokenId}.png`, firstFrameBuffer);
                 }
 
                 // load PNGs for comparison images
@@ -104,3 +125,4 @@ function deleteFileIfExists(path) {
         console.error(gutil.colors.red(error));
     }
 }
+

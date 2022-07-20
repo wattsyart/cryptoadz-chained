@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "@divergencetech/ethier/contracts/utils/DynamicBuffer.sol";
 
 import "./IERC721.sol";
@@ -22,8 +23,10 @@ contract CrypToadz is IERC721, IERC165 {
     bytes private constant JSON_URI_PREFIX = "data:application/json;base64,";
     bytes private constant PNG_URI_PREFIX = "data:image/png;base64,";
     bytes private constant GIF_URI_PREFIX = "data:image/gif;base64,";
-    bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
-    bytes private constant EXTERNAL_URL = "https://cryptoadz.io";    
+    bytes private constant DESCRIPTION =
+        "A small, warty, amphibious creature that resides in the metaverse.";
+    bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
+    bytes private constant NAME = "CrypToadz";
 
     /** @notice Contract responsible for looking up strings. */
     ICrypToadzStrings public stringProvider;
@@ -90,7 +93,6 @@ contract CrypToadz is IERC721, IERC165 {
         require(!builderLocked, "Builder locked");
         builder = ICrypToadzBuilder(_builder);
     }
-
 
     /** @notice Contract responsible for looking up metadata. */
     ICrypToadzMetadata public metadataProvider;
@@ -193,7 +195,13 @@ contract CrypToadz is IERC721, IERC165 {
 
     address owner;
 
-    constructor(address _stringProvider, address _builder, address _metadataProvider, address _customImages, address _customAnimations) {
+    constructor(
+        address _stringProvider,
+        address _builder,
+        address _metadataProvider,
+        address _customImages,
+        address _customAnimations
+    ) {
         stringProvider = ICrypToadzStrings(_stringProvider);
         builder = ICrypToadzBuilder(_builder);
         metadataProvider = ICrypToadzMetadata(_metadataProvider);
@@ -203,7 +211,8 @@ contract CrypToadz is IERC721, IERC165 {
     }
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
-        (uint8[] memory metadata, bool isTallToken) = metadataProvider.getMetadata(tokenId);
+        (uint8[] memory metadata, bool isTallToken) = metadataProvider
+            .getMetadata(tokenId);
 
         string memory imageUri;
         if (customImages.isCustomImage(tokenId)) {
@@ -215,7 +224,9 @@ contract CrypToadz is IERC721, IERC165 {
                 )
             );
         } else if (customAnimations.isCustomAnimation(tokenId)) {
-            bytes memory customAnimation = customAnimations.getCustomAnimation(tokenId);
+            bytes memory customAnimation = customAnimations.getCustomAnimation(
+                tokenId
+            );
             imageUri = string(
                 abi.encodePacked(
                     GIF_URI_PREFIX,
@@ -237,6 +248,10 @@ contract CrypToadz is IERC721, IERC165 {
                 DESCRIPTION,
                 '","external_url":"',
                 EXTERNAL_URL,
+                '","name":"',
+                NAME,
+                " #",
+                Strings.toString(tokenId),
                 '","image":"',
                 imageUri,
                 '",',
@@ -251,7 +266,7 @@ contract CrypToadz is IERC721, IERC165 {
                     Base64.encode(bytes(json), bytes(json).length)
                 )
             );
-    }    
+    }
 
     function getAttributes(uint8[] memory metadata)
         private
@@ -266,6 +281,7 @@ contract CrypToadz is IERC721, IERC165 {
                 continue;
             }
             (string memory a, uint8 t) = appendTrait(
+                value >= 112 && value < 119,
                 attributes,
                 getTraitName(value),
                 stringProvider.getString(value),
@@ -278,6 +294,7 @@ contract CrypToadz is IERC721, IERC165 {
     }
 
     function appendTrait(
+        bool isNumber,
         string memory attributes,
         string memory trait_type,
         string memory value,
@@ -285,17 +302,32 @@ contract CrypToadz is IERC721, IERC165 {
     ) private pure returns (string memory, uint8) {
         if (bytes(value).length > 0) {
             numberOfTraits++;
-            attributes = string(
-                abi.encodePacked(
-                    attributes,
-                    numberOfTraits > 1 ? "," : "",
-                    '{"trait_type":"',
-                    trait_type,
-                    '","value":"',
-                    value,
-                    '"}'
-                )
-            );
+
+            if (isNumber) {
+                attributes = string(
+                    abi.encodePacked(
+                        attributes,
+                        numberOfTraits > 1 ? "," : "",
+                        '{"trait_type":"',
+                        trait_type,
+                        '","value":',
+                        value,
+                        "}"
+                    )
+                );
+            } else {
+                attributes = string(
+                    abi.encodePacked(
+                        attributes,
+                        numberOfTraits > 1 ? "," : "",
+                        '{"trait_type":"',
+                        trait_type,
+                        '","value":"',
+                        value,
+                        '"}'
+                    )
+                );
+            }
         }
         return (attributes, numberOfTraits);
     }
@@ -354,5 +386,5 @@ contract CrypToadz is IERC721, IERC165 {
         returns (bool)
     {
         return interfaceId == type(IERC721).interfaceId;
-    }   
+    }
 }

@@ -12,7 +12,7 @@ async function main() {
       GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
     }
   });
-  toadz = await factory.attach("0x9562ac322fcfd9c1eD1e9358EC00186Bfc4C92c0");
+  toadz = await factory.attach("0x8F283EfCA122535CB7ed559f80e753432509Fb65");
 
   createDirectoryIfNotExists('./scripts/output');
   createDirectoryIfNotExists('./scripts/output/images');
