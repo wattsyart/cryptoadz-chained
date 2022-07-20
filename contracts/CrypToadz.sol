@@ -17,8 +17,6 @@ import "./ICrypToadzCustomAnimations.sol";
 import "./PixelRenderer.sol";
 import "./GIFDraw.sol";
 
-import "hardhat/console.sol";
-
 contract CrypToadz is IERC721, IERC165 {
     using ERC165Checker for address;
 
@@ -250,7 +248,6 @@ contract CrypToadz is IERC721, IERC165 {
             imageUri = GIFEncoder.getDataUri(gif);
 
         } else if (customImages.isCustomImage(tokenId)) {
-            console.log("%s is a custom image", tokenId);
             bytes memory customImage = customImages.getCustomImage(tokenId);
             imageUri = string(
                 abi.encodePacked(
@@ -258,9 +255,7 @@ contract CrypToadz is IERC721, IERC165 {
                     Base64.encode(customImage, customImage.length)
                 )
             );
-            imageUri = string(abi.encodePacked(''));
         } else if (customAnimations.isCustomAnimation(tokenId)) {
-            console.log("%s is a custom animation", tokenId);
             bytes memory customAnimation = customAnimations.getCustomAnimation(tokenId);
             imageUri = string(
                 abi.encodePacked(
@@ -268,9 +263,7 @@ contract CrypToadz is IERC721, IERC165 {
                     Base64.encode(customAnimation, customAnimation.length)
                 )
             );
-            imageUri = string(abi.encodePacked(''));
         } else {
-            console.log("%s is a builder toad", tokenId);
             GIFEncoder.GIF memory gif = builder.getImage(
                 metadata,
                 tokenId,

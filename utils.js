@@ -33,18 +33,33 @@ module.exports = {
 
                 // convert image URI to GIF buffer
                 var imageDataUri = JSON.parse(json).image;
+                var imageFormat = imageDataUri.match(pattern)[1];
                 var imageData = imageDataUri.match(pattern)[2];
                 let imageBuffer = Buffer.from(imageData, 'base64');
 
-                // write GIF buffer to disk for comparison
-                const imagePath = `./scripts/output/images/${tokenId}.gif`;
-                fs.writeFileSync(imagePath, imageBuffer);
-                console.log(gutil.colors.green(imagePath));
+                if(imageFormat === 'png') {
+                    // save as PNG
+                    const imagePath = `./scripts/output/images/${tokenId}.png`;
+                    fs.writeFileSync(imagePath, imageBuffer);
+                    console.log(gutil.colors.green(imagePath));
 
-                // convert GIF to PNG frames for deltas
-                const framePath = `./scripts/output/images/frames/${tokenId}`;
-                createDirectoryIfNotExists(framePath);
-                await gifToPng(imagePath, framePath);
+                    // write out a fake frame1 so we can compare
+                    const framePath = `./scripts/output/images/frames/${tokenId}`;
+                    createDirectoryIfNotExists(framePath);
+                    fs.writeFileSync(`./scripts/output/images/frames/${tokenId}/frame1.png`, imageBuffer);
+                }
+                else
+                {
+                    // write GIF buffer to disk for comparison
+                    const imagePath = `./scripts/output/images/${tokenId}.gif`;
+                    fs.writeFileSync(imagePath, imageBuffer);
+                    console.log(gutil.colors.green(imagePath));
+
+                    // convert GIF to PNG frames for deltas
+                    const framePath = `./scripts/output/images/frames/${tokenId}`;
+                    createDirectoryIfNotExists(framePath);
+                    await gifToPng(imagePath, framePath);
+                }
 
                 // load PNGs for comparison images
                 const asset = PNG.sync.read(fs.readFileSync(`./assets/TOADZ_${tokenId}.png`));
