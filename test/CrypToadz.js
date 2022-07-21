@@ -11,7 +11,7 @@ describe("CrypToadz", function () {
   });
 
   it("can get metadata for existing token", async function () {
-    var tokenURI = await CrypToadzDeployed.tokenURI(1005);
+    var tokenURI = await CrypToadzDeployed.tokenURI(17000000);
     console.log(tokenURI);
   });
 });
