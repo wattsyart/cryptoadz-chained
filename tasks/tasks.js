@@ -14,7 +14,7 @@ task("toadz", "Validates correctness of a single CrypToad")
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
       });
-      toadz = await factory.attach("0x2424746dd848c6b782d42f57d1E27D88381C7091");
+      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
       await utils.collect(toadz, parseInt(taskArgs.id));
     });
 
@@ -27,7 +27,7 @@ task("toadz-custom-images", "Validates correctness of a CrypToadz custom images"
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
       });
-      toadz = await factory.attach("0x2424746dd848c6b782d42f57d1E27D88381C7091");
+      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
 
       const fileStream = fs.createReadStream('./scripts/customImageIds.txt');
       const lines = readline.createInterface({
@@ -49,7 +49,7 @@ task("toadz-custom-animations", "Validates correctness of a CrypToadz animations
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
       });
-      toadz = await factory.attach("0x2424746dd848c6b782d42f57d1E27D88381C7091");
+      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
 
       const fileStream = fs.createReadStream('./scripts/customAnimationIds.txt');
       const lines = readline.createInterface({
@@ -71,7 +71,7 @@ task("toadz-all", "Validates correctness of all CrypToadz tokens")
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
       });
-      toadz = await factory.attach("0x2424746dd848c6b782d42f57d1E27D88381C7091");
+      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
 
       const fileStream = fs.createReadStream('./scripts/tokenIds.txt');
       const lines = readline.createInterface({
