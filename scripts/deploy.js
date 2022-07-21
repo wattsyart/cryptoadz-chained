@@ -59,7 +59,7 @@ async function deployContracts() {
   await CrypToadzCustomImageBankDeployed.deployed();
   console.log("CrypToadzCustomImageBank deployed to " + CrypToadzCustomImageBankDeployed.address);
 
-  if(false)
+  if(true)
   {
     const CrypToadzCustomImage1000000 = await ethers.getContractFactory("CrypToadzCustomImage1000000", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage1000000Deployed = await CrypToadzCustomImage1000000.deploy();
@@ -1074,7 +1074,7 @@ async function deployContracts() {
     console.log("CrypToadzCustomImages deployed to " + CrypToadzCustomImagesDeployed.address);
   }
 
-  if(false)
+  if(true)
   {
     const CrypToadzCustomImage1519 = await ethers.getContractFactory("CrypToadzCustomImage1519", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage1519Deployed = await CrypToadzCustomImage1519.deploy();
