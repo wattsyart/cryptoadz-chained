@@ -8,4 +8,21 @@ typechain
 cache
 artifacts
 scripts/output/**
+
+# Temporary files
 /assets/*.bin
+/assets/TOADZ_1519.png
+/assets/TOADZ_1943.png
+/assets/TOADZ_2208.png
+/assets/TOADZ_318.png
+/assets/TOADZ_3250.png
+/assets/TOADZ_3661.png
+/assets/TOADZ_37.png
+/assets/TOADZ_466.png
+/assets/TOADZ_4035.png
+/assets/TOADZ_43000000.png
+/assets/TOADZ_48000000.png
+/assets/TOADZ_4911.png
+/assets/TOADZ_5086.png
+/assets/TOADZ_5844.png
+/assets/TOADZ_6131.png

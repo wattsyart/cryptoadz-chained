@@ -136,7 +136,7 @@ module.exports = {
                     fs.writeFileSync(imageDeltaPath, PNG.sync.write(diff));
                     console.log(gutil.colors.red(imageDeltaPath));
                     if (logger) {
-                        logger.write(`${tokenId}` + os.EOL);
+                        await logger.write(`${tokenId}` + os.EOL);
                     }
                 }
             } catch (error) {
