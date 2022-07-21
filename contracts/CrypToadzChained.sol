@@ -17,7 +17,7 @@ import "./ICrypToadzCustomAnimations.sol";
 import "./PixelRenderer.sol";
 import "./GIFDraw.sol";
 
-contract CrypToadz is IERC721, IERC165 {
+contract CrypToadzChained is IERC721, IERC165 {
     using ERC165Checker for address;
 
     bytes private constant JSON_URI_PREFIX = "data:application/json;base64,";
