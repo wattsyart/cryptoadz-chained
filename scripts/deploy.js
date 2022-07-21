@@ -1,10 +1,6 @@
 const hre = require("hardhat");
 const ethers = hre.ethers;
 
-// async function main() {
-//   await deployContracts();
-// }
-
 module.exports = {
   deployContracts: deployContracts
 }
@@ -1389,12 +1385,12 @@ async function deployContracts(quiet) {
     if(!quiet) console.log("CrypToadzCustomAnimations deployed to " + CrypToadzCustomAnimationsDeployed.address);
   }
 
-  const CrypToadz = await ethers.getContractFactory("CrypToadz", {
+  const CrypToadzChained = await ethers.getContractFactory("CrypToadzChained", {
     libraries: {
       "GIFEncoder": GIFEncoderDeployed.address
     }
   });
-  var CrypToadzDeployed = await CrypToadz.deploy(
+  var CrypToadzChainedDeployed = await CrypToadzChained.deploy(
     CrypToadzStringsDeployed.address,
     CrypToadzBuilderDeployed.address,
     CrypToadzMetadataDeployed.address,
@@ -1402,14 +1398,9 @@ async function deployContracts(quiet) {
     CrypToadzCustomAnimationsDeployed.address
   );
 
-  await CrypToadzDeployed.deployed();
-  if(!quiet) console.log("CrypToadz deployed to " + CrypToadzDeployed.address)
-  return CrypToadzDeployed;
+  await CrypToadzChainedDeployed.deployed();
+  if(!quiet) console.log("CrypToadzChained deployed to " + CrypToadzDeployed.address)
+  return CrypToadzChainedDeployed;
 }
 
-// main()
-//   .then(() => process.exit(0))
-//   .catch((error) => {
-//     console.error(error);
-//     process.exit(1);
-//   });
+

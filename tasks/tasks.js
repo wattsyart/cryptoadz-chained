@@ -1,6 +1,6 @@
 require("hardhat/config");
 
-const utils = require('../utils.js');
+const utils = require('../scripts/utils.js');
 const fs = require('fs');
 const readline = require('readline');
 
@@ -9,7 +9,7 @@ task("toadz", "Validates correctness of a single CrypToad")
   .setAction(
     async (taskArgs) => {
       var toadz;
-      var factory = await ethers.getContractFactory("CrypToadz", {
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
@@ -22,7 +22,7 @@ task("toadz-custom-images", "Validates correctness of a CrypToadz custom images"
   .setAction(
     async (taskArgs) => {
       var toadz;
-      var factory = await ethers.getContractFactory("CrypToadz", {
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
@@ -44,7 +44,7 @@ task("toadz-custom-animations", "Validates correctness of a CrypToadz animations
   .setAction(
     async (taskArgs) => {
       var toadz;
-      var factory = await ethers.getContractFactory("CrypToadz", {
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }
@@ -66,7 +66,7 @@ task("toadz-all", "Validates correctness of all CrypToadz tokens")
   .setAction(
     async (taskArgs) => {
       var toadz;
-      var factory = await ethers.getContractFactory("CrypToadz", {
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
           GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
         }

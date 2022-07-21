@@ -1,5 +1,3 @@
-const { expect } = require("chai");
-const { ethers } = require("hardhat");
 const utils = require('../scripts/deploy.js');
 
 var CrypToadzDeployed;
