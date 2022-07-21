@@ -4,13 +4,14 @@ pragma solidity ^0.8.13;
 
 import "./lib/InflateLib.sol";
 import "./lib/SSTORE2.sol";
+import "./Errors.sol";
 
 library BufferUtils {
 
     function decompress(address compressed, uint decompressedLength) internal view returns (bytes memory) {
         (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(compressed), decompressedLength);        
-        require(code == InflateLib.ErrorCode.ERR_NONE);
-        require(buffer.length == decompressedLength);
+        if(code != InflateLib.ErrorCode.ERR_NONE) revert FailedToDecompress(uint(code));
+        if(buffer.length != decompressedLength) revert InvalidDecompressionLength(decompressedLength, buffer.length);
         return buffer;
     }
 
