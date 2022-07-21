@@ -25,4 +25,12 @@ library CrypToadzCustomImageBank {
             DynamicBuffer.appendUnchecked(buffer, chunk);
         }
     }
+
+    function getCustomImageSingle(uint16 length, address data)
+        external
+        view
+        returns (bytes memory buffer)
+    {
+        return BufferUtils.decompress(data, length);
+    }
 }
