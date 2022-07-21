@@ -1,4 +1,4 @@
-const utils = require('../deploy.js');
+const utils = require('./deploy.js');
 
 async function main() {
   await utils.deployContracts();
