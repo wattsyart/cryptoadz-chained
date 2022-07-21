@@ -1399,7 +1399,7 @@ async function deployContracts(quiet) {
   );
 
   await CrypToadzChainedDeployed.deployed();
-  if(!quiet) console.log("CrypToadzChained deployed to " + CrypToadzDeployed.address)
+  if(!quiet) console.log("CrypToadzChained deployed to " + CrypToadzChainedDeployed.address)
   return CrypToadzChainedDeployed;
 }
 

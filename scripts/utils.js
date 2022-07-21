@@ -67,8 +67,8 @@ module.exports = {
                     }
 
                     var jsonB = JSON.parse(assetJson);
-                    delete jsonB["image"];
-                    jsonB.attributes = jsonB.attributes.slice(0, 5);
+                    delete jsonB["image"];                    
+                    jsonB.attributes = jsonB.attributes.slice(0, jsonB.attributes.length - 1);
 
                     var metaDiff = jsonDiff.diff(jsonA, jsonB);
                     if (metaDiff) {
