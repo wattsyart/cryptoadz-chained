@@ -23,8 +23,7 @@ contract CrypToadz is IERC721, IERC165 {
     bytes private constant JSON_URI_PREFIX = "data:application/json;base64,";
     bytes private constant PNG_URI_PREFIX = "data:image/png;base64,";
     bytes private constant GIF_URI_PREFIX = "data:image/gif;base64,";
-    bytes private constant DESCRIPTION =
-        "A small, warty, amphibious creature that resides in the metaverse.";
+    bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
     bytes private constant NAME = "CrypToadz";
 
@@ -277,6 +276,9 @@ contract CrypToadz is IERC721, IERC165 {
         uint8 numberOfTraits;
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
+            if(value > 248) {
+                continue;
+            }            
             if (value == 119 || value == 120) {
                 continue;
             }
@@ -358,19 +360,19 @@ contract CrypToadz is IERC721, IERC165 {
         if (traitValue >= 121 && traitValue < 139) {
             return "Mouth";
         }
-        if (traitValue >= 139 && traitValue < 172) {
+        if (traitValue >= 139 && traitValue < 168) {
             return "Eyes";
         }
-        if (traitValue >= 172 && traitValue < 178) {
+        if (traitValue >= 168 && traitValue < 174) {
             return "Custom";
         }
-        if (traitValue >= 178 && traitValue < 241) {
+        if (traitValue >= 174 && traitValue < 237) {
             return "Name";
         }
-        if (traitValue >= 241 && traitValue < 250) {
+        if (traitValue >= 237 && traitValue < 246) {
             return "Accessory I";
         }
-        if (traitValue >= 250 && traitValue < 253) {
+        if (traitValue >= 246 && traitValue < 249) {
             return "Clothes";
         }
         revert();

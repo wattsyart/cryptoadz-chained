@@ -7,11 +7,11 @@ var CrypToadzDeployed;
 describe("CrypToadz", function () {
 
   beforeEach(async () => {
-    await utils.deployContracts();
+    CrypToadzDeployed = await utils.deployContracts();
   });
 
   it("can get metadata for existing token", async function () {
-    var tokenURI = await CrypToadzDeployed.tokenURI(1);
+    var tokenURI = await CrypToadzDeployed.tokenURI(1005);
     console.log(tokenURI);
   });
 });
