@@ -7,7 +7,7 @@ var CrypToadzDeployed;
 describe("CrypToadz", function () {
 
   beforeEach(async () => {
-    CrypToadzDeployed = await utils.deployContracts();
+    CrypToadzDeployed = await utils.deployContracts(true);
   });
 
   it("can get metadata for existing token", async function () {

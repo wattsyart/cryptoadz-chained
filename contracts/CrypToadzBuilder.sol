@@ -42,7 +42,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         );
         uint8 flag;
 
-        (, position) = BufferUtils.readUInt32(buffer, position);
+        (, position) = BufferUtils.readUInt32(position, buffer);
 
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
