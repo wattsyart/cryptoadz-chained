@@ -190,9 +190,7 @@ contract CrypToadzChained is IERC721, IERC165 {
         require(msg.sender == owner, "only owner");
         require(!customAnimationsLocked, "CustomAnimations locked");
         customAnimations = ICrypToadzCustomAnimations(_customAnimations);
-    }
-
-   
+    }   
 
     address owner;
 
@@ -278,17 +276,14 @@ contract CrypToadzChained is IERC721, IERC165 {
         uint8 numberOfTraits;
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
-            if(value > 248) {
-                continue;
-            }            
-            if (value == 119 || value == 120) {
+            if(value == 119 || value == 120) {
                 continue;
             }
             (string memory a, uint8 t) = appendTrait(
                 value >= 112 && value < 119,
                 attributes,
                 getTraitName(value),
-                stringProvider.getString(value),
+                stringProvider.getString(value == 249 ? 55 : value == 250 ? 55 : value),
                 numberOfTraits
             );
             attributes = a;
@@ -341,10 +336,6 @@ contract CrypToadzChained is IERC721, IERC165 {
         pure
         returns (string memory)
     {
-        if(traitValue == 55) return "Mouth";
-        if(traitValue == 249) return "Head";
-        if(traitValue == 250) return "Eyes";
-
         if (traitValue >= 0 && traitValue < 17) {
             return "Background";
         }
@@ -352,6 +343,7 @@ contract CrypToadzChained is IERC721, IERC165 {
             return "Body";
         }
         if (traitValue >= 51 && traitValue < 104) {
+            if(traitValue == 55) return "Mouth";
             return "Head";
         }
         if (traitValue >= 104 && traitValue < 112) {
@@ -381,6 +373,9 @@ contract CrypToadzChained is IERC721, IERC165 {
         if (traitValue >= 246 && traitValue < 249) {
             return "Clothes";
         }
+
+        if(traitValue == 249) return "Head";
+        if(traitValue == 250) return "Eyes";
 
         revert OutOfRange(traitValue);
     }
