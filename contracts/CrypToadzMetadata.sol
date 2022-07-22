@@ -15,11 +15,7 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
 
     function isTall(uint tokenId) external view returns (bool) {
         uint8 metadataFile = getMetadataFileForToken(tokenId);
-
-        (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(SSTORE2.read(metadataData[metadataFile]), metadataLengths[metadataFile]);
-        require(code == InflateLib.ErrorCode.ERR_NONE);
-        require(buffer.length == metadataLengths[metadataFile]);
-
+        bytes memory buffer = BufferUtils.decompress(metadataData[metadataFile], metadataLengths[metadataFile]);
         (uint position,) = BufferUtils.advanceToTokenPosition(tokenId, buffer);
         return buffer[position] == bytes1(uint8(120));
     }    
@@ -29,18 +25,14 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
         view
         returns (uint8[] memory metadata, bool isTallToken)
     {
-        uint8 metadataFile = getMetadataFileForToken(tokenId);
-        (InflateLib.ErrorCode code, bytes memory buffer) = InflateLib.puff(
-            SSTORE2.read(metadataData[metadataFile]),
-            metadataLengths[metadataFile]
-        );
-        require(code == InflateLib.ErrorCode.ERR_NONE);
-        require(buffer.length == metadataLengths[metadataFile]);
+        uint8 metadataFile = getMetadataFileForToken(tokenId);        
+        bytes memory buffer = BufferUtils.decompress(metadataData[metadataFile],  metadataLengths[metadataFile]);
 
         (uint256 position, uint8 length) = BufferUtils.advanceToTokenPosition(
             tokenId,
             buffer
         );
+
         isTallToken = buffer[position] == bytes1(uint8(120));
 
         metadata = new uint8[](length);
@@ -88,7 +80,7 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
         if(tokenId >= 6000 && tokenId < 6545) {
             return 11;
         }
-        if(tokenId >= 6546 && tokenId < 56000000) {
+        if(tokenId >= 6546 && tokenId <= 56000000) {
             return 12;
         }
         revert();

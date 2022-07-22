@@ -20,8 +20,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         bool isTallToken
     ) external override view returns (GIFEncoder.GIF memory gif) {
 
-        uint8 imageFile = getImageFileForToken(tokenId);
-
+        uint8 imageFile = getImageFileForToken(tokenId);        
         bytes memory buffer = BufferUtils.decompress(
             imageData[imageFile],
             imageLengths[imageFile]
@@ -40,26 +39,11 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
             tokenId,
             buffer
         );
-        uint8 flag;
 
-        (, position) = BufferUtils.readUInt32(buffer, position);
+        (, position) = BufferUtils.readUInt32(position, buffer);
 
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
-
-            if (value != 55 && value >= 51 && value < 104) {
-                flag = 1;
-            } else if (value == 55 && flag == 0) {
-                value = 249;
-                flag = 1;
-            }
-
-            if (value != 55 && value >= 121 && value < 139) {
-                flag = 2;
-            } else if (value == 55 && flag == 1) {
-                value = 250;
-                flag = 2;
-            }
 
             address feature;
             if (isTallToken) {
@@ -83,7 +67,25 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
                 if (instructionType == 3) {
                     uint8 featureId = uint8(buffer[position++]);
                     if (featureId != value) {
-                        revert InvalidDrawOrder(featureId);
+
+                        // vampire attribute is always 55, but can be one of
+                        // mouth (55), head (249), or eyes (250), in that order
+                        if(value == 55) {
+                            if(featureId == 249) { 
+                                value = 249;
+                                if (isTallToken) {
+                                    feature = tall.get(value);
+                                } else {
+                                    feature = short.get(value);
+                                }
+                            } else if(featureId == 250) {
+                                value = 250;
+                                feature = any.get(value);
+                            }
+                        }
+                        if(value != featureId) {
+                            revert InvalidDrawOrder(featureId);
+                        }                        
                     }
                     ox = uint8(buffer[position++]);
                     oy = uint8(buffer[position++]);
@@ -187,7 +189,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         if(tokenId >= 6618 && tokenId < 6852) {
             return 28;
         }
-        if(tokenId >= 6853 && tokenId < 56000000) {
+        if(tokenId >= 6853 && tokenId <= 56000000) {
             return 29;
         }
         revert();

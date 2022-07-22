@@ -32,7 +32,7 @@ library PixelRenderer {
 
     function drawFrameWithOffsets(DrawFrame memory f) external pure returns (uint32[] memory buffer, uint) {       
         
-        (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.buffer, f.position);
+        (uint32 instructionCount, uint position) = BufferUtils.readUInt32(f.position, f.buffer);
         f.position = position;
         
         for(uint32 i = 0; i < instructionCount; i++) {

@@ -5,3 +5,5 @@ pragma solidity ^0.8.13;
 error UnsupportedDrawInstruction(uint8 instructionType);
 error DoNotAddBlackToColorTable();
 error InvalidDrawOrder(uint8 featureId);
+error FailedToDecompress(uint errorCode);
+error InvalidDecompressionLength(uint expected, uint actual);

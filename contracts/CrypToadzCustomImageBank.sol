@@ -16,14 +16,21 @@ library CrypToadzCustomImageBank {
         while (lengths[count] != 0) {
             size += lengths[count++];
         }
-
         buffer = DynamicBuffer.allocate(size);
         for (uint8 i = 0; i < count; i++) {
             bytes memory chunk = BufferUtils.decompress(
                 data[i],
                 lengths[i]
-            );
+            );            
             DynamicBuffer.appendUnchecked(buffer, chunk);
         }
+    }
+
+    function getCustomImageSingle(uint16 length, address data)
+        external
+        view
+        returns (bytes memory buffer)
+    {
+        return BufferUtils.decompress(data, length);
     }
 }
