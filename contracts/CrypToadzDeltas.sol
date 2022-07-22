@@ -18,13 +18,17 @@ contract CrypToadzDeltas is ICrypToadzDeltas {
     
     function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[] memory buffer, uint position) {
         uint8 deltaFile = getDeltaFileForToken(tokenId);
-        uint position;
+        uint newPosition;
         if(deltaData[deltaFile] != address(0))
         {
             bytes memory deltaBuffer = BufferUtils.decompress(deltaData[deltaFile], deltaLengths[deltaFile]);
             (position,) = BufferUtils.advanceToTokenPosition(tokenId, deltaBuffer);
             position = GIFDraw.draw(frame, deltaBuffer, position, 0, 0, false);
         }
-        return (frame.buffer, position);
+        return (frame.buffer, newPosition);
+    }
+
+    function getDeltaFileForToken(uint tokenId) public pure returns (uint8) {
+        return 0;
     }
 }
