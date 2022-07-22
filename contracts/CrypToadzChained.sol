@@ -130,7 +130,7 @@ contract CrypToadzChained is IERC721, IERC165 {
     ICrypToadzCustomImages public customImages;
 
     /**
-    @notice Flag to disable use of setAnimations().
+    @notice Flag to disable use of setCustomImages().
      */
     bool public customImagesLocked = false;
 
