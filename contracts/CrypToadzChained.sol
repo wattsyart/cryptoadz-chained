@@ -276,8 +276,8 @@ contract CrypToadzChained is IERC721, IERC165 {
         uint8 numberOfTraits;
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
-            if(value == 119 || value == 120) {
-                continue;
+            if(value == 119 || value == 120 || value == 251) {
+                continue; // short, tall, N/A
             }
             (string memory a, uint8 t) = appendTrait(
                 value >= 112 && value < 119,
@@ -375,7 +375,7 @@ contract CrypToadzChained is IERC721, IERC165 {
         }
 
         if(traitValue == 249) return "Head";
-        if(traitValue == 250) return "Eyes";
+        if(traitValue == 250) return "Eyes";        
 
         revert OutOfRange(traitValue);
     }
