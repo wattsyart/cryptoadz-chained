@@ -7,3 +7,4 @@ error DoNotAddBlackToColorTable();
 error InvalidDrawOrder(uint8 featureId);
 error FailedToDecompress(uint errorCode);
 error InvalidDecompressionLength(uint expected, uint actual);
+error OutOfRange(uint value);

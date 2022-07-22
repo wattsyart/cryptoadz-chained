@@ -83,7 +83,7 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
         if(tokenId >= 6546 && tokenId <= 56000000) {
             return 12;
         }
-        revert();
+        revert OutOfRange(tokenId);
     }
 
     constructor() {

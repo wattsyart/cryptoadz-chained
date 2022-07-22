@@ -140,7 +140,7 @@ contract CrypToadzChained is IERC721, IERC165 {
     function lockCustomImages() external {
         require(msg.sender == owner, "only owner");
         require(
-            address(metadataProvider).supportsInterface(
+            address(customImages).supportsInterface(
                 type(ICrypToadzCustomImages).interfaceId
             ),
             "Not ICrypToadzCustomImages"
@@ -173,7 +173,7 @@ contract CrypToadzChained is IERC721, IERC165 {
     function lockCustomAnimations() external {
         require(msg.sender == owner, "only owner");
         require(
-            address(metadataProvider).supportsInterface(
+            address(customAnimations).supportsInterface(
                 type(ICrypToadzCustomAnimations).interfaceId
             ),
             "Not ICrypToadzCustomAnimations"
@@ -192,6 +192,39 @@ contract CrypToadzChained is IERC721, IERC165 {
         customAnimations = ICrypToadzCustomAnimations(_customAnimations);
     }
 
+    /** @notice Contract responsible for rendering delta patches */
+    ICrypToadzDeltas public deltas;
+
+    /**
+    @notice Flag to disable use of setDeltas().
+     */
+    bool public deltasLocked = false;
+
+    /**
+    @notice Permanently sets the deltasLocked flag to true.
+     */
+    function lockCustomAnimations() external {
+        require(msg.sender == owner, "only owner");
+        require(
+            address(deltas).supportsInterface(
+                type(ICrypToadzDeltas).interfaceId
+            ),
+            "Not ICrypToadzDeltas"
+        );
+        customAnimationsLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the deltas contract.
+    @dev No checks are performed when setting, but lockDeltas() ensures that
+    the final address implements the ICrypToadzDeltas interface.
+     */
+    function setCustomAnimations(address _deltas) public {
+        require(msg.sender == owner, "only owner");
+        require(!deltasLocked, "Deltas locked");
+        deltas = ICrypToadzDeltas(_deltas);
+    }
+
     address owner;
 
     constructor(
@@ -199,13 +232,15 @@ contract CrypToadzChained is IERC721, IERC165 {
         address _builder,
         address _metadataProvider,
         address _customImages,
-        address _customAnimations
+        address _customAnimations,
+        address _deltas
     ) {
         stringProvider = ICrypToadzStrings(_stringProvider);
         builder = ICrypToadzBuilder(_builder);
         metadataProvider = ICrypToadzMetadata(_metadataProvider);
         customImages = ICrypToadzCustomImages(_customImages);
         customAnimations = ICrypToadzCustomAnimations(_customAnimations);
+        deltas = ICrypToadzDeltas(deltas);
         owner = msg.sender;
     }
 
@@ -339,6 +374,10 @@ contract CrypToadzChained is IERC721, IERC165 {
         pure
         returns (string memory)
     {
+        if(traitValue == 55) return "Mouth";
+        if(traitValue == 249) return "Head";
+        if(traitValue == 250) return "Eyes";
+
         if (traitValue >= 0 && traitValue < 17) {
             return "Background";
         }
@@ -375,7 +414,8 @@ contract CrypToadzChained is IERC721, IERC165 {
         if (traitValue >= 246 && traitValue < 249) {
             return "Clothes";
         }
-        revert();
+
+        revert OutOfRange(traitValue);
     }
 
     /**

@@ -97,8 +97,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
             }
         }
 
-        // drawDelta(frame, tokenId);
-
+        frame.buffer = CrypToadzDeltas.drawDelta(frame, tokenId);
         gif.frames[gif.frameCount++] = frame;
     }
 
@@ -193,7 +192,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         if(tokenId >= 6853 && tokenId <= 56000000) {
             return 29;
         }
-        revert();
+        revert OutOfRange(tokenId);
     }
 
     CrypToadzBuilderAny any;
