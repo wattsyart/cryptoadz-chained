@@ -44,40 +44,40 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
     }    
 
     function getMetadataFileForToken(uint tokenId) private pure returns (uint8) {
-        if(tokenId >= 1 && tokenId < 545) {
+        if(tokenId >= 1 && tokenId <= 545) {
             return 0;
         }
-        if(tokenId >= 546 && tokenId < 1088) {
+        if(tokenId >= 546 && tokenId <= 1088) {
             return 1;
         }
-        if(tokenId >= 1089 && tokenId < 1635) {
+        if(tokenId >= 1089 && tokenId <= 1635) {
             return 2;
         }
-        if(tokenId >= 1636 && tokenId < 2179) {
+        if(tokenId >= 1636 && tokenId <= 2179) {
             return 3;
         }
-        if(tokenId >= 2180 && tokenId < 2728) {
+        if(tokenId >= 2180 && tokenId <= 2728) {
             return 4;
         }
-        if(tokenId >= 2729 && tokenId < 3272) {
+        if(tokenId >= 2729 && tokenId <= 3272) {
             return 5;
         }
-        if(tokenId >= 3273 && tokenId < 3816) {
+        if(tokenId >= 3273 && tokenId <= 3816) {
             return 6;
         }
-        if(tokenId >= 3817 && tokenId < 4362) {
+        if(tokenId >= 3817 && tokenId <= 4362) {
             return 7;
         }
-        if(tokenId >= 4363 && tokenId < 4908) {
+        if(tokenId >= 4363 && tokenId <= 4908) {
             return 8;
         }
-        if(tokenId >= 4909 && tokenId < 5453) {
+        if(tokenId >= 4909 && tokenId <= 5453) {
             return 9;
         }
-        if(tokenId >= 5454 && tokenId < 5999) {
+        if(tokenId >= 5454 && tokenId <= 5999) {
             return 10;
         }
-        if(tokenId >= 6000 && tokenId < 6545) {
+        if(tokenId >= 6000 && tokenId <= 6545) {
             return 11;
         }
         if(tokenId >= 6546 && tokenId <= 56000000) {
