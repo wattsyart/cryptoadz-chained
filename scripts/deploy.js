@@ -37,12 +37,51 @@ async function deployContracts(quiet) {
   await CrypToadzBuilderTallDeployed.deployed();
   if (!quiet) console.log("CrypToadzBuilderTall deployed to " + CrypToadzBuilderTallDeployed.address);
 
-  const CrypToadzBuilder = await ethers.getContractFactory("CrypToadzBuilder", {
+  const CrypToadzDeltasA = await ethers.getContractFactory("CrypToadzDeltasA");
+  var CrypToadzDeltasADeployed = await CrypToadzDeltasA.deploy();
+  await CrypToadzDeltasADeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltasA deployed to " + CrypToadzDeltasADeployed.address);
+
+  const CrypToadzDeltasB = await ethers.getContractFactory("CrypToadzDeltasB");
+  var CrypToadzDeltasBDeployed = await CrypToadzDeltasB.deploy();
+  await CrypToadzDeltasBDeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltasB deployed to " + CrypToadzDeltasBDeployed.address);
+
+  const CrypToadzDeltasC = await ethers.getContractFactory("CrypToadzDeltasC");
+  var CrypToadzDeltasCDeployed = await CrypToadzDeltasC.deploy();
+  await CrypToadzDeltasCDeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltasC deployed to " + CrypToadzDeltasCDeployed.address);
+
+  const CrypToadzDeltasD = await ethers.getContractFactory("CrypToadzDeltasD");
+  var CrypToadzDeltasDDeployed = await CrypToadzDeltasD.deploy();
+  await CrypToadzDeltasDDeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltasD deployed to " + CrypToadzDeltasDDeployed.address);
+
+  const CrypToadzDeltasE = await ethers.getContractFactory("CrypToadzDeltasE");
+  var CrypToadzDeltasEDeployed = await CrypToadzDeltasE.deploy();
+  await CrypToadzDeltasEDeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltasE deployed to " + CrypToadzDeltasEDeployed.address);
+
+  const CrypToadzDeltasF = await ethers.getContractFactory("CrypToadzDeltasF");
+  var CrypToadzDeltasFDeployed = await CrypToadzDeltasF.deploy();
+  await CrypToadzDeltasFDeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltasF deployed to " + CrypToadzDeltasFDeployed.address);
+
+  const CrypToadzDeltas = await ethers.getContractFactory("CrypToadzDeltas", {
     libraries: {
       PixelRenderer: PixelRendererDeployed.address
     }
+  });  
+  var CrypToadzDeltasDeployed = await CrypToadzDeltas.deploy(CrypToadzDeltasADeployed.address, CrypToadzDeltasBDeployed.address, CrypToadzDeltasCDeployed.address, CrypToadzDeltasDDeployed.address, CrypToadzDeltasEDeployed.address, CrypToadzDeltasFDeployed.address);
+  await CrypToadzDeltasDeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltas deployed to " + CrypToadzDeltasDeployed.address);
+
+  const CrypToadzBuilder = await ethers.getContractFactory("CrypToadzBuilder", {
+    libraries: {
+      PixelRenderer: PixelRendererDeployed.address,
+    }
   });
-  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(CrypToadzBuilderAnyDeployed.address, CrypToadzBuilderShortDeployed.address, CrypToadzBuilderTallDeployed.address);
+  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(CrypToadzBuilderAnyDeployed.address, CrypToadzBuilderShortDeployed.address, CrypToadzBuilderTallDeployed.address, CrypToadzDeltasDeployed.address);
   await CrypToadzBuilderDeployed.deployed();
   if (!quiet) console.log("CrypToadzBuilder deployed to " + CrypToadzBuilderDeployed.address);
 

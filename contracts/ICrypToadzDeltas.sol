@@ -6,5 +6,5 @@ import "./GIFEncoder.sol";
 
 interface ICrypToadzDeltas {
     function drawDelta(GIFEncoder.GIFFrame memory frame, uint tokenId) external view returns (uint32[] memory buffer, uint position);
-    function getDeltaFileForToken(uint tokenId) external view returns (uint8);
+    function getDeltaFileForToken(uint tokenId) external view returns (int8);
 }

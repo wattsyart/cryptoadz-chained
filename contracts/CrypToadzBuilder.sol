@@ -103,7 +103,10 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
             }
         }
 
-        // (frame.buffer, ) = ICrypToadzDeltas(deltas).drawDelta(frame, tokenId);
+        if(ICrypToadzDeltas(deltas).getDeltaFileForToken(tokenId) != -1) {
+            (frame.buffer, ) = ICrypToadzDeltas(deltas).drawDelta(frame, tokenId);
+        }
+
         gif.frames[gif.frameCount++] = frame;
     }
 
@@ -205,48 +208,48 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
     CrypToadzBuilderShort short;
     CrypToadzBuilderTall tall;
 
-     /** @notice Contract responsible for rendering delta patches */
-    // ICrypToadzDeltas public deltas;
+    /** @notice Contract responsible for rendering delta patches */
+    ICrypToadzDeltas public deltas;
 
-    // /**
-    // @notice Flag to disable use of setDeltas().
-    //  */
-    // bool public deltasLocked = false;    
+    /**
+    @notice Flag to disable use of setDeltas().
+     */
+    bool public deltasLocked = false;    
 
-    // /**
-    // @notice Permanently sets the deltasLocked flag to true.
-    //  */
-    // function lockCustomAnimations() external {
-    //     require(msg.sender == owner, "only owner");
-    //     require(
-    //         address(deltas).supportsInterface(
-    //             type(ICrypToadzDeltas).interfaceId
-    //         ),
-    //         "Not ICrypToadzDeltas"
-    //     );
-    //     deltasLocked = true;
-    // }
+    /**
+    @notice Permanently sets the deltasLocked flag to true.
+     */
+    function lockCustomAnimations() external {
+        require(msg.sender == owner, "only owner");
+        require(
+            address(deltas).supportsInterface(
+                type(ICrypToadzDeltas).interfaceId
+            ),
+            "Not ICrypToadzDeltas"
+        );
+        deltasLocked = true;
+    }
 
-    // /**
-    // @notice Sets the address of the deltas contract.
-    // @dev No checks are performed when setting, but lockDeltas() ensures that
-    // the final address implements the ICrypToadzDeltas interface.
-    //  */
-    // function setDeltas(address _deltas) public {
-    //     require(msg.sender == owner, "only owner");
-    //     require(!deltasLocked, "Deltas locked");
-    //     deltas = ICrypToadzDeltas(_deltas);
-    // }
+    /**
+    @notice Sets the address of the deltas contract.
+    @dev No checks are performed when setting, but lockDeltas() ensures that
+    the final address implements the ICrypToadzDeltas interface.
+     */
+    function setDeltas(address _deltas) public {
+        require(msg.sender == owner, "only owner");
+        require(!deltasLocked, "Deltas locked");
+        deltas = ICrypToadzDeltas(_deltas);
+    }
 
     address owner;
 
-    constructor(address _any, address _short, address _tall/*, address _deltas*/) {
+    constructor(address _any, address _short, address _tall, address _deltas) {
         owner = msg.sender;
 
         any = CrypToadzBuilderAny(_any);
         short = CrypToadzBuilderShort(_short);
         tall = CrypToadzBuilderTall(_tall);
-        // deltas = CrypToadzDeltas(_deltas);
+        deltas = CrypToadzDeltas(_deltas);
 
         imageLengths[0] = 6138;
         imageLengths[1] = 6124;
