@@ -22,6 +22,8 @@ library BufferUtils {
             (length, position) = BufferUtils.readByte(position, buffer);
             if(id != tokenId) {
                 position += length;
+                if(position >= buffer.length)
+                    return (position, length);
             }
         }
     }

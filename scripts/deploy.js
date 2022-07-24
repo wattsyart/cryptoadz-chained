@@ -66,13 +66,19 @@ async function deployContracts(quiet) {
   var CrypToadzDeltasFDeployed = await CrypToadzDeltasF.deploy();
   await CrypToadzDeltasFDeployed.deployed();
   if (!quiet) console.log("CrypToadzDeltasF deployed to " + CrypToadzDeltasFDeployed.address);
-
   const CrypToadzDeltas = await ethers.getContractFactory("CrypToadzDeltas", {
     libraries: {
       PixelRenderer: PixelRendererDeployed.address
     }
   });  
-  var CrypToadzDeltasDeployed = await CrypToadzDeltas.deploy({CrypToadzDeltasADeployed.address, CrypToadzDeltasBDeployed.address, CrypToadzDeltasCDeployed.address, CrypToadzDeltasDDeployed.address, CrypToadzDeltasEDeployed.address, CrypToadzDeltasFDeployed.address});
+  var CrypToadzDeltasDeployed = await CrypToadzDeltas.deploy({
+    _a: CrypToadzDeltasADeployed.address, 
+    _b: CrypToadzDeltasBDeployed.address, 
+    _c: CrypToadzDeltasCDeployed.address, 
+    _d: CrypToadzDeltasDDeployed.address, 
+    _e: CrypToadzDeltasEDeployed.address, 
+    _f: CrypToadzDeltasFDeployed.address
+  });
   await CrypToadzDeltasDeployed.deployed();
   if (!quiet) console.log("CrypToadzDeltas deployed to " + CrypToadzDeltasDeployed.address);
 
@@ -81,7 +87,12 @@ async function deployContracts(quiet) {
       PixelRenderer: PixelRendererDeployed.address,
     }
   });
-  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(CrypToadzBuilderAnyDeployed.address, CrypToadzBuilderShortDeployed.address, CrypToadzBuilderTallDeployed.address, CrypToadzDeltasDeployed.address);
+  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(
+    CrypToadzBuilderAnyDeployed.address, 
+    CrypToadzBuilderShortDeployed.address, 
+    CrypToadzBuilderTallDeployed.address, 
+    CrypToadzDeltasDeployed.address
+  );
   await CrypToadzBuilderDeployed.deployed();
   if (!quiet) console.log("CrypToadzBuilder deployed to " + CrypToadzBuilderDeployed.address);
 

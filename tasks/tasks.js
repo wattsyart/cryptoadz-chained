@@ -4,6 +4,9 @@ const utils = require('../scripts/utils.js');
 const fs = require('fs');
 const readline = require('readline');
 
+const gifEncoderAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
+const mainContractAddress = "0x8D3F09683C0439a91B227162E0c2E9836bEF3aaB";
+
 task("toadz", "Validates correctness of a single CrypToad")
   .addParam("id", "The CrypToadz token ID to validate")
   .setAction(
@@ -11,10 +14,10 @@ task("toadz", "Validates correctness of a single CrypToad")
       var toadz;
       var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
-          GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
+          GIFEncoder: gifEncoderAddress
         }
       });
-      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
+      toadz = await factory.attach(mainContractAddress);
       await utils.collect(toadz, parseInt(taskArgs.id));
     });
 
@@ -24,10 +27,10 @@ task("toadz-custom-images", "Validates correctness of a CrypToadz custom images"
       var toadz;
       var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
-          GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
+          GIFEncoder: gifEncoderAddress
         }
       });
-      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
+      toadz = await factory.attach(mainContractAddress);
 
       const fileStream = fs.createReadStream('./scripts/customImageIds.txt');
       const lines = readline.createInterface({
@@ -46,10 +49,10 @@ task("toadz-custom-animations", "Validates correctness of a CrypToadz animations
       var toadz;
       var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
-          GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
+          GIFEncoder: gifEncoderAddress
         }
       });
-      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
+      toadz = await factory.attach(mainContractAddress);
 
       const fileStream = fs.createReadStream('./scripts/customAnimationIds.txt');
       const lines = readline.createInterface({
@@ -68,10 +71,10 @@ task("toadz-all", "Validates correctness of all CrypToadz tokens")
       var toadz;
       var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
-          GIFEncoder: "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F"
+          GIFEncoder: gifEncoderAddress
         }
       });
-      toadz = await factory.attach("0x294eEB770Fa60Dc80f0D3e2C34B4fA10d7E51675");
+      toadz = await factory.attach(mainContractAddress);
 
       const fileStream = fs.createReadStream('./scripts/tokenIds.txt');
       const lines = readline.createInterface({

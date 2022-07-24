@@ -20,21 +20,19 @@ contract CrypToadzDeltas is ICrypToadzDeltas {
 
     mapping(uint256 => AddressAndIndex) deltaBank;
 
-    function drawDelta(GIFEncoder.GIFFrame memory frame, uint256 tokenId)
+    function drawDelta(GIFEncoder.GIFFrame memory frame, uint256 tokenId, uint8 deltaFile)
         external
         view
-        returns (uint32[] memory buffer, uint256 position)
+        returns (uint32[] memory buffer)
     {
-        int8 deltaFile = getDeltaFileForToken(tokenId);        
-        if(deltaFile != -1) {
-            uint256 newPosition;
-            if (deltaBank[uint8(deltaFile)]._address != address(0)) {
-                bytes memory deltaBuffer = ICrypToadzDeltaBank(deltaBank[uint8(deltaFile)]._address).getBufferAtIndex(deltaBank[uint8(deltaFile)]._index);
-                (position, ) = BufferUtils.advanceToTokenPosition(tokenId, deltaBuffer);
+        if (deltaBank[deltaFile]._address != address(0)) {
+            bytes memory deltaBuffer = ICrypToadzDeltaBank(deltaBank[deltaFile]._address).getBufferAtIndex(deltaBank[deltaFile]._index);
+            (uint position, ) = BufferUtils.advanceToTokenPosition(tokenId, deltaBuffer);
+            if(position < buffer.length) {
                 position = GIFDraw.draw(frame, deltaBuffer, position, 0, 0, false);
             }
-            return (frame.buffer, newPosition);
-        }        
+        }
+        return (frame.buffer);      
     }
 
     function getDeltaFileForToken(uint256 tokenId) public pure returns (int8) {

@@ -25,9 +25,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         uint256 tokenId,
         bool isTallToken
     ) external override view returns (GIFEncoder.GIF memory gif) {
-
         uint8 imageFile = getImageFileForToken(tokenId); 
-
         bytes memory buffer = BufferUtils.decompress(
             imageData[imageFile],
             imageLengths[imageFile]
@@ -103,8 +101,9 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
             }
         }
 
-        if(ICrypToadzDeltas(deltas).getDeltaFileForToken(tokenId) != -1) {
-            (frame.buffer, ) = ICrypToadzDeltas(deltas).drawDelta(frame, tokenId);
+        int8 deltaFile = ICrypToadzDeltas(deltas).getDeltaFileForToken(tokenId);
+        if(deltaFile != -1) {
+            (frame.buffer) = ICrypToadzDeltas(deltas).drawDelta(frame, tokenId, uint8(deltaFile));
         }
 
         gif.frames[gif.frameCount++] = frame;
@@ -219,7 +218,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
     /**
     @notice Permanently sets the deltasLocked flag to true.
      */
-    function lockCustomAnimations() external {
+    function lockDeltas() external {
         require(msg.sender == owner, "only owner");
         require(
             address(deltas).supportsInterface(
