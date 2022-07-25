@@ -59,7 +59,7 @@ task("crush", "Runs pngcrush on all custom images")
       await utils.crush();
     });
 
-function checkToadz(idFilePath, gifEncoderAddress, contractAddress, logger, checkMetadata, checkImage) {
+async function checkToadz(idFilePath, gifEncoderAddress, contractAddress, logger, checkMetadata, checkImage) {
   var toadz;
       var factory = await ethers.getContractFactory("CrypToadzChained", {
         libraries: {
