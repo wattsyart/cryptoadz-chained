@@ -5,7 +5,7 @@ const fs = require('fs');
 const readline = require('readline');
 
 const gifEncoderAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
-const mainContractAddress = "0x8D3F09683C0439a91B227162E0c2E9836bEF3aaB";
+const mainContractAddress = "0x299F288606EeE22364EE19bC0DD97e6Cf65f1b2a";
 
 task("toadz", "Validates correctness of a single CrypToad")
   .addParam("id", "The CrypToadz token ID to validate")
@@ -18,7 +18,7 @@ task("toadz", "Validates correctness of a single CrypToad")
         }
       });
       toadz = await factory.attach(mainContractAddress);
-      await utils.collect(toadz, parseInt(taskArgs.id));
+      await utils.collect(toadz, parseInt(taskArgs.id), null, true, true);
     });
 
 task("toadz-custom-images", "Validates correctness of a CrypToadz custom images")
@@ -39,7 +39,7 @@ task("toadz-custom-images", "Validates correctness of a CrypToadz custom images"
       });
 
       for await (const line of lines) {
-        await utils.collect(toadz, parseInt(line),);
+        await utils.collect(toadz, parseInt(line), null, true, true);
       }
     });
 
@@ -61,7 +61,7 @@ task("toadz-custom-animations", "Validates correctness of a CrypToadz animations
       });
 
       for await (const line of lines) {
-        await utils.collect(toadz, parseInt(line),);
+        await utils.collect(toadz, parseInt(line), null, true, true);
       }
     });
 
@@ -83,7 +83,7 @@ task("toadz-image-deltas", "Validates correctness of all CrypToadz token images 
       });
 
       for await (const line of lines) {
-        await utils.collect(toadz, parseInt(line),);
+        await utils.collect(toadz, parseInt(line), null, false, true);
       }
     });
 
@@ -105,7 +105,7 @@ task("toadz-all", "Validates correctness of all CrypToadz tokens")
       });
 
       for await (const line of lines) {
-        await utils.collect(toadz, parseInt(line),);
+        await utils.collect(toadz, parseInt(line), null, true, true);
       }
     });
 
