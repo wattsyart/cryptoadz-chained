@@ -74,9 +74,10 @@ module.exports = {
                     });
 
                     var metaDiff = jsonDiff.diff(jsonA, jsonB);
+                    var metaDeltaPath = `./scripts/output/metadata/${tokenId}_delta.json`;
+                    deleteFileIfExists(metaDeltaPath);
                     if (metaDiff) {
-                        // create delta image if there isn't an exact match, for inspection
-                        var metaDeltaPath = `./scripts/output/metadata/${tokenId}_delta.json`;
+                        // create delta JSON if there isn't an exact match, for inspection                        
                         fs.writeFileSync(metaDeltaPath, JSON.stringify(metaDiff));
                         console.log(gutil.colors.red(metaDeltaPath));
                     } else {
