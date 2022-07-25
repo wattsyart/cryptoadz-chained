@@ -65,6 +65,28 @@ task("toadz-custom-animations", "Validates correctness of a CrypToadz animations
       }
     });
 
+task("toadz-image-deltas", "Validates correctness of all CrypToadz token images that have deltas")
+  .setAction(
+    async (taskArgs) => {
+      var toadz;
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
+        libraries: {
+          GIFEncoder: gifEncoderAddress
+        }
+      });
+      toadz = await factory.attach(mainContractAddress);
+
+      const fileStream = fs.createReadStream('./scripts/deltaIds.txt');
+      const lines = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+      });
+
+      for await (const line of lines) {
+        await utils.collect(toadz, parseInt(line),);
+      }
+    });
+
 task("toadz-all", "Validates correctness of all CrypToadz tokens")
   .setAction(
     async (taskArgs) => {
