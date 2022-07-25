@@ -276,14 +276,19 @@ contract CrypToadzChained is IERC721, IERC165 {
         uint8 numberOfTraits;
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
+            
             if(value == 119 || value == 120 || value == 251) {
                 continue; // short, tall, N/A
             }
+
+            string memory traitName = getTraitName(value);
+            string memory label = stringProvider.getString(value == 249 ? 55 : value == 250 ? 55 : value == 252 ? 37 : value);
+
             (string memory a, uint8 t) = appendTrait(
                 value >= 112 && value < 119,
                 attributes,
-                getTraitName(value),
-                stringProvider.getString(value == 249 ? 55 : value == 250 ? 55 : value),
+                traitName,
+                label,
                 numberOfTraits
             );
             attributes = a;
@@ -355,10 +360,10 @@ contract CrypToadzChained is IERC721, IERC165 {
         if (traitValue >= 119 && traitValue < 121) {
             return "Size";
         }
-        if (traitValue >= 121 && traitValue < 139) {
+        if (traitValue >= 121 && traitValue < 138) {
             return "Mouth";
         }
-        if (traitValue >= 139 && traitValue < 168) {
+        if (traitValue >= 138 && traitValue < 168) {
             return "Eyes";
         }
         if (traitValue >= 168 && traitValue < 174) {
@@ -375,7 +380,9 @@ contract CrypToadzChained is IERC721, IERC165 {
         }
 
         if(traitValue == 249) return "Head";
-        if(traitValue == 250) return "Eyes";        
+        if(traitValue == 250) return "Eyes";
+        if(traitValue == 251) return "Size";      
+        if(traitValue == 252) return "Eyes";      
 
         revert OutOfRange(traitValue);
     }
