@@ -26,6 +26,21 @@ library BufferUtils {
                     return (position, length);
             }
         }
+        return (position, length);
+    }
+
+    function advanceToTokenPositionDelta(uint tokenId, bytes memory buffer) internal pure returns (uint position, uint32 length) {
+        uint id;
+        while(id != tokenId) {
+            (id, position) = BufferUtils.readUInt32(position, buffer);            
+            (length, position) = BufferUtils.readUInt32(position, buffer);
+            if(id != tokenId) {
+                position += length;
+                if(position >= buffer.length)
+                    return (position, length);
+            }
+        }
+        return (position, length);
     }
 
     function readUInt32(uint position, bytes memory buffer) internal pure returns (uint32, uint) {

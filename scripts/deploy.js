@@ -66,6 +66,12 @@ async function deployContracts(quiet) {
   var CrypToadzDeltasFDeployed = await CrypToadzDeltasF.deploy();
   await CrypToadzDeltasFDeployed.deployed();
   if (!quiet) console.log("CrypToadzDeltasF deployed to " + CrypToadzDeltasFDeployed.address);
+
+  const CrypToadzDeltasG = await ethers.getContractFactory("CrypToadzDeltasG");
+  var CrypToadzDeltasGDeployed = await CrypToadzDeltasG.deploy();
+  await CrypToadzDeltasGDeployed.deployed();
+  if (!quiet) console.log("CrypToadzDeltasG deployed to " + CrypToadzDeltasGDeployed.address);
+
   const CrypToadzDeltas = await ethers.getContractFactory("CrypToadzDeltas", {
     libraries: {
       PixelRenderer: PixelRendererDeployed.address
@@ -77,7 +83,8 @@ async function deployContracts(quiet) {
     _c: CrypToadzDeltasCDeployed.address, 
     _d: CrypToadzDeltasDDeployed.address, 
     _e: CrypToadzDeltasEDeployed.address, 
-    _f: CrypToadzDeltasFDeployed.address
+    _f: CrypToadzDeltasFDeployed.address,
+    _g: CrypToadzDeltasGDeployed.address
   });
   await CrypToadzDeltasDeployed.deployed();
   if (!quiet) console.log("CrypToadzDeltas deployed to " + CrypToadzDeltasDeployed.address);
