@@ -23,13 +23,13 @@ task("toadz", "Validates correctness of a single CrypToad")
       await utils.collect(toadz, parseInt(taskArgs.id), logger, true, true);
     });
 
-task("toadz-custom-images", "Validates correctness of a CrypToadz custom images")
+task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
   .setAction(
     async (taskArgs) => {
       await checkToadz('./scripts/customImageIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
     });
 
-task("toadz-custom-animations", "Validates correctness of a CrypToadz animations")
+task("toadz-custom-animations", "Validates correctness of CrypToadz animations")
   .setAction(
     async (taskArgs) => {
       await checkToadz('./scripts/customAnimationIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
