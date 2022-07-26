@@ -1,7 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
-require('@primitivefi/hardhat-dodoc');
 
 require("./tasks/tasks.js");
 
@@ -43,7 +42,7 @@ require("./tasks/tasks.js");
   gasReporter: {
     currency: 'ETH',
     gasPriceApi: 'https://api.etherscan.io/api?module=proxy&action=eth_gasPrice',
-    coinmarketcap: 'COINMARKETCAP_API_KEY'
+    // coinmarketcap: 'COINMARKETCAP_API_KEY'
   },
   dodoc: {
     exclude: ['generated', "console.sol"]
