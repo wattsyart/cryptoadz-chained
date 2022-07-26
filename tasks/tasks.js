@@ -36,7 +36,7 @@ task("toadz-custom-animations", "Validates correctness of CrypToadz animations")
       await checkToadz('./scripts/customAnimationIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
     });
 
-task("toadz-image-deltas", "Validates correctness of all CrypToadz token images that have deltas")
+task("toadz-image-deltas", "Validates correctness of CrypToadz token images that have deltas")
   .setAction(
     async (taskArgs) => {
       await checkToadz('./scripts/deltaIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, false, true);
@@ -171,7 +171,6 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
           name = "PixelRenderer";
           setDeploymentCost(gasPriceInWei, components, name, line, name);
         }
-
         if (name && name.length > contractPaddingLength) {
           contractPaddingLength = name.length;
         }

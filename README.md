@@ -22,7 +22,18 @@ node scripts/deployer.js
 npx hardhat toadz --id 1
 ```
 
-To see additional toadz-related commands, run `npx hardhat`.
+The following list shows all available commands.
+
+```bash
+toadz                         Validates correctness of a single CrypToad
+toadz-all                     Validates correctness of all CrypToadz tokens
+toadz-all-images              Validates correctness of all CrypToadz token images
+toadz-all-metadata            Validates correctness of all CrypToadz token metadata
+toadz-custom-animations       Validates correctness of CrypToadz animations
+toadz-custom-images           Validates correctness of CrypToadz custom images
+toadz-image-deltas            Validates correctness of CrypToadz token images that have deltas
+toadz-gas                     Produces ETH cost breakdown for deployment by component
+```
 
 ## Design Notes
 
