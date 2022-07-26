@@ -6,9 +6,10 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
 import "./ICrypToadzBuilder.sol";
-import "./CrypToadzDeltas.sol";
 import "./GIFDraw.sol";
 import "./Errors.sol";
+
+import "./generated/CrypToadzDeltas.sol";
 
 /*
 777777777777777777777777777777777777777777777777777777777777777777777777
