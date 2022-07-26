@@ -1,7 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
-require("solidity-coverage");
+require('@primitivefi/hardhat-dodoc');
 
 require("./tasks/tasks.js");
 

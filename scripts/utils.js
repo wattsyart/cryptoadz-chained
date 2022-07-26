@@ -3,7 +3,6 @@ const readline = require('readline');
 
 const os = require('os');
 const gutil = require('gulp-util');
-const superagent = require('superagent');
 
 const jsonDiff = require('json-diff')
 const gifToPng = require('gif-to-png');
@@ -11,27 +10,7 @@ const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
 
 module.exports = {
-
-    crush:
-        async function crush() {
-            const fileStream = fs.createReadStream('./scripts/customImageIds.txt');
-            const lines = readline.createInterface({
-                input: fileStream,
-                crlfDelay: Infinity
-            });
-
-            for await (const line of lines) {
-                console.log(`crushing ./assets/TOADZ_${line}.png`);
-                superagent.post('https://www.toptal.com/developers/pngcrush/crush').attach('input', `./assets/TOADZ_${line}.png`).end(function (res) {
-                    var tempFilePath = `./assets/TOADZ_${line}_crushed.png`;
-                    var tempFile = fs.createWriteStream(tempFilePath);
-                    res.pipe(tempFile);
-                    fs.copyFileSync(tempFilePath, `./assets/${line}.png`);
-                    deleteFileIfExists(tempFilePath);
-                });
-            }
-        },
-
+    
     collect:
         async function collect(contract, tokenId, logger, checkMetadata, checkImage) {
 
