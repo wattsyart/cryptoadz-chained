@@ -373,7 +373,7 @@ contract CrypToadzChained is IERC721, IERC165 {
             return "Body";
         }
         if (traitValue >= 51 && traitValue < 104) {
-            if(traitValue == 55) return "Mouth";
+            if(traitValue == 55) return "Mouth"; // Vampire
             return "Head";
         }
         if (traitValue >= 104 && traitValue < 112) {
@@ -404,15 +404,15 @@ contract CrypToadzChained is IERC721, IERC165 {
             return "Clothes";
         }
 
-        if(traitValue == 249) return "Head"; // Creep
-        if(traitValue == 250) return "Eyes"; //
+        if(traitValue == 249) return "Head"; // Vampire
+        if(traitValue == 250) return "Eyes"; // Vampire
 
         if(traitValue == 251) return "Size";
 
-        if(traitValue == 252) return "Eyes"; // Creep
-        if(traitValue == 253) return "Eyes"; //   
+        if(traitValue == 252) return "Eyes"; // Undead
+        if(traitValue == 253) return "Eyes"; // Creep  
 
-        revert OutOfRange(traitValue);
+        revert TraitOutOfRange(traitValue);
     }
 
     /**

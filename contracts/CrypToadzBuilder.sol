@@ -84,6 +84,17 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
 
+            // DEBT: Reverse recent metadata changes
+            if(value >= 252) {
+                if(value == 252) {
+                    value = 37; // Undead
+                } else if(value == 253) {
+                    value = 20; // Creep
+                } else if(value == 254) {
+                    continue;   // Stop Byte
+                }
+            }            
+
             address feature;
             if (isTallToken) {
                 if (tall.get(value) != address(0)) {
@@ -106,9 +117,12 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
                 if (instructionType == 3) {
                     uint8 featureId = uint8(buffer[position++]);
                     if (featureId != value) {
-
-                        // vampire attribute is always 55, but can be one of
-                        // mouth (55), head (249), or eyes (250), in that order
+                        
+                        // Vampire:
+                        //                         
+                        // Vampire attribute is always 55, but can be one of:
+                        // Mouth (55), Head (249), or Eyes (250), in that order
+                        //
                         if(value == 55) {
                             if(featureId == 249) { 
                                 value = 249;
@@ -234,7 +248,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         if(tokenId >= 6853 && tokenId <= 56000000) {
             return 29;
         }
-        revert OutOfRange(tokenId);
+        revert ImageFileOutOfRange(tokenId);
     }
 
     CrypToadzBuilderAny any;
