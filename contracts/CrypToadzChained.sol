@@ -1,5 +1,23 @@
 // SPDX-License-Identifier: MPL-2.0
 
+/*
+CrypToadz Created By:
+  ___  ____  ____  __  __  ____  __    ____  _  _ 
+ / __)(  _ \( ___)(  \/  )(  _ \(  )  (_  _)( \( )
+( (_-. )   / )__)  )    (  )___/ )(__  _)(_  )  ( 
+ \___/(_)\_)(____)(_/\/\_)(__)  (____)(____)(_)\_) 
+(https://cryptoadz.io)
+
+CrypToadzChained Programmed By:
+ __      __         __    __                 
+/  \    /  \_____ _/  |__/  |_  _________.__.
+\   \/\/   /\__  \\   __\   __\/  ___<   |  |
+ \        /  / __ \|  |  |  |  \___ \ \___  |
+  \__/\  /  (____  /__|  |__| /____  >/ ____|
+       \/        \/                \/ \/     
+(https://wattsy.art)
+*/
+
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
