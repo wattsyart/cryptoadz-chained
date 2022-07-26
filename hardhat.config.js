@@ -43,8 +43,6 @@ require("./tasks/tasks.js");
   gasReporter: {
     currency: 'ETH',
     gasPriceApi: 'https://api.etherscan.io/api?module=proxy&action=eth_gasPrice',
-    coinmarketcap: 'COINMARKETCAP_API_KEY',
-    outputFile: "./scripts/gasReport.txt"
+    coinmarketcap: 'COINMARKETCAP_API_KEY'
   }
 };
-
