@@ -5,7 +5,7 @@ The same CrypToadz you know and love, preserved on-chain.
 
 Due to complexity, hardhat on its own cannot deploy the project without a private geth client deployed to Docker.
 
-In VS Code w/ the Docker Extension installed, you can right-click `./docker/docker-compose.yml` and choose `Compose Up`, or run
+In VS Code w/ the Docker Extension installed, you can right-click `./docker/docker-compose.yml` and choose `Compose Up`, or run:
 
 ```bash
 docker compose -f "docker\docker-compose.yml" up -d --build 
@@ -13,7 +13,7 @@ docker compose -f "docker\docker-compose.yml" up -d --build
 
 On the command line to bring up the private node instance.
 
-Once deployed, you can run the following commands to compile the project, deploy to the private node, and return the `tokenURI` for CrypToadz #1.
+Once deployed, you can run the following commands to compile the project, deploy to the private node, and return the `tokenURI` for CrypToadz #1:
 
 ```bash
 npm install

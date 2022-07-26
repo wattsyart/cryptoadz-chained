@@ -10,9 +10,9 @@ const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
 
 module.exports = {
-    
+
     collect:
-        async function collect(contract, tokenId, logger, checkMetadata, checkImage) {
+        async function collect(contract, tokenId, logger, checkMetadata, checkImage, continueOnError) {
 
             createDirectoryIfNotExists('./scripts/output');
             createDirectoryIfNotExists('./scripts/output/images');
@@ -28,7 +28,7 @@ module.exports = {
                 // convert base64 tokenURI to JSON
                 var jsonData = tokenDataUri.match(pattern)[2];
                 var jsonBuffer = Buffer.from(jsonData, 'base64');
-                var json = jsonBuffer.toString('utf8');                
+                var json = jsonBuffer.toString('utf8');
 
                 // compare metadata
                 if (checkMetadata) {
@@ -125,6 +125,9 @@ module.exports = {
 
             } catch (error) {
                 console.error(gutil.colors.red(error));
+                if (!continueOnError) {
+                    throw (error);
+                }
             }
         }
 }
