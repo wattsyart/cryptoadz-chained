@@ -277,8 +277,8 @@ contract CrypToadzChained is IERC721, IERC165 {
         for (uint8 i = 0; i < metadata.length; i++) {
             uint8 value = metadata[i];
             
-            if(value == 119 || value == 120 || value == 251) {
-                continue; // short, tall, N/A
+            if(value == 119 || value == 120 || value == 251 || value == 253) {
+                continue; // Short, Tall, N/A, stop byte
             }
 
             string memory traitName = getTraitName(value);
