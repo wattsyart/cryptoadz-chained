@@ -1,7 +1,7 @@
 # cryptoadz-chained
 The same CrypToadz you know and love, preserved on-chain.
 
-# Setting up
+## Setting up
 
 The following code will compile the project and build the tokenURI for CrypToadz #1.
 
@@ -15,10 +15,26 @@ The following code will run a test pass across all toads, building delta images 
 _WARNING: This takes a long time..._
 
 ```bash
-node scripts/collect.js
+npx hardhat toadz-all
 ```
 
-# How are images created?
+## Design Notes
+
+Deployment is modular, and split across five main components:
+
+`CrypToadzChained`: main contract, responsible producing the final tokenURI
+
+`CrypToadzBuilder`: contains features and builder logic for "buildable" toadz (non-custom, non-animations)
+    `CrypToadzDeltas`: contains patch data for built toadz where errors occur (manually edited images, metadata mismatches, etc.)
+
+`CrypToadzMetadata`: contains all metadata
+    `CrypToadzStrings`: contains all string lookups for metadata
+
+`CrypToadzCustomImages`: contains image data for "1/1" custom toadz that are PNG images
+
+`CrypToadzCustomAnimations`: contains image data for "1/1" custom toadz that are GIF animations
+
+## How are buildable toadz created?
 
 Each toad feature is represented in an intermediate format that is compressed with INFLATE and stored via SSTORE2.
 
@@ -56,22 +72,13 @@ The intermediate format for draw instructions is:
 | x           | byte        | The x-offset to begin drawing from     |
 | y           | byte        | The y-offset to begin drawing from     |
 
-# Current deployment cost
+## What is the deployment cost?
+
+The current gas cost deployment for each component is listed below. 
+
+You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command to show the deployment costs for each component for a given `gwei` value, which is useful when trying to time deployments of expensive components.
+
+Each component in the table indicates the current optimization level, and the estimated possible improvement for further development.
 
 ```bash
-·------------------------|---------------------------|-------------|---------------------------------·
-|  Solc version: 0.8.13  ·  Optimizer enabled: true  ·   Runs: 1   ·  Block limit: 900000000000 gas  │
-·························|···························|·············|··································
-|  Methods               ·               60 gwei/gas               ·          1.00 eth/eth           │
-··············|··········|·············|·············|·············|·················|················
-|  Contract   ·  Method  ·  Min        ·  Max        ·  Avg        ·  # calls        ·  eth (avg)    │
-··············|··········|·············|·············|·············|·················|················
-|  Deployments           ·                                         ·  % of limit     ·               │
-·························|·············|·············|·············|·················|················
-|  CrypToadz             ·          -  ·          -  ·  107637723  ·            0 %  ·         6.46  │
-·························|·············|·············|·············|·················|················
-|  GIFEncoder            ·          -  ·          -  ·    1552785  ·            0 %  ·         0.09  │
-·························|·············|·············|·············|·················|················
-|  PixelRenderer         ·          -  ·          -  ·    1187439  ·            0 %  ·         0.07  │
-·------------------------|-------------|-------------|-------------|-----------------|---------------·
 ```
