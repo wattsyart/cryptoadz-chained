@@ -8,7 +8,7 @@ const gutil = require('gulp-util');
 const GIFEncoderAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
 const CrypToadzChainedAddress = "0x299F288606EeE22364EE19bC0DD97e6Cf65f1b2a";
 
-task("toadz", "Validates correctness of a single CrypToad")
+task("toadz", "Validates correctness of a single CrypToadz")
   .addParam("id", "The CrypToadz token ID to validate")
   .setAction(
     async (taskArgs) => {
@@ -61,7 +61,7 @@ task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadat
     });
 
 task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
-  .addOptionalParam("gwei", "The gas price in gwei to base ETH cost calculations on", "20")
+  .addOptionalParam("gwei", "The gas price in gwei to base ETH cost calculations on", "10")
   .setAction(
     async (taskArgs, hre) => {
 
@@ -239,8 +239,12 @@ function renderCategoryTable(components, categoryName, gasPriceInWei, contractPa
   console.log(`| ${"".padEnd(contractPaddingLength, "-")} | ${"".padEnd(categoryPaddingLength, "-")} | ${"".padEnd(costPaddingLength, "-")} |`);
 
   for (const [key, value] of Object.entries(components)) {
-    if (value["category"] && value["category"] == categoryName) {           
-      console.log(`| ${key.padEnd(contractPaddingLength)} | ${value["category"].padEnd(categoryPaddingLength)} | ${value["cost"].toString().padEnd(costPaddingLength, "0")} |`);      
+    if (value["category"] && value["category"] == categoryName) {    
+      if(!value["cost"]) {
+        console.log(gutil.colors.red(`${key} IS MISSING COST!`));
+      } else {
+        console.log(`| ${key.padEnd(contractPaddingLength)} | ${value["category"].padEnd(categoryPaddingLength)} | ${value["cost"].toString().padEnd(costPaddingLength, "0")} |`);      
+      }
     };
   }
 
@@ -255,10 +259,14 @@ function setDeploymentCost(gasPriceInWei, components, name, line, preamble) {
   if (!components[name]) {
     components[name] = {};
   }
+
   const pattern = new RegExp(`\\|  ${preamble}\\S*\\s*.\\s*-\\s*\\·\\s*-\\s*\\·\\s*`);
-  const gas = parseInt(line.replace(line.match(pattern)[0], "").match(/\d*/)[0]);
+
+  const gas = parseInt(line.replace(line.match(pattern)[0], "").match(/\d*/)[0]);  
   components[name]["gas"] = gas;
-  components[name]["cost"] = hre.ethers.utils.formatUnits(gasPriceInWei.mul(hre.ethers.BigNumber.from(gas)), "ether");
+
+  const cost = hre.ethers.utils.formatUnits(gasPriceInWei.mul(hre.ethers.BigNumber.from(gas)), "ether");
+  components[name]["cost"] = cost;
 }
 
 async function checkToadz(idFilePath, logger, gifEncoderAddress, contractAddress, checkMetadata, checkImage) {
