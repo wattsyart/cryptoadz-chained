@@ -1,4 +1,4 @@
-# cryptoadz-chained
+# CrypToadzChained
 The same CrypToadz you know and love, preserved on-chain.
 
 ## Setting Up
