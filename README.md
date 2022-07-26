@@ -1,28 +1,37 @@
 # cryptoadz-chained
 The same CrypToadz you know and love, preserved on-chain.
 
-## Setting up
+## Setting Up
 
-The following code will compile the project and build the tokenURI for CrypToadz #1.
+Due to complexity, hardhat on its own cannot deploy the project without a private geth client deployed to Docker.
+
+In VS Code w/ the Docker Extension installed, you can right-click `./docker/docker-compose.yml` and choose `Compose Up`, or run
+
+```bash
+docker compose -f "docker\docker-compose.yml" up -d --build 
+```
+
+On the command line to bring up the private node instance.
+
+Once deployed, you can run the following commands to compile the project, deploy to the private node, and return the `tokenURI` for CrypToadz #1.
 
 ```bash
 npm install
 npx hardhat compile
-npx hardhat toad --id 1
+node scripts/deployer.js
+npx hardhat toadz --id 1
 ```
 
-The following code will run a test pass across all toads, building delta images of any errors. 
-_WARNING: This takes a long time..._
-
-```bash
-npx hardhat toadz-all
-```
+To see additional toadz-related commands, run `npx hardhat`.
 
 ## Design Notes
 
+Note that this project is NOT an ERC-721 token in its own right, and only contains the `tokenURI` method from ERC-721
+in order to return the on-chain metadata and image for a given CrypToadz Token ID.
+
 Deployment is modular, and split across five main components:
 
-`CrypToadzChained`: main contract, responsible producing the final tokenURI
+`CrypToadzChained`: contract responsible producing an on-chain tokenURI, and main entrypoint to the project
 
 `CrypToadzBuilder`: contains features and builder logic for "buildable" toadz (non-custom, non-animations)
     `CrypToadzDeltas`: contains patch data for built toadz where errors occur (manually edited images, metadata mismatches, etc.)
@@ -38,7 +47,7 @@ Deployment is modular, and split across five main components:
 
 Each toad feature is represented in an intermediate format that is compressed with INFLATE and stored via SSTORE2.
 
-The intermediate format for draw instructions is:
+The uncompressed intermediate format for draw instructions is:
 
 `DrawFill`: Fills the canvas with a given color
 | Field       | Date Type   | Description                      |
@@ -76,9 +85,6 @@ The intermediate format for draw instructions is:
 
 The current gas cost deployment for each component is listed below. 
 
-You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command to show the deployment costs for each component for a given `gwei` value, which is useful when trying to time deployments of expensive components.
+You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deployed dev node) to show the deployment costs for each component for a given `gwei` value, which is useful when trying to time deployments of expensive components.
 
 Each component in the table indicates the current optimization level, and the estimated possible improvement for further development.
-
-```bash
-```
