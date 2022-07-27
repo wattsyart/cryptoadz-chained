@@ -379,4 +379,5 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage966      | Custom Images     | 0.00375732 |
 | Total                        | 700614112         | 7.00614112 |
 
+Total Gas = 3058221852
 Total Cost = 15.29110926 eth @ 10 gwei

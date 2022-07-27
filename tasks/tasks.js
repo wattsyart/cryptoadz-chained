@@ -155,7 +155,7 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
       components["CrypToadzBuilder"] = {};
       components["CrypToadzBuilder"]["category"] = builderCategory;
       components["CrypToadzBuilder"] = {};
-      components["CrypToadzBuilder"]["category"] = builderCategory;      
+      components["CrypToadzBuilder"]["category"] = builderCategory;
 
       //
       // Deltas:
@@ -179,6 +179,8 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
       var categoryPaddingLength = "Category".length;
       var costPaddingLength = "Cost".length;
 
+      var totalGas = ethers.BigNumber.from(0);
+
       for await (const line of lines) {
         var name;
         if (line.startsWith("|  CrypToadz")) {
@@ -190,6 +192,9 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
         } else if (line.startsWith("|  PixelRenderer")) {
           name = "PixelRenderer";
           setDeploymentCost(gasPriceInWei, components, name, line, name);
+        }
+        if (name) {
+          totalGas = totalGas.add(components[name]["gas"]);
         }
         if (name && name.length > contractPaddingLength) {
           contractPaddingLength = name.length;
@@ -208,25 +213,25 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
         }
         if (name && name.startsWith("CrypToadzCustomImage") && !components[name]["category"]) {
           var tokenId = parseInt(name.replace("CrypToadzCustomImage", "").match(/\d*/)[0]);
-          if(customAnimationNames.includes(tokenId)) {
+          if (customAnimationNames.includes(tokenId)) {
             components[name]["category"] = customAnimationsCategory;
-          } else if(customImageNames.includes(tokenId)) {
+          } else if (customImageNames.includes(tokenId)) {
             components[name]["category"] = customImagesCategory;
           } else {
             console.log(gutil.colors.red(`Missing Category for '${name}!'`));
           }
         }
       }
-      
+
       var totalCostInWei = ethers.BigNumber.from(0);
 
       totalCostInWei = totalCostInWei.add(renderCategoryTable(components, mainCategory, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength));
       console.log();
 
-      totalCostInWei = totalCostInWei.add(renderCategoryTable(components, metadataCategory, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength));      
+      totalCostInWei = totalCostInWei.add(renderCategoryTable(components, metadataCategory, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength));
       console.log();
 
-      totalCostInWei = totalCostInWei.add(renderCategoryTable(components, builderCategory, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength));      
+      totalCostInWei = totalCostInWei.add(renderCategoryTable(components, builderCategory, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength));
       console.log();
 
       totalCostInWei = totalCostInWei.add(renderCategoryTable(components, deltaCategory, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength));
@@ -238,8 +243,9 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
       totalCostInWei = totalCostInWei.add(renderCategoryTable(components, customImagesCategory, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength));
       console.log();
 
+      console.log(`Total Gas = ${totalGas}`);
       console.log(`Total Cost = ${hre.ethers.utils.formatUnits(totalCostInWei, "ether")} eth @ ${taskArgs.gwei} gwei`);
-  });
+    });
 
 
 function renderCategoryTable(components, categoryName, gasPriceInWei, contractPaddingLength, categoryPaddingLength, costPaddingLength) {
@@ -259,11 +265,11 @@ function renderCategoryTable(components, categoryName, gasPriceInWei, contractPa
   console.log(`| ${"".padEnd(contractPaddingLength, "-")} | ${"".padEnd(categoryPaddingLength, "-")} | ${"".padEnd(costPaddingLength, "-")} |`);
 
   for (const [key, value] of Object.entries(components)) {
-    if (value["category"] && value["category"] == categoryName) {    
-      if(!value["cost"]) {
+    if (value["category"] && value["category"] == categoryName) {
+      if (!value["cost"]) {
         console.log(gutil.colors.red(`${key} IS MISSING COST!`));
       } else {
-        console.log(`| ${key.padEnd(contractPaddingLength)} | ${value["category"].padEnd(categoryPaddingLength)} | ${value["cost"].toString().padEnd(costPaddingLength, "0")} |`);      
+        console.log(`| ${key.padEnd(contractPaddingLength)} | ${value["category"].padEnd(categoryPaddingLength)} | ${value["cost"].toString().padEnd(costPaddingLength, "0")} |`);
       }
     };
   }
@@ -282,7 +288,7 @@ function setDeploymentCost(gasPriceInWei, components, name, line, preamble) {
 
   const pattern = new RegExp(`\\|  ${preamble}\\S*\\s*.\\s*-\\s*\\·\\s*-\\s*\\·\\s*`);
 
-  const gas = parseInt(line.replace(line.match(pattern)[0], "").match(/\d*/)[0]);  
+  const gas = parseInt(line.replace(line.match(pattern)[0], "").match(/\d*/)[0]);
   components[name]["gas"] = gas;
 
   const cost = hre.ethers.utils.formatUnits(gasPriceInWei.mul(hre.ethers.BigNumber.from(gas)), "ether");
