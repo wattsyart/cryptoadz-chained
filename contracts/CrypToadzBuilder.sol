@@ -60,6 +60,7 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         uint256 tokenId,
         bool isTallToken
     ) external override view returns (GIFEncoder.GIF memory gif) {
+
         uint8 imageFile = getImageFileForToken(tokenId); 
         bytes memory buffer = BufferUtils.decompress(
             imageData[imageFile],
@@ -131,8 +132,10 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
                                 value = 249;
                                 if (isTallToken) {
                                     feature = tall.get(value);
+                                    rect = tall.getRect(value);
                                 } else {
                                     feature = short.get(value);
+                                    rect = short.getRect(value);
                                 }
                             } else if(featureId == 250) {
                                 value = 250;
