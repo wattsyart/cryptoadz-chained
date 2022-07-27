@@ -30,7 +30,7 @@ task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
       await checkToadz('./scripts/customImageIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
     });
 
-task("toadz-custom-animations", "Validates correctness of CrypToadz animations")
+task("toadz-custom-animations", "Validates correctness of CrypToadz custom animations")
   .setAction(
     async (taskArgs) => {
       await checkToadz('./scripts/customAnimationIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
@@ -59,6 +59,26 @@ task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadat
     async (taskArgs) => {
       await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, false);
     });
+
+async function checkToadz(idFilePath, logger, gifEncoderAddress, contractAddress, checkMetadata, checkImage) {
+  var toadz;
+  var factory = await ethers.getContractFactory("CrypToadzChained", {
+    libraries: {
+      GIFEncoder: gifEncoderAddress
+    }
+  });
+  toadz = await factory.attach(contractAddress);
+
+  const fileStream = fs.createReadStream(idFilePath);
+  const lines = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+
+  for await (const line of lines) {
+    await utils.collect(toadz, parseInt(line), logger, checkMetadata, checkImage);
+  }
+}
 
 task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
   .addOptionalParam("gwei", "The gas price in gwei to base ETH cost calculations on", "10")
@@ -267,24 +287,4 @@ function setDeploymentCost(gasPriceInWei, components, name, line, preamble) {
 
   const cost = hre.ethers.utils.formatUnits(gasPriceInWei.mul(hre.ethers.BigNumber.from(gas)), "ether");
   components[name]["cost"] = cost;
-}
-
-async function checkToadz(idFilePath, logger, gifEncoderAddress, contractAddress, checkMetadata, checkImage) {
-  var toadz;
-  var factory = await ethers.getContractFactory("CrypToadzChained", {
-    libraries: {
-      GIFEncoder: gifEncoderAddress
-    }
-  });
-  toadz = await factory.attach(contractAddress);
-
-  const fileStream = fs.createReadStream(idFilePath);
-  const lines = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity
-  });
-
-  for await (const line of lines) {
-    await utils.collect(toadz, parseInt(line), logger, checkMetadata, checkImage);
-  }
 }
