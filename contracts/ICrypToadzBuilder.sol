@@ -4,6 +4,11 @@ pragma solidity ^0.8.13;
 
 import "./GIFEncoder.sol";
 
+struct Rectangle {
+    uint8 x;
+    uint8 y;
+}
+
 interface ICrypToadzBuilder {
     function getImage(
         uint8[] memory metadata,
