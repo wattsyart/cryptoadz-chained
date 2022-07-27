@@ -117,11 +117,11 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | ---------------------------- | ----------------- | ---------- |
 | GIFEncoder                   | Builder           | 0.01552785 |
 | PixelRenderer                | Builder           | 0.01187223 |
-| CrypToadzBuilder             | Builder           | 0.16726716 |
+| CrypToadzBuilder             | Builder           | 0.16714638 |
 | CrypToadzBuilderAny          | Builder           | 0.30966568 |
-| CrypToadzBuilderShort        | Builder           | 0.18425936 |
-| CrypToadzBuilderTall         | Builder           | 0.19033606 |
-| Total                        | 87892834          | 0.87892834 |
+| CrypToadzBuilderShort        | Builder           | 0.20547074 |
+| CrypToadzBuilderTall         | Builder           | 0.21154984 |
+| Total                        | 92123272          | 0.92123272 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
@@ -379,5 +379,5 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage966      | Custom Images     | 0.00375732 |
 | Total                        | 700614112         | 7.00614112 |
 
-Total Gas = 3058221852
-Total Cost = 15.29110926 eth @ 10 gwei
+Total Gas = 3066682728
+Total Cost = 15.33341364 eth @ 10 gwei
