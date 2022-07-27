@@ -5,7 +5,7 @@ The same CrypToadz you know and love, preserved on-chain.
 
 Due to complexity, hardhat on its own cannot deploy the project without a private geth client deployed to Docker.
 
-First, you will need to install (Docker Desktop)[https://www.docker.com/products/docker-desktop] for your development environment.
+First, you will need to install [Docker Desktop](https://www.docker.com/products/docker-desktop) for your development environment.
 
 In VS Code w/ the Docker Extension installed, you can right-click `./docker/docker-compose.yml` and choose `Compose Up`, or run:
 
