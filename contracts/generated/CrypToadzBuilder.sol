@@ -101,28 +101,27 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
             }            
 
             address feature;
-            Rectangle memory rect;
 
             if (isTallToken) {
                 if (tall.get(value) != address(0)) {
-                    feature = tall.get(value);
-                    rect = tall.getRect(value);
+                    feature = tall.get(value);                    
                 } else if (any.get(value) != address(0)) {
                     feature = any.get(value);
                 }
             } else {
                 if (short.get(value) != address(0)) {
-                    feature = short.get(value);
-                    rect = short.getRect(value);
+                    feature = short.get(value);                    
                 } else if (any.get(value) != address(0)) {
                     feature = any.get(value);
                 }
             }
 
-            if (feature != address(0)) {                                
+            if (feature != address(0)) {
+
                 uint8 instructionType = uint8(buffer[position++]);
                 if (instructionType == 3) {
-                    uint8 featureId = uint8(buffer[position++]);
+                    
+                    uint8 featureId = uint8(buffer[position++]);                                        
                     if (featureId != value) {
                         
                         // Vampire:
@@ -135,10 +134,8 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
                                 value = 249;
                                 if (isTallToken) {
                                     feature = tall.get(value);
-                                    rect = tall.getRect(value);
                                 } else {
-                                    feature = short.get(value);
-                                    rect = short.getRect(value);
+                                    feature = short.get(value);                                    
                                 }
                             } else if(featureId == 250) {
                                 value = 250;
@@ -152,9 +149,16 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
                 } else {
                     revert UnsupportedDrawInstruction(instructionType);
                 }
+
+                Rectangle memory rect;
+                if (isTallToken) {
+                    rect = tall.getRect(value);
+                } else {
+                    rect = short.getRect(value);                                    
+                }
                 GIFDraw.draw(frame, SSTORE2.read(feature), 0, rect.x, rect.y, true);
             }
-        }
+        }        
 
         int8 deltaFile = ICrypToadzDeltas(deltas).getDeltaFileForToken(tokenId);
         if(deltaFile != -1) {
