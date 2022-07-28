@@ -388,13 +388,9 @@ contract CrypToadzChained is IERC721, IERC165 {
     {
         attributes = string(abi.encodePacked('"attributes":['));
         uint8 numberOfTraits;
-        for (uint8 i = 0; i < metadata.length; i++) {
-            uint8 value = metadata[i];
-            
-            if(value == 119 || value == 120 || value == 251 || value == 254) {
-                continue; // Short, Tall, N/A, stop byte
-            }
-
+        for (uint8 i = 1; i < metadata.length; i++) {
+            uint8 value = metadata[i];            
+            if(value == 254) continue; // stop byte            
             string memory traitName = getTraitName(value);
             
             string memory label = stringProvider.getString(
