@@ -288,7 +288,7 @@ contract CrypToadzChained is IERC721, IERC165 {
         }
         if(flags[2]) {
             uint8 eyes = uint8(139) + uint8(PRNG.readLessThan(src, 29 + 3, 8));
-            if(eyes < 139 || eyes > 170) revert TraitOutOfRange(mouth);
+            if(eyes < 139 || eyes > 170) revert TraitOutOfRange(eyes);
             if(eyes == 168) eyes = 250; // Vampire
             if(eyes == 169) eyes = 252; // Undead
             if(eyes == 170) eyes = 253; // Creep            
