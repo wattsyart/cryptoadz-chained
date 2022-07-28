@@ -1,1 +1,65 @@
-{"eye-big-side-red":{"Location":{"IsEmpty":false,"X":11,"Y":12},"Size":{"IsEmpty":false,"Width":11,"Height":2},"X":11,"Y":12,"Width":11,"Height":2,"Left":11,"Top":12,"Right":22,"Bottom":14,"IsEmpty":false},"eye-creep":{"Location":{"IsEmpty":false,"X":10,"Y":10},"Size":{"IsEmpty":false,"Width":13,"Height":5},"X":10,"Y":10,"Width":13,"Height":5,"Left":10,"Top":10,"Right":23,"Bottom":15,"IsEmpty":false},"eye-matrix":{"Location":{"IsEmpty":false,"X":9,"Y":11},"Size":{"IsEmpty":false,"Width":15,"Height":5},"X":9,"Y":11,"Width":15,"Height":5,"Left":9,"Top":11,"Right":24,"Bottom":16,"IsEmpty":false},"eye-space":{"Location":{"IsEmpty":false,"X":8,"Y":10},"Size":{"IsEmpty":false,"Width":19,"Height":5},"X":8,"Y":10,"Width":19,"Height":5,"Left":8,"Top":10,"Right":27,"Bottom":15,"IsEmpty":false},"eye-vampire":{"Location":{"IsEmpty":false,"X":11,"Y":12},"Size":{"IsEmpty":false,"Width":11,"Height":3},"X":11,"Y":12,"Width":11,"Height":3,"Left":11,"Top":12,"Right":22,"Bottom":15,"IsEmpty":false},"eye-vr":{"Location":{"IsEmpty":false,"X":8,"Y":10},"Size":{"IsEmpty":false,"Width":18,"Height":5},"X":8,"Y":10,"Width":18,"Height":5,"Left":8,"Top":10,"Right":26,"Bottom":15,"IsEmpty":false},"head-vampire":{"Location":{"IsEmpty":false,"X":13,"Y":5},"Size":{"IsEmpty":false,"Width":11,"Height":6},"X":13,"Y":5,"Width":11,"Height":6,"Left":13,"Top":5,"Right":24,"Bottom":11,"IsEmpty":false}}
+{
+  "eye-matrix": {
+    "Location": {
+      "IsEmpty": false,
+      "X": 9,
+      "Y": 11
+    },
+    "Size": {
+      "IsEmpty": false,
+      "Width": 15,
+      "Height": 5
+    },
+    "X": 9,
+    "Y": 11,
+    "Width": 15,
+    "Height": 5,
+    "Left": 9,
+    "Top": 11,
+    "Right": 24,
+    "Bottom": 16,
+    "IsEmpty": false
+  },
+  "eye-space": {
+    "Location": {
+      "IsEmpty": false,
+      "X": 8,
+      "Y": 10
+    },
+    "Size": {
+      "IsEmpty": false,
+      "Width": 19,
+      "Height": 5
+    },
+    "X": 8,
+    "Y": 10,
+    "Width": 19,
+    "Height": 5,
+    "Left": 8,
+    "Top": 10,
+    "Right": 27,
+    "Bottom": 15,
+    "IsEmpty": false
+  },
+  "eye-vr": {
+    "Location": {
+      "IsEmpty": false,
+      "X": 8,
+      "Y": 10
+    },
+    "Size": {
+      "IsEmpty": false,
+      "Width": 18,
+      "Height": 5
+    },
+    "X": 8,
+    "Y": 10,
+    "Width": 18,
+    "Height": 5,
+    "Left": 8,
+    "Top": 10,
+    "Right": 26,
+    "Bottom": 15,
+    "IsEmpty": false
+  }
+}

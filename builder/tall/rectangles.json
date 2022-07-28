@@ -797,7 +797,7 @@
     "Bottom": 12,
     "IsEmpty": false
   },
-  "Creep": {
+  "Creep Body": {
     "Location": {
       "IsEmpty": false,
       "X": 5,
@@ -816,6 +816,27 @@
     "Top": 9,
     "Right": 31,
     "Bottom": 29,
+    "IsEmpty": false
+  },
+  "Creep Eyes": {
+    "Location": {
+      "IsEmpty": false,
+      "X": 10,
+      "Y": 10
+    },
+    "Size": {
+      "IsEmpty": false,
+      "Width": 13,
+      "Height": 5
+    },
+    "X": 10,
+    "Y": 10,
+    "Width": 13,
+    "Height": 5,
+    "Left": 10,
+    "Top": 10,
+    "Right": 23,
+    "Bottom": 15,
     "IsEmpty": false
   },
   "Croak": {
@@ -2876,7 +2897,7 @@
     "Bottom": 15,
     "IsEmpty": false
   },
-  "Undead": {
+  "Undead Body": {
     "Location": {
       "IsEmpty": false,
       "X": 5,
@@ -2895,6 +2916,27 @@
     "Top": 9,
     "Right": 31,
     "Bottom": 29,
+    "IsEmpty": false
+  },
+  "Undead Eyes": {
+    "Location": {
+      "IsEmpty": false,
+      "X": 11,
+      "Y": 12
+    },
+    "Size": {
+      "IsEmpty": false,
+      "Width": 11,
+      "Height": 2
+    },
+    "X": 11,
+    "Y": 12,
+    "Width": 11,
+    "Height": 2,
+    "Left": 11,
+    "Top": 12,
+    "Right": 22,
+    "Bottom": 14,
     "IsEmpty": false
   },
   "Vampire Eyes": {
