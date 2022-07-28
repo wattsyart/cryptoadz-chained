@@ -52,26 +52,6 @@ async function deployContracts(quiet) {
   await CrypToadzDeltasCDeployed.deployed();
   if (!quiet) console.log("CrypToadzDeltasC deployed to " + CrypToadzDeltasCDeployed.address);
 
-  const CrypToadzDeltasD = await ethers.getContractFactory("CrypToadzDeltasD");
-  var CrypToadzDeltasDDeployed = await CrypToadzDeltasD.deploy();
-  await CrypToadzDeltasDDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasD deployed to " + CrypToadzDeltasDDeployed.address);
-
-  const CrypToadzDeltasE = await ethers.getContractFactory("CrypToadzDeltasE");
-  var CrypToadzDeltasEDeployed = await CrypToadzDeltasE.deploy();
-  await CrypToadzDeltasEDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasE deployed to " + CrypToadzDeltasEDeployed.address);
-
-  const CrypToadzDeltasF = await ethers.getContractFactory("CrypToadzDeltasF");
-  var CrypToadzDeltasFDeployed = await CrypToadzDeltasF.deploy();
-  await CrypToadzDeltasFDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasF deployed to " + CrypToadzDeltasFDeployed.address);
-
-  const CrypToadzDeltasG = await ethers.getContractFactory("CrypToadzDeltasG");
-  var CrypToadzDeltasGDeployed = await CrypToadzDeltasG.deploy();
-  await CrypToadzDeltasGDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasG deployed to " + CrypToadzDeltasGDeployed.address);
-
   const CrypToadzDeltas = await ethers.getContractFactory("CrypToadzDeltas", {
     libraries: {
       PixelRenderer: PixelRendererDeployed.address
@@ -1296,11 +1276,7 @@ async function deployContracts(quiet) {
   await CrypToadzDeltasDeployed.setAddresses({
     _a: CrypToadzDeltasADeployed.address,
     _b: CrypToadzDeltasBDeployed.address,
-    _c: CrypToadzDeltasCDeployed.address,
-    _d: CrypToadzDeltasDDeployed.address,
-    _e: CrypToadzDeltasEDeployed.address,
-    _f: CrypToadzDeltasFDeployed.address,
-    _g: CrypToadzDeltasGDeployed.address
+    _c: CrypToadzDeltasCDeployed.address
   });
   if(!quiet) console.log("CrypToadzDeltas linked with dependencies");
 
