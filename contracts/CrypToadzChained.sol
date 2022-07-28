@@ -303,7 +303,7 @@ contract CrypToadzChained is IERC721, IERC165 {
         if(flags[4]) {
             uint8 accessoryII = uint8(104) + uint8(PRNG.readLessThan(src, 8, 8));
             if(accessoryII < 104 || accessoryII > 111) revert TraitOutOfRange(accessoryII);
-            metadata[index++] = accessoryII
+            metadata[index++] = accessoryII;
         }
         if(flags[5]) {
             uint8 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
