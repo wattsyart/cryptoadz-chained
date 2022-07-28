@@ -294,7 +294,15 @@ contract CrypToadzDeltas is ICrypToadzDeltas {
         uint8 _index;
     }
 
+    address owner;
+
     constructor(Addresses memory a) {
+        owner = msg.sender;        
+    }
+
+    function setAddresses(address _addresses) public {
+        require(msg.sender == owner, "only owner");
+        
         deltaBank[0] = AddressAndIndex(a._a, 0);
         deltaBank[1] = AddressAndIndex(a._a, 1);
         deltaBank[2] = AddressAndIndex(a._a, 2);
