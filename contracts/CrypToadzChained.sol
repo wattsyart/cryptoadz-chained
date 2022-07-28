@@ -36,7 +36,13 @@ import "./PixelRenderer.sol";
 import "./GIFDraw.sol";
 import "./Presentation.sol";
 
-contract CrypToadzChained is IERC721, IERC165 {
+import "./HasBuilder.sol";
+import "./HasMetadata.sol";
+import "./HasStrings.sol";
+import "./HasCustomImages.sol";
+import "./HasCustomAnimations.sol";
+
+contract CrypToadzChained is HasBuilder, HasMetadata, HasStrings, HasCustomImages, HasCustomAnimations, IERC721, IERC165 {
     using ERC165Checker for address;
 
     bytes private constant DATA_URI_PREFIX = "data:";
@@ -49,172 +55,7 @@ contract CrypToadzChained is IERC721, IERC165 {
 
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
-    bytes private constant NAME = "CrypToadz";
-
-    /** @notice Contract responsible for looking up strings. */
-    ICrypToadzStrings public stringProvider;
-
-    /**
-    @notice Flag to disable use of setStringProvider().
-     */
-    bool public stringProviderLocked = false;
-
-    /**
-    @notice Permanently sets the stringProviderLocked flag to true.
-     */
-    function lockStringProvider() external {
-        require(msg.sender == owner, "only owner");
-        require(
-            address(stringProvider).supportsInterface(
-                type(ICrypToadzStrings).interfaceId
-            ),
-            "Not ICrypToadzStrings"
-        );
-        stringProviderLocked = true;
-    }
-
-    /**
-    @notice Sets the address of the string provider contract.
-    @dev No checks are performed when setting, but lockStringProvider() ensures that
-    the final address implements the ICryptoadzStrings interface.
-     */
-    function setStringProvider(address _stringProvider) public {
-        require(msg.sender == owner, "only owner");
-        require(!stringProviderLocked, "StringProvider locked");
-        stringProvider = ICrypToadzStrings(_stringProvider);
-    }
-
-    /** @notice Contract responsible for building non-custom toadz images. */
-    ICrypToadzBuilder public builder;
-
-    /**
-    @notice Flag to disable use of setBuilder().
-     */
-    bool public builderLocked = false;
-
-    /**
-    @notice Permanently sets the builderLocked flag to true.
-     */
-    function lockBuilder() external {
-        require(msg.sender == owner, "only owner");
-        require(
-            address(builder).supportsInterface(
-                type(ICrypToadzStrings).interfaceId
-            ),
-            "Not ICrypToadzBuilder"
-        );
-        builderLocked = true;
-    }
-
-    /**
-    @notice Sets the address of the builder contract.
-    @dev No checks are performed when setting, but lockBuilder() ensures that
-    the final address implements the ICrypToadzBuilder interface.
-     */
-    function setBuilder(address _builder) public {
-        require(msg.sender == owner, "only owner");
-        require(!builderLocked, "Builder locked");
-        builder = ICrypToadzBuilder(_builder);
-    }
-
-    /** @notice Contract responsible for looking up metadata. */
-    ICrypToadzMetadata public metadataProvider;
-
-    /**
-    @notice Flag to disable use of setMetadataProvider().
-     */
-    bool public metadataProviderLocked = false;
-
-    /**
-    @notice Permanently sets the metadataProviderLocked flag to true.
-     */
-    function lockMetadataProvider() external {
-        require(msg.sender == owner, "only owner");
-        require(
-            address(metadataProvider).supportsInterface(
-                type(ICrypToadzMetadata).interfaceId
-            ),
-            "Not ICrypToadzMetadata"
-        );
-        metadataProviderLocked = true;
-    }
-
-    /**
-    @notice Sets the address of the metadata provider contract.
-    @dev No checks are performed when setting, but lockMetadataProvider() ensures that
-    the final address implements the ICrypToadzMetadata interface.
-     */
-    function setMetadataProvider(address _metadataProvider) public {
-        require(msg.sender == owner, "only owner");
-        require(!metadataProviderLocked, "MetadataProvider locked");
-        metadataProvider = ICrypToadzMetadata(_metadataProvider);
-    }
-
-    /** @notice Contract responsible for rendering custom images. */
-    ICrypToadzCustomImages public customImages;
-
-    /**
-    @notice Flag to disable use of setCustomImages().
-     */
-    bool public customImagesLocked = false;
-
-    /**
-    @notice Permanently sets the customImagesLocked flag to true.
-     */
-    function lockCustomImages() external {
-        require(msg.sender == owner, "only owner");
-        require(
-            address(customImages).supportsInterface(
-                type(ICrypToadzCustomImages).interfaceId
-            ),
-            "Not ICrypToadzCustomImages"
-        );
-        customImagesLocked = true;
-    }
-
-    /**
-    @notice Sets the address of the custom images contract.
-    @dev No checks are performed when setting, but lockCustomImages() ensures that
-    the final address implements the ICrypToadzCustomImages interface.
-     */
-    function setCustomImages(address _customImages) public {
-        require(msg.sender == owner, "only owner");
-        require(!customImagesLocked, "CustomImages locked");
-        customImages = ICrypToadzCustomImages(_customImages);
-    }
-
-    /** @notice Contract responsible for rendering custom animations. */
-    ICrypToadzCustomAnimations public customAnimations;
-
-    /**
-    @notice Flag to disable use of setCustomAnimations().
-     */
-    bool public customAnimationsLocked = false;
-
-    /**
-    @notice Permanently sets the customAnimationsLocked flag to true.
-     */
-    function lockCustomAnimations() external {
-        require(msg.sender == owner, "only owner");
-        require(
-            address(customAnimations).supportsInterface(
-                type(ICrypToadzCustomAnimations).interfaceId
-            ),
-            "Not ICrypToadzCustomAnimations"
-        );
-        customAnimationsLocked = true;
-    }
-
-    /**
-    @notice Sets the address of the custom animations contract.
-    @dev No checks are performed when setting, but lockCustomAnimations() ensures that
-    the final address implements the ICrypToadzCustomAnimations interface.
-     */
-    function setCustomAnimations(address _customAnimations) public {
-        require(msg.sender == owner, "only owner");
-        require(!customAnimationsLocked, "CustomAnimations locked");
-        customAnimations = ICrypToadzCustomAnimations(_customAnimations);
-    }   
+    bytes private constant NAME = "CrypToadz";   
 
     address owner;
 
