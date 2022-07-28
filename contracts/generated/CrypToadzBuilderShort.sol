@@ -241,5 +241,7 @@ contract CrypToadzBuilderShort {
         rects[248] = Rectangle(4, 9);
         rects[249] = Rectangle(13, 12);
         rects[250] = Rectangle(11, 17);
+        rects[252] = Rectangle(11, 17);
+        rects[253] = Rectangle(10, 15);
     }
 }
