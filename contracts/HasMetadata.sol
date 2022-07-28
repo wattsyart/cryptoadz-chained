@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzMetadata.sol";
 
 contract HasMetadata {
@@ -16,8 +17,7 @@ contract HasMetadata {
     /**
     @notice Permanently sets the metadataLocked flag to true.
      */
-    function lockMetadata() external {
-        require(msg.sender == owner, "only owner");
+    function lockMetadata() external onlyOwner {
         require(
             address(metadata).supportsInterface(
                 type(ICrypToadzMetadata).interfaceId
@@ -32,8 +32,7 @@ contract HasMetadata {
     @dev No checks are performed when setting, but lockMetadata() ensures that
     the final address implements the ICrypToadzMetadata interface.
      */
-    function setMetadata(address _metadata) public {
-        require(msg.sender == owner, "only owner");
+    function setMetadata(address _metadata) external onlyOwner {
         require(!metadataLocked, "Metadata locked");
         metadata = ICrypToadzMetadata(_metadata);
     }

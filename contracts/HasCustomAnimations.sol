@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzCustomAnimations.sol";
 
 contract HasCustomAnimations {
@@ -16,8 +17,7 @@ contract HasCustomAnimations {
     /**
     @notice Permanently sets the customAnimationsLocked flag to true.
      */
-    function lockCustomAnimations() external {
-        require(msg.sender == owner, "only owner");
+    function lockCustomAnimations() external onlyOwner {
         require(
             address(customAnimations).supportsInterface(
                 type(ICrypToadzCustomAnimations).interfaceId
@@ -32,8 +32,7 @@ contract HasCustomAnimations {
     @dev No checks are performed when setting, but lockCustomAnimations() ensures that
     the final address implements the ICrypToadzCustomAnimations interface.
      */
-    function setCustomAnimations(address _customAnimations) public {
-        require(msg.sender == owner, "only owner");
+    function setCustomAnimations(address _customAnimations) external onlyOwner {
         require(!customAnimationsLocked, "CustomAnimations locked");
         customAnimations = ICrypToadzCustomAnimations(_customAnimations);
     }       

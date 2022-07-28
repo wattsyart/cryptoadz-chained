@@ -39,6 +39,8 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+
 import "../lib/SSTORE2.sol";
 
 import "../ICrypToadzDeltas.sol";
@@ -46,7 +48,7 @@ import "../ICrypToadzDeltaBank.sol";
 import "../GIFDraw.sol";
 import "../BufferUtils.sol";
 
-contract CrypToadzDeltas is ICrypToadzDeltas {   
+contract CrypToadzDeltas is Ownable, ICrypToadzDeltas {   
     mapping(uint256 => AddressAndIndex) deltaBank;
 
     function drawDelta(GIFEncoder.GIFFrame memory frame, uint256 tokenId, uint8 deltaFile)
@@ -294,15 +296,7 @@ contract CrypToadzDeltas is ICrypToadzDeltas {
         uint8 _index;
     }
 
-    address owner;
-
-    constructor(Addresses memory a) {
-        owner = msg.sender;        
-    }
-
-    function setAddresses(address _addresses) public {
-        require(msg.sender == owner, "only owner");
-        
+    function setAddresses(Addresses memory a) external onlyOwner {        
         deltaBank[0] = AddressAndIndex(a._a, 0);
         deltaBank[1] = AddressAndIndex(a._a, 1);
         deltaBank[2] = AddressAndIndex(a._a, 2);

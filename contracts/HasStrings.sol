@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzStrings";
 
 contract HasStrings {
@@ -16,8 +17,7 @@ contract HasStrings {
     /**
     @notice Permanently sets the stringsLocked flag to true.
      */
-    function lockStrings() external {
-        require(msg.sender == owner, "only owner");
+    function lockStrings() external onlyOwner {
         require(
             address(strings).supportsInterface(
                 type(ICrypToadzStrings).interfaceId
@@ -32,8 +32,7 @@ contract HasStrings {
     @dev No checks are performed when setting, but lockStrings() ensures that
     the final address implements the ICrypToadzStrings interface.
      */
-    function setStrings(address _strings) public {
-        require(msg.sender == owner, "only owner");
+    function setStrings(address _strings) external onlyOwner {
         require(!stringsLocked, "Strings locked");
         strings = ICrypToadzStrings(_strings);
     }

@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "../ICrypToadzDeltas.sol";
 
 contract HasDeltas {
@@ -16,8 +17,7 @@ contract HasDeltas {
     /**
     @notice Permanently sets the deltasLocked flag to true.
      */
-    function lockDeltas() external {
-        require(msg.sender == owner, "only owner");
+    function lockDeltas() external onlyOwner {
         require(
             address(deltas).supportsInterface(
                 type(ICrypToadzDeltas).interfaceId
@@ -32,8 +32,7 @@ contract HasDeltas {
     @dev No checks are performed when setting, but lockDeltas() ensures that
     the final address implements the ICrypToadzDeltas interface.
      */
-    function setDeltas(address _deltas) public {
-        require(msg.sender == owner, "only owner");
+    function setDeltas(address _deltas) external onlyOwner {
         require(!deltasLocked, "Deltas locked");
         deltas = ICrypToadzDeltas(_deltas);
     }    

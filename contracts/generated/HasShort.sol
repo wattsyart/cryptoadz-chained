@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "../CrypToadzBuilderShort.sol";
 
 contract HasShort {
@@ -16,8 +17,7 @@ contract HasShort {
     /**
     @notice Permanently sets the shortLocked flag to true.
      */
-    function lockShort() external {
-        require(msg.sender == owner, "only owner");
+    function lockShort() external onlyOwner {
         require(
             address(short).supportsInterface(
                 type(CrypToadzBuilderShort).interfaceId
@@ -32,8 +32,7 @@ contract HasShort {
     @dev No checks are performed when setting, but lockShort() ensures that
     the final address implements the CrypToadzBuilderShort interface.
      */
-    function setShort(address _short) public {
-        require(msg.sender == owner, "only owner");
+    function setShort(address _short) external onlyOwner {
         require(!shortLocked, "Short locked");
         short = CrypToadzBuilderShort(_short);
     }    

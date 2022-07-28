@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "../CrypToadzBuilderAny.sol";
 
 contract HasAny {
@@ -16,8 +17,7 @@ contract HasAny {
     /**
     @notice Permanently sets the anyLocked flag to true.
      */
-    function lockAny() external {
-        require(msg.sender == owner, "only owner");
+    function lockAny() external onlyOwner {
         require(
             address(any).supportsInterface(
                 type(CrypToadzBuilderAny).interfaceId
@@ -32,8 +32,7 @@ contract HasAny {
     @dev No checks are performed when setting, but lockAny() ensures that
     the final address implements the CrypToadzBuilderAny interface.
      */
-    function setAny(address _any) public {
-        require(msg.sender == owner, "only owner");
+    function setAny(address _any) external onlyOwner {
         require(!anyLocked, "Any locked");
         any = CrypToadzBuilderAny(_any);
     }    

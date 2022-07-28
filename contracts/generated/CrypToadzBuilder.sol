@@ -41,6 +41,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "../ICrypToadzBuilder.sol";
 import "../GIFDraw.sol";
@@ -51,7 +52,7 @@ import "./CrypToadzBuilderShort.sol";
 import "./CrypToadzBuilderTall.sol";
 import "./CrypToadzDeltas.sol";
 
-contract CrypToadzBuilder is HasAny, HasShort, HasTall, HasDeltas, ICrypToadzBuilder {  
+contract CrypToadzBuilder is Ownable, HasAny, HasShort, HasTall, HasDeltas, ICrypToadzBuilder {  
 
     using ERC165Checker for address;
 
@@ -261,11 +262,7 @@ contract CrypToadzBuilder is HasAny, HasShort, HasTall, HasDeltas, ICrypToadzBui
         revert ImageFileOutOfRange(tokenId);
     }
 
-    address owner;
-
     constructor() {
-        owner = msg.sender;
-
         imageLengths[0] = 6131;
         imageLengths[1] = 6138;
         imageLengths[2] = 6140;

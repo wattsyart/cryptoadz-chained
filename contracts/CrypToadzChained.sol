@@ -20,6 +20,7 @@ CrypToadzChained Programmed By:
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -42,7 +43,7 @@ import "./HasStrings.sol";
 import "./HasCustomImages.sol";
 import "./HasCustomAnimations.sol";
 
-contract CrypToadzChained is HasBuilder, HasMetadata, HasStrings, HasCustomImages, HasCustomAnimations, IERC721, IERC165 {
+contract CrypToadzChained is Ownable, HasBuilder, HasMetadata, HasStrings, HasCustomImages, HasCustomAnimations, IERC721, IERC165 {
     using ERC165Checker for address;
 
     bytes private constant DATA_URI_PREFIX = "data:";
@@ -56,12 +57,6 @@ contract CrypToadzChained is HasBuilder, HasMetadata, HasStrings, HasCustomImage
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
     bytes private constant NAME = "CrypToadz";   
-
-    address owner;
-
-    constructor() {
-        owner = msg.sender;
-    }
 
     function random() external view returns (string memory) {
         return _random(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));

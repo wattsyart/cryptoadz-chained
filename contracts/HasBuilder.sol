@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzBuilder.sol";
 
 contract HasBuilder {
@@ -16,8 +17,7 @@ contract HasBuilder {
     /**
     @notice Permanently sets the builderLocked flag to true.
      */
-    function lockBuilder() external {
-        require(msg.sender == owner, "only owner");
+    function lockBuilder() external onlyOwner {
         require(
             address(builder).supportsInterface(
                 type(ICrypToadzBuilder).interfaceId
@@ -32,8 +32,7 @@ contract HasBuilder {
     @dev No checks are performed when setting, but lockBuilder() ensures that
     the final address implements the ICrypToadzBuilder interface.
      */
-    function setBuilder(address _builder) public {
-        require(msg.sender == owner, "only owner");
+    function setBuilder(address _builder) external onlyOwner {
         require(!builderLocked, "Builder locked");
         builder = ICrypToadzBuilder(_builder);
     }

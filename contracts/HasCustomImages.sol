@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzCustomImages.sol";
 
 contract HasCustomImages {
@@ -16,8 +17,7 @@ contract HasCustomImages {
     /**
     @notice Permanently sets the customImagesLocked flag to true.
      */
-    function lockCustomImages() external {
-        require(msg.sender == owner, "only owner");
+    function lockCustomImages() external onlyOwner {
         require(
             address(customImages).supportsInterface(
                 type(ICrypToadzCustomImages).interfaceId
@@ -32,8 +32,7 @@ contract HasCustomImages {
     @dev No checks are performed when setting, but lockCustomImages() ensures that
     the final address implements the ICrypToadzCustomImages interface.
      */
-    function setCustomImages(address _customImages) public {
-        require(msg.sender == owner, "only owner");
+    function setCustomImages(address _customImages) external onlyOwner {
         require(!customImagesLocked, "CustomImages locked");
         customImages = ICrypToadzCustomImages(_customImages);
     }

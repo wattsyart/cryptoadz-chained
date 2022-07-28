@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "../CrypToadzBuilderTall.sol";
 
 contract HasTall {
@@ -16,8 +17,7 @@ contract HasTall {
     /**
     @notice Permanently sets the shortLocked flag to true.
      */
-    function lockTall() external {
-        require(msg.sender == owner, "only owner");
+    function lockTall() external onlyOwner {
         require(
             address(tall).supportsInterface(
                 type(CrypToadzBuilderTall).interfaceId
@@ -32,8 +32,7 @@ contract HasTall {
     @dev No checks are performed when setting, but lockTall() ensures that
     the final address implements the CrypToadzBuilderTall interface.
      */
-    function setTall(address _tall) public {
-        require(msg.sender == owner, "only owner");
+    function setTall(address _tall) external onlyOwner {
         require(!shortLocked, "Tall locked");
         tall = CrypToadzBuilderTall(_tall);
     }    
