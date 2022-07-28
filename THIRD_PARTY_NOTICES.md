@@ -4,7 +4,7 @@ This project uses [Brecht Davos' Base64.sol](https://github.com/Brechtpd/base64)
 
 This project uses the [SSTORE2 library](https://github.com/0xsequence/sstore2) for more efficient storage of binary data, licensed under [MIT](https://github.com/0xsequence/sstore2/blob/master/LICENSE.md).
 
-This project uses the [ethier library](https://github.com/divergencetech/ethier)'s `DynamicBuffer` for memory file management, licensed under [MIT](https://github.com/divergencetech/ethier/blob/main/LICENSE).
+This project uses the [ethier library](https://github.com/divergencetech/ethier)'s `DynamicBuffer` for memory file management, and `PRNG` for creating random images, licensed under [MIT](https://github.com/divergencetech/ethier/blob/main/LICENSE).
 
 This project uses [InflateLib by adlerjohn](https://github.com/adlerjohn/inflate-sol) to decompress stored contract data, licensed under [Apache 2.0](https://github.com/adlerjohn/inflate-sol/blob/master/LICENSE).
 
