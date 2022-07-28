@@ -32,7 +32,7 @@ contract HasMetadata {
     @dev No checks are performed when setting, but lockMetadata() ensures that
     the final address implements the ICrypToadzMetadata interface.
      */
-    function setMetadataProvider(address _metadata) public {
+    function setMetadata(address _metadata) public {
         require(msg.sender == owner, "only owner");
         require(!metadataLocked, "Metadata locked");
         metadata = ICrypToadzMetadata(_metadata);

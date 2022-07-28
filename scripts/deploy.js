@@ -76,13 +76,13 @@ async function deployContracts(quiet) {
     libraries: {
       PixelRenderer: PixelRendererDeployed.address
     }
-  });  
+  });
   var CrypToadzDeltasDeployed = await CrypToadzDeltas.deploy({
-    _a: CrypToadzDeltasADeployed.address, 
-    _b: CrypToadzDeltasBDeployed.address, 
-    _c: CrypToadzDeltasCDeployed.address, 
-    _d: CrypToadzDeltasDDeployed.address, 
-    _e: CrypToadzDeltasEDeployed.address, 
+    _a: CrypToadzDeltasADeployed.address,
+    _b: CrypToadzDeltasBDeployed.address,
+    _c: CrypToadzDeltasCDeployed.address,
+    _d: CrypToadzDeltasDDeployed.address,
+    _e: CrypToadzDeltasEDeployed.address,
     _f: CrypToadzDeltasFDeployed.address,
     _g: CrypToadzDeltasGDeployed.address
   });
@@ -95,9 +95,9 @@ async function deployContracts(quiet) {
     }
   });
   var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(
-    CrypToadzBuilderAnyDeployed.address, 
-    CrypToadzBuilderShortDeployed.address, 
-    CrypToadzBuilderTallDeployed.address, 
+    CrypToadzBuilderAnyDeployed.address,
+    CrypToadzBuilderShortDeployed.address,
+    CrypToadzBuilderTallDeployed.address,
     CrypToadzDeltasDeployed.address
   );
   await CrypToadzBuilderDeployed.deployed();
@@ -1445,16 +1445,18 @@ async function deployContracts(quiet) {
       "GIFEncoder": GIFEncoderDeployed.address
     }
   });
-  var CrypToadzChainedDeployed = await CrypToadzChained.deploy(
-    CrypToadzStringsDeployed.address,
-    CrypToadzBuilderDeployed.address,
-    CrypToadzMetadataDeployed.address,
-    CrypToadzCustomImagesDeployed.address,
-    CrypToadzCustomAnimationsDeployed.address
-  );
 
+  var CrypToadzChainedDeployed = await CrypToadzChained.deploy();
   await CrypToadzChainedDeployed.deployed();
   if (!quiet) console.log("CrypToadzChained deployed to " + CrypToadzChainedDeployed.address)
+
+  await CrypToadzChainedDeployed.setStrings(CrypToadzStringsDeployed.address);
+  await CrypToadzChainedDeployed.setMetadata(CrypToadzMetadataDeployed.address);
+  await CrypToadzChainedDeployed.setCustomImages(CrypToadzCustomImagesDeployed.address);
+  await CrypToadzChainedDeployed.setCustomAnimations(CrypToadzCustomAnimationsDeployed.address);
+  await CrypToadzChainedDeployed.setBuilder(CrypToadzBuilderDeployed.address);
+  if(!quiet) console.log("CrypToadzChained linked with dependencies");
+
   return CrypToadzChainedDeployed;
 }
 

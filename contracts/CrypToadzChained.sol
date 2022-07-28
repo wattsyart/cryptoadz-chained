@@ -59,18 +59,7 @@ contract CrypToadzChained is HasBuilder, HasMetadata, HasStrings, HasCustomImage
 
     address owner;
 
-    constructor(
-        address _stringProvider,
-        address _builder,
-        address _metadataProvider,
-        address _customImages,
-        address _customAnimations
-    ) {
-        stringProvider = ICrypToadzStrings(_stringProvider);
-        builder = ICrypToadzBuilder(_builder);
-        metadataProvider = ICrypToadzMetadata(_metadataProvider);
-        customImages = ICrypToadzCustomImages(_customImages);
-        customAnimations = ICrypToadzCustomAnimations(_customAnimations);
+    constructor() {
         owner = msg.sender;
     }
 
