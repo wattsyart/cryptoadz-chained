@@ -58,17 +58,10 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
     mapping(uint8 => address) imageData;
     mapping(uint8 => uint16) imageLengths;
 
-    function getImage(
-        uint8[] memory metadata,
-        uint256 tokenId,
-        bool isTallToken
-    ) external override view returns (GIFEncoder.GIF memory gif) {
+    function getImage(uint8[] memory metadata, uint256 tokenId) external override view returns (GIFEncoder.GIF memory gif) {
 
         uint8 imageFile = getImageFileForToken(tokenId); 
-        bytes memory buffer = BufferUtils.decompress(
-            imageData[imageFile],
-            imageLengths[imageFile]
-        );
+        bytes memory buffer = BufferUtils.decompress(imageData[imageFile], imageLengths[imageFile]);
 
         gif.width = 36;
         gif.height = 36;
@@ -79,14 +72,12 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         frame.height = gif.height;
         frame.buffer = new uint32[](frame.width * frame.height);
 
-        (uint256 position, ) = BufferUtils.advanceToTokenPosition(
-            tokenId,
-            buffer
-        );
-
+        (uint256 position, ) = BufferUtils.advanceToTokenPosition(tokenId, buffer);
         (, position) = BufferUtils.readUInt32(position, buffer);
         
-        for (uint8 i = 0; i < metadata.length; i++) {
+        bool isTallToken = metadata[0] == 120;
+
+        for (uint8 i = 1; i < metadata.length; i++) {
             uint8 value = metadata[i];            
 
             address feature;
@@ -152,8 +143,51 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
         int8 deltaFile = ICrypToadzDeltas(deltas).getDeltaFileForToken(tokenId);
         if(deltaFile != -1) {
             (frame.buffer) = ICrypToadzDeltas(deltas).drawDelta(frame, tokenId, uint8(deltaFile));
-        } 
+        }
 
+        gif.frames[gif.frameCount++] = frame;
+    }
+
+    function getImage(uint8[] memory metadata) external override view returns (GIFEncoder.GIF memory gif) {
+
+        gif.width = 36;
+        gif.height = 36;
+        gif.frames = new GIFEncoder.GIFFrame[](1);
+
+        GIFEncoder.GIFFrame memory frame;
+        frame.width = gif.width;
+        frame.height = gif.height;
+        frame.buffer = new uint32[](frame.width * frame.height);
+
+        bool isTallToken = metadata[0] == 120;
+        
+        for (uint8 i = 1; i < metadata.length; i++) {
+            uint8 value = metadata[i];            
+
+            address feature;
+            if (isTallToken) {
+                feature = tall.get(value);
+                if (feature == address(0)) {
+                    feature = any.get(value);                   
+                }
+            } else {
+                feature = short.get(value);
+                if (feature == address(0)) {      
+                    feature = any.get(value);                               
+                }
+            }
+
+            if (feature != address(0)) {
+                Rectangle memory rect;
+                if (isTallToken) {
+                    rect = tall.getRect(value);
+                } else {
+                    rect = short.getRect(value);                                    
+                }
+                GIFDraw.draw(frame, SSTORE2.read(feature), 0, rect.x, rect.y, true);
+            }
+        }
+        
         gif.frames[gif.frameCount++] = frame;
     }
 
