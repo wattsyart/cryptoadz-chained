@@ -94,14 +94,15 @@ async function deployContracts(quiet) {
       PixelRenderer: PixelRendererDeployed.address,
     }
   });
-  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(
-    CrypToadzBuilderAnyDeployed.address,
-    CrypToadzBuilderShortDeployed.address,
-    CrypToadzBuilderTallDeployed.address,
-    CrypToadzDeltasDeployed.address
-  );
-  await CrypToadzBuilderDeployed.deployed();
+  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy();
+   await CrypToadzBuilderDeployed.deployed();
   if (!quiet) console.log("CrypToadzBuilder deployed to " + CrypToadzBuilderDeployed.address);
+
+  await CrypToadzBuilderDeployed.setAny(CrypToadzBuilderAnyDeployed.address);
+  await CrypToadzBuilderDeployed.setTall(CrypToadzBuilderTallDeployed.address);
+  await CrypToadzBuilderDeployed.setShort(CrypToadzBuilderShortDeployed.address);  
+  await CrypToadzBuilderDeployed.setDeltas(CrypToadzDeltasDeployed.address);
+  if(!quiet) console.log("CrypToadzBuilder linked with dependencies");
 
   const CrypToadzMetadata = await ethers.getContractFactory("CrypToadzMetadata");
   var CrypToadzMetadataDeployed = await CrypToadzMetadata.deploy();
