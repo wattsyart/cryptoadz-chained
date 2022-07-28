@@ -24,6 +24,25 @@ task("toadz", "Validates correctness of a single CrypToadz")
       await utils.collect(toadz, parseInt(taskArgs.id), logger, true, true);
     });
 
+task("toadz-random", "Generates a random toadz")
+  .addOptionalParam("seed", "The random seed to use")
+  .setAction(
+    async (taskArgs) => {
+      var toadz;
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
+        libraries: {
+          GIFEncoder: GIFEncoderAddress
+        }
+      });
+      toadz = await factory.attach(CrypToadzChainedAddress);
+
+      if(!taskArgs.seed) {
+        await toadz.random();        
+      } else {
+        await toadz.random(seed);
+      }
+    });
+
 task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
   .setAction(
     async (taskArgs) => {
