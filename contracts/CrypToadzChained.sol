@@ -34,13 +34,19 @@ import "./ICrypToadzCustomAnimations.sol";
 
 import "./PixelRenderer.sol";
 import "./GIFDraw.sol";
+import "./Presentation.sol";
 
 contract CrypToadzChained is IERC721, IERC165 {
     using ERC165Checker for address;
 
-    bytes private constant JSON_URI_PREFIX = "data:application/json;base64,";
-    bytes private constant PNG_URI_PREFIX = "data:image/png;base64,";
-    bytes private constant GIF_URI_PREFIX = "data:image/gif;base64,";
+    bytes private constant DATA_URI_PREFIX = "data:";
+    bytes private constant DATA_URI_SUFFIX = DATA_URI_PREFIX + ";base64,";
+    bytes private constant DATA_IMAGE_PREFIX = DATA_URI_PREFIX + "image/";    
+    bytes private constant JSON_URI_PREFIX = DATA_URI_PREFIX + "application/json" + DATA_URI_SUFFIX;
+    bytes private constant PNG_URI_PREFIX = DATA_IMAGE_PREFIX + "png" + DATA_URI_SUFFIX;
+    bytes private constant GIF_URI_PREFIX = DATA_IMAGE_PREFIX + "gif" + DATA_URI_SUFFIX;
+    bytes constant private SVG_URI_PREFIX = DATA_IMAGE_PREFIX + "svg+xml" + DATA_URI_SUFFIX;
+
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
     bytes private constant NAME = "CrypToadz";
@@ -358,6 +364,10 @@ contract CrypToadzChained is IERC721, IERC165 {
     }
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
+        return getTokenURI(tokenId, Presentation.Image);
+    }
+
+    function getTokenURI(uint256 tokenId, Presentation presentation) external view returns (string memory) {
         (uint8[] memory metadata) = metadataProvider.getMetadata(tokenId);
 
         string memory imageUri;
@@ -384,23 +394,37 @@ contract CrypToadzChained is IERC721, IERC165 {
             imageUri = GIFEncoder.getDataUri(gif);
         }
 
-        string memory json = string(
+        string memory imageDataUri;
+        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
+
+            string memory imageData = string(abi.encodePacked(
+            '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">',
+            '<image style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100" height="100" xlink:href="', 
+            imageUri, '"/></svg>'));
+            
+            imageDataUri = string(abi.encodePacked(SVG_URI_PREFIX, Base64.encode(bytes(imageData), bytes(imageData).length)));
+        }
+
+        string memory json;
+
+        json = string(
             abi.encodePacked(
-                '{"description":"',
-                DESCRIPTION,
-                '","external_url":"',
-                EXTERNAL_URL,
-                '","name":"',
-                NAME,
-                " #",
-                Strings.toString(tokenId),
-                '","image":"',
-                imageUri,
-                '",',
-                getAttributes(metadata),
-                "}"
+                '{"description":"', DESCRIPTION,
+                '","external_url":"', EXTERNAL_URL,
+                '","name":"', NAME, " #", Strings.toString(tokenId);               
             )
         );
+
+        if(presentation == Presentation.Image || presentation == Presentation.Both) {
+            json = string(abi.encodePacked(json, '","image":"', imageUri, '",'));
+        }
+
+        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
+            json = string(abi.encodePacked(json, '","image_data":"', imageDataUri, '",'));
+        }
+
+        json = string(abi.encodePacked(json, getAttributes(metadata)));
+
         return
             string(
                 abi.encodePacked(
