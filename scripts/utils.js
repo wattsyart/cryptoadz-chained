@@ -11,13 +11,15 @@ const pixelmatch = require('pixelmatch');
 
 module.exports = {
 
-    random: async function random(contract) {
+    random: async function random(contract, seed) {
         createDirectoryIfNotExists('./scripts/output/random');
 
         const pattern = /^data:.+\/(.+);base64,(.*)$/;
 
         // call contract to get tokenURI
-        var seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
+        if(!seed) {
+            seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
+        }
         var tokenDataUri = await contract.fromSeed(seed);
         
         // convert base64 tokenURI to JSON

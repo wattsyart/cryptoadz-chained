@@ -73,14 +73,13 @@ task("toadz-random", "Generates a random toadz")
       toadz = await factory.attach(CrypToadzChainedAddress);
 
       if (!taskArgs.seed) {
-        var seed = Math.floor(Math.random() * 9007199254740990) + 1;
-        console.log(await toadz.fromSeed(seed));
+        await utils.random(toadz)
       } else {
-        console.log(await toadz.fromSeed(seed));
+        await utils.random(toadz, parseInt(taskArgs.seed));
       }
     });
 
-task("toadz-random-test", "Tests random toadz generation, saving metadata and image to disk")
+task("toadz-random-batch", "Tests random toadz generation, saving metadata and image to disk")
   .addOptionalParam("count", "The number of random toadz to generate", "1")
   .setAction(
     async (taskArgs) => {
