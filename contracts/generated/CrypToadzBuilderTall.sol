@@ -229,7 +229,7 @@ contract CrypToadzBuilderTall {
         rects[247] = Rectangle(4, 4);
         rects[248] = Rectangle(4, 4);
         rects[249] = Rectangle(13, 5);
-        rects[250] = Rectangle(11, 2);
+        rects[250] = Rectangle(11, 12);
         rects[252] = Rectangle(11, 12);
         rects[253] = Rectangle(10, 10);
     }
