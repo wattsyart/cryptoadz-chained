@@ -5,7 +5,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzBuilder.sol";
 
-contract HasBuilder {
+contract HasBuilder is Ownable {
     /** @notice Contract responsible for building non-custom toadz images. */
     ICrypToadzBuilder public builder;
 

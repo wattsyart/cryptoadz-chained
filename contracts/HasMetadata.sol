@@ -5,7 +5,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzMetadata.sol";
 
-contract HasMetadata {
+contract HasMetadata is Ownable {
     /** @notice Contract responsible for looking up metadata. */
     ICrypToadzMetadata public metadata;
 

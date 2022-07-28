@@ -5,7 +5,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ICrypToadzCustomAnimations.sol";
 
-contract HasCustomAnimations {
+contract HasCustomAnimations is Ownable {
     /** @notice Contract responsible for rendering custom animations. */
     ICrypToadzCustomAnimations public customAnimations;
 

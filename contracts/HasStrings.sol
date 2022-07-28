@@ -3,9 +3,9 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./ICrypToadzStrings";
+import "./ICrypToadzStrings.sol";
 
-contract HasStrings {
+contract HasStrings is Ownable {
     /** @notice Contract responsible for looking up strings. */
     ICrypToadzStrings public strings;
 

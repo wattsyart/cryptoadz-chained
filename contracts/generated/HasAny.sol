@@ -3,7 +3,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../CrypToadzBuilderAny.sol";
+import "./CrypToadzBuilderAny.sol";
 
 contract HasAny {
     /** @notice Contract responsible for rendering unsized features */

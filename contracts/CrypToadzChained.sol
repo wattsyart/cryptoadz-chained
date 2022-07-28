@@ -189,11 +189,15 @@ contract CrypToadzChained is Ownable, HasBuilder, HasMetadata, HasStrings, HasCu
     }
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
-        return getTokenURI(tokenId, Presentation.Image);
+        return _getTokenURI(tokenId, Presentation.Image);
     }
 
-    function getTokenURI(uint256 tokenId, Presentation presentation) external view returns (string memory) {
-        (uint8[] memory metadata) = metadataProvider.getMetadata(tokenId);
+    function tokenURIWithPresentation(uint256 tokenId, Presentation presentation) external view returns (string memory) {
+        return _getTokenURI(tokenId, presentation);
+    }
+
+    function _getTokenURI(uint256 tokenId, Presentation presentation) private view returns (string memory) {
+        (uint8[] memory meta) = metadata.getMetadata(tokenId);
 
         string memory imageUri;
         if (customImages.isCustomImage(tokenId)) {
@@ -215,7 +219,7 @@ contract CrypToadzChained is Ownable, HasBuilder, HasMetadata, HasStrings, HasCu
                 )
             );
         } else {
-            GIFEncoder.GIF memory gif = builder.getImage(metadata, tokenId);
+            GIFEncoder.GIF memory gif = builder.getImage(meta, tokenId);
             imageUri = GIFEncoder.getDataUri(gif);
         }
 
@@ -236,7 +240,7 @@ contract CrypToadzChained is Ownable, HasBuilder, HasMetadata, HasStrings, HasCu
             abi.encodePacked(
                 '{"description":"', DESCRIPTION,
                 '","external_url":"', EXTERNAL_URL,
-                '","name":"', NAME, " #", Strings.toString(tokenId);               
+                '","name":"', NAME, " #", Strings.toString(tokenId)               
             )
         );
 
@@ -248,7 +252,7 @@ contract CrypToadzChained is Ownable, HasBuilder, HasMetadata, HasStrings, HasCu
             json = string(abi.encodePacked(json, '","image_data":"', imageDataUri, '",'));
         }
 
-        json = string(abi.encodePacked(json, getAttributes(metadata)));
+        json = string(abi.encodePacked(json, getAttributes(meta)));
 
         return
             string(
@@ -259,19 +263,19 @@ contract CrypToadzChained is Ownable, HasBuilder, HasMetadata, HasStrings, HasCu
             );
     }
 
-    function getAttributes(uint8[] memory metadata)
+    function getAttributes(uint8[] memory meta)
         private
         view
         returns (string memory attributes)
     {
         attributes = string(abi.encodePacked('"attributes":['));
         uint8 numberOfTraits;
-        for (uint8 i = 1; i < metadata.length; i++) {
-            uint8 value = metadata[i];            
+        for (uint8 i = 1; i < meta.length; i++) {
+            uint8 value = meta[i];            
             if(value == 254) continue; // stop byte            
             string memory traitName = getTraitName(value);
             
-            string memory label = stringProvider.getString(
+            string memory label = strings.getString(
                 // Undead
                 value == 249 ? 55 : 
                 value == 250 ? 55 : 

@@ -3,7 +3,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../CrypToadzBuilderTall.sol";
+import "./CrypToadzBuilderTall.sol";
 
 contract HasTall {
     /** @notice Contract responsible for rendering tall features */

@@ -3,7 +3,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../CrypToadzBuilderShort.sol";
+import "./CrypToadzBuilderShort.sol";
 
 contract HasShort {
     /** @notice Contract responsible for rendering short features */
