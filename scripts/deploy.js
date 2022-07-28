@@ -1286,7 +1286,7 @@ async function deployContracts(quiet) {
   await CrypToadzBuilderDeployed.setDeltas(CrypToadzDeltasDeployed.address);
   if(!quiet) console.log("CrypToadzBuilder linked with dependencies");
 
-  await CrypToadzCustomImagesDeployed.setAddreses({
+  await CrypToadzCustomImagesDeployed.setAddresses({
     _123: CrypToadzCustomImage123Deployed.address,
     _316: CrypToadzCustomImage316Deployed.address,
     _472: CrypToadzCustomImage472Deployed.address,
