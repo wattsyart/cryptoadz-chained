@@ -37,26 +37,175 @@ import "./PixelRenderer.sol";
 import "./GIFDraw.sol";
 import "./Presentation.sol";
 
-import "./HasBuilder.sol";
-import "./HasMetadata.sol";
-import "./HasStrings.sol";
-import "./HasCustomImages.sol";
-import "./HasCustomAnimations.sol";
-
-contract CrypToadzChained is Ownable, HasBuilder, HasMetadata, HasStrings, HasCustomImages, HasCustomAnimations, IERC721, IERC165 {
+contract CrypToadzChained is Ownable, IERC721, IERC165 {
     using ERC165Checker for address;
 
     bytes private constant DATA_URI_PREFIX = "data:";
-    bytes private constant DATA_URI_SUFFIX = DATA_URI_PREFIX + ";base64,";
-    bytes private constant DATA_IMAGE_PREFIX = DATA_URI_PREFIX + "image/";    
-    bytes private constant JSON_URI_PREFIX = DATA_URI_PREFIX + "application/json" + DATA_URI_SUFFIX;
-    bytes private constant PNG_URI_PREFIX = DATA_IMAGE_PREFIX + "png" + DATA_URI_SUFFIX;
-    bytes private constant GIF_URI_PREFIX = DATA_IMAGE_PREFIX + "gif" + DATA_URI_SUFFIX;
-    bytes constant private SVG_URI_PREFIX = DATA_IMAGE_PREFIX + "svg+xml" + DATA_URI_SUFFIX;
+    bytes private constant DATA_URI_SUFFIX = abi.encodePacked(DATA_URI_PREFIX, ";base64,");
+    bytes private constant DATA_IMAGE_PREFIX = abi.encodePacked(DATA_URI_PREFIX, "image/");
+    bytes private constant JSON_URI_PREFIX = abi.encodePacked(DATA_URI_PREFIX, "application/json", DATA_URI_SUFFIX);
+    bytes private constant PNG_URI_PREFIX = abi.encodePacked(DATA_IMAGE_PREFIX, "png", DATA_URI_SUFFIX);
+    bytes private constant GIF_URI_PREFIX = abi.encodePacked(DATA_IMAGE_PREFIX, "gif", DATA_URI_SUFFIX);
+    bytes private constant SVG_URI_PREFIX = abi.encodePacked(DATA_IMAGE_PREFIX, "svg+xml", DATA_URI_SUFFIX);
 
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
-    bytes private constant NAME = "CrypToadz";   
+    bytes private constant NAME = "CrypToadz";
+
+    /** @notice Contract responsible for building non-custom toadz images. */
+    ICrypToadzBuilder public builder;
+
+    /**
+    @notice Flag to disable use of setBuilder().
+     */
+    bool public builderLocked = false;
+
+    /**
+    @notice Permanently sets the builderLocked flag to true.
+     */
+    function lockBuilder() external onlyOwner {
+        require(
+            address(builder).supportsInterface(
+                type(ICrypToadzBuilder).interfaceId
+            ),
+            "Not ICrypToadzBuilder"
+        );
+        builderLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the builder contract.
+    @dev No checks are performed when setting, but lockBuilder() ensures that
+    the final address implements the ICrypToadzBuilder interface.
+     */
+    function setBuilder(address _builder) external onlyOwner {
+        require(!builderLocked, "Builder locked");
+        builder = ICrypToadzBuilder(_builder);
+    }
+
+    /** @notice Contract responsible for looking up metadata. */
+    ICrypToadzMetadata public metadata;
+
+    /**
+    @notice Flag to disable use of setMetadata().
+     */
+    bool public metadataLocked = false;
+
+    /**
+    @notice Permanently sets the metadataLocked flag to true.
+     */
+    function lockMetadata() external onlyOwner {
+        require(
+            address(metadata).supportsInterface(
+                type(ICrypToadzMetadata).interfaceId
+            ),
+            "Not ICrypToadzMetadata"
+        );
+        metadataLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the metadata provider contract.
+    @dev No checks are performed when setting, but lockMetadata() ensures that
+    the final address implements the ICrypToadzMetadata interface.
+     */
+    function setMetadata(address _metadata) external onlyOwner {
+        require(!metadataLocked, "Metadata locked");
+        metadata = ICrypToadzMetadata(_metadata);
+    }
+
+    /** @notice Contract responsible for looking up strings. */
+    ICrypToadzStrings public strings;
+
+    /**
+    @notice Flag to disable use of setStrings().
+     */
+    bool public stringsLocked = false;
+
+    /**
+    @notice Permanently sets the stringsLocked flag to true.
+     */
+    function lockStrings() external onlyOwner {
+        require(
+            address(strings).supportsInterface(
+                type(ICrypToadzStrings).interfaceId
+            ),
+            "Not ICrypToadzStrings"
+        );
+        stringsLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the string provider contract.
+    @dev No checks are performed when setting, but lockStrings() ensures that
+    the final address implements the ICrypToadzStrings interface.
+     */
+    function setStrings(address _strings) external onlyOwner {
+        require(!stringsLocked, "Strings locked");
+        strings = ICrypToadzStrings(_strings);
+    }
+
+    /** @notice Contract responsible for rendering custom images. */
+    ICrypToadzCustomImages public customImages;
+
+    /**
+    @notice Flag to disable use of setCustomImages().
+     */
+    bool public customImagesLocked = false;
+
+    /**
+    @notice Permanently sets the customImagesLocked flag to true.
+     */
+    function lockCustomImages() external onlyOwner {
+        require(
+            address(customImages).supportsInterface(
+                type(ICrypToadzCustomImages).interfaceId
+            ),
+            "Not ICrypToadzCustomImages"
+        );
+        customImagesLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the custom images contract.
+    @dev No checks are performed when setting, but lockCustomImages() ensures that
+    the final address implements the ICrypToadzCustomImages interface.
+     */
+    function setCustomImages(address _customImages) external onlyOwner {
+        require(!customImagesLocked, "CustomImages locked");
+        customImages = ICrypToadzCustomImages(_customImages);
+    }
+
+    /** @notice Contract responsible for rendering custom animations. */
+    ICrypToadzCustomAnimations public customAnimations;
+
+    /**
+    @notice Flag to disable use of setCustomAnimations().
+     */
+    bool public customAnimationsLocked = false;
+
+    /**
+    @notice Permanently sets the customAnimationsLocked flag to true.
+     */
+    function lockCustomAnimations() external onlyOwner {
+        require(
+            address(customAnimations).supportsInterface(
+                type(ICrypToadzCustomAnimations).interfaceId
+            ),
+            "Not ICrypToadzCustomAnimations"
+        );
+        customAnimationsLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the custom animations contract.
+    @dev No checks are performed when setting, but lockCustomAnimations() ensures that
+    the final address implements the ICrypToadzCustomAnimations interface.
+     */
+    function setCustomAnimations(address _customAnimations) external onlyOwner {
+        require(!customAnimationsLocked, "CustomAnimations locked");
+        customAnimations = ICrypToadzCustomAnimations(_customAnimations);
+    }
 
     function random() external view returns (string memory) {
         return _random(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
