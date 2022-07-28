@@ -24,25 +24,6 @@ task("toadz", "Validates correctness of a single CrypToadz")
       await utils.collect(toadz, parseInt(taskArgs.id), logger, true, true);
     });
 
-task("toadz-random", "Generates a random toadz")
-  .addOptionalParam("seed", "The random seed to use")
-  .setAction(
-    async (taskArgs) => {
-      var toadz;
-      var factory = await ethers.getContractFactory("CrypToadzChained", {
-        libraries: {
-          GIFEncoder: GIFEncoderAddress
-        }
-      });
-      toadz = await factory.attach(CrypToadzChainedAddress);
-
-      if(!taskArgs.seed) {
-        await toadz.random();        
-      } else {
-        await toadz.fromSeed(seed);
-      }
-    });
-
 task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
   .setAction(
     async (taskArgs) => {
@@ -77,6 +58,44 @@ task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadat
   .setAction(
     async (taskArgs) => {
       await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, false);
+    });
+
+task("toadz-random", "Generates a random toadz")
+  .addOptionalParam("seed", "The random seed to use")
+  .setAction(
+    async (taskArgs) => {
+      var toadz;
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
+        libraries: {
+          GIFEncoder: GIFEncoderAddress
+        }
+      });
+      toadz = await factory.attach(CrypToadzChainedAddress);
+
+      if (!taskArgs.seed) {
+        var seed = Math.floor(Math.random() * 9007199254740990) + 1;
+        console.log(await toadz.fromSeed(seed));
+      } else {
+        console.log(await toadz.fromSeed(seed));
+      }
+    });
+
+task("toadz-random-test", "Tests random toadz generation, saving metadata and image to disk")
+  .addOptionalParam("count", "The number of random toadz to generate", "1")
+  .setAction(
+    async (taskArgs) => {
+      var toadz;
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
+        libraries: {
+          GIFEncoder: GIFEncoderAddress
+        }
+      });
+      toadz = await factory.attach(CrypToadzChainedAddress);
+
+      var count = parseInt(taskArgs.count);
+      for (var i = 0; i < count; i++) {
+        await utils.random(toadz);
+      }
     });
 
 async function checkToadz(idFilePath, logger, gifEncoderAddress, contractAddress, checkMetadata, checkImage) {

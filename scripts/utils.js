@@ -11,6 +11,36 @@ const pixelmatch = require('pixelmatch');
 
 module.exports = {
 
+    random: async function random(contract) {
+        createDirectoryIfNotExists('./scripts/output/random');
+
+        const pattern = /^data:.+\/(.+);base64,(.*)$/;
+
+        // call contract to get tokenURI
+        var seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
+        var tokenDataUri = await contract.fromSeed(seed);
+        
+        // convert base64 tokenURI to JSON
+        var jsonData = tokenDataUri.match(pattern)[2];
+        var jsonBuffer = Buffer.from(jsonData, 'base64');
+        var json = jsonBuffer.toString('utf8');
+
+        // save metadata
+        const metadataPath = `./scripts/output/random/${seed}.json`;
+        fs.writeFileSync(metadataPath, json);
+        console.log(gutil.colors.green(metadataPath));
+
+        // convert image URI to GIF buffer
+        var imageDataUri = JSON.parse(json).image;
+        var imageData = imageDataUri.match(pattern)[2];
+        let imageBuffer = Buffer.from(imageData, 'base64');
+
+        // save image
+        const imagePath = `./scripts/output/random/${seed}.gif`;
+        fs.writeFileSync(imagePath, imageBuffer);
+        console.log(gutil.colors.green(imagePath));
+    },
+
     collect:
         async function collect(contract, tokenId, logger, checkMetadata, checkImage, continueOnError) {
 

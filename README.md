@@ -36,6 +36,7 @@ npx hardhat toadz-custom-images           Validates correctness of CrypToadz cus
 npx hardhat toadz-image-deltas            Validates correctness of CrypToadz token images that have deltas
 npx hardhat toadz-gas                     Produces ETH cost breakdown for deployment by component
 npx hardhat toadz-random                  Generates a random toadz
+npx hardhat toadz-random-test             Tests random toadz generation, saving metadata and image to disk
 ```
 
 ## Design Notes
