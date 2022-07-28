@@ -221,10 +221,10 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         uint8 traits = 2 + uint8(PRNG.readLessThan(src, 6, 8));            
         if(traits < 2 || traits > 7) revert BadTraitCount(traits);
         
-        uint8[] memory metadata = new uint8[](1 + traits + 1);
-        metadata[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size
-        metadata[1] = uint8(PRNG.readLessThan(src, 17, 8));      // Background
-        metadata[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
+        uint8[] memory meta = new uint8[](1 + traits + 1);
+        meta[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size
+        meta[1] = uint8(PRNG.readLessThan(src, 17, 8));      // Background
+        meta[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
         
         uint8 picked;
         uint8 count;
@@ -258,13 +258,13 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             uint8 mouth = uint8(121) + uint8(PRNG.readLessThan(src, 18 + 1, 8));
             if(mouth < 121 || mouth > 139) revert TraitOutOfRange(mouth);
             if(mouth == 139) mouth = 55; // Vampire
-            metadata[index++] = mouth;
+            meta[index++] = mouth;
         }
         if(flags[1]) {
             uint8 head = uint8(51) + uint8(PRNG.readLessThan(src, 53 + 1, 8));
             if(head < 51 || head > 104) revert TraitOutOfRange(head);
             if(head == 104) head = 249; // Vampire
-            metadata[index++] = head;
+            meta[index++] = head;
         }
         if(flags[2]) {
             uint8 eyes = uint8(139) + uint8(PRNG.readLessThan(src, 29 + 3, 8));
@@ -272,43 +272,43 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             if(eyes == 168) eyes = 250; // Vampire
             if(eyes == 169) eyes = 252; // Undead
             if(eyes == 170) eyes = 253; // Creep            
-            metadata[index++] = eyes;
+            meta[index++] = eyes;
         } 
 
         if(flags[3]) {
             uint8 clothes = uint8(246) + uint8(PRNG.readLessThan(src, 3, 8));
             if(clothes < 246 || clothes > 248) revert TraitOutOfRange(clothes);
-            metadata[index++] = clothes;
+            meta[index++] = clothes;
         }
         if(flags[4]) {
             uint8 accessoryII = uint8(104) + uint8(PRNG.readLessThan(src, 8, 8));
             if(accessoryII < 104 || accessoryII > 111) revert TraitOutOfRange(accessoryII);
-            metadata[index++] = accessoryII;
+            meta[index++] = accessoryII;
         }
         if(flags[5]) {
             uint8 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
             if(accessoryI < 237 || accessoryI > 245) revert TraitOutOfRange(accessoryI);
-            metadata[index++] = accessoryI;
+            meta[index++] = accessoryI;
         }
         
         // # Traits
         if(traits == 2) {
-            metadata[index++] = 114;
+            meta[index++] = 114;
         } else if(traits == 3) {
-            metadata[index++] = 116;
+            meta[index++] = 116;
         } else if(traits == 4) {
-            metadata[index++] = 112;
+            meta[index++] = 112;
         } else if(traits == 5) {
-            metadata[index++] = 113;
+            meta[index++] = 113;
         } else if(traits == 6) {
-            metadata[index++] = 115;
+            meta[index++] = 115;
         } else if(traits == 7) {
-            metadata[index++] = 118;
+            meta[index++] = 118;
         } else { 
             revert BadTraitCount(traits);
         }
 
-        string memory attributes = getAttributes(metadata);
+        string memory attributes = getAttributes(meta);
 
         string memory json = string(
             abi.encodePacked(
@@ -321,7 +321,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                 " #",
                 Strings.toString(seed),
                 '","image":"',
-                GIFEncoder.getDataUri(builder.getImage(metadata)),
+                GIFEncoder.getDataUri(builder.getImage(meta)),
                 '",',
                 attributes,
                 "}"
