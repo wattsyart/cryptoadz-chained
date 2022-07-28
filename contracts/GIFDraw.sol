@@ -14,22 +14,20 @@ library GIFDraw {
         uint8 offsetY,
         bool blend
     ) internal pure returns (uint256) {
-        (uint32[] memory colors, uint256 positionAfterColor) = PixelRenderer
-            .getColorTable(buffer, position);
+        (uint32[] memory colors, uint256 positionAfterColor) = PixelRenderer.getColorTable(buffer, position);
         position = positionAfterColor;
 
-        (uint32[] memory newBuffer, uint256 positionAfterDraw) = PixelRenderer
-            .drawFrameWithOffsets(
-                PixelRenderer.DrawFrame(
-                    buffer,
-                    position,
-                    frame,
-                    colors,
-                    offsetX,
-                    offsetY,
-                    blend
-                )
-            );
+        (uint32[] memory newBuffer, uint256 positionAfterDraw) = PixelRenderer.drawFrameWithOffsets(
+            PixelRenderer.DrawFrame(
+                buffer,
+                position,
+                frame,
+                colors,
+                offsetX,
+                offsetY,
+                blend
+            )
+        );
 
         frame.buffer = newBuffer;
         return positionAfterDraw;

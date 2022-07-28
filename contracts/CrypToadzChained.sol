@@ -23,7 +23,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "@divergencetech/ethier/contracts/utils/DynamicBuffer.sol";
+import "@divergencetech/ethier/contracts/random/PRNG.sol";
 
 import "./IERC721.sol";
 import "./ICrypToadzStrings.sol";
@@ -227,9 +227,105 @@ contract CrypToadzChained is IERC721, IERC165 {
         owner = msg.sender;
     }
 
+    function random() external view returns (string memory) {
+        return _random(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
+    }
+
+    function random(uint64 seed) external view returns (string memory) {
+        return _random(seed);
+    }
+
+    function _random(uint64 seed) private view returns (string memory) {
+        PRNG.Source src = PRNG.newSource(keccak256(abi.encodePacked(seed)));
+
+        uint8 traits = 2 + uint8(PRNG.readLessThan(src, 6, 8));            
+        if(traits < 2 || traits > 7) revert BadTraitCount(traits);
+
+        uint8[] memory metadata = new uint8[](1 + traits);
+        metadata[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size        
+        metadata[1] = uint8(PRNG.readLessThan(src, 17, 8));      // Background
+        metadata[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
+
+        // WARNING: We need a stable order, so there is a possibility of OutOfGas here!
+        uint8 picked;
+        bool[] memory flags = new bool[](6);
+        while(picked < traits) {
+            if(!flags[0] && PRNG.readBool(src)) {
+                flags[0] = true;
+                picked++;
+            } else if(!flags[1] && PRNG.readBool(src)) {
+                flags[1] = true;
+                picked++;
+            } else if(!flags[2] && PRNG.readBool(src)) {
+                flags[2] = true;
+                picked++;
+            } else if(!flags[3] && PRNG.readBool(src)) {
+                flags[3] = true;
+                picked++;
+            } else if(!flags[4] && PRNG.readBool(src)) {
+                flags[4] = true;
+                picked++;
+            } else if(!flags[5] && PRNG.readBool(src)) {
+                flags[5] = true;
+                picked++;
+            }
+        }
+
+        // WARNING: OS counts match, but currently this won't ever pick Vampire Head/Eyes, Undead Eyes, or Creep Eyes
+        uint8 index = 3;
+        if(flags[0]) metadata[index++] = uint8(121) + uint8(PRNG.readLessThan(src, 18, 8)); // Mouth        
+        if(flags[1]) metadata[index++] = uint8( 51) + uint8(PRNG.readLessThan(src, 53, 8)); // Head
+        if(flags[2]) metadata[index++] = uint8(139) + uint8(PRNG.readLessThan(src, 33, 8)); // Eyes
+        if(flags[3]) metadata[index++] = uint8(246) + uint8(PRNG.readLessThan(src,  3, 8)); // Clothes
+        if(flags[4]) metadata[index++] = uint8(104) + uint8(PRNG.readLessThan(src,  8, 8)); // Accessory II        
+        if(flags[5]) metadata[index++] = uint8(237) + uint8(PRNG.readLessThan(src,  9, 8)); // Accessory I
+        
+        // # Traits
+        if(traits == 2) {
+            metadata[index++] = 114;
+        } else if(traits == 3) {
+            metadata[index++] = 116;
+        } else if(traits == 4) {
+            metadata[index++] = 112;
+        } else if(traits == 5) {
+            metadata[index++] = 113;
+        } else if(traits == 6) {
+            metadata[index++] = 115;
+        } else if(traits == 7) {
+            metadata[index++] = 118;
+        } else { 
+            revert BadTraitCount(traits);
+        }
+
+        string memory json = string(
+            abi.encodePacked(
+                '{"description":"',
+                DESCRIPTION,
+                '","external_url":"',
+                EXTERNAL_URL,
+                '","name":"',
+                NAME,
+                " #",
+                Strings.toString(seed),
+                '","image":"',
+                GIFEncoder.getDataUri(builder.getImage(metadata)),
+                '",',
+                getAttributes(metadata),
+                "}"
+            )
+        );
+
+        return
+            string(
+                abi.encodePacked(
+                    JSON_URI_PREFIX,
+                    Base64.encode(bytes(json), bytes(json).length)
+                )
+            );
+    }
+
     function tokenURI(uint256 tokenId) external view returns (string memory) {
-        (uint8[] memory metadata, bool isTallToken) = metadataProvider
-            .getMetadata(tokenId);
+        (uint8[] memory metadata) = metadataProvider.getMetadata(tokenId);
 
         string memory imageUri;
         if (customImages.isCustomImage(tokenId)) {
@@ -251,11 +347,7 @@ contract CrypToadzChained is IERC721, IERC165 {
                 )
             );
         } else {
-            GIFEncoder.GIF memory gif = builder.getImage(
-                metadata,
-                tokenId,
-                isTallToken
-            );
+            GIFEncoder.GIF memory gif = builder.getImage(metadata, tokenId);
             imageUri = GIFEncoder.getDataUri(gif);
         }
 

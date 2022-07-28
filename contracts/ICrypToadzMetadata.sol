@@ -6,9 +6,5 @@ import "./GIFEncoder.sol";
 
 interface ICrypToadzMetadata {
     function isTall(uint256 tokenId) external view returns (bool);
-
-    function getMetadata(uint256 tokenId)
-        external
-        view
-        returns (uint8[] memory metadata, bool isTall);
+    function getMetadata(uint256 tokenId) external view returns (uint8[] memory metadata);
 }

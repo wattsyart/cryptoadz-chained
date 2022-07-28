@@ -35,6 +35,7 @@ npx hardhat toadz-custom-animations       Validates correctness of CrypToadz cus
 npx hardhat toadz-custom-images           Validates correctness of CrypToadz custom images
 npx hardhat toadz-image-deltas            Validates correctness of CrypToadz token images that have deltas
 npx hardhat toadz-gas                     Produces ETH cost breakdown for deployment by component
+npx hardhat toadz-random                  Generates a random toadz
 ```
 
 ## Design Notes
@@ -104,36 +105,36 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
-| CrypToadzChained             | Main              | 0.02150301 |
-| Total                        | 2150301           | 0.02150301 |
+| CrypToadzChained             | Main              | 0.02774844 |
+| Total                        | 2774844           | 0.02774844 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
 | CrypToadzStrings             | Metadata          | 0.05864486 |
-| CrypToadzMetadata            | Metadata          | 0.14389456 |
-| Total                        | 20253942          | 0.20253942 |
+| CrypToadzMetadata            | Metadata          | 0.14382145 |
+| Total                        | 20246631          | 0.20246631 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
 | GIFEncoder                   | Builder           | 0.01552785 |
-| PixelRenderer                | Builder           | 0.01187199 |
-| CrypToadzBuilder             | Builder           | 0.22200233 |
-| CrypToadzBuilderAny          | Builder           | 0.30966556 |
-| CrypToadzBuilderShort        | Builder           | 0.16820288 |
-| CrypToadzBuilderTall         | Builder           | 0.17551121 |
-| Total                        | 90278182          | 0.90278182 |
+| PixelRenderer                | Builder           | 0.01187223 |
+| CrypToadzBuilder             | Builder           | 0.15456148 |
+| CrypToadzBuilderAny          | Builder           | 0.31148912 |
+| CrypToadzBuilderShort        | Builder           | 0.20719718 |
+| CrypToadzBuilderTall         | Builder           | 0.21327662 |
+| Total                        | 91392448          | 0.91392448 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
 | CrypToadzDeltas              | Deltas            | 0.02820727 |
-| CrypToadzDeltasA             | Deltas            | 0.09371175 |
+| CrypToadzDeltasA             | Deltas            | 0.09371163 |
 | CrypToadzDeltasB             | Deltas            | 0.09537784 |
-| CrypToadzDeltasC             | Deltas            | 0.09238400 |
-| CrypToadzDeltasD             | Deltas            | 0.09738152 |
+| CrypToadzDeltasC             | Deltas            | 0.09238388 |
+| CrypToadzDeltasD             | Deltas            | 0.09738140 |
 | CrypToadzDeltasE             | Deltas            | 0.09581744 |
 | CrypToadzDeltasF             | Deltas            | 0.09715246 |
 | CrypToadzDeltasG             | Deltas            | 0.02766819 |
-| Total                        | 62770047          | 0.62770047 |
+| Total                        | 62770011          | 0.62770011 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
@@ -141,8 +142,8 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage1519     | Custom Animations | 0.00428670 |
 | CrypToadzCustomImage1943     | Custom Animations | 0.00455810 |
 | CrypToadzCustomImage1943A    | Custom Animations | 0.16117391 |
-| CrypToadzCustomImage1943B    | Custom Animations | 0.16017630 |
-| CrypToadzCustomImage1943C    | Custom Animations | 0.15983521 |
+| CrypToadzCustomImage1943B    | Custom Animations | 0.16017618 |
+| CrypToadzCustomImage1943C    | Custom Animations | 0.15983509 |
 | CrypToadzCustomImage1943D    | Custom Animations | 0.16114931 |
 | CrypToadzCustomImage1943E    | Custom Animations | 0.15667501 |
 | CrypToadzCustomImage2208     | Custom Animations | 0.00422217 |
@@ -161,15 +162,15 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage3661D    | Custom Animations | 0.16121982 |
 | CrypToadzCustomImage3661E    | Custom Animations | 0.16121454 |
 | CrypToadzCustomImage3661F    | Custom Animations | 0.16112505 |
-| CrypToadzCustomImage3661G    | Custom Animations | 0.12531963 |
+| CrypToadzCustomImage3661G    | Custom Animations | 0.12531951 |
 | CrypToadzCustomImage37       | Custom Animations | 0.00509749 |
 | CrypToadzCustomImage37A      | Custom Animations | 0.16115891 |
-| CrypToadzCustomImage37B      | Custom Animations | 0.16117295 |
-| CrypToadzCustomImage37C      | Custom Animations | 0.16120590 |
+| CrypToadzCustomImage37B      | Custom Animations | 0.16117307 |
+| CrypToadzCustomImage37C      | Custom Animations | 0.16120602 |
 | CrypToadzCustomImage37D      | Custom Animations | 0.16120242 |
 | CrypToadzCustomImage37E      | Custom Animations | 0.16121238 |
 | CrypToadzCustomImage37F      | Custom Animations | 0.07957883 |
-| CrypToadzCustomImage4035     | Custom Animations | 0.00509917 |
+| CrypToadzCustomImage4035     | Custom Animations | 0.00509929 |
 | CrypToadzCustomImage4035A    | Custom Animations | 0.16120155 |
 | CrypToadzCustomImage4035B    | Custom Animations | 0.15942554 |
 | CrypToadzCustomImage4035C    | Custom Animations | 0.16121586 |
@@ -184,10 +185,10 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage466D     | Custom Animations | 0.16121502 |
 | CrypToadzCustomImage466E     | Custom Animations | 0.16121550 |
 | CrypToadzCustomImage466F     | Custom Animations | 0.01889371 |
-| CrypToadzCustomImage48000000 | Custom Animations | 0.00368632 |
-| CrypToadzCustomImage4911     | Custom Animations | 0.00564113 |
+| CrypToadzCustomImage48000000 | Custom Animations | 0.00368620 |
+| CrypToadzCustomImage4911     | Custom Animations | 0.00564125 |
 | CrypToadzCustomImage4911A    | Custom Animations | 0.16119538 |
-| CrypToadzCustomImage4911B    | Custom Animations | 0.16100167 |
+| CrypToadzCustomImage4911B    | Custom Animations | 0.16100155 |
 | CrypToadzCustomImage4911C    | Custom Animations | 0.16120266 |
 | CrypToadzCustomImage4911D    | Custom Animations | 0.16117343 |
 | CrypToadzCustomImage4911E    | Custom Animations | 0.16121478 |
@@ -196,30 +197,30 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage5086     | Custom Animations | 0.10674031 |
 | CrypToadzCustomImage5844     | Custom Animations | 0.00440709 |
 | CrypToadzCustomImage6131     | Custom Animations | 0.00414733 |
-| Total                        | 655412144         | 6.55412144 |
+| Total                        | 655412132         | 6.55412132 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
 | CrypToadzCustomImageBank     | Custom Images     | 0.01894289 |
-| CrypToadzCustomImages        | Custom Images     | 0.03164428 |
+| CrypToadzCustomImages        | Custom Images     | 0.03164440 |
 | CrypToadzCustomImage1000000  | Custom Images     | 0.00410239 |
-| CrypToadzCustomImage10000000 | Custom Images     | 0.00409807 |
+| CrypToadzCustomImage10000000 | Custom Images     | 0.00409831 |
 | CrypToadzCustomImage1005     | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage1005A    | Custom Images     | 0.15279551 |
 | CrypToadzCustomImage1005B    | Custom Images     | 0.01253281 |
 | CrypToadzCustomImage11000000 | Custom Images     | 0.00392666 |
 | CrypToadzCustomImage1165     | Custom Images     | 0.00410263 |
 | CrypToadzCustomImage12000000 | Custom Images     | 0.00443424 |
-| CrypToadzCustomImage123      | Custom Images     | 0.00473944 |
-| CrypToadzCustomImage13000000 | Custom Images     | 0.00390329 |
+| CrypToadzCustomImage123      | Custom Images     | 0.00473956 |
+| CrypToadzCustomImage13000000 | Custom Images     | 0.00390317 |
 | CrypToadzCustomImage14000000 | Custom Images     | 0.00393047 |
 | CrypToadzCustomImage1423     | Custom Images     | 0.00411115 |
 | CrypToadzCustomImage15000000 | Custom Images     | 0.00397826 |
 | CrypToadzCustomImage1559     | Custom Images     | 0.00391628 |
 | CrypToadzCustomImage16000000 | Custom Images     | 0.00386802 |
 | CrypToadzCustomImage1637     | Custom Images     | 0.00473068 |
-| CrypToadzCustomImage17000000 | Custom Images     | 0.00391832 |
-| CrypToadzCustomImage1703     | Custom Images     | 0.00384540 |
+| CrypToadzCustomImage17000000 | Custom Images     | 0.00391820 |
+| CrypToadzCustomImage1703     | Custom Images     | 0.00384528 |
 | CrypToadzCustomImage1754     | Custom Images     | 0.00407008 |
 | CrypToadzCustomImage1793     | Custom Images     | 0.12899610 |
 | CrypToadzCustomImage18000000 | Custom Images     | 0.00406591 |
@@ -227,37 +228,37 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage1812A    | Custom Images     | 0.15357649 |
 | CrypToadzCustomImage1812B    | Custom Images     | 0.02378573 |
 | CrypToadzCustomImage19000000 | Custom Images     | 0.00450128 |
-| CrypToadzCustomImage1935     | Custom Images     | 0.00417772 |
+| CrypToadzCustomImage1935     | Custom Images     | 0.00417760 |
 | CrypToadzCustomImage1975     | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage1975A    | Custom Images     | 0.15154966 |
 | CrypToadzCustomImage1975B    | Custom Images     | 0.08329873 |
 | CrypToadzCustomImage2000000  | Custom Images     | 0.00447810 |
-| CrypToadzCustomImage20000000 | Custom Images     | 0.00367960 |
+| CrypToadzCustomImage20000000 | Custom Images     | 0.00367984 |
 | CrypToadzCustomImage21000000 | Custom Images     | 0.00412846 |
 | CrypToadzCustomImage2124     | Custom Images     | 0.00451656 |
 | CrypToadzCustomImage22000000 | Custom Images     | 0.00393192 |
 | CrypToadzCustomImage2232     | Custom Images     | 0.00293322 |
-| CrypToadzCustomImage2232A    | Custom Images     | 0.15131946 |
+| CrypToadzCustomImage2232A    | Custom Images     | 0.15131934 |
 | CrypToadzCustomImage2232B    | Custom Images     | 0.13458208 |
-| CrypToadzCustomImage23000000 | Custom Images     | 0.00401647 |
+| CrypToadzCustomImage23000000 | Custom Images     | 0.00401635 |
 | CrypToadzCustomImage2327     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage2327A    | Custom Images     | 0.15010494 |
+| CrypToadzCustomImage2327A    | Custom Images     | 0.15010482 |
 | CrypToadzCustomImage2327B    | Custom Images     | 0.10668133 |
-| CrypToadzCustomImage24000000 | Custom Images     | 0.00398042 |
+| CrypToadzCustomImage24000000 | Custom Images     | 0.00398030 |
 | CrypToadzCustomImage2469     | Custom Images     | 0.00403402 |
-| CrypToadzCustomImage2471     | Custom Images     | 0.00387941 |
+| CrypToadzCustomImage2471     | Custom Images     | 0.00387953 |
 | CrypToadzCustomImage2482     | Custom Images     | 0.00377031 |
 | CrypToadzCustomImage2489     | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage2489A    | Custom Images     | 0.15245713 |
 | CrypToadzCustomImage2489B    | Custom Images     | 0.04984302 |
 | CrypToadzCustomImage25000000 | Custom Images     | 0.00417112 |
 | CrypToadzCustomImage2521     | Custom Images     | 0.08031551 |
-| CrypToadzCustomImage2569     | Custom Images     | 0.00396110 |
+| CrypToadzCustomImage2569     | Custom Images     | 0.00396098 |
 | CrypToadzCustomImage2579     | Custom Images     | 0.00372909 |
 | CrypToadzCustomImage26000000 | Custom Images     | 0.00457626 |
 | CrypToadzCustomImage27000000 | Custom Images     | 0.00402082 |
 | CrypToadzCustomImage2709     | Custom Images     | 0.07902454 |
-| CrypToadzCustomImage28000000 | Custom Images     | 0.00391169 |
+| CrypToadzCustomImage28000000 | Custom Images     | 0.00391157 |
 | CrypToadzCustomImage2825     | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage2825A    | Custom Images     | 0.15193952 |
 | CrypToadzCustomImage2825B    | Custom Images     | 0.07035493 |
@@ -273,17 +274,17 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage30000000 | Custom Images     | 0.00397850 |
 | CrypToadzCustomImage31000000 | Custom Images     | 0.00536739 |
 | CrypToadzCustomImage316      | Custom Images     | 0.11153921 |
-| CrypToadzCustomImage3196     | Custom Images     | 0.00293322 |
-| CrypToadzCustomImage3196A    | Custom Images     | 0.15462007 |
+| CrypToadzCustomImage3196     | Custom Images     | 0.00293334 |
+| CrypToadzCustomImage3196A    | Custom Images     | 0.15462019 |
 | CrypToadzCustomImage3196B    | Custom Images     | 0.13412355 |
-| CrypToadzCustomImage32000000 | Custom Images     | 0.00398054 |
+| CrypToadzCustomImage32000000 | Custom Images     | 0.00398042 |
 | CrypToadzCustomImage33000000 | Custom Images     | 0.00408100 |
 | CrypToadzCustomImage3309     | Custom Images     | 0.00347464 |
 | CrypToadzCustomImage3309A    | Custom Images     | 0.15365961 |
 | CrypToadzCustomImage3309B    | Custom Images     | 0.15978802 |
-| CrypToadzCustomImage3309C    | Custom Images     | 0.01489162 |
+| CrypToadzCustomImage3309C    | Custom Images     | 0.01489174 |
 | CrypToadzCustomImage3382     | Custom Images     | 0.00293322 |
-| CrypToadzCustomImage3382A    | Custom Images     | 0.15562497 |
+| CrypToadzCustomImage3382A    | Custom Images     | 0.15562521 |
 | CrypToadzCustomImage3382B    | Custom Images     | 0.09670502 |
 | CrypToadzCustomImage34000000 | Custom Images     | 0.00389193 |
 | CrypToadzCustomImage35000000 | Custom Images     | 0.00402946 |
@@ -294,7 +295,7 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage39000000 | Custom Images     | 0.00416872 |
 | CrypToadzCustomImage4000000  | Custom Images     | 0.00398441 |
 | CrypToadzCustomImage40000000 | Custom Images     | 0.00379553 |
-| CrypToadzCustomImage4096     | Custom Images     | 0.08765470 |
+| CrypToadzCustomImage4096     | Custom Images     | 0.08765458 |
 | CrypToadzCustomImage41000000 | Custom Images     | 0.00434749 |
 | CrypToadzCustomImage4126     | Custom Images     | 0.00410047 |
 | CrypToadzCustomImage4152     | Custom Images     | 0.00293334 |
@@ -310,73 +311,74 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 | CrypToadzCustomImage4368     | Custom Images     | 0.00414325 |
 | CrypToadzCustomImage44000000 | Custom Images     | 0.00392036 |
 | CrypToadzCustomImage45000000 | Custom Images     | 0.00416248 |
-| CrypToadzCustomImage4578     | Custom Images     | 0.00393491 |
+| CrypToadzCustomImage4578     | Custom Images     | 0.00393503 |
 | CrypToadzCustomImage4580     | Custom Images     | 0.00293322 |
 | CrypToadzCustomImage4580A    | Custom Images     | 0.15113971 |
 | CrypToadzCustomImage4580B    | Custom Images     | 0.12810352 |
 | CrypToadzCustomImage46000000 | Custom Images     | 0.00389657 |
 | CrypToadzCustomImage4604     | Custom Images     | 0.00381729 |
-| CrypToadzCustomImage47000000 | Custom Images     | 0.00396974 |
-| CrypToadzCustomImage4714     | Custom Images     | 0.06584214 |
+| CrypToadzCustomImage47000000 | Custom Images     | 0.00396962 |
+| CrypToadzCustomImage4714     | Custom Images     | 0.06584238 |
 | CrypToadzCustomImage472      | Custom Images     | 0.00425689 |
 | CrypToadzCustomImage4773     | Custom Images     | 0.08363437 |
 | CrypToadzCustomImage4845     | Custom Images     | 0.00483184 |
 | CrypToadzCustomImage4896     | Custom Images     | 0.00347464 |
-| CrypToadzCustomImage4896A    | Custom Images     | 0.14321364 |
-| CrypToadzCustomImage4896B    | Custom Images     | 0.15746544 |
-| CrypToadzCustomImage4896C    | Custom Images     | 0.01724029 |
+| CrypToadzCustomImage4896A    | Custom Images     | 0.14321352 |
+| CrypToadzCustomImage4896B    | Custom Images     | 0.15746556 |
+| CrypToadzCustomImage4896C    | Custom Images     | 0.01724017 |
 | CrypToadzCustomImage49000000 | Custom Images     | 0.00418180 |
 | CrypToadzCustomImage491      | Custom Images     | 0.00384960 |
-| CrypToadzCustomImage5000000  | Custom Images     | 0.00396302 |
+| CrypToadzCustomImage5000000  | Custom Images     | 0.00396314 |
 | CrypToadzCustomImage50000000 | Custom Images     | 0.00392264 |
 | CrypToadzCustomImage51000000 | Custom Images     | 0.00393707 |
 | CrypToadzCustomImage5128     | Custom Images     | 0.08778164 |
 | CrypToadzCustomImage5150     | Custom Images     | 0.00449252 |
 | CrypToadzCustomImage52000000 | Custom Images     | 0.00398681 |
-| CrypToadzCustomImage5262     | Custom Images     | 0.00433873 |
+| CrypToadzCustomImage5262     | Custom Images     | 0.00433861 |
 | CrypToadzCustomImage53000000 | Custom Images     | 0.00390285 |
 | CrypToadzCustomImage54000000 | Custom Images     | 0.00357496 |
 | CrypToadzCustomImage5441     | Custom Images     | 0.00464295 |
 | CrypToadzCustomImage5471     | Custom Images     | 0.00347464 |
 | CrypToadzCustomImage5471A    | Custom Images     | 0.15502667 |
 | CrypToadzCustomImage5471B    | Custom Images     | 0.15876049 |
-| CrypToadzCustomImage5471C    | Custom Images     | 0.00301633 |
-| CrypToadzCustomImage55000000 | Custom Images     | 0.00399113 |
+| CrypToadzCustomImage5471C    | Custom Images     | 0.00301645 |
+| CrypToadzCustomImage55000000 | Custom Images     | 0.00399125 |
 | CrypToadzCustomImage56000000 | Custom Images     | 0.00408520 |
-| CrypToadzCustomImage5730     | Custom Images     | 0.00395654 |
+| CrypToadzCustomImage5730     | Custom Images     | 0.00395666 |
 | CrypToadzCustomImage5836     | Custom Images     | 0.00421605 |
-| CrypToadzCustomImage5848     | Custom Images     | 0.00406482 |
+| CrypToadzCustomImage5848     | Custom Images     | 0.00406494 |
 | CrypToadzCustomImage5902     | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage5902A    | Custom Images     | 0.15347491 |
 | CrypToadzCustomImage5902B    | Custom Images     | 0.12533046 |
 | CrypToadzCustomImage6000000  | Custom Images     | 0.00425053 |
 | CrypToadzCustomImage6214     | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage6214A    | Custom Images     | 0.15392668 |
-| CrypToadzCustomImage6214B    | Custom Images     | 0.04835908 |
+| CrypToadzCustomImage6214B    | Custom Images     | 0.04835896 |
 | CrypToadzCustomImage6382     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage6382A    | Custom Images     | 0.15471477 |
+| CrypToadzCustomImage6382A    | Custom Images     | 0.15471465 |
 | CrypToadzCustomImage6382B    | Custom Images     | 0.13024484 |
 | CrypToadzCustomImage6491     | Custom Images     | 0.08017935 |
 | CrypToadzCustomImage6572     | Custom Images     | 0.09061552 |
-| CrypToadzCustomImage6578     | Custom Images     | 0.00538911 |
+| CrypToadzCustomImage6578     | Custom Images     | 0.00538899 |
 | CrypToadzCustomImage6631     | Custom Images     | 0.07387689 |
 | CrypToadzCustomImage6719     | Custom Images     | 0.00434305 |
 | CrypToadzCustomImage6736     | Custom Images     | 0.00401227 |
 | CrypToadzCustomImage6852     | Custom Images     | 0.00424201 |
-| CrypToadzCustomImage6894     | Custom Images     | 0.00364454 |
+| CrypToadzCustomImage6894     | Custom Images     | 0.00364442 |
 | CrypToadzCustomImage6916     | Custom Images     | 0.00356866 |
 | CrypToadzCustomImage7000000  | Custom Images     | 0.00443244 |
 | CrypToadzCustomImage703      | Custom Images     | 0.05854948 |
 | CrypToadzCustomImage8000000  | Custom Images     | 0.00375696 |
 | CrypToadzCustomImage864      | Custom Images     | 0.00392352 |
-| CrypToadzCustomImage9000000  | Custom Images     | 0.00390305 |
+| CrypToadzCustomImage9000000  | Custom Images     | 0.00390317 |
 | CrypToadzCustomImage916      | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage916A     | Custom Images     | 0.15102789 |
 | CrypToadzCustomImage916B     | Custom Images     | 0.13390865 |
-| CrypToadzCustomImage936      | Custom Images     | 0.00293322 |
+| CrypToadzCustomImage936      | Custom Images     | 0.00293334 |
 | CrypToadzCustomImage936A     | Custom Images     | 0.15076898 |
 | CrypToadzCustomImage936B     | Custom Images     | 0.14594743 |
 | CrypToadzCustomImage966      | Custom Images     | 0.00375732 |
-| Total                        | 700614088         | 7.00614088 |
+| Total                        | 700614124         | 7.00614124 |
 
-Total Cost = 15.31478704 eth @ 10 gwei
+Total Gas = 3066420380
+Total Cost = 15.3321019 eth @ 10 gwei
