@@ -96,13 +96,36 @@ contract CrypToadzBuilder is ICrypToadzBuilder {
             if (feature != address(0)) {
 
                 uint8 featureId = uint8(buffer[position++]);                
-                if (featureId != value) {                    
-                    // Vampire:
-                    //                         
-                    // Vampire attribute is always 55, but can be one of:
-                    // Mouth (55), Head (249), or Eyes (250), in that order
-                    //
-                    if(value == 55) {
+                if (featureId != value) {
+
+                    if(value == 20) {
+                        // Creep attribute is always 20, but can be one of:
+                        // Body (20), or Eyes (253), in that order
+                        //
+                        if(featureId == 253) { 
+                            value = 253;
+                            if (isTallToken) {
+                                feature = tall.get(value);
+                            } else {
+                                feature = short.get(value);                                    
+                            }
+                        }
+                    } else if(value == 37) {
+                        // Undead attribute is always 37, but can be one of:
+                        // Body (37), or Eyes (252), in that order
+                        //
+                        if(featureId == 252) { 
+                            value = 252;
+                            if (isTallToken) {
+                                feature = tall.get(value);
+                            } else {
+                                feature = short.get(value);                                    
+                            }
+                        }
+                    } else if(value == 55) {
+                        // Vampire attribute is always 55, but can be one of:
+                        // Mouth (55), Head (249), or Eyes (250), in that order
+                        //
                         if(featureId == 249) { 
                             value = 249;
                             if (isTallToken) {

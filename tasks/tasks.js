@@ -39,7 +39,7 @@ task("toadz-random", "Generates a random toadz")
       if(!taskArgs.seed) {
         await toadz.random();        
       } else {
-        await toadz.random(seed);
+        await toadz.fromSeed(seed);
       }
     });
 

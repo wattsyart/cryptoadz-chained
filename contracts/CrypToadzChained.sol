@@ -231,7 +231,7 @@ contract CrypToadzChained is IERC721, IERC165 {
         return _random(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
     }
 
-    function random(uint64 seed) external view returns (string memory) {
+    function fromSeed(uint64 seed) external view returns (string memory) {
         return _random(seed);
     }
 
@@ -240,41 +240,43 @@ contract CrypToadzChained is IERC721, IERC165 {
 
         uint8 traits = 2 + uint8(PRNG.readLessThan(src, 6, 8));            
         if(traits < 2 || traits > 7) revert BadTraitCount(traits);
-
-        uint8[] memory metadata = new uint8[](1 + traits);
-        metadata[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size        
+        
+        uint8[] memory metadata = new uint8[](1 + traits + 1);
+        metadata[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size
         metadata[1] = uint8(PRNG.readLessThan(src, 17, 8));      // Background
         metadata[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
-
-        // WARNING: We need a stable order, so there is a possibility of OutOfGas here!
+        
         uint8 picked;
+        uint8 count;
+        uint8 maxCount = 30;
         bool[] memory flags = new bool[](6);
-        while(picked < traits) {
-            if(!flags[0] && PRNG.readBool(src)) {
+        while(picked < traits - 2) {
+            if(!flags[0] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[0] = true;
                 picked++;
-            } else if(!flags[1] && PRNG.readBool(src)) {
+            } else if(!flags[1] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[1] = true;
                 picked++;
-            } else if(!flags[2] && PRNG.readBool(src)) {
+            } else if(!flags[2] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[2] = true;
                 picked++;
-            } else if(!flags[3] && PRNG.readBool(src)) {
+            } else if(!flags[3] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[3] = true;
                 picked++;
-            } else if(!flags[4] && PRNG.readBool(src)) {
+            } else if(!flags[4] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[4] = true;
                 picked++;
-            } else if(!flags[5] && PRNG.readBool(src)) {
+            } else if(!flags[5] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[5] = true;
                 picked++;
             }
+            count++;
         }
 
         // WARNING: OS counts match, but currently this won't ever pick Vampire Head/Eyes, Undead Eyes, or Creep Eyes
         uint8 index = 3;
         if(flags[0]) metadata[index++] = uint8(121) + uint8(PRNG.readLessThan(src, 18, 8)); // Mouth        
-        if(flags[1]) metadata[index++] = uint8( 51) + uint8(PRNG.readLessThan(src, 53, 8)); // Head
+        if(flags[1]) metadata[index++] = uint8( 51) + uint8(PRNG.readLessThan(src, 53, 8)); // Head            
         if(flags[2]) metadata[index++] = uint8(139) + uint8(PRNG.readLessThan(src, 33, 8)); // Eyes
         if(flags[3]) metadata[index++] = uint8(246) + uint8(PRNG.readLessThan(src,  3, 8)); // Clothes
         if(flags[4]) metadata[index++] = uint8(104) + uint8(PRNG.readLessThan(src,  8, 8)); // Accessory II        
@@ -297,6 +299,8 @@ contract CrypToadzChained is IERC721, IERC165 {
             revert BadTraitCount(traits);
         }
 
+        string memory attributes = getAttributes(metadata);
+
         string memory json = string(
             abi.encodePacked(
                 '{"description":"',
@@ -310,7 +314,7 @@ contract CrypToadzChained is IERC721, IERC165 {
                 '","image":"',
                 GIFEncoder.getDataUri(builder.getImage(metadata)),
                 '",',
-                getAttributes(metadata),
+                attributes,
                 "}"
             )
         );
