@@ -273,14 +273,43 @@ contract CrypToadzChained is IERC721, IERC165 {
             count++;
         }
 
-        // WARNING: OS counts match, but currently this won't ever pick Vampire Head/Eyes, Undead Eyes, or Creep Eyes
         uint8 index = 3;
-        if(flags[0]) metadata[index++] = uint8(121) + uint8(PRNG.readLessThan(src, 18, 8)); // Mouth        
-        if(flags[1]) metadata[index++] = uint8( 51) + uint8(PRNG.readLessThan(src, 53, 8)); // Head            
-        if(flags[2]) metadata[index++] = uint8(139) + uint8(PRNG.readLessThan(src, 33, 8)); // Eyes
-        if(flags[3]) metadata[index++] = uint8(246) + uint8(PRNG.readLessThan(src,  3, 8)); // Clothes
-        if(flags[4]) metadata[index++] = uint8(104) + uint8(PRNG.readLessThan(src,  8, 8)); // Accessory II        
-        if(flags[5]) metadata[index++] = uint8(237) + uint8(PRNG.readLessThan(src,  9, 8)); // Accessory I
+        if(flags[0]) {
+            uint8 mouth = uint8(121) + uint8(PRNG.readLessThan(src, 18 + 1, 8));
+            if(mouth < 121 || mouth > 139) revert TraitOutOfRange(mouth);
+            if(mouth == 139) mouth = 55; // Vampire
+            metadata[index++] = mouth;
+        }
+        if(flags[1]) {
+            uint8 head = uint8(51) + uint8(PRNG.readLessThan(src, 53 + 1, 8));
+            if(head < 51 || head > 104) revert TraitOutOfRange(head);
+            if(head == 104) head = 249; // Vampire
+            metadata[index++] = head;
+        }
+        if(flags[2]) {
+            uint8 eyes = uint8(139) + uint8(PRNG.readLessThan(src, 29 + 3, 8));
+            if(eyes < 139 || eyes > 170) revert TraitOutOfRange(mouth);
+            if(eyes == 168) eyes = 250; // Vampire
+            if(eyes == 169) eyes = 252; // Undead
+            if(eyes == 170) eyes = 253; // Creep            
+            metadata[index++] = eyes;
+        } 
+
+        if(flags[3]) {
+            uint8 clothes = uint8(246) + uint8(PRNG.readLessThan(src, 3, 8));
+            if(clothes < 246 || clothes > 248) revert TraitOutOfRange(clothes);
+            metadata[index++] = clothes;
+        }
+        if(flags[4]) {
+            uint8 accessoryII = uint8(104) + uint8(PRNG.readLessThan(src, 8, 8));
+            if(accessoryII < 104 || accessoryII > 111) revert TraitOutOfRange(accessoryII);
+            metadata[index++] = accessoryII
+        }
+        if(flags[5]) {
+            uint8 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
+            if(accessoryI < 237 || accessoryI > 245) revert TraitOutOfRange(accessoryI);
+            metadata[index++] = accessoryI;
+        }
         
         // # Traits
         if(traits == 2) {
