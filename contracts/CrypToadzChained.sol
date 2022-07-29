@@ -389,16 +389,17 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             abi.encodePacked(
                 '{"description":"', DESCRIPTION,
                 '","external_url":"', EXTERNAL_URL,
-                '","name":"', NAME, " #", Strings.toString(tokenId)               
+                '","name":"', NAME, " #", Strings.toString(tokenId),
+                '",'
             )
         );
 
         if(presentation == Presentation.Image || presentation == Presentation.Both) {
-            json = string(abi.encodePacked(json, '","image":"', imageUri, '",'));
+            json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
         }
 
         if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
-            json = string(abi.encodePacked(json, '","image_data":"', imageDataUri, '",'));
+            json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
         }
 
         json = string(abi.encodePacked(json, getAttributes(meta), '}'));
