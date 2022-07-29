@@ -40,13 +40,9 @@ import "./Presentation.sol";
 contract CrypToadzChained is Ownable, IERC721, IERC165 {
     using ERC165Checker for address;
 
-    bytes private constant DATA_URI_PREFIX = "data:";
-    bytes private constant DATA_URI_SUFFIX = abi.encodePacked(DATA_URI_PREFIX, ";base64,");
-    bytes private constant DATA_IMAGE_PREFIX = abi.encodePacked(DATA_URI_PREFIX, "image/");
-    bytes private constant JSON_URI_PREFIX = abi.encodePacked(DATA_URI_PREFIX, "application/json", DATA_URI_SUFFIX);
-    bytes private constant PNG_URI_PREFIX = abi.encodePacked(DATA_IMAGE_PREFIX, "png", DATA_URI_SUFFIX);
-    bytes private constant GIF_URI_PREFIX = abi.encodePacked(DATA_IMAGE_PREFIX, "gif", DATA_URI_SUFFIX);
-    bytes private constant SVG_URI_PREFIX = abi.encodePacked(DATA_IMAGE_PREFIX, "svg+xml", DATA_URI_SUFFIX);
+    bytes private constant JSON_URI_PREFIX = "data:application/json;base64,";
+    bytes private constant PNG_URI_PREFIX = "data:image/png;base64,";
+    bytes private constant SVG_URI_PREFIX = "data:image/svg+xml;base64,";
 
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
@@ -363,7 +359,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             );
             imageUri = string(
                 abi.encodePacked(
-                    GIF_URI_PREFIX,
+                    GIFEncoder.GIF_URI_PREFIX,
                     Base64.encode(customAnimation, customAnimation.length)
                 )
             );
