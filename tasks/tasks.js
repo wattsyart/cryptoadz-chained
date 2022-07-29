@@ -6,7 +6,6 @@ const fs = require('fs');
 const readline = require('readline');
 const gutil = require('gulp-util');
 
-const GIFEncoderAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
 const CrypToadzChainedAddress = "0x3Fb5877CAD6Dbe10805124017c702cBB3a8BcFb1";
 
 task("toadz", "Validates correctness of a single CrypToadz")
@@ -32,37 +31,37 @@ task("toadz-wrapped", "Validates correctness of a single, wrapped CrypToadz")
 task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/customImageIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
+      await checkToadz('./scripts/customImageIds.txt', null, true, true);
     });
 
 task("toadz-custom-animations", "Validates correctness of CrypToadz custom animations")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/customAnimationIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
+      await checkToadz('./scripts/customAnimationIds.txt', null, true, true);
     });
 
 task("toadz-image-deltas", "Validates correctness of CrypToadz token images that have deltas")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/deltaIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, false, true);
+      await checkToadz('./scripts/deltaIds.txt', null, false, true);
     });
 
 task("toadz-all", "Validates correctness of all CrypToadz tokens")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
+      await checkToadz('./scripts/tokenIds.txt', null, true, true);
     });
 
 task("toadz-all-images", "Validates correctness of all CrypToadz token images")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, false, true);
+      await checkToadz('./scripts/tokenIds.txt', null, false, true);
     });
 
 task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadata")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, false);
+      await checkToadz('./scripts/tokenIds.txt', null, true, false);
     });
 
 task("toadz-random", "Generates a random toadz and saves the metadata and image to disk")
@@ -90,7 +89,7 @@ task("toadz-random-batch", "Batch-based random generation for stress testing")
       }
     });
 
-async function checkToadz(idFilePath, logger, gifEncoderAddress, contractAddress, checkMetadata, checkImage) {
+async function checkToadz(idFilePath, logger, checkMetadata, checkImage) {
   var toadz = await getToadz();
 
   const fileStream = fs.createReadStream(idFilePath);
@@ -339,10 +338,6 @@ function setDeploymentCost(gasPriceInWei, components, name, line, preamble) {
 }
 
 async function getToadz() {
-  var factory = await ethers.getContractFactory("CrypToadzChained", {
-    libraries: {
-      GIFEncoder: GIFEncoderAddress
-    }
-  });
+  var factory = await ethers.getContractFactory("CrypToadzChained");
   return await factory.attach(CrypToadzChainedAddress);
 }
