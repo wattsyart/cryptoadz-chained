@@ -2,12 +2,12 @@
 
 pragma solidity ^0.8.13;
 
-import "./GIFEncoder.sol";
+import "./IPixelRenderer.sol";
 import "./BufferUtils.sol";
 import "./Errors.sol";
 
 /** @notice Pixel renderer using basic drawing instructions: fill, line, and dot. */
-library PixelRenderer {
+contract PixelRenderer is IPixelRenderer {
 
     struct Point2D {
         int32 x;
@@ -18,16 +18,6 @@ library PixelRenderer {
         Point2D v0;
         Point2D v1;
         uint32 color;
-    }
-
-    struct DrawFrame {
-        bytes buffer;
-        uint position;
-        GIFEncoder.GIFFrame frame;
-        uint32[] colors;
-        uint8 ox;
-        uint8 oy;
-        bool blend;
     }
 
     function drawFrameWithOffsets(DrawFrame memory f) external pure returns (uint32[] memory buffer, uint) {       
@@ -112,7 +102,7 @@ library PixelRenderer {
     }
 
     function dot(
-        GIFEncoder.GIFFrame memory frame,
+        GIFFrame memory frame,
         int32 x,
         int32 y,
         uint32 color,
@@ -122,7 +112,7 @@ library PixelRenderer {
         frame.buffer[p] = blend ? blendPixel(frame.buffer[p], color) : color;
     }
 
-    function line(GIFEncoder.GIFFrame memory frame, Line2D memory f, bool blend)
+    function line(GIFFrame memory frame, Line2D memory f, bool blend)
         private
         pure
     {

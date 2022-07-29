@@ -34,7 +34,6 @@ import "./ICrypToadzCustomImages.sol";
 import "./ICrypToadzCustomAnimations.sol";
 
 import "./PixelRenderer.sol";
-import "./GIFDraw.sol";
 import "./Presentation.sol";
 
 contract CrypToadzChained is Ownable, IERC721, IERC165 {
@@ -42,6 +41,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
 
     bytes private constant JSON_URI_PREFIX = "data:application/json;base64,";
     bytes private constant PNG_URI_PREFIX = "data:image/png;base64,";
+    bytes private constant GIF_URI_PREFIX = "data:image/gif;base64,";
     bytes private constant SVG_URI_PREFIX = "data:image/svg+xml;base64,";
 
     bytes private constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
@@ -203,6 +203,37 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         customAnimations = ICrypToadzCustomAnimations(_customAnimations);
     }
 
+    /** @notice Contract responsible for encoding GIF images */
+    IGIFEncoder public encoder;
+
+    /**
+    @notice Flag to disable use of setEncoder().
+     */
+    bool public encoderLocked = false;
+
+    /**
+    @notice Permanently sets the encoderLocked flag to true.
+     */
+    function lockEncoder() external onlyOwner {
+        require(
+            address(builder).supportsInterface(
+                type(IGIFEncoder).interfaceId
+            ),
+            "Not IGIFEncoder"
+        );
+        encoderLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the encoder contract.
+    @dev No checks are performed when setting, but lockEncoder() ensures that
+    the final address implements the GIFEncoder interface.
+     */
+    function setEncoder(address _encoder) external onlyOwner {
+        require(!builderLocked, "Encoder locked");
+        encoder = IGIFEncoder(_encoder);
+    }
+
     function random() external view returns (string memory) {
         return _random(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
     }
@@ -317,7 +348,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                 " #",
                 Strings.toString(seed),
                 '","image":"',
-                GIFEncoder.getDataUri(builder.getImage(meta)),
+                IGIFEncoder(encoder).getDataUri(builder.getImage(meta)),
                 '",',
                 attributes,
                 "}"
@@ -359,13 +390,13 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             );
             imageUri = string(
                 abi.encodePacked(
-                    GIFEncoder.GIF_URI_PREFIX,
+                    GIF_URI_PREFIX,
                     Base64.encode(customAnimation, customAnimation.length)
                 )
             );
         } else {
-            GIFEncoder.GIF memory gif = builder.getImage(meta, tokenId);
-            imageUri = GIFEncoder.getDataUri(gif);
+            GIF memory gif = builder.getImage(meta, tokenId);
+            imageUri = IGIFEncoder(encoder).getDataUri(gif);
         }
 
         string memory imageDataUri;

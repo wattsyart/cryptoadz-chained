@@ -6,9 +6,8 @@ module.exports = {
 }
 
 // https://docs.ethers.io/v5/api/contract/contract-factory/
-async function deployContract(contractName, quiet, trace, txOptions, contractFactoryOps) {
-  // WARNING: libraries aren't linked during trace!
-  const contract = await ethers.getContractFactory(contractName, contractFactoryOps);
+async function deployContract(contractName, quiet, trace, txOptions) {
+  const contract = await ethers.getContractFactory(contractName);
   if(trace) {
     // https://docs.ethers.io/v5/api/utils/transactions/#UnsignedTransaction
     var unsignedTx = await contract.getDeployTransaction(txOptions);
@@ -28,11 +27,12 @@ async function deployContracts(quiet, trace, txOptions) {
   var GIFEncoderDeployed = await deployContract("GIFEncoder", quiet, trace, txOptions);
   var PixelRendererDeployed = await deployContract("PixelRenderer", quiet, trace, txOptions);
 
-  var CrypToadzChainedDeployed = await deployContract("CrypToadzChained", quiet, trace, txOptions, { libraries: { "GIFEncoder": GIFEncoderDeployed.address }});
+  var CrypToadzChainedDeployed = await deployContract("CrypToadzChained", quiet, trace, txOptions);  
   var CrypToadzStringsDeployed = await deployContract("CrypToadzStrings", quiet, trace, txOptions);  
-  var CrypToadzMetadataDeployed = await deployContract("CrypToadzMetadata", quiet, trace, txOptions);
-  var CrypToadzDeltasDeployed = await deployContract("CrypToadzDeltas", quiet, trace, txOptions, { libraries: { "PixelRenderer": PixelRendererDeployed.address }});
-  var CrypToadzBuilderDeployed = await deployContract("CrypToadzBuilder", quiet, trace, txOptions, { libraries: { "PixelRenderer": PixelRendererDeployed.address }});
+  var CrypToadzMetadataDeployed = await deployContract("CrypToadzMetadata", quiet, trace, txOptions);  
+  var CrypToadzDeltasDeployed = await deployContract("CrypToadzDeltas", quiet, trace, txOptions);
+  var CrypToadzBuilderDeployed = await deployContract("CrypToadzBuilder", quiet, trace, txOptions);
+  var CrypToadzCustomImageBankDeployed = await deployContract("CrypToadzCustomImageBank", quiet, trace, txOptions);
   var CrypToadzCustomImagesDeployed = await deployContract("CrypToadzCustomImages", quiet, trace, txOptions);
   var CrypToadzCustomAnimationsDeployed = await deployContract("CrypToadzCustomAnimations", quiet, trace, txOptions);
 
@@ -44,8 +44,6 @@ async function deployContracts(quiet, trace, txOptions) {
   var CrypToadzBuilderShortDeployed = await deployContract("CrypToadzBuilderShort", quiet, trace, txOptions);
   var CrypToadzBuilderTallDeployed = await deployContract("CrypToadzBuilderTall", quiet, trace, txOptions);  
 
-  var CrypToadzCustomImageBankDeployed = await deployContract("CrypToadzCustomImageBank", quiet, trace, txOptions);
-  
   if (true) {
     const CrypToadzCustomImage1000000 = await ethers.getContractFactory("CrypToadzCustomImage1000000", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage1000000Deployed = await CrypToadzCustomImage1000000.deploy();
@@ -1222,6 +1220,10 @@ async function deployContracts(quiet, trace, txOptions) {
   //
   // Post-Deployment: Link all dependencies
   //
+
+  await CrypToadzChainedDeployed.setEncoder(GIFEncoderDeployed.address);
+  await CrypToadzDeltasDeployed.setRenderer(PixelRendererDeployed.address);
+  await CrypToadzBuilderDeployed.setRenderer(PixelRendererDeployed.address);
 
   await CrypToadzDeltasDeployed.setAddresses({
     _a: CrypToadzDeltasADeployed.address,
