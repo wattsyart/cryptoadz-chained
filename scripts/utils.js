@@ -44,7 +44,7 @@ module.exports = {
     },
 
     collect:
-        async function collect(contract, tokenId, logger, checkMetadata, checkImage, continueOnError) {
+        async function collect(contract, tokenId, logger, checkMetadata, checkImage, continueOnError, wrapped) {
 
             createDirectoryIfNotExists('./scripts/output');
             createDirectoryIfNotExists('./scripts/output/images');
@@ -55,7 +55,12 @@ module.exports = {
                 const pattern = /^data:.+\/(.+);base64,(.*)$/;
 
                 // call contract to get tokenURI
-                var tokenDataUri = await contract.tokenURI(tokenId);
+                var tokenDataUri;
+                if(!wrapped) {
+                    tokenDataUri = await contract.tokenURI(tokenId);
+                } else {
+                    tokenDataUri = await contract.tokenURIWithPresentation(tokenId, 2);
+                }               
 
                 // convert base64 tokenURI to JSON
                 var jsonData = tokenDataUri.match(pattern)[2];
@@ -71,6 +76,9 @@ module.exports = {
 
                     var jsonA = JSON.parse(json);
                     delete jsonA["image"];
+                    if(wrapped) {
+                        delete jsonA["image_data"];
+                    }
 
                     // some arweave assets have junk symbols in the first byte, we have to cleanse
                     var assetJson = fs.readFileSync(`./assets/TOADZ_${tokenId}.json`, 'utf8').slice(1).toString('utf8');
@@ -80,6 +88,10 @@ module.exports = {
 
                     var jsonB = JSON.parse(assetJson);
                     delete jsonB["image"];
+                    if(wrapped) {
+                        delete jsonB["image_data"];
+                    }
+
                     jsonB.attributes = jsonB.attributes.filter(function (obj) {
                         return obj.trait_type !== 'Size';
                     });

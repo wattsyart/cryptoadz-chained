@@ -24,6 +24,22 @@ task("toadz", "Validates correctness of a single CrypToadz")
       await utils.collect(toadz, parseInt(taskArgs.id), logger, true, true);
     });
 
+task("toadz-wrapped", "Validates correctness of a single, wrapped CrypToadz")
+  .addParam("id", "The CrypToadz token ID to validate")
+  .setAction(
+    async (taskArgs) => {
+      var toadz;
+      var factory = await ethers.getContractFactory("CrypToadzChained", {
+        libraries: {
+          GIFEncoder: GIFEncoderAddress
+        }
+      });
+      toadz = await factory.attach(CrypToadzChainedAddress);
+
+      var logger = null;
+      await utils.collect(toadz, parseInt(taskArgs.id), logger, true, true, true, true);
+    });
+
 task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
   .setAction(
     async (taskArgs) => {
