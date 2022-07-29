@@ -5,87 +5,53 @@ module.exports = {
   deployContracts: deployContracts
 }
 
-async function deployContracts(quiet) {
+// https://docs.ethers.io/v5/api/contract/contract-factory/
+async function deployContract(contractName, quiet, trace, txOptions, contractFactoryOps) {
+  // WARNING: libraries aren't linked during trace!
+  const contract = await ethers.getContractFactory(contractName, contractFactoryOps);
+  if(trace) {
+    // https://docs.ethers.io/v5/api/utils/transactions/#UnsignedTransaction
+    var unsignedTx = await contract.getDeployTransaction(txOptions);
+    if (!quiet) console.log(`${contractName} created unsigned transaction`);
+    return unsignedTx;
+  } else {
+    var deployed = await contract.deploy(txOptions);
+    await deployed.deployed();
+    if (!quiet) console.log(`${contractName} deployed to ${deployed.address}`);
+    return deployed;
+  }  
+}
 
-  const GIFEncoder = await ethers.getContractFactory("GIFEncoder");
-  var GIFEncoderDeployed = await GIFEncoder.deploy();
-  await GIFEncoderDeployed.deployed();
-  if (!quiet) console.log("GIFEncoder deployed to " + GIFEncoderDeployed.address);
+async function deployContracts(quiet, trace, txOptions) {
+  if(!txOptions) txOptions = {};
 
-  const PixelRenderer = await ethers.getContractFactory("PixelRenderer");
-  var PixelRendererDeployed = await PixelRenderer.deploy();
-  await PixelRendererDeployed.deployed();
-  if (!quiet) console.log("PixelRenderer deployed to " + PixelRendererDeployed.address);
+  var GIFEncoderDeployed = await deployContract("GIFEncoder", quiet, trace, txOptions);
+  var PixelRendererDeployed = await deployContract("PixelRenderer", quiet, trace, txOptions);
 
-  const CrypToadzStrings = await ethers.getContractFactory("CrypToadzStrings");
-  var CrypToadzStringsDeployed = await CrypToadzStrings.deploy();
-  await CrypToadzStringsDeployed.deployed();
-  if (!quiet) console.log("CrypToadzStrings deployed to " + CrypToadzStringsDeployed.address);
+  var CrypToadzChainedDeployed = await deployContract("CrypToadzChained", quiet, trace, txOptions, { libraries: { "GIFEncoder": GIFEncoderDeployed.address }});
+  var CrypToadzStringsDeployed = await deployContract("CrypToadzStrings", quiet, trace, txOptions);  
+  var CrypToadzMetadataDeployed = await deployContract("CrypToadzMetadata", quiet, trace, txOptions);
+  var CrypToadzDeltasDeployed = await deployContract("CrypToadzDeltas", quiet, trace, txOptions, { libraries: { "PixelRenderer": PixelRendererDeployed.address }});
+  var CrypToadzBuilderDeployed = await deployContract("CrypToadzBuilder", quiet, trace, txOptions, { libraries: { "PixelRenderer": PixelRendererDeployed.address }});
+  var CrypToadzCustomImagesDeployed = await deployContract("CrypToadzCustomImages", quiet, trace, txOptions);
+  var CrypToadzCustomAnimationsDeployed = await deployContract("CrypToadzCustomAnimations", quiet, trace, txOptions);
 
-  const CrypToadzBuilderAny = await ethers.getContractFactory("CrypToadzBuilderAny");
-  var CrypToadzBuilderAnyDeployed = await CrypToadzBuilderAny.deploy();
-  await CrypToadzBuilderAnyDeployed.deployed();
-  if (!quiet) console.log("CrypToadzBuilderAny deployed to " + CrypToadzBuilderAnyDeployed.address);
+  var CrypToadzDeltasADeployed = await deployContract("CrypToadzDeltasA", quiet, trace, txOptions);
+  var CrypToadzDeltasBDeployed = await deployContract("CrypToadzDeltasB", quiet, trace, txOptions);
+  var CrypToadzDeltasCDeployed = await deployContract("CrypToadzDeltasC", quiet, trace, txOptions);
 
-  const CrypToadzBuilderShort = await ethers.getContractFactory("CrypToadzBuilderShort");
-  var CrypToadzBuilderShortDeployed = await CrypToadzBuilderShort.deploy();
-  await CrypToadzBuilderShortDeployed.deployed();
-  if (!quiet) console.log("CrypToadzBuilderShort deployed to " + CrypToadzBuilderShortDeployed.address);
+  var CrypToadzBuilderAnyDeployed = await deployContract("CrypToadzBuilderAny", quiet, trace, txOptions);
+  var CrypToadzBuilderShortDeployed = await deployContract("CrypToadzBuilderShort", quiet, trace, txOptions);
+  var CrypToadzBuilderTallDeployed = await deployContract("CrypToadzBuilderTall", quiet, trace, txOptions);  
 
-  const CrypToadzBuilderTall = await ethers.getContractFactory("CrypToadzBuilderTall");
-  var CrypToadzBuilderTallDeployed = await CrypToadzBuilderTall.deploy();
-  await CrypToadzBuilderTallDeployed.deployed();
-  if (!quiet) console.log("CrypToadzBuilderTall deployed to " + CrypToadzBuilderTallDeployed.address);
-
-  const CrypToadzDeltasA = await ethers.getContractFactory("CrypToadzDeltasA");
-  var CrypToadzDeltasADeployed = await CrypToadzDeltasA.deploy();
-  await CrypToadzDeltasADeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasA deployed to " + CrypToadzDeltasADeployed.address);
-
-  const CrypToadzDeltasB = await ethers.getContractFactory("CrypToadzDeltasB");
-  var CrypToadzDeltasBDeployed = await CrypToadzDeltasB.deploy();
-  await CrypToadzDeltasBDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasB deployed to " + CrypToadzDeltasBDeployed.address);
-
-  const CrypToadzDeltasC = await ethers.getContractFactory("CrypToadzDeltasC");
-  var CrypToadzDeltasCDeployed = await CrypToadzDeltasC.deploy();
-  await CrypToadzDeltasCDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasC deployed to " + CrypToadzDeltasCDeployed.address);
-
-  const CrypToadzDeltas = await ethers.getContractFactory("CrypToadzDeltas", {
-    libraries: {
-      PixelRenderer: PixelRendererDeployed.address
-    }
-  });
-  var CrypToadzDeltasDeployed = await CrypToadzDeltas.deploy();
-  await CrypToadzDeltasDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltas deployed to " + CrypToadzDeltasDeployed.address);
-
-  const CrypToadzBuilder = await ethers.getContractFactory("CrypToadzBuilder", {
-    libraries: {
-      PixelRenderer: PixelRendererDeployed.address,
-    }
-  });
-  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy();
-   await CrypToadzBuilderDeployed.deployed();
-  if (!quiet) console.log("CrypToadzBuilder deployed to " + CrypToadzBuilderDeployed.address);  
-
-  const CrypToadzMetadata = await ethers.getContractFactory("CrypToadzMetadata");
-  var CrypToadzMetadataDeployed = await CrypToadzMetadata.deploy();
-  await CrypToadzMetadataDeployed.deployed();
-  if (!quiet) console.log("CrypToadzMetadata deployed to " + CrypToadzMetadataDeployed.address);
-
-  const CrypToadzCustomImageBank = await ethers.getContractFactory("CrypToadzCustomImageBank");
-  var CrypToadzCustomImageBankDeployed = await CrypToadzCustomImageBank.deploy();
-  await CrypToadzCustomImageBankDeployed.deployed();
-  if (!quiet) console.log("CrypToadzCustomImageBank deployed to " + CrypToadzCustomImageBankDeployed.address);
-
+  var CrypToadzCustomImageBankDeployed = await deployContract("CrypToadzCustomImageBank", quiet, trace, txOptions);
+  
   if (true) {
     const CrypToadzCustomImage1000000 = await ethers.getContractFactory("CrypToadzCustomImage1000000", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage1000000Deployed = await CrypToadzCustomImage1000000.deploy();
     await CrypToadzCustomImage1000000Deployed.deployed();
-    if (!quiet) console.log("CrypToadzCustomImage1000000 deployed to " + CrypToadzCustomImage1000000Deployed.address);
-
+    if (!quiet) console.log("CrypToadzCustomImage1000000 deployed to " + CrypToadzCustomImage1000000Deployed.address);   
+    
     const CrypToadzCustomImage10000000 = await ethers.getContractFactory("CrypToadzCustomImage10000000", { libraries: { CrypToadzCustomImageBank: CrypToadzCustomImageBankDeployed.address } });
     var CrypToadzCustomImage10000000Deployed = await CrypToadzCustomImage10000000.deploy();
     await CrypToadzCustomImage10000000Deployed.deployed();
@@ -956,11 +922,7 @@ async function deployContracts(quiet) {
     await CrypToadzCustomImage966Deployed.deployed();
     if (!quiet) console.log("CrypToadzCustomImage966 deployed to " + CrypToadzCustomImage966Deployed.address);
 
-    const CrypToadzCustomImages = await ethers.getContractFactory("CrypToadzCustomImages");
-
-    var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy();
-    await CrypToadzCustomImagesDeployed.deployed();
-    if (!quiet) console.log("CrypToadzCustomImages deployed to " + CrypToadzCustomImagesDeployed.address);
+    
   }
 
   if (true) {
@@ -1254,20 +1216,8 @@ async function deployContracts(quiet) {
     await CrypToadzCustomImage6131Deployed.deployed();
     if (!quiet) console.log("CrypToadzCustomImage6131 deployed to " + CrypToadzCustomImage6131Deployed.address);
 
-    const CrypToadzCustomAnimations = await ethers.getContractFactory("CrypToadzCustomAnimations");
-    var CrypToadzCustomAnimationsDeployed = await CrypToadzCustomAnimations.deploy();
-    if (!quiet) console.log("CrypToadzCustomAnimations deployed to " + CrypToadzCustomAnimationsDeployed.address);
+
   }
-
-  const CrypToadzChained = await ethers.getContractFactory("CrypToadzChained", {
-    libraries: {
-      "GIFEncoder": GIFEncoderDeployed.address
-    }
-  });
-
-  var CrypToadzChainedDeployed = await CrypToadzChained.deploy();
-  await CrypToadzChainedDeployed.deployed();
-  if (!quiet) console.log("CrypToadzChained deployed to " + CrypToadzChainedDeployed.address)
 
   //
   // Post-Deployment: Link all dependencies
