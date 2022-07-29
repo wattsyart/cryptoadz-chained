@@ -401,7 +401,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             json = string(abi.encodePacked(json, '","image_data":"', imageDataUri, '",'));
         }
 
-        json = string(abi.encodePacked(json, getAttributes(meta)));
+        json = string(abi.encodePacked(json, getAttributes(meta), '}'));
 
         return
             string(
