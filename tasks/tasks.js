@@ -60,7 +60,7 @@ task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadat
       await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, false);
     });
 
-task("toadz-random", "Generates a random toadz")
+task("toadz-random", "Generates a random toadz and saves the metadata and image to disk")
   .addOptionalParam("seed", "The random seed to use")
   .setAction(
     async (taskArgs) => {
@@ -79,7 +79,7 @@ task("toadz-random", "Generates a random toadz")
       }
     });
 
-task("toadz-random-batch", "Tests random toadz generation, saving metadata and image to disk")
+task("toadz-random-batch", "Batch-based random generation for stress testing")
   .addOptionalParam("count", "The number of random toadz to generate", "1")
   .setAction(
     async (taskArgs) => {
