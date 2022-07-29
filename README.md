@@ -95,9 +95,7 @@ The uncompressed intermediate format for draw instructions is:
 | Field       | Date Type   | Description                            |
 | ----------- | ----------- | -------------------------------------- |
 | Type        | byte        | Type discriminator, fixed at `3`       |
-| i           | byte        | An index into the draw instructions    | 
-| x           | byte        | The x-offset to begin drawing from     |
-| y           | byte        | The y-offset to begin drawing from     |
+| i           | byte        | An index into the draw instructions    |
 
 ## What is the deployment cost?
 
