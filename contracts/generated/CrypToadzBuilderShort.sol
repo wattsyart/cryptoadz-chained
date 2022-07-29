@@ -5,7 +5,9 @@ pragma solidity ^0.8.13;
 import "../lib/SSTORE2.sol";
 import "../Rectangle.sol";
 
-contract CrypToadzBuilderShort {
+import "../ICrypToadzFeatureBuilder.sol";
+
+contract CrypToadzBuilderShort is ICrypToadzFeatureBuilder {
 
     mapping(uint8 => address) short;
     mapping(uint8 => Rectangle) rects;

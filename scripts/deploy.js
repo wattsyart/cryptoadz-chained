@@ -52,40 +52,12 @@ async function deployContracts(quiet) {
   await CrypToadzDeltasCDeployed.deployed();
   if (!quiet) console.log("CrypToadzDeltasC deployed to " + CrypToadzDeltasCDeployed.address);
 
-  const CrypToadzDeltasD = await ethers.getContractFactory("CrypToadzDeltasD");
-  var CrypToadzDeltasDDeployed = await CrypToadzDeltasD.deploy();
-  await CrypToadzDeltasDDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasD deployed to " + CrypToadzDeltasDDeployed.address);
-
-  const CrypToadzDeltasE = await ethers.getContractFactory("CrypToadzDeltasE");
-  var CrypToadzDeltasEDeployed = await CrypToadzDeltasE.deploy();
-  await CrypToadzDeltasEDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasE deployed to " + CrypToadzDeltasEDeployed.address);
-
-  const CrypToadzDeltasF = await ethers.getContractFactory("CrypToadzDeltasF");
-  var CrypToadzDeltasFDeployed = await CrypToadzDeltasF.deploy();
-  await CrypToadzDeltasFDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasF deployed to " + CrypToadzDeltasFDeployed.address);
-
-  const CrypToadzDeltasG = await ethers.getContractFactory("CrypToadzDeltasG");
-  var CrypToadzDeltasGDeployed = await CrypToadzDeltasG.deploy();
-  await CrypToadzDeltasGDeployed.deployed();
-  if (!quiet) console.log("CrypToadzDeltasG deployed to " + CrypToadzDeltasGDeployed.address);
-
   const CrypToadzDeltas = await ethers.getContractFactory("CrypToadzDeltas", {
     libraries: {
       PixelRenderer: PixelRendererDeployed.address
     }
-  });  
-  var CrypToadzDeltasDeployed = await CrypToadzDeltas.deploy({
-    _a: CrypToadzDeltasADeployed.address, 
-    _b: CrypToadzDeltasBDeployed.address, 
-    _c: CrypToadzDeltasCDeployed.address, 
-    _d: CrypToadzDeltasDDeployed.address, 
-    _e: CrypToadzDeltasEDeployed.address, 
-    _f: CrypToadzDeltasFDeployed.address,
-    _g: CrypToadzDeltasGDeployed.address
   });
+  var CrypToadzDeltasDeployed = await CrypToadzDeltas.deploy();
   await CrypToadzDeltasDeployed.deployed();
   if (!quiet) console.log("CrypToadzDeltas deployed to " + CrypToadzDeltasDeployed.address);
 
@@ -94,14 +66,9 @@ async function deployContracts(quiet) {
       PixelRenderer: PixelRendererDeployed.address,
     }
   });
-  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy(
-    CrypToadzBuilderAnyDeployed.address, 
-    CrypToadzBuilderShortDeployed.address, 
-    CrypToadzBuilderTallDeployed.address, 
-    CrypToadzDeltasDeployed.address
-  );
-  await CrypToadzBuilderDeployed.deployed();
-  if (!quiet) console.log("CrypToadzBuilder deployed to " + CrypToadzBuilderDeployed.address);
+  var CrypToadzBuilderDeployed = await CrypToadzBuilder.deploy();
+   await CrypToadzBuilderDeployed.deployed();
+  if (!quiet) console.log("CrypToadzBuilder deployed to " + CrypToadzBuilderDeployed.address);  
 
   const CrypToadzMetadata = await ethers.getContractFactory("CrypToadzMetadata");
   var CrypToadzMetadataDeployed = await CrypToadzMetadata.deploy();
@@ -991,138 +958,7 @@ async function deployContracts(quiet) {
 
     const CrypToadzCustomImages = await ethers.getContractFactory("CrypToadzCustomImages");
 
-    var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy({
-      _123: CrypToadzCustomImage123Deployed.address,
-      _316: CrypToadzCustomImage316Deployed.address,
-      _472: CrypToadzCustomImage472Deployed.address,
-      _491: CrypToadzCustomImage491Deployed.address,
-      _703: CrypToadzCustomImage703Deployed.address,
-      _864: CrypToadzCustomImage864Deployed.address,
-      _916: CrypToadzCustomImage916Deployed.address,
-      _936: CrypToadzCustomImage936Deployed.address,
-      _966: CrypToadzCustomImage966Deployed.address,
-      _1005: CrypToadzCustomImage1005Deployed.address,
-      _1165: CrypToadzCustomImage1165Deployed.address,
-      _1423: CrypToadzCustomImage1423Deployed.address,
-      _1559: CrypToadzCustomImage1559Deployed.address,
-      _1637: CrypToadzCustomImage1637Deployed.address,
-      _1703: CrypToadzCustomImage1703Deployed.address,
-      _1754: CrypToadzCustomImage1754Deployed.address,
-      _1793: CrypToadzCustomImage1793Deployed.address,
-      _1812: CrypToadzCustomImage1812Deployed.address,
-      _1935: CrypToadzCustomImage1935Deployed.address,
-      _1975: CrypToadzCustomImage1975Deployed.address,
-      _2124: CrypToadzCustomImage2124Deployed.address,
-      _2232: CrypToadzCustomImage2232Deployed.address,
-      _2327: CrypToadzCustomImage2327Deployed.address,
-      _2469: CrypToadzCustomImage2469Deployed.address,
-      _2471: CrypToadzCustomImage2471Deployed.address,
-      _2482: CrypToadzCustomImage2482Deployed.address,
-      _2489: CrypToadzCustomImage2489Deployed.address,
-      _2521: CrypToadzCustomImage2521Deployed.address,
-      _2569: CrypToadzCustomImage2569Deployed.address,
-      _2579: CrypToadzCustomImage2579Deployed.address,
-      _2709: CrypToadzCustomImage2709Deployed.address,
-      _2825: CrypToadzCustomImage2825Deployed.address,
-      _2839: CrypToadzCustomImage2839Deployed.address,
-      _2846: CrypToadzCustomImage2846Deployed.address,
-      _2865: CrypToadzCustomImage2865Deployed.address,
-      _2959: CrypToadzCustomImage2959Deployed.address,
-      _2986: CrypToadzCustomImage2986Deployed.address,
-      _3196: CrypToadzCustomImage3196Deployed.address,
-      _3309: CrypToadzCustomImage3309Deployed.address,
-      _3382: CrypToadzCustomImage3382Deployed.address,
-      _3703: CrypToadzCustomImage3703Deployed.address,
-      _4096: CrypToadzCustomImage4096Deployed.address,
-      _4126: CrypToadzCustomImage4126Deployed.address,
-      _4152: CrypToadzCustomImage4152Deployed.address,
-      _4192: CrypToadzCustomImage4192Deployed.address,
-      _4201: CrypToadzCustomImage4201Deployed.address,
-      _4221: CrypToadzCustomImage4221Deployed.address,
-      _4238: CrypToadzCustomImage4238Deployed.address,
-      _4368: CrypToadzCustomImage4368Deployed.address,
-      _4578: CrypToadzCustomImage4578Deployed.address,
-      _4580: CrypToadzCustomImage4580Deployed.address,
-      _4604: CrypToadzCustomImage4604Deployed.address,
-      _4714: CrypToadzCustomImage4714Deployed.address,
-      _4773: CrypToadzCustomImage4773Deployed.address,
-      _4845: CrypToadzCustomImage4845Deployed.address,
-      _4896: CrypToadzCustomImage4896Deployed.address,
-      _5128: CrypToadzCustomImage5128Deployed.address,
-      _5150: CrypToadzCustomImage5150Deployed.address,
-      _5262: CrypToadzCustomImage5262Deployed.address,
-      _5441: CrypToadzCustomImage5441Deployed.address,
-      _5471: CrypToadzCustomImage5471Deployed.address,
-      _5730: CrypToadzCustomImage5730Deployed.address,
-      _5836: CrypToadzCustomImage5836Deployed.address,
-      _5848: CrypToadzCustomImage5848Deployed.address,
-      _5902: CrypToadzCustomImage5902Deployed.address,
-      _6214: CrypToadzCustomImage6214Deployed.address,
-      _6382: CrypToadzCustomImage6382Deployed.address,
-      _6491: CrypToadzCustomImage6491Deployed.address,
-      _6572: CrypToadzCustomImage6572Deployed.address,
-      _6578: CrypToadzCustomImage6578Deployed.address,
-      _6631: CrypToadzCustomImage6631Deployed.address,
-      _6719: CrypToadzCustomImage6719Deployed.address,
-      _6736: CrypToadzCustomImage6736Deployed.address,
-      _6852: CrypToadzCustomImage6852Deployed.address,
-      _6894: CrypToadzCustomImage6894Deployed.address,
-      _6916: CrypToadzCustomImage6916Deployed.address,
-      _1000000: CrypToadzCustomImage1000000Deployed.address,
-      _2000000: CrypToadzCustomImage2000000Deployed.address,
-      _3000000: CrypToadzCustomImage3000000Deployed.address,
-      _4000000: CrypToadzCustomImage4000000Deployed.address,
-      _5000000: CrypToadzCustomImage5000000Deployed.address,
-      _6000000: CrypToadzCustomImage6000000Deployed.address,
-      _7000000: CrypToadzCustomImage7000000Deployed.address,
-      _8000000: CrypToadzCustomImage8000000Deployed.address,
-      _9000000: CrypToadzCustomImage9000000Deployed.address,
-      _10000000: CrypToadzCustomImage10000000Deployed.address,
-      _11000000: CrypToadzCustomImage11000000Deployed.address,
-      _12000000: CrypToadzCustomImage12000000Deployed.address,
-      _13000000: CrypToadzCustomImage13000000Deployed.address,
-      _14000000: CrypToadzCustomImage14000000Deployed.address,
-      _15000000: CrypToadzCustomImage15000000Deployed.address,
-      _16000000: CrypToadzCustomImage16000000Deployed.address,
-      _17000000: CrypToadzCustomImage17000000Deployed.address,
-      _18000000: CrypToadzCustomImage18000000Deployed.address,
-      _19000000: CrypToadzCustomImage19000000Deployed.address,
-      _20000000: CrypToadzCustomImage20000000Deployed.address,
-      _21000000: CrypToadzCustomImage21000000Deployed.address,
-      _22000000: CrypToadzCustomImage22000000Deployed.address,
-      _23000000: CrypToadzCustomImage23000000Deployed.address,
-      _24000000: CrypToadzCustomImage24000000Deployed.address,
-      _25000000: CrypToadzCustomImage25000000Deployed.address,
-      _26000000: CrypToadzCustomImage26000000Deployed.address,
-      _27000000: CrypToadzCustomImage27000000Deployed.address,
-      _28000000: CrypToadzCustomImage28000000Deployed.address,
-      _29000000: CrypToadzCustomImage29000000Deployed.address,
-      _30000000: CrypToadzCustomImage30000000Deployed.address,
-      _31000000: CrypToadzCustomImage31000000Deployed.address,
-      _32000000: CrypToadzCustomImage32000000Deployed.address,
-      _33000000: CrypToadzCustomImage33000000Deployed.address,
-      _34000000: CrypToadzCustomImage34000000Deployed.address,
-      _35000000: CrypToadzCustomImage35000000Deployed.address,
-      _36000000: CrypToadzCustomImage36000000Deployed.address,
-      _37000000: CrypToadzCustomImage37000000Deployed.address,
-      _38000000: CrypToadzCustomImage38000000Deployed.address,
-      _39000000: CrypToadzCustomImage39000000Deployed.address,
-      _40000000: CrypToadzCustomImage40000000Deployed.address,
-      _41000000: CrypToadzCustomImage41000000Deployed.address,
-      _42000000: CrypToadzCustomImage42000000Deployed.address,
-      _44000000: CrypToadzCustomImage44000000Deployed.address,
-      _45000000: CrypToadzCustomImage45000000Deployed.address,
-      _46000000: CrypToadzCustomImage46000000Deployed.address,
-      _47000000: CrypToadzCustomImage47000000Deployed.address,
-      _49000000: CrypToadzCustomImage49000000Deployed.address,
-      _50000000: CrypToadzCustomImage50000000Deployed.address,
-      _51000000: CrypToadzCustomImage51000000Deployed.address,
-      _52000000: CrypToadzCustomImage52000000Deployed.address,
-      _53000000: CrypToadzCustomImage53000000Deployed.address,
-      _54000000: CrypToadzCustomImage54000000Deployed.address,
-      _55000000: CrypToadzCustomImage55000000Deployed.address,
-      _56000000: CrypToadzCustomImage56000000Deployed.address
-    });
+    var CrypToadzCustomImagesDeployed = await CrypToadzCustomImages.deploy();
     await CrypToadzCustomImagesDeployed.deployed();
     if (!quiet) console.log("CrypToadzCustomImages deployed to " + CrypToadzCustomImagesDeployed.address);
   }
@@ -1419,24 +1255,7 @@ async function deployContracts(quiet) {
     if (!quiet) console.log("CrypToadzCustomImage6131 deployed to " + CrypToadzCustomImage6131Deployed.address);
 
     const CrypToadzCustomAnimations = await ethers.getContractFactory("CrypToadzCustomAnimations");
-
-    var CrypToadzCustomAnimationsDeployed = await CrypToadzCustomAnimations.deploy({
-      _37: CrypToadzCustomImage37Deployed.address,
-      _318: CrypToadzCustomImage318Deployed.address,
-      _466: CrypToadzCustomImage466Deployed.address,
-      _1519: CrypToadzCustomImage1519Deployed.address,
-      _1943: CrypToadzCustomImage1943Deployed.address,
-      _2208: CrypToadzCustomImage2208Deployed.address,
-      _3250: CrypToadzCustomImage3250Deployed.address,
-      _3661: CrypToadzCustomImage3661Deployed.address,
-      _4035: CrypToadzCustomImage4035Deployed.address,
-      _4911: CrypToadzCustomImage4911Deployed.address,
-      _5086: CrypToadzCustomImage5086Deployed.address,
-      _5844: CrypToadzCustomImage5844Deployed.address,
-      _6131: CrypToadzCustomImage6131Deployed.address,
-      _43000000: CrypToadzCustomImage43000000Deployed.address,
-      _48000000: CrypToadzCustomImage48000000Deployed.address
-    });
+    var CrypToadzCustomAnimationsDeployed = await CrypToadzCustomAnimations.deploy();
     if (!quiet) console.log("CrypToadzCustomAnimations deployed to " + CrypToadzCustomAnimationsDeployed.address);
   }
 
@@ -1445,16 +1264,188 @@ async function deployContracts(quiet) {
       "GIFEncoder": GIFEncoderDeployed.address
     }
   });
-  var CrypToadzChainedDeployed = await CrypToadzChained.deploy(
-    CrypToadzStringsDeployed.address,
-    CrypToadzBuilderDeployed.address,
-    CrypToadzMetadataDeployed.address,
-    CrypToadzCustomImagesDeployed.address,
-    CrypToadzCustomAnimationsDeployed.address
-  );
 
+  var CrypToadzChainedDeployed = await CrypToadzChained.deploy();
   await CrypToadzChainedDeployed.deployed();
   if (!quiet) console.log("CrypToadzChained deployed to " + CrypToadzChainedDeployed.address)
+
+  //
+  // Post-Deployment: Link all dependencies
+  //
+
+  await CrypToadzDeltasDeployed.setAddresses({
+    _a: CrypToadzDeltasADeployed.address,
+    _b: CrypToadzDeltasBDeployed.address,
+    _c: CrypToadzDeltasCDeployed.address
+  });
+  if(!quiet) console.log("CrypToadzDeltas linked with dependencies");
+
+  await CrypToadzBuilderDeployed.setAny(CrypToadzBuilderAnyDeployed.address);
+  await CrypToadzBuilderDeployed.setTall(CrypToadzBuilderTallDeployed.address);
+  await CrypToadzBuilderDeployed.setShort(CrypToadzBuilderShortDeployed.address);  
+  await CrypToadzBuilderDeployed.setDeltas(CrypToadzDeltasDeployed.address);
+  if(!quiet) console.log("CrypToadzBuilder linked with dependencies");
+
+  await CrypToadzCustomImagesDeployed.setAddresses({
+    _123: CrypToadzCustomImage123Deployed.address,
+    _316: CrypToadzCustomImage316Deployed.address,
+    _472: CrypToadzCustomImage472Deployed.address,
+    _491: CrypToadzCustomImage491Deployed.address,
+    _703: CrypToadzCustomImage703Deployed.address,
+    _864: CrypToadzCustomImage864Deployed.address,
+    _916: CrypToadzCustomImage916Deployed.address,
+    _936: CrypToadzCustomImage936Deployed.address,
+    _966: CrypToadzCustomImage966Deployed.address,
+    _1005: CrypToadzCustomImage1005Deployed.address,
+    _1165: CrypToadzCustomImage1165Deployed.address,
+    _1423: CrypToadzCustomImage1423Deployed.address,
+    _1559: CrypToadzCustomImage1559Deployed.address,
+    _1637: CrypToadzCustomImage1637Deployed.address,
+    _1703: CrypToadzCustomImage1703Deployed.address,
+    _1754: CrypToadzCustomImage1754Deployed.address,
+    _1793: CrypToadzCustomImage1793Deployed.address,
+    _1812: CrypToadzCustomImage1812Deployed.address,
+    _1935: CrypToadzCustomImage1935Deployed.address,
+    _1975: CrypToadzCustomImage1975Deployed.address,
+    _2124: CrypToadzCustomImage2124Deployed.address,
+    _2232: CrypToadzCustomImage2232Deployed.address,
+    _2327: CrypToadzCustomImage2327Deployed.address,
+    _2469: CrypToadzCustomImage2469Deployed.address,
+    _2471: CrypToadzCustomImage2471Deployed.address,
+    _2482: CrypToadzCustomImage2482Deployed.address,
+    _2489: CrypToadzCustomImage2489Deployed.address,
+    _2521: CrypToadzCustomImage2521Deployed.address,
+    _2569: CrypToadzCustomImage2569Deployed.address,
+    _2579: CrypToadzCustomImage2579Deployed.address,
+    _2709: CrypToadzCustomImage2709Deployed.address,
+    _2825: CrypToadzCustomImage2825Deployed.address,
+    _2839: CrypToadzCustomImage2839Deployed.address,
+    _2846: CrypToadzCustomImage2846Deployed.address,
+    _2865: CrypToadzCustomImage2865Deployed.address,
+    _2959: CrypToadzCustomImage2959Deployed.address,
+    _2986: CrypToadzCustomImage2986Deployed.address,
+    _3196: CrypToadzCustomImage3196Deployed.address,
+    _3309: CrypToadzCustomImage3309Deployed.address,
+    _3382: CrypToadzCustomImage3382Deployed.address,
+    _3703: CrypToadzCustomImage3703Deployed.address,
+    _4096: CrypToadzCustomImage4096Deployed.address,
+    _4126: CrypToadzCustomImage4126Deployed.address,
+    _4152: CrypToadzCustomImage4152Deployed.address,
+    _4192: CrypToadzCustomImage4192Deployed.address,
+    _4201: CrypToadzCustomImage4201Deployed.address,
+    _4221: CrypToadzCustomImage4221Deployed.address,
+    _4238: CrypToadzCustomImage4238Deployed.address,
+    _4368: CrypToadzCustomImage4368Deployed.address,
+    _4578: CrypToadzCustomImage4578Deployed.address,
+    _4580: CrypToadzCustomImage4580Deployed.address,
+    _4604: CrypToadzCustomImage4604Deployed.address,
+    _4714: CrypToadzCustomImage4714Deployed.address,
+    _4773: CrypToadzCustomImage4773Deployed.address,
+    _4845: CrypToadzCustomImage4845Deployed.address,
+    _4896: CrypToadzCustomImage4896Deployed.address,
+    _5128: CrypToadzCustomImage5128Deployed.address,
+    _5150: CrypToadzCustomImage5150Deployed.address,
+    _5262: CrypToadzCustomImage5262Deployed.address,
+    _5441: CrypToadzCustomImage5441Deployed.address,
+    _5471: CrypToadzCustomImage5471Deployed.address,
+    _5730: CrypToadzCustomImage5730Deployed.address,
+    _5836: CrypToadzCustomImage5836Deployed.address,
+    _5848: CrypToadzCustomImage5848Deployed.address,
+    _5902: CrypToadzCustomImage5902Deployed.address,
+    _6214: CrypToadzCustomImage6214Deployed.address,
+    _6382: CrypToadzCustomImage6382Deployed.address,
+    _6491: CrypToadzCustomImage6491Deployed.address,
+    _6572: CrypToadzCustomImage6572Deployed.address,
+    _6578: CrypToadzCustomImage6578Deployed.address,
+    _6631: CrypToadzCustomImage6631Deployed.address,
+    _6719: CrypToadzCustomImage6719Deployed.address,
+    _6736: CrypToadzCustomImage6736Deployed.address,
+    _6852: CrypToadzCustomImage6852Deployed.address,
+    _6894: CrypToadzCustomImage6894Deployed.address,
+    _6916: CrypToadzCustomImage6916Deployed.address,
+    _1000000: CrypToadzCustomImage1000000Deployed.address,
+    _2000000: CrypToadzCustomImage2000000Deployed.address,
+    _3000000: CrypToadzCustomImage3000000Deployed.address,
+    _4000000: CrypToadzCustomImage4000000Deployed.address,
+    _5000000: CrypToadzCustomImage5000000Deployed.address,
+    _6000000: CrypToadzCustomImage6000000Deployed.address,
+    _7000000: CrypToadzCustomImage7000000Deployed.address,
+    _8000000: CrypToadzCustomImage8000000Deployed.address,
+    _9000000: CrypToadzCustomImage9000000Deployed.address,
+    _10000000: CrypToadzCustomImage10000000Deployed.address,
+    _11000000: CrypToadzCustomImage11000000Deployed.address,
+    _12000000: CrypToadzCustomImage12000000Deployed.address,
+    _13000000: CrypToadzCustomImage13000000Deployed.address,
+    _14000000: CrypToadzCustomImage14000000Deployed.address,
+    _15000000: CrypToadzCustomImage15000000Deployed.address,
+    _16000000: CrypToadzCustomImage16000000Deployed.address,
+    _17000000: CrypToadzCustomImage17000000Deployed.address,
+    _18000000: CrypToadzCustomImage18000000Deployed.address,
+    _19000000: CrypToadzCustomImage19000000Deployed.address,
+    _20000000: CrypToadzCustomImage20000000Deployed.address,
+    _21000000: CrypToadzCustomImage21000000Deployed.address,
+    _22000000: CrypToadzCustomImage22000000Deployed.address,
+    _23000000: CrypToadzCustomImage23000000Deployed.address,
+    _24000000: CrypToadzCustomImage24000000Deployed.address,
+    _25000000: CrypToadzCustomImage25000000Deployed.address,
+    _26000000: CrypToadzCustomImage26000000Deployed.address,
+    _27000000: CrypToadzCustomImage27000000Deployed.address,
+    _28000000: CrypToadzCustomImage28000000Deployed.address,
+    _29000000: CrypToadzCustomImage29000000Deployed.address,
+    _30000000: CrypToadzCustomImage30000000Deployed.address,
+    _31000000: CrypToadzCustomImage31000000Deployed.address,
+    _32000000: CrypToadzCustomImage32000000Deployed.address,
+    _33000000: CrypToadzCustomImage33000000Deployed.address,
+    _34000000: CrypToadzCustomImage34000000Deployed.address,
+    _35000000: CrypToadzCustomImage35000000Deployed.address,
+    _36000000: CrypToadzCustomImage36000000Deployed.address,
+    _37000000: CrypToadzCustomImage37000000Deployed.address,
+    _38000000: CrypToadzCustomImage38000000Deployed.address,
+    _39000000: CrypToadzCustomImage39000000Deployed.address,
+    _40000000: CrypToadzCustomImage40000000Deployed.address,
+    _41000000: CrypToadzCustomImage41000000Deployed.address,
+    _42000000: CrypToadzCustomImage42000000Deployed.address,
+    _44000000: CrypToadzCustomImage44000000Deployed.address,
+    _45000000: CrypToadzCustomImage45000000Deployed.address,
+    _46000000: CrypToadzCustomImage46000000Deployed.address,
+    _47000000: CrypToadzCustomImage47000000Deployed.address,
+    _49000000: CrypToadzCustomImage49000000Deployed.address,
+    _50000000: CrypToadzCustomImage50000000Deployed.address,
+    _51000000: CrypToadzCustomImage51000000Deployed.address,
+    _52000000: CrypToadzCustomImage52000000Deployed.address,
+    _53000000: CrypToadzCustomImage53000000Deployed.address,
+    _54000000: CrypToadzCustomImage54000000Deployed.address,
+    _55000000: CrypToadzCustomImage55000000Deployed.address,
+    _56000000: CrypToadzCustomImage56000000Deployed.address
+  })
+  if(!quiet) console.log("CrypToadzCustomImages linked with dependencies");
+
+  await CrypToadzCustomAnimationsDeployed.setAddresses({
+    _37: CrypToadzCustomImage37Deployed.address,
+    _318: CrypToadzCustomImage318Deployed.address,
+    _466: CrypToadzCustomImage466Deployed.address,
+    _1519: CrypToadzCustomImage1519Deployed.address,
+    _1943: CrypToadzCustomImage1943Deployed.address,
+    _2208: CrypToadzCustomImage2208Deployed.address,
+    _3250: CrypToadzCustomImage3250Deployed.address,
+    _3661: CrypToadzCustomImage3661Deployed.address,
+    _4035: CrypToadzCustomImage4035Deployed.address,
+    _4911: CrypToadzCustomImage4911Deployed.address,
+    _5086: CrypToadzCustomImage5086Deployed.address,
+    _5844: CrypToadzCustomImage5844Deployed.address,
+    _6131: CrypToadzCustomImage6131Deployed.address,
+    _43000000: CrypToadzCustomImage43000000Deployed.address,
+    _48000000: CrypToadzCustomImage48000000Deployed.address
+  });
+  if(!quiet) console.log("CrypToadzCustomAnimations linked with dependencies");
+
+  await CrypToadzChainedDeployed.setStrings(CrypToadzStringsDeployed.address);
+  await CrypToadzChainedDeployed.setMetadata(CrypToadzMetadataDeployed.address);
+  await CrypToadzChainedDeployed.setCustomImages(CrypToadzCustomImagesDeployed.address);
+  await CrypToadzChainedDeployed.setCustomAnimations(CrypToadzCustomAnimationsDeployed.address);
+  await CrypToadzChainedDeployed.setBuilder(CrypToadzBuilderDeployed.address);
+  if(!quiet) console.log("CrypToadzChained linked with dependencies");
+
   return CrypToadzChainedDeployed;
 }
 
