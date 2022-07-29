@@ -6,7 +6,7 @@ const readline = require('readline');
 const gutil = require('gulp-util');
 
 const GIFEncoderAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
-const CrypToadzChainedAddress = "0x299F288606EeE22364EE19bC0DD97e6Cf65f1b2a";
+const CrypToadzChainedAddress = "0x0B8Da90792d1710C99517eefc66394EAB83c93Cc";
 
 task("toadz", "Validates correctness of a single CrypToadz")
   .addParam("id", "The CrypToadz token ID to validate")
