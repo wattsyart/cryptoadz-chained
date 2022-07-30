@@ -43,14 +43,17 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "../ICrypToadzBuilder.sol";
-import "../GIFDraw.sol";
-import "../Errors.sol";
-
 import "./CrypToadzBuilderAny.sol";
 import "./CrypToadzBuilderShort.sol";
 import "./CrypToadzBuilderTall.sol";
+
+import "../ICrypToadzBuilder.sol";
 import "../ICrypToadzDeltas.sol";
+
+import "../Errors.sol";
+import "../BufferUtils.sol";
+import "../PixelRenderer.sol";
+import "../GIFDraw.sol";
 
 contract CrypToadzBuilder is Ownable, ICrypToadzBuilder {  
 
@@ -181,7 +184,38 @@ contract CrypToadzBuilder is Ownable, ICrypToadzBuilder {
     function setDeltas(address _deltas) external onlyOwner {
         require(!deltasLocked, "Deltas locked");
         deltas = ICrypToadzDeltas(_deltas);
-    } 
+    }
+
+    /** @notice Contract responsible for rendering image pixels */
+    IPixelRenderer public renderer;
+
+    /**
+    @notice Flag to disable use of setRenderer().
+     */
+    bool public rendererLocked = false;    
+
+    /**
+    @notice Permanently sets the rendererLocked flag to true.
+     */
+    function lockRenderer() external onlyOwner {
+        require(
+            address(renderer).supportsInterface(
+                type(IPixelRenderer).interfaceId
+            ),
+            "Not IPixelRenderer"
+        );
+        rendererLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the renderer contract.
+    @dev No checks are performed when setting, but lockRenderer() ensures that
+    the final address implements the IPixelRenderer interface.
+     */
+    function setRenderer(address _renderer) external onlyOwner {
+        require(!rendererLocked, "Renderer locked");
+        renderer = IPixelRenderer(_renderer);
+    }
 
     constructor() {
         imageLengths[0] = 6131;
@@ -221,16 +255,16 @@ contract CrypToadzBuilder is Ownable, ICrypToadzBuilder {
         imageData[16] = SSTORE2.write(hex"45d36948d3711807f0efeec3a3dcdc9c9be634a75bb6b2729689b66ecbd2caf24551d0a96efffed28ba0b4e99c9a66abe6911d6a07240581d02b41088440088a5e09051104415144e5d6a1d9f1177a9ede8ce7cbf3f99dffdf3e5901bd1ad24f4eb9f8119fa5a8534951e90ad7e18b94e23452921b9b8fde8a628aba718ed65a4429c527dd1010a3243385457ca5913247b0f44a0cdf28ab1cad3b6ec7f09dd7c90909f8c1ddf4a241df274c53579ed23084194ada8ce23efc24abce692eed12314b5d455ab51fbf28e9ec2d3efc9692463137af097fd8b9031580eddfb1e3720f760b90d96898b17516721b6d3ea363d3701d14849519815f3e28a5a892616e5a1aa67036ed829a92ca567d171a4a48f25c829692c6da59091d25992174197a96f67e1171b4983e776b9f80788a2a4773898804b26ac76a1f1279c5ac482de6d1b613f21a375e1331ffff0e3a6e23c9c637eeed8681ac3cb973cfc5e330f2498ca10892b96b0f78067d30d126e29d676b8660a6b6ded0e9bd13450a65989a3d0375b0f0fd99da8ff4f8904a59eb0a0c0b5158693a7552a8b716365a5b9b1f1690c6fbb404a34827aab3aeedf163011fd8b92f820c6acad242657ed8ffdf7fb9884c4af1d6eb02b2a4a455ce7defd43558c84b64f6c6904d2da57b0a0e0a2a4b0572687eada5bd2a8c5c9edf3ae487939be640cd79b8784e63773d16f189cd0ddba5bf431e61b9c9d37f1c8bf902b34eaf1d10e0a655d5c97e2ce1d796ddb445c4527e0096960d02f2f901244b1f75191f2b7b16cba9a5cf6b2ac00afe66a633853e14f0c14c53f0904cb0364ea390a426bd2cf2112b79a0ab75f30c56d140ade50c8af84999db8ae15d370f6af95c42b06d0195e3136e2aa12ba1d25bbe8ded857d6c9ff9d81a1ad8ee3ec7b6ff2adbe777d9da46d9ee9f607b7392edeb376cb3636c8f296464ef19a81c7f9f4925dccba8f4d67bd93ea8641b3dc0b650647b2ac0762ccc767680ed9afb6c5bc6d83e7acc56f5826dd93bb65ddfd93e51cbc9269aa9c44e0795dede022a8393ebd9a654b1dd7b88ede009b6af826ced11b6876fb21d1e61fbf6215bd753b6c24bb6231fd87e9e61bb5caf207b32954aefa893cae0f44a2ac78b37b36daaa6f22f");
     }
 
-     function getImage(uint8[] memory metadata, uint256 tokenId) external override view returns (GIFEncoder.GIF memory gif) {
+     function getImage(uint8[] memory metadata, uint256 tokenId) external override view returns (GIF memory gif) {
 
         uint8 imageFile = getImageFileForToken(tokenId); 
         bytes memory buffer = BufferUtils.decompress(imageData[imageFile], imageLengths[imageFile]);
 
         gif.width = 36;
         gif.height = 36;
-        gif.frames = new GIFEncoder.GIFFrame[](1);
+        gif.frames = new GIFFrame[](1);
 
-        GIFEncoder.GIFFrame memory frame;
+        GIFFrame memory frame;
         frame.width = gif.width;
         frame.height = gif.height;
         frame.buffer = new uint32[](frame.width * frame.height);
@@ -314,7 +348,7 @@ contract CrypToadzBuilder is Ownable, ICrypToadzBuilder {
                     rect = short.getRect(value);                                    
                 }
 
-                GIFDraw.draw(frame, SSTORE2.read(feature), 0, rect.x, rect.y, true);
+                GIFDraw.draw(IPixelRenderer(renderer), frame, SSTORE2.read(feature), 0, rect.x, rect.y, true);
             }
         }       
 
@@ -326,13 +360,13 @@ contract CrypToadzBuilder is Ownable, ICrypToadzBuilder {
         gif.frames[gif.frameCount++] = frame;
     }
 
-    function getImage(uint8[] memory metadata) external override view returns (GIFEncoder.GIF memory gif) {
+    function getImage(uint8[] memory metadata) external override view returns (GIF memory gif) {
 
         gif.width = 36;
         gif.height = 36;
-        gif.frames = new GIFEncoder.GIFFrame[](1);
+        gif.frames = new GIFFrame[](1);
 
-        GIFEncoder.GIFFrame memory frame;
+        GIFFrame memory frame;
         frame.width = gif.width;
         frame.height = gif.height;
         frame.buffer = new uint32[](frame.width * frame.height);
@@ -362,7 +396,7 @@ contract CrypToadzBuilder is Ownable, ICrypToadzBuilder {
                 } else {
                     rect = short.getRect(value);                                    
                 }
-                GIFDraw.draw(frame, SSTORE2.read(feature), 0, rect.x, rect.y, true);
+                GIFDraw.draw(IPixelRenderer(renderer), frame, SSTORE2.read(feature), 0, rect.x, rect.y, true);
             }
         }
         
@@ -422,5 +456,5 @@ contract CrypToadzBuilder is Ownable, ICrypToadzBuilder {
             return 16;
         }
         revert ImageFileOutOfRange(tokenId);
-    }
+    }    
 }

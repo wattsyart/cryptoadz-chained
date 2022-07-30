@@ -3,22 +3,24 @@
 pragma solidity ^0.8.13;
 
 import "./lib/Base64.sol";
+import "./IGIFEncoder.sol";
+import "./GIF.sol";
 
 /** @notice Encodes image data in GIF format. GIF is much more compact than SVG, allows for animation (SVG does as well), and also represents images that are already rastered. 
             This is important if the art shouldn't change fundamentally depending on which process is doing the SVG rendering, such as a browser or custom application.
  */
-library GIFEncoder {
+contract GIFEncoder is IGIFEncoder {
     
-    uint32 internal constant MASK = (1 << 12) - 1;
-    uint32 internal constant CLEAR_CODE = 256;
-    uint32 internal constant END_CODE = 257;
-    uint16 internal constant CODE_START = 258;
-    uint16 internal constant TREE_TABLE_LENGTH = 4096;
-    uint16 internal constant CODE_TABLE_LENGTH = TREE_TABLE_LENGTH - CODE_START;
+    uint32 private constant MASK = (1 << 12) - 1;
+    uint32 private constant CLEAR_CODE = 256;
+    uint32 private constant END_CODE = 257;
+    uint16 private constant CODE_START = 258;
+    uint16 private constant TREE_TABLE_LENGTH = 4096;
+    uint16 private constant CODE_TABLE_LENGTH = TREE_TABLE_LENGTH - CODE_START;
 
-    bytes public constant HEADER = hex"474946383961";
-    bytes public constant NETSCAPE = hex"21FF0b4E45545343415045322E300301000000";
-    bytes public constant GIF_URI_PREFIX = "data:image/gif;base64,";
+    bytes private constant HEADER = hex"474946383961";
+    bytes private constant NETSCAPE = hex"21FF0b4E45545343415045322E300301000000";
+    bytes private constant GIF_URI_PREFIX = "data:image/gif;base64,";
 
     struct GCT {
         uint32 start;
@@ -39,20 +41,6 @@ library GIFEncoder {
         uint32 value;
         int32 bits;
         uint32 chunkSize;
-    }
-
-    struct GIF {
-        uint32 frameCount;
-        GIFFrame[] frames;
-        uint16 width;
-        uint16 height;
-    }
-
-    struct GIFFrame {
-        uint32[] buffer;
-        uint16 delay;
-        uint16 width;
-        uint16 height;
     }
 
     function getDataUri(GIF memory gif) external pure returns (string memory) {

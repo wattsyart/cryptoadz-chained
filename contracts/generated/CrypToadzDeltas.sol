@@ -40,18 +40,52 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
 import "../lib/SSTORE2.sol";
 
 import "../ICrypToadzDeltas.sol";
 import "../ICrypToadzDeltaBank.sol";
-import "../GIFDraw.sol";
 import "../BufferUtils.sol";
+import "../GIFDraw.sol";
 
 contract CrypToadzDeltas is Ownable, ICrypToadzDeltas {   
+    using ERC165Checker for address;
+
     mapping(uint256 => AddressAndIndex) deltaBank;
 
-    function drawDelta(GIFEncoder.GIFFrame memory frame, uint256 tokenId, uint8 deltaFile)
+    /** @notice Contract responsible for rendering image pixels */
+    IPixelRenderer public renderer;
+
+    /**
+    @notice Flag to disable use of setRenderer().
+     */
+    bool public rendererLocked = false;    
+
+    /**
+    @notice Permanently sets the rendererLocked flag to true.
+     */
+    function lockRenderer() external onlyOwner {
+        require(
+            address(renderer).supportsInterface(
+                type(IPixelRenderer).interfaceId
+            ),
+            "Not IPixelRenderer"
+        );
+        rendererLocked = true;
+    }
+
+    /**
+    @notice Sets the address of the renderer contract.
+    @dev No checks are performed when setting, but lockRenderer() ensures that
+    the final address implements the IPixelRenderer interface.
+     */
+    function setRenderer(address _renderer) external onlyOwner {
+        require(!rendererLocked, "Renderer locked");
+        renderer = IPixelRenderer(_renderer);
+    }
+
+    function drawDelta(GIFFrame memory frame, uint256 tokenId, uint8 deltaFile)
         external
         view
         returns (uint32[] memory buffer)
@@ -67,7 +101,7 @@ contract CrypToadzDeltas is Ownable, ICrypToadzDeltas {
             // since the read gas cost of scanning is given to every token, even those without deltas.
 
             if(position < deltaBuffer.length) {
-                position = GIFDraw.draw(frame, deltaBuffer, position, 0, 0, false);
+                position = GIFDraw.draw(renderer, frame, deltaBuffer, position, 0, 0, false);
             }
         }
         return (frame.buffer);      

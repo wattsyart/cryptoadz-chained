@@ -1,24 +1,19 @@
 require("hardhat/config");
 
 const utils = require('../scripts/utils.js');
+const deploy = require('../scripts/deploy.js');
+
 const fs = require('fs');
 const readline = require('readline');
 const gutil = require('gulp-util');
 
-const GIFEncoderAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
-const CrypToadzChainedAddress = "0x0B8Da90792d1710C99517eefc66394EAB83c93Cc";
+const CrypToadzChainedAddress = "0x3Fb5877CAD6Dbe10805124017c702cBB3a8BcFb1";
 
 task("toadz", "Validates correctness of a single CrypToadz")
   .addParam("id", "The CrypToadz token ID to validate")
   .setAction(
     async (taskArgs) => {
-      var toadz;
-      var factory = await ethers.getContractFactory("CrypToadzChained", {
-        libraries: {
-          GIFEncoder: GIFEncoderAddress
-        }
-      });
-      toadz = await factory.attach(CrypToadzChainedAddress);
+      var toadz = await getToadz();
 
       var logger = null;
       await utils.collect(toadz, parseInt(taskArgs.id), logger, true, true);
@@ -28,13 +23,7 @@ task("toadz-wrapped", "Validates correctness of a single, wrapped CrypToadz")
   .addParam("id", "The CrypToadz token ID to validate")
   .setAction(
     async (taskArgs) => {
-      var toadz;
-      var factory = await ethers.getContractFactory("CrypToadzChained", {
-        libraries: {
-          GIFEncoder: GIFEncoderAddress
-        }
-      });
-      toadz = await factory.attach(CrypToadzChainedAddress);
+      var toadz = await getToadz();
 
       var logger = null;
       await utils.collect(toadz, parseInt(taskArgs.id), logger, true, true, true, true);
@@ -43,50 +32,44 @@ task("toadz-wrapped", "Validates correctness of a single, wrapped CrypToadz")
 task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/customImageIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
+      await checkToadz('./scripts/customImageIds.txt', null, true, true);
     });
 
 task("toadz-custom-animations", "Validates correctness of CrypToadz custom animations")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/customAnimationIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
+      await checkToadz('./scripts/customAnimationIds.txt', null, true, true);
     });
 
 task("toadz-image-deltas", "Validates correctness of CrypToadz token images that have deltas")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/deltaIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, false, true);
+      await checkToadz('./scripts/deltaIds.txt', null, false, true);
     });
 
 task("toadz-all", "Validates correctness of all CrypToadz tokens")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, true);
+      await checkToadz('./scripts/tokenIds.txt', null, true, true);
     });
 
 task("toadz-all-images", "Validates correctness of all CrypToadz token images")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, false, true);
+      await checkToadz('./scripts/tokenIds.txt', null, false, true);
     });
 
 task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadata")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, GIFEncoderAddress, CrypToadzChainedAddress, true, false);
+      await checkToadz('./scripts/tokenIds.txt', null, true, false);
     });
 
 task("toadz-random", "Generates a random toadz and saves the metadata and image to disk")
   .addOptionalParam("seed", "The random seed to use")
   .setAction(
     async (taskArgs) => {
-      var toadz;
-      var factory = await ethers.getContractFactory("CrypToadzChained", {
-        libraries: {
-          GIFEncoder: GIFEncoderAddress
-        }
-      });
-      toadz = await factory.attach(CrypToadzChainedAddress);
+      var toadz = await getToadz();
 
       if (!taskArgs.seed) {
         await utils.random(toadz)
@@ -99,13 +82,7 @@ task("toadz-random-batch", "Batch-based random generation for stress testing")
   .addOptionalParam("count", "The number of random toadz to generate", "1")
   .setAction(
     async (taskArgs) => {
-      var toadz;
-      var factory = await ethers.getContractFactory("CrypToadzChained", {
-        libraries: {
-          GIFEncoder: GIFEncoderAddress
-        }
-      });
-      toadz = await factory.attach(CrypToadzChainedAddress);
+      var toadz = await getToadz();
 
       var count = parseInt(taskArgs.count);
       for (var i = 0; i < count; i++) {
@@ -113,14 +90,8 @@ task("toadz-random-batch", "Batch-based random generation for stress testing")
       }
     });
 
-async function checkToadz(idFilePath, logger, gifEncoderAddress, contractAddress, checkMetadata, checkImage) {
-  var toadz;
-  var factory = await ethers.getContractFactory("CrypToadzChained", {
-    libraries: {
-      GIFEncoder: gifEncoderAddress
-    }
-  });
-  toadz = await factory.attach(contractAddress);
+async function checkToadz(idFilePath, logger, checkMetadata, checkImage) {
+  var toadz = await getToadz();
 
   const fileStream = fs.createReadStream(idFilePath);
   const lines = readline.createInterface({
@@ -132,6 +103,26 @@ async function checkToadz(idFilePath, logger, gifEncoderAddress, contractAddress
     await utils.collect(toadz, parseInt(line), logger, checkMetadata, checkImage);
   }
 }
+
+task("toadz-deploy-bundle", "Produces a JSON file containing unsigned transactions for all deployments at a set price budget")
+  .addOptionalParam("gwei", "The gas budget in gwei to base ETH cost calculations on", "4")
+  .addOptionalParam("priorityFee", "The priority fee in gwei", "2")
+  .setAction(
+    async (taskArgs, hre) => {
+
+      var baseFeePerGas = ethers.BigNumber.from(parseInt(taskArgs.gwei)).mul(hre.ethers.BigNumber.from(1000000000));
+      var priorityFeeInWei = ethers.BigNumber.from(parseInt(taskArgs.priorityFee)).mul(hre.ethers.BigNumber.from(1000000000));
+
+      const txOptions = {        
+        maxPriorityFeePerGas: priorityFeeInWei,
+        maxFeePerGas: baseFeePerGas.add(priorityFeeInWei)
+      }
+
+      var output = await deploy.deployContracts(hre.ethers, true, true, txOptions);
+      var json = JSON.stringify(output);      
+      fs.writeFileSync(`./scripts/output/deploy.js`, json);
+    }
+  );
 
 task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
   .addOptionalParam("gwei", "The gas price in gwei to base ETH cost calculations on", "10")
@@ -346,4 +337,9 @@ function setDeploymentCost(gasPriceInWei, components, name, line, preamble) {
 
   const cost = hre.ethers.utils.formatUnits(gasPriceInWei.mul(hre.ethers.BigNumber.from(gas)), "ether");
   components[name]["cost"] = cost;
+}
+
+async function getToadz() {
+  var factory = await ethers.getContractFactory("CrypToadzChained");
+  return await factory.attach(CrypToadzChainedAddress);
 }

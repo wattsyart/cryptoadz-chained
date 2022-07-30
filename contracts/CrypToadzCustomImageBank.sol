@@ -7,7 +7,7 @@ import "./BufferUtils.sol";
 
 library CrypToadzCustomImageBank {
     function getCustomImage(mapping(uint8 => uint16) storage lengths, mapping(uint8 => address) storage data)
-        external
+        internal
         view
         returns (bytes memory buffer)
     {
@@ -27,7 +27,7 @@ library CrypToadzCustomImageBank {
     }
 
     function getCustomImageSingle(uint16 length, address data)
-        external
+        internal
         view
         returns (bytes memory buffer)
     {
