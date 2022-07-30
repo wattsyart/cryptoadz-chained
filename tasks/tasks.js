@@ -7,7 +7,7 @@ const fs = require('fs');
 const readline = require('readline');
 const gutil = require('gulp-util');
 
-const CrypToadzChainedAddress = "0x3Fb5877CAD6Dbe10805124017c702cBB3a8BcFb1";
+const CrypToadzChainedAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
 
 task("toadz", "Validates correctness of a single CrypToadz")
   .addParam("id", "The CrypToadz token ID to validate")
