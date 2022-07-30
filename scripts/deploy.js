@@ -32,7 +32,6 @@ async function deployContracts(quiet, trace, txOptions) {
   var CrypToadzMetadataDeployed = await deployContract("CrypToadzMetadata", quiet, trace, txOptions);
   var CrypToadzDeltasDeployed = await deployContract("CrypToadzDeltas", quiet, trace, txOptions);
   var CrypToadzBuilderDeployed = await deployContract("CrypToadzBuilder", quiet, trace, txOptions);
-  var CrypToadzCustomImageBankDeployed = await deployContract("CrypToadzCustomImageBank", quiet, trace, txOptions);
   var CrypToadzCustomImagesDeployed = await deployContract("CrypToadzCustomImages", quiet, trace, txOptions);
   var CrypToadzCustomAnimationsDeployed = await deployContract("CrypToadzCustomAnimations", quiet, trace, txOptions);
 
