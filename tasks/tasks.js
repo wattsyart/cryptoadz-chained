@@ -208,8 +208,6 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
       //
       // Custom Images:
       const customImagesCategory = "Custom Images";
-      components["CrypToadzCustomImageBank"] = {};
-      components["CrypToadzCustomImageBank"]["category"] = customImagesCategory;
       components["CrypToadzCustomImages"] = {};
       components["CrypToadzCustomImages"]["category"] = customImagesCategory;
 
@@ -226,6 +224,9 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
       var totalGas = ethers.BigNumber.from(0);
 
       for await (const line of lines) {
+        if(line.includes("setRenderer") || line.includes("setAddresses") || line.includes("setEncoder")) {
+          continue;
+        }
         var name;
         if (line.startsWith("|  CrypToadz")) {
           name = line.match(/CrypToadz\S*/)[0];
@@ -331,7 +332,7 @@ function setDeploymentCost(gasPriceInWei, components, name, line, preamble) {
   }
 
   const pattern = new RegExp(`\\|  ${preamble}\\S*\\s*.\\s*-\\s*\\·\\s*-\\s*\\·\\s*`);
-
+  
   const gas = parseInt(line.replace(line.match(pattern)[0], "").match(/\d*/)[0]);
   components[name]["gas"] = gas;
 

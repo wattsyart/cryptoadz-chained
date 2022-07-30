@@ -105,8 +105,8 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
-| CrypToadzChained             | Main              | 0.03252549 |
-| Total                        | 3252549           | 0.03252549 |
+| CrypToadzChained             | Main              | 0.03186386 |
+| Total                        | 3186386           | 0.03186386 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
@@ -116,265 +116,254 @@ You may also run the `npx hardhat toadz-gas --gwei [GWEI]` command (to a deploye
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
-| GIFEncoder                   | Builder           | 0.01552785 |
-| PixelRenderer                | Builder           | 0.01187223 |
-| CrypToadzBuilder             | Builder           | 0.15687256 |
+| GIFEncoder                   | Builder           | 0.01512106 |
+| PixelRenderer                | Builder           | 0.01184819 |
+| CrypToadzBuilder             | Builder           | 0.15743527 |
 | CrypToadzBuilderAny          | Builder           | 0.31166861 |
 | CrypToadzBuilderShort        | Builder           | 0.20719718 |
 | CrypToadzBuilderTall         | Builder           | 0.21327662 |
-| Total                        | 91641505          | 0.91641505 |
+| Total                        | 91654693          | 0.91654693 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
-| CrypToadzDeltas              | Deltas            | 0.01759244 |
-| CrypToadzDeltasA             | Deltas            | 0.08789292 |
-| CrypToadzDeltasB             | Deltas            | 0.08601815 |
+| CrypToadzDeltas              | Deltas            | 0.01921233 |
+| CrypToadzDeltasA             | Deltas            | 0.08789304 |
+| CrypToadzDeltasB             | Deltas            | 0.08601827 |
 | CrypToadzDeltasC             | Deltas            | 0.03792545 |
-| Total                        | 22942896          | 0.22942896 |
+| Total                        | 23104909          | 0.23104909 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
 | CrypToadzCustomAnimations    | Custom Animations | 0.00626640 |
-| CrypToadzCustomImage1519     | Custom Animations | 0.00428670 |
-| CrypToadzCustomImage1943     | Custom Animations | 0.00455798 |
-| CrypToadzCustomImage1943A    | Custom Animations | 0.16117391 |
-| CrypToadzCustomImage1943B    | Custom Animations | 0.16017630 |
-| CrypToadzCustomImage1943C    | Custom Animations | 0.15983521 |
-| CrypToadzCustomImage1943D    | Custom Animations | 0.16114931 |
-| CrypToadzCustomImage1943E    | Custom Animations | 0.15667501 |
-| CrypToadzCustomImage2208     | Custom Animations | 0.00422217 |
-| CrypToadzCustomImage318      | Custom Animations | 0.00509953 |
-| CrypToadzCustomImage318A     | Custom Animations | 0.16121046 |
-| CrypToadzCustomImage318B     | Custom Animations | 0.16104147 |
-| CrypToadzCustomImage318C     | Custom Animations | 0.16103927 |
-| CrypToadzCustomImage318D     | Custom Animations | 0.16122438 |
-| CrypToadzCustomImage318E     | Custom Animations | 0.16109141 |
-| CrypToadzCustomImage318F     | Custom Animations | 0.06664068 |
-| CrypToadzCustomImage3250     | Custom Animations | 0.00410467 |
-| CrypToadzCustomImage3661     | Custom Animations | 0.00564137 |
-| CrypToadzCustomImage3661A    | Custom Animations | 0.16121226 |
-| CrypToadzCustomImage3661B    | Custom Animations | 0.16115483 |
-| CrypToadzCustomImage3661C    | Custom Animations | 0.16121034 |
-| CrypToadzCustomImage3661D    | Custom Animations | 0.16121982 |
-| CrypToadzCustomImage3661E    | Custom Animations | 0.16121454 |
-| CrypToadzCustomImage3661F    | Custom Animations | 0.16112505 |
-| CrypToadzCustomImage3661G    | Custom Animations | 0.12531963 |
-| CrypToadzCustomImage37       | Custom Animations | 0.00509749 |
-| CrypToadzCustomImage37A      | Custom Animations | 0.16115891 |
-| CrypToadzCustomImage37B      | Custom Animations | 0.16117307 |
-| CrypToadzCustomImage37C      | Custom Animations | 0.16120602 |
-| CrypToadzCustomImage37D      | Custom Animations | 0.16120242 |
-| CrypToadzCustomImage37E      | Custom Animations | 0.16121238 |
-| CrypToadzCustomImage37F      | Custom Animations | 0.07957883 |
-| CrypToadzCustomImage4035     | Custom Animations | 0.00509953 |
-| CrypToadzCustomImage4035A    | Custom Animations | 0.16120155 |
-| CrypToadzCustomImage4035B    | Custom Animations | 0.15942554 |
-| CrypToadzCustomImage4035C    | Custom Animations | 0.16121586 |
-| CrypToadzCustomImage4035D    | Custom Animations | 0.16112918 |
-| CrypToadzCustomImage4035E    | Custom Animations | 0.16122210 |
-| CrypToadzCustomImage4035F    | Custom Animations | 0.02514699 |
-| CrypToadzCustomImage43000000 | Custom Animations | 0.00425905 |
-| CrypToadzCustomImage466      | Custom Animations | 0.00509917 |
-| CrypToadzCustomImage466A     | Custom Animations | 0.16111965 |
-| CrypToadzCustomImage466B     | Custom Animations | 0.16122090 |
-| CrypToadzCustomImage466C     | Custom Animations | 0.16121922 |
-| CrypToadzCustomImage466D     | Custom Animations | 0.16121502 |
-| CrypToadzCustomImage466E     | Custom Animations | 0.16121550 |
-| CrypToadzCustomImage466F     | Custom Animations | 0.01889371 |
-| CrypToadzCustomImage48000000 | Custom Animations | 0.00368632 |
-| CrypToadzCustomImage4911     | Custom Animations | 0.00564137 |
-| CrypToadzCustomImage4911A    | Custom Animations | 0.16119526 |
-| CrypToadzCustomImage4911B    | Custom Animations | 0.16100155 |
-| CrypToadzCustomImage4911C    | Custom Animations | 0.16120242 |
-| CrypToadzCustomImage4911D    | Custom Animations | 0.16117355 |
-| CrypToadzCustomImage4911E    | Custom Animations | 0.16121478 |
-| CrypToadzCustomImage4911F    | Custom Animations | 0.16121274 |
-| CrypToadzCustomImage4911G    | Custom Animations | 0.10584984 |
-| CrypToadzCustomImage5086     | Custom Animations | 0.10674031 |
-| CrypToadzCustomImage5844     | Custom Animations | 0.00440697 |
-| CrypToadzCustomImage6131     | Custom Animations | 0.00414733 |
-| Total                        | 655467723         | 6.55467723 |
+| CrypToadzCustomImage1519     | Custom Animations | 0.02174313 |
+| CrypToadzCustomImage1943     | Custom Animations | 0.00528392 |
+| CrypToadzCustomImage1943A    | Custom Animations | 0.17804219 |
+| CrypToadzCustomImage1943B    | Custom Animations | 0.17704446 |
+| CrypToadzCustomImage1943C    | Custom Animations | 0.17670337 |
+| CrypToadzCustomImage1943D    | Custom Animations | 0.17801759 |
+| CrypToadzCustomImage1943E    | Custom Animations | 0.17354317 |
+| CrypToadzCustomImage2208     | Custom Animations | 0.02167870 |
+| CrypToadzCustomImage318      | Custom Animations | 0.00567435 |
+| CrypToadzCustomImage318A     | Custom Animations | 0.17807886 |
+| CrypToadzCustomImage318B     | Custom Animations | 0.17790975 |
+| CrypToadzCustomImage318C     | Custom Animations | 0.17790755 |
+| CrypToadzCustomImage318D     | Custom Animations | 0.17809266 |
+| CrypToadzCustomImage318E     | Custom Animations | 0.17795969 |
+| CrypToadzCustomImage318F     | Custom Animations | 0.08351012 |
+| CrypToadzCustomImage3250     | Custom Animations | 0.02156124 |
+| CrypToadzCustomImage3661     | Custom Animations | 0.00606917 |
+| CrypToadzCustomImage3661A    | Custom Animations | 0.17808054 |
+| CrypToadzCustomImage3661B    | Custom Animations | 0.17802311 |
+| CrypToadzCustomImage3661C    | Custom Animations | 0.17807850 |
+| CrypToadzCustomImage3661D    | Custom Animations | 0.17808810 |
+| CrypToadzCustomImage3661E    | Custom Animations | 0.17808282 |
+| CrypToadzCustomImage3661F    | Custom Animations | 0.17799333 |
+| CrypToadzCustomImage3661G    | Custom Animations | 0.14218767 |
+| CrypToadzCustomImage37       | Custom Animations | 0.00567219 |
+| CrypToadzCustomImage37A      | Custom Animations | 0.17802719 |
+| CrypToadzCustomImage37B      | Custom Animations | 0.17804135 |
+| CrypToadzCustomImage37C      | Custom Animations | 0.17807430 |
+| CrypToadzCustomImage37D      | Custom Animations | 0.17807070 |
+| CrypToadzCustomImage37E      | Custom Animations | 0.17808066 |
+| CrypToadzCustomImage37F      | Custom Animations | 0.09644687 |
+| CrypToadzCustomImage4035     | Custom Animations | 0.00567435 |
+| CrypToadzCustomImage4035A    | Custom Animations | 0.17806983 |
+| CrypToadzCustomImage4035B    | Custom Animations | 0.17629382 |
+| CrypToadzCustomImage4035C    | Custom Animations | 0.17808402 |
+| CrypToadzCustomImage4035D    | Custom Animations | 0.17799758 |
+| CrypToadzCustomImage4035E    | Custom Animations | 0.17809050 |
+| CrypToadzCustomImage4035F    | Custom Animations | 0.04201607 |
+| CrypToadzCustomImage43000000 | Custom Animations | 0.02171566 |
+| CrypToadzCustomImage466      | Custom Animations | 0.00567435 |
+| CrypToadzCustomImage466A     | Custom Animations | 0.17798805 |
+| CrypToadzCustomImage466B     | Custom Animations | 0.17808918 |
+| CrypToadzCustomImage466C     | Custom Animations | 0.17808750 |
+| CrypToadzCustomImage466D     | Custom Animations | 0.17808330 |
+| CrypToadzCustomImage466E     | Custom Animations | 0.17808378 |
+| CrypToadzCustomImage466F     | Custom Animations | 0.03576279 |
+| CrypToadzCustomImage48000000 | Custom Animations | 0.02114370 |
+| CrypToadzCustomImage4911     | Custom Animations | 0.00606917 |
+| CrypToadzCustomImage4911A    | Custom Animations | 0.17806366 |
+| CrypToadzCustomImage4911B    | Custom Animations | 0.17786995 |
+| CrypToadzCustomImage4911C    | Custom Animations | 0.17807094 |
+| CrypToadzCustomImage4911D    | Custom Animations | 0.17804171 |
+| CrypToadzCustomImage4911E    | Custom Animations | 0.17808306 |
+| CrypToadzCustomImage4911F    | Custom Animations | 0.17808102 |
+| CrypToadzCustomImage4911G    | Custom Animations | 0.12271788 |
+| CrypToadzCustomImage5086     | Custom Animations | 0.12484303 |
+| CrypToadzCustomImage5844     | Custom Animations | 0.02186336 |
+| CrypToadzCustomImage6131     | Custom Animations | 0.02160395 |
+| Total                        | 742419586         | 7.42419586 |
 
 | Contract                     | Category          | Cost       |
 | ---------------------------- | ----------------- | ---------- |
-| CrypToadzCustomImageBank     | Custom Images     | 0.01894289 |
-| CrypToadzCustomImages        | Custom Images     | 0.02510286 |
-| CrypToadzCustomImage1000000  | Custom Images     | 0.00410239 |
-| CrypToadzCustomImage10000000 | Custom Images     | 0.00409831 |
-| CrypToadzCustomImage1005     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage1005A    | Custom Images     | 0.15279551 |
-| CrypToadzCustomImage1005B    | Custom Images     | 0.01253281 |
-| CrypToadzCustomImage11000000 | Custom Images     | 0.00392666 |
-| CrypToadzCustomImage1165     | Custom Images     | 0.00410263 |
-| CrypToadzCustomImage12000000 | Custom Images     | 0.00443424 |
-| CrypToadzCustomImage123      | Custom Images     | 0.00473956 |
-| CrypToadzCustomImage13000000 | Custom Images     | 0.00390329 |
-| CrypToadzCustomImage14000000 | Custom Images     | 0.00393047 |
-| CrypToadzCustomImage1423     | Custom Images     | 0.00411115 |
-| CrypToadzCustomImage15000000 | Custom Images     | 0.00397814 |
-| CrypToadzCustomImage1559     | Custom Images     | 0.00391628 |
-| CrypToadzCustomImage16000000 | Custom Images     | 0.00386802 |
-| CrypToadzCustomImage1637     | Custom Images     | 0.00473068 |
-| CrypToadzCustomImage17000000 | Custom Images     | 0.00391832 |
-| CrypToadzCustomImage1703     | Custom Images     | 0.00384540 |
-| CrypToadzCustomImage1754     | Custom Images     | 0.00407008 |
-| CrypToadzCustomImage1793     | Custom Images     | 0.12899610 |
-| CrypToadzCustomImage18000000 | Custom Images     | 0.00406591 |
-| CrypToadzCustomImage1812     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage1812A    | Custom Images     | 0.15357649 |
-| CrypToadzCustomImage1812B    | Custom Images     | 0.02378573 |
-| CrypToadzCustomImage19000000 | Custom Images     | 0.00450128 |
-| CrypToadzCustomImage1935     | Custom Images     | 0.00417772 |
-| CrypToadzCustomImage1975     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage1975A    | Custom Images     | 0.15154966 |
-| CrypToadzCustomImage1975B    | Custom Images     | 0.08329873 |
-| CrypToadzCustomImage2000000  | Custom Images     | 0.00447810 |
-| CrypToadzCustomImage20000000 | Custom Images     | 0.00367984 |
-| CrypToadzCustomImage21000000 | Custom Images     | 0.00412846 |
-| CrypToadzCustomImage2124     | Custom Images     | 0.00451644 |
-| CrypToadzCustomImage22000000 | Custom Images     | 0.00393192 |
-| CrypToadzCustomImage2232     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage2232A    | Custom Images     | 0.15131946 |
-| CrypToadzCustomImage2232B    | Custom Images     | 0.13458208 |
-| CrypToadzCustomImage23000000 | Custom Images     | 0.00401647 |
-| CrypToadzCustomImage2327     | Custom Images     | 0.00293322 |
-| CrypToadzCustomImage2327A    | Custom Images     | 0.15010494 |
-| CrypToadzCustomImage2327B    | Custom Images     | 0.10668133 |
-| CrypToadzCustomImage24000000 | Custom Images     | 0.00398042 |
-| CrypToadzCustomImage2469     | Custom Images     | 0.00403402 |
-| CrypToadzCustomImage2471     | Custom Images     | 0.00387941 |
-| CrypToadzCustomImage2482     | Custom Images     | 0.00377031 |
-| CrypToadzCustomImage2489     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage2489A    | Custom Images     | 0.15245713 |
-| CrypToadzCustomImage2489B    | Custom Images     | 0.04984302 |
-| CrypToadzCustomImage25000000 | Custom Images     | 0.00417112 |
-| CrypToadzCustomImage2521     | Custom Images     | 0.08031551 |
-| CrypToadzCustomImage2569     | Custom Images     | 0.00396110 |
-| CrypToadzCustomImage2579     | Custom Images     | 0.00372909 |
-| CrypToadzCustomImage26000000 | Custom Images     | 0.00457626 |
-| CrypToadzCustomImage27000000 | Custom Images     | 0.00402082 |
-| CrypToadzCustomImage2709     | Custom Images     | 0.07902454 |
-| CrypToadzCustomImage28000000 | Custom Images     | 0.00391169 |
-| CrypToadzCustomImage2825     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage2825A    | Custom Images     | 0.15193952 |
-| CrypToadzCustomImage2825B    | Custom Images     | 0.07035493 |
-| CrypToadzCustomImage2839     | Custom Images     | 0.00407896 |
-| CrypToadzCustomImage2846     | Custom Images     | 0.10014843 |
-| CrypToadzCustomImage2865     | Custom Images     | 0.00446499 |
-| CrypToadzCustomImage29000000 | Custom Images     | 0.00449924 |
-| CrypToadzCustomImage2959     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage2959A    | Custom Images     | 0.15541627 |
-| CrypToadzCustomImage2959B    | Custom Images     | 0.13659594 |
-| CrypToadzCustomImage2986     | Custom Images     | 0.00395462 |
-| CrypToadzCustomImage3000000  | Custom Images     | 0.00393479 |
-| CrypToadzCustomImage30000000 | Custom Images     | 0.00397850 |
-| CrypToadzCustomImage31000000 | Custom Images     | 0.00536727 |
-| CrypToadzCustomImage316      | Custom Images     | 0.11153921 |
-| CrypToadzCustomImage3196     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage3196A    | Custom Images     | 0.15462019 |
-| CrypToadzCustomImage3196B    | Custom Images     | 0.13412355 |
-| CrypToadzCustomImage32000000 | Custom Images     | 0.00398054 |
-| CrypToadzCustomImage33000000 | Custom Images     | 0.00408088 |
-| CrypToadzCustomImage3309     | Custom Images     | 0.00347464 |
-| CrypToadzCustomImage3309A    | Custom Images     | 0.15365961 |
-| CrypToadzCustomImage3309B    | Custom Images     | 0.15978802 |
-| CrypToadzCustomImage3309C    | Custom Images     | 0.01489174 |
-| CrypToadzCustomImage3382     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage3382A    | Custom Images     | 0.15562521 |
-| CrypToadzCustomImage3382B    | Custom Images     | 0.09670514 |
-| CrypToadzCustomImage34000000 | Custom Images     | 0.00389193 |
-| CrypToadzCustomImage35000000 | Custom Images     | 0.00402946 |
-| CrypToadzCustomImage36000000 | Custom Images     | 0.00427012 |
-| CrypToadzCustomImage37000000 | Custom Images     | 0.00408304 |
-| CrypToadzCustomImage3703     | Custom Images     | 0.00468778 |
-| CrypToadzCustomImage38000000 | Custom Images     | 0.00414745 |
-| CrypToadzCustomImage39000000 | Custom Images     | 0.00416872 |
-| CrypToadzCustomImage4000000  | Custom Images     | 0.00398441 |
-| CrypToadzCustomImage40000000 | Custom Images     | 0.00379553 |
-| CrypToadzCustomImage4096     | Custom Images     | 0.08765470 |
-| CrypToadzCustomImage41000000 | Custom Images     | 0.00434749 |
-| CrypToadzCustomImage4126     | Custom Images     | 0.00410047 |
-| CrypToadzCustomImage4152     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage4152A    | Custom Images     | 0.15447482 |
-| CrypToadzCustomImage4152B    | Custom Images     | 0.07719166 |
-| CrypToadzCustomImage4192     | Custom Images     | 0.00407428 |
-| CrypToadzCustomImage42000000 | Custom Images     | 0.00392468 |
-| CrypToadzCustomImage4201     | Custom Images     | 0.00394370 |
-| CrypToadzCustomImage4221     | Custom Images     | 0.00392352 |
-| CrypToadzCustomImage4238     | Custom Images     | 0.00293310 |
-| CrypToadzCustomImage4238A    | Custom Images     | 0.15377180 |
-| CrypToadzCustomImage4238B    | Custom Images     | 0.01663559 |
-| CrypToadzCustomImage4368     | Custom Images     | 0.00414325 |
-| CrypToadzCustomImage44000000 | Custom Images     | 0.00392036 |
-| CrypToadzCustomImage45000000 | Custom Images     | 0.00416248 |
-| CrypToadzCustomImage4578     | Custom Images     | 0.00393503 |
-| CrypToadzCustomImage4580     | Custom Images     | 0.00293322 |
-| CrypToadzCustomImage4580A    | Custom Images     | 0.15113971 |
-| CrypToadzCustomImage4580B    | Custom Images     | 0.12810352 |
-| CrypToadzCustomImage46000000 | Custom Images     | 0.00389657 |
-| CrypToadzCustomImage4604     | Custom Images     | 0.00381729 |
-| CrypToadzCustomImage47000000 | Custom Images     | 0.00396974 |
-| CrypToadzCustomImage4714     | Custom Images     | 0.06584238 |
-| CrypToadzCustomImage472      | Custom Images     | 0.00425689 |
-| CrypToadzCustomImage4773     | Custom Images     | 0.08363437 |
-| CrypToadzCustomImage4845     | Custom Images     | 0.00483172 |
-| CrypToadzCustomImage4896     | Custom Images     | 0.00347464 |
-| CrypToadzCustomImage4896A    | Custom Images     | 0.14321364 |
-| CrypToadzCustomImage4896B    | Custom Images     | 0.15746556 |
-| CrypToadzCustomImage4896C    | Custom Images     | 0.01724029 |
-| CrypToadzCustomImage49000000 | Custom Images     | 0.00418180 |
-| CrypToadzCustomImage491      | Custom Images     | 0.00384960 |
-| CrypToadzCustomImage5000000  | Custom Images     | 0.00396314 |
-| CrypToadzCustomImage50000000 | Custom Images     | 0.00392264 |
-| CrypToadzCustomImage51000000 | Custom Images     | 0.00393707 |
-| CrypToadzCustomImage5128     | Custom Images     | 0.08778164 |
-| CrypToadzCustomImage5150     | Custom Images     | 0.00449252 |
-| CrypToadzCustomImage52000000 | Custom Images     | 0.00398681 |
-| CrypToadzCustomImage5262     | Custom Images     | 0.00433873 |
-| CrypToadzCustomImage53000000 | Custom Images     | 0.00390285 |
-| CrypToadzCustomImage54000000 | Custom Images     | 0.00357496 |
-| CrypToadzCustomImage5441     | Custom Images     | 0.00464295 |
-| CrypToadzCustomImage5471     | Custom Images     | 0.00347464 |
-| CrypToadzCustomImage5471A    | Custom Images     | 0.15502667 |
-| CrypToadzCustomImage5471B    | Custom Images     | 0.15876049 |
-| CrypToadzCustomImage5471C    | Custom Images     | 0.00301645 |
-| CrypToadzCustomImage55000000 | Custom Images     | 0.00399125 |
-| CrypToadzCustomImage56000000 | Custom Images     | 0.00408520 |
-| CrypToadzCustomImage5730     | Custom Images     | 0.00395666 |
-| CrypToadzCustomImage5836     | Custom Images     | 0.00421605 |
-| CrypToadzCustomImage5848     | Custom Images     | 0.00406494 |
-| CrypToadzCustomImage5902     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage5902A    | Custom Images     | 0.15347491 |
-| CrypToadzCustomImage5902B    | Custom Images     | 0.12533046 |
-| CrypToadzCustomImage6000000  | Custom Images     | 0.00425053 |
-| CrypToadzCustomImage6214     | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage6214A    | Custom Images     | 0.15392668 |
-| CrypToadzCustomImage6214B    | Custom Images     | 0.04835908 |
-| CrypToadzCustomImage6382     | Custom Images     | 0.00293322 |
-| CrypToadzCustomImage6382A    | Custom Images     | 0.15471477 |
-| CrypToadzCustomImage6382B    | Custom Images     | 0.13024484 |
-| CrypToadzCustomImage6491     | Custom Images     | 0.08017935 |
-| CrypToadzCustomImage6572     | Custom Images     | 0.09061540 |
-| CrypToadzCustomImage6578     | Custom Images     | 0.00538911 |
-| CrypToadzCustomImage6631     | Custom Images     | 0.07387689 |
-| CrypToadzCustomImage6719     | Custom Images     | 0.00434305 |
-| CrypToadzCustomImage6736     | Custom Images     | 0.00401227 |
-| CrypToadzCustomImage6852     | Custom Images     | 0.00424201 |
-| CrypToadzCustomImage6894     | Custom Images     | 0.00364454 |
-| CrypToadzCustomImage6916     | Custom Images     | 0.00356866 |
-| CrypToadzCustomImage7000000  | Custom Images     | 0.00443256 |
-| CrypToadzCustomImage703      | Custom Images     | 0.05854948 |
-| CrypToadzCustomImage8000000  | Custom Images     | 0.00375696 |
-| CrypToadzCustomImage864      | Custom Images     | 0.00392352 |
-| CrypToadzCustomImage9000000  | Custom Images     | 0.00390317 |
-| CrypToadzCustomImage916      | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage916A     | Custom Images     | 0.15102777 |
-| CrypToadzCustomImage916B     | Custom Images     | 0.13390865 |
-| CrypToadzCustomImage936      | Custom Images     | 0.00293334 |
-| CrypToadzCustomImage936A     | Custom Images     | 0.15076898 |
-| CrypToadzCustomImage936B     | Custom Images     | 0.14594743 |
-| CrypToadzCustomImage966      | Custom Images     | 0.00375732 |
-| Total                        | 699960054         | 6.99960054 |
+| CrypToadzCustomImages        | Custom Images     | 0.02510274 |
+| CrypToadzCustomImage1000000  | Custom Images     | 0.02155920 |
+| CrypToadzCustomImage10000000 | Custom Images     | 0.02155512 |
+| CrypToadzCustomImage1005     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage1005A    | Custom Images     | 0.16966367 |
+| CrypToadzCustomImage1005B    | Custom Images     | 0.02874599 |
+| CrypToadzCustomImage11000000 | Custom Images     | 0.02138376 |
+| CrypToadzCustomImage1165     | Custom Images     | 0.02155932 |
+| CrypToadzCustomImage12000000 | Custom Images     | 0.02189047 |
+| CrypToadzCustomImage123      | Custom Images     | 0.02219536 |
+| CrypToadzCustomImage13000000 | Custom Images     | 0.02136027 |
+| CrypToadzCustomImage14000000 | Custom Images     | 0.02138750 |
+| CrypToadzCustomImage1423     | Custom Images     | 0.02156784 |
+| CrypToadzCustomImage15000000 | Custom Images     | 0.02143526 |
+| CrypToadzCustomImage1559     | Custom Images     | 0.02137323 |
+| CrypToadzCustomImage16000000 | Custom Images     | 0.02132515 |
+| CrypToadzCustomImage1637     | Custom Images     | 0.02218648 |
+| CrypToadzCustomImage17000000 | Custom Images     | 0.02137539 |
+| CrypToadzCustomImage1703     | Custom Images     | 0.02130244 |
+| CrypToadzCustomImage1754     | Custom Images     | 0.02152680 |
+| CrypToadzCustomImage1793     | Custom Images     | 0.14709927 |
+| CrypToadzCustomImage18000000 | Custom Images     | 0.02152270 |
+| CrypToadzCustomImage1812     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage1812A    | Custom Images     | 0.17044453 |
+| CrypToadzCustomImage1812B    | Custom Images     | 0.04065481 |
+| CrypToadzCustomImage19000000 | Custom Images     | 0.02195754 |
+| CrypToadzCustomImage1935     | Custom Images     | 0.02163431 |
+| CrypToadzCustomImage1975     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage1975A    | Custom Images     | 0.16841794 |
+| CrypToadzCustomImage1975B    | Custom Images     | 0.10016677 |
+| CrypToadzCustomImage2000000  | Custom Images     | 0.02193439 |
+| CrypToadzCustomImage20000000 | Custom Images     | 0.02113722 |
+| CrypToadzCustomImage21000000 | Custom Images     | 0.02158524 |
+| CrypToadzCustomImage2124     | Custom Images     | 0.02197266 |
+| CrypToadzCustomImage22000000 | Custom Images     | 0.02138899 |
+| CrypToadzCustomImage2232     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage2232A    | Custom Images     | 0.16818762 |
+| CrypToadzCustomImage2232B    | Custom Images     | 0.15145012 |
+| CrypToadzCustomImage23000000 | Custom Images     | 0.02147341 |
+| CrypToadzCustomImage2327     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage2327A    | Custom Images     | 0.16697310 |
+| CrypToadzCustomImage2327B    | Custom Images     | 0.12354949 |
+| CrypToadzCustomImage24000000 | Custom Images     | 0.02143742 |
+| CrypToadzCustomImage2469     | Custom Images     | 0.02149081 |
+| CrypToadzCustomImage2471     | Custom Images     | 0.02133639 |
+| CrypToadzCustomImage2482     | Custom Images     | 0.02122745 |
+| CrypToadzCustomImage2489     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage2489A    | Custom Images     | 0.16932529 |
+| CrypToadzCustomImage2489B    | Custom Images     | 0.06671230 |
+| CrypToadzCustomImage25000000 | Custom Images     | 0.02162783 |
+| CrypToadzCustomImage2521     | Custom Images     | 0.09841850 |
+| CrypToadzCustomImage2569     | Custom Images     | 0.02141798 |
+| CrypToadzCustomImage2579     | Custom Images     | 0.02118629 |
+| CrypToadzCustomImage26000000 | Custom Images     | 0.02203242 |
+| CrypToadzCustomImage27000000 | Custom Images     | 0.02147773 |
+| CrypToadzCustomImage2709     | Custom Images     | 0.09712756 |
+| CrypToadzCustomImage28000000 | Custom Images     | 0.02136879 |
+| CrypToadzCustomImage2825     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage2825A    | Custom Images     | 0.16880780 |
+| CrypToadzCustomImage2825B    | Custom Images     | 0.08722465 |
+| CrypToadzCustomImage2839     | Custom Images     | 0.02153568 |
+| CrypToadzCustomImage2846     | Custom Images     | 0.11825139 |
+| CrypToadzCustomImage2865     | Custom Images     | 0.02192119 |
+| CrypToadzCustomImage29000000 | Custom Images     | 0.02195538 |
+| CrypToadzCustomImage2959     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage2959A    | Custom Images     | 0.17228455 |
+| CrypToadzCustomImage2959B    | Custom Images     | 0.15346398 |
+| CrypToadzCustomImage2986     | Custom Images     | 0.02141150 |
+| CrypToadzCustomImage3000000  | Custom Images     | 0.02139182 |
+| CrypToadzCustomImage30000000 | Custom Images     | 0.02143550 |
+| CrypToadzCustomImage31000000 | Custom Images     | 0.02282240 |
+| CrypToadzCustomImage316      | Custom Images     | 0.12964241 |
+| CrypToadzCustomImage3196     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage3196A    | Custom Images     | 0.17148847 |
+| CrypToadzCustomImage3196B    | Custom Images     | 0.15099159 |
+| CrypToadzCustomImage32000000 | Custom Images     | 0.02143754 |
+| CrypToadzCustomImage33000000 | Custom Images     | 0.02153784 |
+| CrypToadzCustomImage3309     | Custom Images     | 0.00449453 |
+| CrypToadzCustomImage3309A    | Custom Images     | 0.17052789 |
+| CrypToadzCustomImage3309B    | Custom Images     | 0.17665642 |
+| CrypToadzCustomImage3309C    | Custom Images     | 0.03176082 |
+| CrypToadzCustomImage3382     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage3382A    | Custom Images     | 0.17249337 |
+| CrypToadzCustomImage3382B    | Custom Images     | 0.11357306 |
+| CrypToadzCustomImage34000000 | Custom Images     | 0.02134903 |
+| CrypToadzCustomImage35000000 | Custom Images     | 0.02148637 |
+| CrypToadzCustomImage36000000 | Custom Images     | 0.02172670 |
+| CrypToadzCustomImage37000000 | Custom Images     | 0.02153988 |
+| CrypToadzCustomImage3703     | Custom Images     | 0.02214365 |
+| CrypToadzCustomImage38000000 | Custom Images     | 0.02160419 |
+| CrypToadzCustomImage39000000 | Custom Images     | 0.02162531 |
+| CrypToadzCustomImage4000000  | Custom Images     | 0.02144138 |
+| CrypToadzCustomImage40000000 | Custom Images     | 0.02125276 |
+| CrypToadzCustomImage4096     | Custom Images     | 0.10575769 |
+| CrypToadzCustomImage41000000 | Custom Images     | 0.02180397 |
+| CrypToadzCustomImage4126     | Custom Images     | 0.02155716 |
+| CrypToadzCustomImage4152     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage4152A    | Custom Images     | 0.17134298 |
+| CrypToadzCustomImage4152B    | Custom Images     | 0.09406126 |
+| CrypToadzCustomImage4192     | Custom Images     | 0.02153088 |
+| CrypToadzCustomImage42000000 | Custom Images     | 0.02138187 |
+| CrypToadzCustomImage4201     | Custom Images     | 0.02140058 |
+| CrypToadzCustomImage4221     | Custom Images     | 0.02138047 |
+| CrypToadzCustomImage4238     | Custom Images     | 0.00409978 |
+| CrypToadzCustomImage4238A    | Custom Images     | 0.17063996 |
+| CrypToadzCustomImage4238B    | Custom Images     | 0.03350491 |
+| CrypToadzCustomImage4368     | Custom Images     | 0.02159987 |
+| CrypToadzCustomImage44000000 | Custom Images     | 0.02137743 |
+| CrypToadzCustomImage45000000 | Custom Images     | 0.02161919 |
+| CrypToadzCustomImage4578     | Custom Images     | 0.02139194 |
+| CrypToadzCustomImage4580     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage4580A    | Custom Images     | 0.16800787 |
+| CrypToadzCustomImage4580B    | Custom Images     | 0.14497156 |
+| CrypToadzCustomImage46000000 | Custom Images     | 0.02135367 |
+| CrypToadzCustomImage4604     | Custom Images     | 0.02127436 |
+| CrypToadzCustomImage47000000 | Custom Images     | 0.02142674 |
+| CrypToadzCustomImage4714     | Custom Images     | 0.08394708 |
+| CrypToadzCustomImage472      | Custom Images     | 0.02171338 |
+| CrypToadzCustomImage4773     | Custom Images     | 0.10173736 |
+| CrypToadzCustomImage4845     | Custom Images     | 0.02228751 |
+| CrypToadzCustomImage4896     | Custom Images     | 0.00449453 |
+| CrypToadzCustomImage4896A    | Custom Images     | 0.16008168 |
+| CrypToadzCustomImage4896B    | Custom Images     | 0.17433384 |
+| CrypToadzCustomImage4896C    | Custom Images     | 0.03410937 |
+| CrypToadzCustomImage49000000 | Custom Images     | 0.02163851 |
+| CrypToadzCustomImage491      | Custom Images     | 0.02130664 |
+| CrypToadzCustomImage5000000  | Custom Images     | 0.02142014 |
+| CrypToadzCustomImage50000000 | Custom Images     | 0.02137971 |
+| CrypToadzCustomImage51000000 | Custom Images     | 0.02139410 |
+| CrypToadzCustomImage5128     | Custom Images     | 0.10588463 |
+| CrypToadzCustomImage5150     | Custom Images     | 0.02194866 |
+| CrypToadzCustomImage52000000 | Custom Images     | 0.02144378 |
+| CrypToadzCustomImage5262     | Custom Images     | 0.02179509 |
+| CrypToadzCustomImage53000000 | Custom Images     | 0.02135995 |
+| CrypToadzCustomImage54000000 | Custom Images     | 0.02103253 |
+| CrypToadzCustomImage5441     | Custom Images     | 0.02209889 |
+| CrypToadzCustomImage5471     | Custom Images     | 0.00449453 |
+| CrypToadzCustomImage5471A    | Custom Images     | 0.17189483 |
+| CrypToadzCustomImage5471B    | Custom Images     | 0.17562877 |
+| CrypToadzCustomImage5471C    | Custom Images     | 0.01923799 |
+| CrypToadzCustomImage55000000 | Custom Images     | 0.02144822 |
+| CrypToadzCustomImage56000000 | Custom Images     | 0.02154204 |
+| CrypToadzCustomImage5730     | Custom Images     | 0.02141354 |
+| CrypToadzCustomImage5836     | Custom Images     | 0.02167258 |
+| CrypToadzCustomImage5848     | Custom Images     | 0.02152169 |
+| CrypToadzCustomImage5902     | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage6572     | Custom Images     | 0.10871851 |
+| CrypToadzCustomImage6578     | Custom Images     | 0.02284400 |
+| CrypToadzCustomImage6631     | Custom Images     | 0.09197991 |
+| CrypToadzCustomImage6719     | Custom Images     | 0.02179941 |
+| CrypToadzCustomImage6736     | Custom Images     | 0.02146897 |
+| CrypToadzCustomImage6852     | Custom Images     | 0.02169850 |
+| CrypToadzCustomImage6894     | Custom Images     | 0.02110175 |
+| CrypToadzCustomImage6916     | Custom Images     | 0.02102596 |
+| CrypToadzCustomImage7000000  | Custom Images     | 0.02188891 |
+| CrypToadzCustomImage703      | Custom Images     | 0.07665405 |
+| CrypToadzCustomImage8000000  | Custom Images     | 0.02121425 |
+| CrypToadzCustomImage864      | Custom Images     | 0.02138047 |
+| CrypToadzCustomImage9000000  | Custom Images     | 0.02136027 |
+| CrypToadzCustomImage916      | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage916A     | Custom Images     | 0.16789605 |
+| CrypToadzCustomImage916B     | Custom Images     | 0.15077657 |
+| CrypToadzCustomImage936      | Custom Images     | 0.00409990 |
+| CrypToadzCustomImage936A     | Custom Images     | 0.16763714 |
+| CrypToadzCustomImage936B     | Custom Images     | 0.16281547 |
+| CrypToadzCustomImage966      | Custom Images     | 0.02121449 |
+| Total                        | 967368054         | 9.67368054 |
 
-Total Gas = 2987022716
-Total Cost = 14.93511358 eth @ 10 gwei
+Total Gas = 3695960518
+Total Cost = 18.47980259 eth @ 10 gwei
