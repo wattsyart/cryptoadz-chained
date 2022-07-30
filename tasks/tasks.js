@@ -104,7 +104,7 @@ async function checkToadz(idFilePath, logger, checkMetadata, checkImage) {
   }
 }
 
-task("toadz-deploy-bundle", "Produces a JSON file containing signed transactions for all deployments at a set price budget")
+task("toadz-deploy-bundle", "Produces a JSON file containing unsigned transactions for all deployments at a set price budget")
   .addOptionalParam("gwei", "The gas budget in gwei to base ETH cost calculations on", "4")
   .addOptionalParam("priorityFee", "The priority fee in gwei", "2")
   .setAction(
@@ -117,7 +117,7 @@ task("toadz-deploy-bundle", "Produces a JSON file containing signed transactions
         maxPriorityFeePerGas: priorityFeeInWei,
         maxFeePerGas: baseFeePerGas.add(priorityFeeInWei)
       }
-      
+
       var output = await deploy.deployContracts(hre.ethers, true, true, txOptions);
       var json = JSON.stringify(output);      
       fs.writeFileSync(`./scripts/output/deploy.js`, json);

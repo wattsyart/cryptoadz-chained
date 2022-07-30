@@ -23,10 +23,15 @@ async function deployContracts(ethers, quiet, trace, txOptions) {
 
   var output = {};
 
+  output["CrypToadzChained"] = await deployContract(ethers, "CrypToadzChained", quiet, trace, {
+    maxPriorityFeePerGas: txOptions.maxPriorityFeePerGas,
+    maxFeePerGas: txOptions.maxFeePerGas,
+    nonce: 0
+  });
+
   output["GIFEncoder"] = await deployContract(ethers, "GIFEncoder", quiet, trace, txOptions);
   output["PixelRenderer"] = await deployContract(ethers, "PixelRenderer", quiet, trace, txOptions);
 
-  output["CrypToadzChained"] = await deployContract(ethers, "CrypToadzChained", quiet, trace, txOptions);
   output["CrypToadzStrings"] = await deployContract(ethers, "CrypToadzStrings", quiet, trace, txOptions);
   output["CrypToadzMetadata"] = await deployContract(ethers, "CrypToadzMetadata", quiet, trace, txOptions);
   output["CrypToadzDeltas"] = await deployContract(ethers, "CrypToadzDeltas", quiet, trace, txOptions);
