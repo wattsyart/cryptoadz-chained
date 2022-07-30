@@ -117,12 +117,10 @@ task("toadz-deploy-bundle", "Produces a JSON file containing signed transactions
         maxPriorityFeePerGas: priorityFeeInWei,
         maxFeePerGas: baseFeePerGas.add(priorityFeeInWei)
       }
-
-      console.log(JSON.stringify(txOptions));
-
-      var output = await deploy.deployContracts(hre.ethers, false, true, txOptions);
-      const deployPath = `./scripts/output/deploy.js`;
-      fs.writeFileSync(deployPath, JSON.stringify(output));
+      
+      var output = await deploy.deployContracts(hre.ethers, true, true, txOptions);
+      var json = JSON.stringify(output);      
+      fs.writeFileSync(`./scripts/output/deploy.js`, json);
     }
   );
 
