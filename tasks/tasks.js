@@ -1,6 +1,7 @@
 require("hardhat/config");
 
 const utils = require('../scripts/utils.js');
+const deploy = require('../scripts/deploy.js');
 
 const fs = require('fs');
 const readline = require('readline');
@@ -103,8 +104,8 @@ async function checkToadz(idFilePath, logger, checkMetadata, checkImage) {
   }
 }
 
-task("toadz-deploy-cost", "Get deployment transaction parameters for debugging scenarios")
-  .addOptionalParam("gwei", "The gas budget in gwei to base ETH cost calculations on", "10")
+task("toadz-deploy-bundle", "Produces a JSON file containing signed transactions for all deployments at a set price budget")
+  .addOptionalParam("gwei", "The gas budget in gwei to base ETH cost calculations on", "4")
   .addOptionalParam("priorityFee", "The priority fee in gwei", "2")
   .setAction(
     async (taskArgs, hre) => {
@@ -112,13 +113,16 @@ task("toadz-deploy-cost", "Get deployment transaction parameters for debugging s
       var baseFeePerGas = ethers.BigNumber.from(parseInt(taskArgs.gwei)).mul(hre.ethers.BigNumber.from(1000000000));
       var priorityFeeInWei = ethers.BigNumber.from(parseInt(taskArgs.priorityFee)).mul(hre.ethers.BigNumber.from(1000000000));
 
-      const txOptions = {
-        baseFeePerGas: baseFeePerGas,
+      const txOptions = {        
         maxPriorityFeePerGas: priorityFeeInWei,
         maxFeePerGas: baseFeePerGas.add(priorityFeeInWei)
       }
 
       console.log(JSON.stringify(txOptions));
+
+      var output = await deploy.deployContracts(hre.ethers, false, true, txOptions);
+      const deployPath = `./scripts/output/deploy.js`;
+      fs.writeFileSync(deployPath, JSON.stringify(output));
     }
   );
 
