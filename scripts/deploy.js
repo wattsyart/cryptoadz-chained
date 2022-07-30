@@ -304,7 +304,7 @@ async function deployContracts(ethers, quiet, trace, txOptions) {
     await output["CrypToadzBuilder"].setAny(output["CrypToadzBuilderAny"].address);
     await output["CrypToadzBuilder"].setTall(output["CrypToadzBuilderTall"].address);
     await output["CrypToadzBuilder"].setShort(output["CrypToadzBuilderShort"].address);
-    await output["CrypToadzBuilder"].setDeltas(output["CrypToadzBuilderDeltas"].address);
+    await output["CrypToadzBuilder"].setDeltas(output["CrypToadzDeltas"].address);
     if (!quiet) console.log("CrypToadzBuilder linked with dependencies");
 
     await output["CrypToadzCustomImage1005"].setAddresses(output["CrypToadzCustomImage1005A"].address, output["CrypToadzCustomImage1005B"].address);
