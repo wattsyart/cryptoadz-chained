@@ -1,16 +1,16 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/4896.png",
-   "name": "CrypToadz #4896",
-   "attributes": [
-      {
-         "trait_type": "Custom",
-         "value": "Licked - Don't Look in the Mirror"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 1
-      }
-   ]
+{
+    "description": "A small, warty, amphibious creature that resides in the metaverse.",
+    "external_url": "https://cryptoadz.io",
+    "image": "ipfs://QmRHuK4aA3BoHcA2jVViNDj1t3ZAQo48pcPhkKcdT4G81t",
+    "name": "CrypToadz #4896",
+    "attributes": [
+        {
+            "trait_type": "Custom",
+            "value": "Licked - Don't Look in the Mirror"
+        },
+        {
+            "trait_type": "# Traits",
+            "value": 1
+        }
+    ]
 }

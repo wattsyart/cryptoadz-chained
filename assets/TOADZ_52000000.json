@@ -1,20 +1,20 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/52000000.png",
-   "name": "CrypToadz #52000000",
-   "attributes": [
-      {
-         "trait_type": "Custom",
-         "value": "1/1"
-      },
-      {
-         "trait_type": "Name",
-         "value": "Vegtoad"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 2
-      }
-   ]
+{
+    "description": "A small, warty, amphibious creature that resides in the metaverse.",
+    "external_url": "https://cryptoadz.io",
+    "image": "ipfs://QmTbs84chCn2Jbgg58TdmZyD7ZdBuihGMR4kmtFWFx9Etk",
+    "name": "CrypToadz #52000000",
+    "attributes": [
+        {
+            "trait_type": "Custom",
+            "value": "1/1"
+        },
+        {
+            "trait_type": "Name",
+            "value": "Vegtoad"
+        },
+        {
+            "trait_type": "# Traits",
+            "value": 2
+        }
+    ]
 }

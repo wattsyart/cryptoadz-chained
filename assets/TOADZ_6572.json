@@ -1,16 +1,16 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/6572.png",
-   "name": "CrypToadz #6572",
-   "attributes": [
-      {
-         "trait_type": "Custom",
-         "value": "Murdered by Fronkz"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 1
-      }
-   ]
+{
+    "description": "A small, warty, amphibious creature that resides in the metaverse.",
+    "external_url": "https://cryptoadz.io",
+    "image": "ipfs://QmR7khs2HAQjX68fW7CDY3XFiaUSaAECwJ64hSj3muGyDu",
+    "name": "CrypToadz #6572",
+    "attributes": [
+        {
+            "trait_type": "Custom",
+            "value": "Murdered by Fronkz"
+        },
+        {
+            "trait_type": "# Traits",
+            "value": 1
+        }
+    ]
 }

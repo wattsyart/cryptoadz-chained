@@ -1,20 +1,20 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/43000000.gif",
-   "name": "CrypToadz #43000000",
-   "attributes": [
-      {
-         "trait_type": "Custom",
-         "value": "1/1"
-      },
-      {
-         "trait_type": "Name",
-         "value": "Snowfroad"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 2
-      }
-   ]
+{
+    "description": "A small, warty, amphibious creature that resides in the metaverse.",
+    "external_url": "https://cryptoadz.io",
+    "image": "ipfs://Qmbw1Ygj1oZBeUUy5WWbEqAwh3rqDRvL6t5JdCVXnuwNgR",
+    "name": "CrypToadz #43000000",
+    "attributes": [
+        {
+            "trait_type": "Custom",
+            "value": "1/1"
+        },
+        {
+            "trait_type": "Name",
+            "value": "Snowfroad"
+        },
+        {
+            "trait_type": "# Traits",
+            "value": 2
+        }
+    ]
 }
