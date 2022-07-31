@@ -374,6 +374,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
 
     function _getTokenURI(uint256 tokenId, Presentation presentation) private view returns (string memory) {
         (uint8[] memory meta) = metadata.getMetadata(tokenId);
+        require (meta.length > 0, "ERC721Metadata: URI query for nonexistent token");
 
         string memory imageUri;
         if (customImages.isCustomImage(tokenId)) {

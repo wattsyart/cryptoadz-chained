@@ -23,7 +23,7 @@ library BufferUtils {
             if(id != tokenId) {
                 position += length;
                 if(position >= buffer.length)
-                    return (position, length);
+                    return (position, 0);
             }
         }
         return (position, length);
@@ -37,7 +37,7 @@ library BufferUtils {
             if(id != tokenId) {
                 position += length;
                 if(position >= buffer.length)
-                    return (position, length);
+                    return (position, 0);
             }
         }
         return (position, length);

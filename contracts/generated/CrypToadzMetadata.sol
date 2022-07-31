@@ -56,8 +56,9 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
     function getMetadata(uint256 tokenId) external view returns (uint8[] memory metadata)
     {
         uint8 metadataFile = getMetadataFileForToken(tokenId);        
-        bytes memory buffer = BufferUtils.decompress(metadataData[metadataFile],  metadataLengths[metadataFile]);
+        if(metadataFile > 12) return metadata;
 
+        bytes memory buffer = BufferUtils.decompress(metadataData[metadataFile],  metadataLengths[metadataFile]);
         (uint256 position, uint8 length) = BufferUtils.advanceToTokenPosition(tokenId, buffer);        
 
         metadata = new uint8[](length);
@@ -108,7 +109,7 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
         if(tokenId >= 6546 && tokenId <= 56000000) {
             return 12;
         }
-        revert MetadataFileOutOfRange(tokenId);
+        return 13;
     }
 
     constructor() {
