@@ -1,20 +1,20 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/1943.gif",
-   "name": "CrypToadz #1943",
-   "attributes": [
-      {
-         "trait_type": "Custom",
-         "value": "Legendary"
-      },
-      {
-         "trait_type": "Name",
-         "value": "Adventurer"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 2
-      }
-   ]
+{
+    "description": "A small, warty, amphibious creature that resides in the metaverse.",
+    "external_url": "https://cryptoadz.io",
+    "image": "ipfs://QmcWuRU5UQz9bjiBjjfDRnr2Qj2VnkWcwTJRCNBZuF9N45",
+    "name": "CrypToadz #1943",
+    "attributes": [
+        {
+            "trait_type": "Custom",
+            "value": "Legendary"
+        },
+        {
+            "trait_type": "Name",
+            "value": "Adventurer"
+        },
+        {
+            "trait_type": "# Traits",
+            "value": 2
+        }
+    ]
 }

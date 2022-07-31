@@ -1,20 +1,20 @@
-﻿{
-   "description": "A small, warty, amphibious creature that resides in the metaverse.",
-   "external_url": "https://cryptoadz.io",
-   "image": "https://arweave.net/gjAzfpcJcHqviSnYuUI5ElEQT9b934ShxrUQ-WVolZ0/318.gif",
-   "name": "CrypToadz #318",
-   "attributes": [
-      {
-         "trait_type": "Custom",
-         "value": "Legendary"
-      },
-      {
-         "trait_type": "Name",
-         "value": "Fronkz Henchman 2"
-      },
-      {
-         "trait_type": "# Traits",
-         "value": 2
-      }
-   ]
+{
+    "description": "A small, warty, amphibious creature that resides in the metaverse.",
+    "external_url": "https://cryptoadz.io",
+    "image": "ipfs://QmRxaBhizBgghFm9kQJLHC8YVxL1sVgG1R2KSY4SZf22Ti",
+    "name": "CrypToadz #318",
+    "attributes": [
+        {
+            "trait_type": "Custom",
+            "value": "Legendary"
+        },
+        {
+            "trait_type": "Name",
+            "value": "Fronkz Henchman 2"
+        },
+        {
+            "trait_type": "# Traits",
+            "value": 2
+        }
+    ]
 }
