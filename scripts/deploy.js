@@ -1,3 +1,5 @@
+const { expect } = require("chai");
+
 module.exports = {
   deployContracts: deployContracts
 }
@@ -371,157 +373,157 @@ async function deployContracts(ethers, quiet, trace, txOptions) {
     if (!quiet) console.log("CrypToadzCustomImage936 linked with dependencies");
 
     await output["CrypToadzCustomImages"].setAddresses({
-      _123: output["CrypToadzCustomImage123"].address, 
-      _316: output["CrypToadzCustomImage316"].address, 
-      _472: output["CrypToadzCustomImage472"].address, 
-      _491: output["CrypToadzCustomImage491"].address, 
-      _703: output["CrypToadzCustomImage703"].address, 
-      _864: output["CrypToadzCustomImage864"].address, 
-      _916: output["CrypToadzCustomImage916"].address, 
-      _936: output["CrypToadzCustomImage936"].address, 
-      _966: output["CrypToadzCustomImage966"].address, 
-      _1005: output["CrypToadzCustomImage1005"].address, 
-      _1165: output["CrypToadzCustomImage1165"].address, 
-      _1423: output["CrypToadzCustomImage1423"].address, 
-      _1559: output["CrypToadzCustomImage1559"].address, 
-      _1637: output["CrypToadzCustomImage1637"].address, 
-      _1703: output["CrypToadzCustomImage1703"].address, 
-      _1754: output["CrypToadzCustomImage1754"].address, 
-      _1793: output["CrypToadzCustomImage1793"].address, 
-      _1812: output["CrypToadzCustomImage1812"].address, 
-      _1935: output["CrypToadzCustomImage1935"].address, 
-      _1975: output["CrypToadzCustomImage1975"].address, 
-      _2124: output["CrypToadzCustomImage2124"].address, 
-      _2232: output["CrypToadzCustomImage2232"].address, 
-      _2327: output["CrypToadzCustomImage2327"].address, 
-      _2469: output["CrypToadzCustomImage2469"].address, 
-      _2471: output["CrypToadzCustomImage2471"].address, 
-      _2482: output["CrypToadzCustomImage2482"].address, 
-      _2489: output["CrypToadzCustomImage2489"].address, 
-      _2521: output["CrypToadzCustomImage2521"].address, 
-      _2569: output["CrypToadzCustomImage2569"].address, 
-      _2579: output["CrypToadzCustomImage2579"].address, 
-      _2709: output["CrypToadzCustomImage2709"].address, 
-      _2825: output["CrypToadzCustomImage2825"].address, 
-      _2839: output["CrypToadzCustomImage2839"].address, 
-      _2846: output["CrypToadzCustomImage2846"].address, 
-      _2865: output["CrypToadzCustomImage2865"].address, 
-      _2959: output["CrypToadzCustomImage2959"].address, 
-      _2986: output["CrypToadzCustomImage2986"].address, 
-      _3196: output["CrypToadzCustomImage3196"].address, 
-      _3309: output["CrypToadzCustomImage3309"].address, 
-      _3382: output["CrypToadzCustomImage3382"].address, 
-      _3703: output["CrypToadzCustomImage3703"].address, 
-      _4096: output["CrypToadzCustomImage4096"].address, 
-      _4126: output["CrypToadzCustomImage4126"].address, 
-      _4152: output["CrypToadzCustomImage4152"].address, 
-      _4192: output["CrypToadzCustomImage4192"].address, 
-      _4201: output["CrypToadzCustomImage4201"].address, 
-      _4221: output["CrypToadzCustomImage4221"].address, 
-      _4238: output["CrypToadzCustomImage4238"].address, 
-      _4368: output["CrypToadzCustomImage4368"].address, 
-      _4578: output["CrypToadzCustomImage4578"].address, 
-      _4580: output["CrypToadzCustomImage4580"].address, 
-      _4604: output["CrypToadzCustomImage4604"].address, 
-      _4714: output["CrypToadzCustomImage4714"].address, 
-      _4773: output["CrypToadzCustomImage4773"].address, 
-      _4845: output["CrypToadzCustomImage4845"].address, 
-      _4896: output["CrypToadzCustomImage4896"].address, 
-      _5128: output["CrypToadzCustomImage5128"].address, 
-      _5150: output["CrypToadzCustomImage5150"].address, 
-      _5262: output["CrypToadzCustomImage5262"].address, 
-      _5441: output["CrypToadzCustomImage5441"].address, 
-      _5471: output["CrypToadzCustomImage5471"].address, 
-      _5730: output["CrypToadzCustomImage5730"].address, 
-      _5836: output["CrypToadzCustomImage5836"].address, 
-      _5848: output["CrypToadzCustomImage5848"].address, 
-      _5902: output["CrypToadzCustomImage5902"].address, 
-      _6214: output["CrypToadzCustomImage6214"].address, 
-      _6382: output["CrypToadzCustomImage6382"].address, 
-      _6491: output["CrypToadzCustomImage6491"].address, 
-      _6572: output["CrypToadzCustomImage6572"].address, 
-      _6578: output["CrypToadzCustomImage6578"].address, 
-      _6631: output["CrypToadzCustomImage6631"].address, 
-      _6719: output["CrypToadzCustomImage6719"].address, 
-      _6736: output["CrypToadzCustomImage6736"].address, 
-      _6852: output["CrypToadzCustomImage6852"].address, 
-      _6894: output["CrypToadzCustomImage6894"].address, 
-      _6916: output["CrypToadzCustomImage6916"].address, 
-      _1000000: output["CrypToadzCustomImage1000000"].address, 
-      _2000000: output["CrypToadzCustomImage2000000"].address, 
-      _3000000: output["CrypToadzCustomImage3000000"].address, 
-      _4000000: output["CrypToadzCustomImage4000000"].address, 
-      _5000000: output["CrypToadzCustomImage5000000"].address, 
-      _6000000: output["CrypToadzCustomImage6000000"].address, 
-      _7000000: output["CrypToadzCustomImage7000000"].address, 
-      _8000000: output["CrypToadzCustomImage8000000"].address, 
-      _9000000: output["CrypToadzCustomImage9000000"].address, 
-      _10000000: output["CrypToadzCustomImage10000000"].address, 
-      _11000000: output["CrypToadzCustomImage11000000"].address, 
-      _12000000: output["CrypToadzCustomImage12000000"].address, 
-      _13000000: output["CrypToadzCustomImage13000000"].address, 
-      _14000000: output["CrypToadzCustomImage14000000"].address, 
-      _15000000: output["CrypToadzCustomImage15000000"].address, 
-      _16000000: output["CrypToadzCustomImage16000000"].address, 
-      _17000000: output["CrypToadzCustomImage17000000"].address, 
-      _18000000: output["CrypToadzCustomImage18000000"].address, 
-      _19000000: output["CrypToadzCustomImage19000000"].address, 
-      _20000000: output["CrypToadzCustomImage20000000"].address, 
-      _21000000: output["CrypToadzCustomImage21000000"].address, 
-      _22000000: output["CrypToadzCustomImage22000000"].address, 
-      _23000000: output["CrypToadzCustomImage23000000"].address, 
-      _24000000: output["CrypToadzCustomImage24000000"].address, 
-      _25000000: output["CrypToadzCustomImage25000000"].address, 
-      _26000000: output["CrypToadzCustomImage26000000"].address, 
-      _27000000: output["CrypToadzCustomImage27000000"].address, 
-      _28000000: output["CrypToadzCustomImage28000000"].address, 
-      _29000000: output["CrypToadzCustomImage29000000"].address, 
-      _30000000: output["CrypToadzCustomImage30000000"].address, 
-      _31000000: output["CrypToadzCustomImage31000000"].address, 
-      _32000000: output["CrypToadzCustomImage32000000"].address, 
-      _33000000: output["CrypToadzCustomImage33000000"].address, 
-      _34000000: output["CrypToadzCustomImage34000000"].address, 
-      _35000000: output["CrypToadzCustomImage35000000"].address, 
-      _36000000: output["CrypToadzCustomImage36000000"].address, 
-      _37000000: output["CrypToadzCustomImage37000000"].address, 
-      _38000000: output["CrypToadzCustomImage38000000"].address, 
-      _39000000: output["CrypToadzCustomImage39000000"].address, 
-      _40000000: output["CrypToadzCustomImage40000000"].address, 
-      _41000000: output["CrypToadzCustomImage41000000"].address, 
-      _42000000: output["CrypToadzCustomImage42000000"].address, 
-      _44000000: output["CrypToadzCustomImage44000000"].address, 
-      _45000000: output["CrypToadzCustomImage45000000"].address, 
-      _46000000: output["CrypToadzCustomImage46000000"].address, 
-      _47000000: output["CrypToadzCustomImage47000000"].address, 
-      _49000000: output["CrypToadzCustomImage49000000"].address, 
-      _50000000: output["CrypToadzCustomImage50000000"].address, 
-      _51000000: output["CrypToadzCustomImage51000000"].address, 
-      _52000000: output["CrypToadzCustomImage52000000"].address, 
-      _53000000: output["CrypToadzCustomImage53000000"].address, 
-      _54000000: output["CrypToadzCustomImage54000000"].address, 
-      _55000000: output["CrypToadzCustomImage55000000"].address, 
+      _123: output["CrypToadzCustomImage123"].address,
+      _316: output["CrypToadzCustomImage316"].address,
+      _472: output["CrypToadzCustomImage472"].address,
+      _491: output["CrypToadzCustomImage491"].address,
+      _703: output["CrypToadzCustomImage703"].address,
+      _864: output["CrypToadzCustomImage864"].address,
+      _916: output["CrypToadzCustomImage916"].address,
+      _936: output["CrypToadzCustomImage936"].address,
+      _966: output["CrypToadzCustomImage966"].address,
+      _1005: output["CrypToadzCustomImage1005"].address,
+      _1165: output["CrypToadzCustomImage1165"].address,
+      _1423: output["CrypToadzCustomImage1423"].address,
+      _1559: output["CrypToadzCustomImage1559"].address,
+      _1637: output["CrypToadzCustomImage1637"].address,
+      _1703: output["CrypToadzCustomImage1703"].address,
+      _1754: output["CrypToadzCustomImage1754"].address,
+      _1793: output["CrypToadzCustomImage1793"].address,
+      _1812: output["CrypToadzCustomImage1812"].address,
+      _1935: output["CrypToadzCustomImage1935"].address,
+      _1975: output["CrypToadzCustomImage1975"].address,
+      _2124: output["CrypToadzCustomImage2124"].address,
+      _2232: output["CrypToadzCustomImage2232"].address,
+      _2327: output["CrypToadzCustomImage2327"].address,
+      _2469: output["CrypToadzCustomImage2469"].address,
+      _2471: output["CrypToadzCustomImage2471"].address,
+      _2482: output["CrypToadzCustomImage2482"].address,
+      _2489: output["CrypToadzCustomImage2489"].address,
+      _2521: output["CrypToadzCustomImage2521"].address,
+      _2569: output["CrypToadzCustomImage2569"].address,
+      _2579: output["CrypToadzCustomImage2579"].address,
+      _2709: output["CrypToadzCustomImage2709"].address,
+      _2825: output["CrypToadzCustomImage2825"].address,
+      _2839: output["CrypToadzCustomImage2839"].address,
+      _2846: output["CrypToadzCustomImage2846"].address,
+      _2865: output["CrypToadzCustomImage2865"].address,
+      _2959: output["CrypToadzCustomImage2959"].address,
+      _2986: output["CrypToadzCustomImage2986"].address,
+      _3196: output["CrypToadzCustomImage3196"].address,
+      _3309: output["CrypToadzCustomImage3309"].address,
+      _3382: output["CrypToadzCustomImage3382"].address,
+      _3703: output["CrypToadzCustomImage3703"].address,
+      _4096: output["CrypToadzCustomImage4096"].address,
+      _4126: output["CrypToadzCustomImage4126"].address,
+      _4152: output["CrypToadzCustomImage4152"].address,
+      _4192: output["CrypToadzCustomImage4192"].address,
+      _4201: output["CrypToadzCustomImage4201"].address,
+      _4221: output["CrypToadzCustomImage4221"].address,
+      _4238: output["CrypToadzCustomImage4238"].address,
+      _4368: output["CrypToadzCustomImage4368"].address,
+      _4578: output["CrypToadzCustomImage4578"].address,
+      _4580: output["CrypToadzCustomImage4580"].address,
+      _4604: output["CrypToadzCustomImage4604"].address,
+      _4714: output["CrypToadzCustomImage4714"].address,
+      _4773: output["CrypToadzCustomImage4773"].address,
+      _4845: output["CrypToadzCustomImage4845"].address,
+      _4896: output["CrypToadzCustomImage4896"].address,
+      _5128: output["CrypToadzCustomImage5128"].address,
+      _5150: output["CrypToadzCustomImage5150"].address,
+      _5262: output["CrypToadzCustomImage5262"].address,
+      _5441: output["CrypToadzCustomImage5441"].address,
+      _5471: output["CrypToadzCustomImage5471"].address,
+      _5730: output["CrypToadzCustomImage5730"].address,
+      _5836: output["CrypToadzCustomImage5836"].address,
+      _5848: output["CrypToadzCustomImage5848"].address,
+      _5902: output["CrypToadzCustomImage5902"].address,
+      _6214: output["CrypToadzCustomImage6214"].address,
+      _6382: output["CrypToadzCustomImage6382"].address,
+      _6491: output["CrypToadzCustomImage6491"].address,
+      _6572: output["CrypToadzCustomImage6572"].address,
+      _6578: output["CrypToadzCustomImage6578"].address,
+      _6631: output["CrypToadzCustomImage6631"].address,
+      _6719: output["CrypToadzCustomImage6719"].address,
+      _6736: output["CrypToadzCustomImage6736"].address,
+      _6852: output["CrypToadzCustomImage6852"].address,
+      _6894: output["CrypToadzCustomImage6894"].address,
+      _6916: output["CrypToadzCustomImage6916"].address,
+      _1000000: output["CrypToadzCustomImage1000000"].address,
+      _2000000: output["CrypToadzCustomImage2000000"].address,
+      _3000000: output["CrypToadzCustomImage3000000"].address,
+      _4000000: output["CrypToadzCustomImage4000000"].address,
+      _5000000: output["CrypToadzCustomImage5000000"].address,
+      _6000000: output["CrypToadzCustomImage6000000"].address,
+      _7000000: output["CrypToadzCustomImage7000000"].address,
+      _8000000: output["CrypToadzCustomImage8000000"].address,
+      _9000000: output["CrypToadzCustomImage9000000"].address,
+      _10000000: output["CrypToadzCustomImage10000000"].address,
+      _11000000: output["CrypToadzCustomImage11000000"].address,
+      _12000000: output["CrypToadzCustomImage12000000"].address,
+      _13000000: output["CrypToadzCustomImage13000000"].address,
+      _14000000: output["CrypToadzCustomImage14000000"].address,
+      _15000000: output["CrypToadzCustomImage15000000"].address,
+      _16000000: output["CrypToadzCustomImage16000000"].address,
+      _17000000: output["CrypToadzCustomImage17000000"].address,
+      _18000000: output["CrypToadzCustomImage18000000"].address,
+      _19000000: output["CrypToadzCustomImage19000000"].address,
+      _20000000: output["CrypToadzCustomImage20000000"].address,
+      _21000000: output["CrypToadzCustomImage21000000"].address,
+      _22000000: output["CrypToadzCustomImage22000000"].address,
+      _23000000: output["CrypToadzCustomImage23000000"].address,
+      _24000000: output["CrypToadzCustomImage24000000"].address,
+      _25000000: output["CrypToadzCustomImage25000000"].address,
+      _26000000: output["CrypToadzCustomImage26000000"].address,
+      _27000000: output["CrypToadzCustomImage27000000"].address,
+      _28000000: output["CrypToadzCustomImage28000000"].address,
+      _29000000: output["CrypToadzCustomImage29000000"].address,
+      _30000000: output["CrypToadzCustomImage30000000"].address,
+      _31000000: output["CrypToadzCustomImage31000000"].address,
+      _32000000: output["CrypToadzCustomImage32000000"].address,
+      _33000000: output["CrypToadzCustomImage33000000"].address,
+      _34000000: output["CrypToadzCustomImage34000000"].address,
+      _35000000: output["CrypToadzCustomImage35000000"].address,
+      _36000000: output["CrypToadzCustomImage36000000"].address,
+      _37000000: output["CrypToadzCustomImage37000000"].address,
+      _38000000: output["CrypToadzCustomImage38000000"].address,
+      _39000000: output["CrypToadzCustomImage39000000"].address,
+      _40000000: output["CrypToadzCustomImage40000000"].address,
+      _41000000: output["CrypToadzCustomImage41000000"].address,
+      _42000000: output["CrypToadzCustomImage42000000"].address,
+      _44000000: output["CrypToadzCustomImage44000000"].address,
+      _45000000: output["CrypToadzCustomImage45000000"].address,
+      _46000000: output["CrypToadzCustomImage46000000"].address,
+      _47000000: output["CrypToadzCustomImage47000000"].address,
+      _49000000: output["CrypToadzCustomImage49000000"].address,
+      _50000000: output["CrypToadzCustomImage50000000"].address,
+      _51000000: output["CrypToadzCustomImage51000000"].address,
+      _52000000: output["CrypToadzCustomImage52000000"].address,
+      _53000000: output["CrypToadzCustomImage53000000"].address,
+      _54000000: output["CrypToadzCustomImage54000000"].address,
+      _55000000: output["CrypToadzCustomImage55000000"].address,
       _56000000: output["CrypToadzCustomImage56000000"].address
     });
     if (!quiet) console.log("CrypToadzCustomImages linked with dependencies");
 
     await output["CrypToadzCustomImage1943"].setAddresses(output["CrypToadzCustomImage1943A"].address, output["CrypToadzCustomImage1943B"].address, output["CrypToadzCustomImage1943C"].address, output["CrypToadzCustomImage1943D"].address, output["CrypToadzCustomImage1943E"].address);
     if (!quiet) console.log("CrypToadzCustomImage1943 linked with dependencies");
-    
+
     await output["CrypToadzCustomImage318"].setAddresses(output["CrypToadzCustomImage318A"].address, output["CrypToadzCustomImage318B"].address, output["CrypToadzCustomImage318C"].address, output["CrypToadzCustomImage318D"].address, output["CrypToadzCustomImage318E"].address, output["CrypToadzCustomImage318F"].address);
     if (!quiet) console.log("CrypToadzCustomImage318 linked with dependencies");
-    
+
     await output["CrypToadzCustomImage3661"].setAddresses(output["CrypToadzCustomImage3661A"].address, output["CrypToadzCustomImage3661B"].address, output["CrypToadzCustomImage3661C"].address, output["CrypToadzCustomImage3661D"].address, output["CrypToadzCustomImage3661E"].address, output["CrypToadzCustomImage3661F"].address, output["CrypToadzCustomImage3661G"].address);
     if (!quiet) console.log("CrypToadzCustomImage3661 linked with dependencies");
-    
+
     await output["CrypToadzCustomImage37"].setAddresses(output["CrypToadzCustomImage37A"].address, output["CrypToadzCustomImage37B"].address, output["CrypToadzCustomImage37C"].address, output["CrypToadzCustomImage37D"].address, output["CrypToadzCustomImage37E"].address, output["CrypToadzCustomImage37F"].address);
     if (!quiet) console.log("CrypToadzCustomImage37 linked with dependencies");
-    
+
     await output["CrypToadzCustomImage4035"].setAddresses(output["CrypToadzCustomImage4035A"].address, output["CrypToadzCustomImage4035B"].address, output["CrypToadzCustomImage4035C"].address, output["CrypToadzCustomImage4035D"].address, output["CrypToadzCustomImage4035E"].address, output["CrypToadzCustomImage4035F"].address);
     if (!quiet) console.log("CrypToadzCustomImage4035 linked with dependencies");
-    
+
     await output["CrypToadzCustomImage466"].setAddresses(output["CrypToadzCustomImage466A"].address, output["CrypToadzCustomImage466B"].address, output["CrypToadzCustomImage466C"].address, output["CrypToadzCustomImage466D"].address, output["CrypToadzCustomImage466E"].address, output["CrypToadzCustomImage466F"].address);
     if (!quiet) console.log("CrypToadzCustomImage466 linked with dependencies");
-    
+
     await output["CrypToadzCustomImage4911"].setAddresses(output["CrypToadzCustomImage4911A"].address, output["CrypToadzCustomImage4911B"].address, output["CrypToadzCustomImage4911C"].address, output["CrypToadzCustomImage4911D"].address, output["CrypToadzCustomImage4911E"].address, output["CrypToadzCustomImage4911F"].address, output["CrypToadzCustomImage4911G"].address);
     if (!quiet) console.log("CrypToadzCustomImage4911 linked with dependencies");
 
@@ -550,6 +552,51 @@ async function deployContracts(ethers, quiet, trace, txOptions) {
     await output["CrypToadzChained"].setCustomAnimations(output["CrypToadzCustomAnimations"].address);
     await output["CrypToadzChained"].setBuilder(output["CrypToadzBuilder"].address);
     if (!quiet) console.log("CrypToadzChained linked with dependencies");
+
+    //
+    // Test locks
+    //
+    if (!trace) {
+      {
+        await output["CrypToadzChained"].setStrings(CrypToadzChainedAddress);
+        await expect(output["CrypToadzChained"].lockStrings()).to.be.revertedWith("Not ICrypToadzStrings");
+        await output["CrypToadzChained"].setStrings(output["CrypToadzStrings"]);
+        await output["CrypToadzChained"].lockStrings();
+        await expect(output["CrypToadzChained"].setStrings(output["CrypToadzStrings"])).to.be.revertedWith("Strings locked");
+      }
+
+      {
+        await output["CrypToadzChained"].setMetadata(CrypToadzChainedAddress);
+        await expect(output["CrypToadzChained"].lockMetadata()).to.be.revertedWith("Not ICrypToadzMetadata");
+        await output["CrypToadzChained"].setMetadata(output["CrypToadzMetadata"]);
+        await output["CrypToadzChained"].lockMetadata();
+        await expect(output["CrypToadzChained"].setMetadata(output["CrypToadzMetadata"])).to.be.revertedWith("Metadata locked");
+      }
+
+      {
+        await output["CrypToadzChained"].setBuilder(CrypToadzChainedAddress);
+        await expect(output["CrypToadzChained"].lockBuilder()).to.be.revertedWith("Not ICrypToadzBuilder");
+        await output["CrypToadzChained"].setBuilder(output["CrypToadzBuilder"]);
+        await output["CrypToadzChained"].lockBuilder();
+        await expect(output["CrypToadzChained"].setBuilder(output["CrypToadzBuilder"])).to.be.revertedWith("Builder locked");
+      }
+
+      {
+        await output["CrypToadzChained"].setCustomImages(CrypToadzChainedAddress);
+        await expect(output["CrypToadzChained"].lockCustomImages()).to.be.revertedWith("Not ICrypToadzCustomImages");
+        await output["CrypToadzChained"].setCustomImages(output["CrypToadzCustomImages"]);
+        await output["CrypToadzChained"].lockCustomImages();
+        await expect(output["CrypToadzChained"].setCustomImages(output["CrypToadzCustomImages"])).to.be.revertedWith("CustomImages locked");
+      }
+
+      {
+        await output["CrypToadzChained"].setCustomAnimations(CrypToadzChainedAddress);
+        await expect(output["CrypToadzChained"].lockCustomAnimations()).to.be.revertedWith("Not ICrypToadzCustomAnimations");
+        await output["CrypToadzChained"].setCustomAnimations(output["CrypToadzCustomAnimations"]);
+        await output["CrypToadzChained"].lockCustomAnimations();
+        await expect(output["CrypToadzChained"].setCustomAnimations(output["CrypToadzCustomAnimations"])).to.be.revertedWith("CustomAnimations locked");
+      }
+    }
   }
 
   return output;
