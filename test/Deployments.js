@@ -3,7 +3,13 @@ const utils = require('../scripts/deploy.js');
 
 describe("Deployments", function () {
   it("deploys all contracts", async function () {
-    await utils.deployContracts(hre.ethers, false, false, getTxOptions());
+    const network = await ethers.getDefaultProvider().getNetwork();
+    console.log(`Network: ${network}`);
+    if(network !== "privatenode") {
+      await utils.deployContracts(hre.ethers, false, false, getTxOptions());
+    } else {
+      await utils.deployContracts(hre.ethers, false, false);
+    }
   });
 });
 
