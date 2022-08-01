@@ -61,7 +61,7 @@ contract CrypToadzMetadata is ICrypToadzMetadata {
         bytes memory buffer = BufferUtils.decompress(metadataData[metadataFile],  metadataLengths[metadataFile]);
         (uint256 position, uint8 length) = BufferUtils.advanceToTokenPosition(tokenId, buffer);
 
-        if(length == 0 && tokenId == BufferUtils.readUInt256(0, hex"6DBDD5")) {
+        if(length == 0 && tokenId == 0x6dbdd5) {
             metadata = new uint8[](1);
             metadata[0] = 255;
         } else {

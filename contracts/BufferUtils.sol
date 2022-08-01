@@ -72,18 +72,6 @@ library BufferUtils {
         return ((16777216 * d4) + (65536 * d3) + (256 * d2) + d1, position);
     }
 
-    function readUInt256(uint256 position, bytes memory buffer)
-        internal
-        pure
-        returns (uint256)
-    {
-        uint256 x;
-        assembly {
-            x := mload(add(buffer, add(0x20, position)))
-        }
-        return x;
-    }
-
     function readByte(uint256 position, bytes memory buffer)
         internal
         pure
