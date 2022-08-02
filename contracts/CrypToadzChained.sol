@@ -236,35 +236,97 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         encoder = IGIFEncoder(_encoder);
     }
 
-    function random() external view returns (string memory) {
-        return _random(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
+    address immutable _stop;
+
+    constructor() {
+        _stop = SSTORE2.write(hex"7b2274726169745f74797065223a22437573746f6d222c2276616c7565223a22312f31227d2c7b2274726169745f74797065223a224e616d65222c2276616c7565223a22467265616b792046726f677a227d2c7b2274726169745f74797065223a222320547261697473222c2276616c7565223a327d");
     }
 
-    function fromSeed(uint64 seed) external view returns (string memory) {
-        return _random(seed);
-    }
-
+    /**
+    @notice Retrieves the image data URI for a given token ID. This includes only the image itself, not the metadata.
+    @param tokenId Token ID referring to an existing CrypToadz NFT Token ID
+    */
     function imageURI(uint256 tokenId) external view returns (string memory) {
         (uint8[] memory meta) = metadata.getMetadata(tokenId);
         require (meta.length > 0, LEGACY_URI_NOT_FOUND);
         return _getImageURI(tokenId, meta);
     }
 
+    /**
+    @notice Retrieves the token data URI for a given token ID. Includes both the image and its accompanying metadata.
+    @param tokenId Token ID referring to an existing CrypToadz NFT Token ID
+    */
     function tokenURI(uint256 tokenId) external view returns (string memory) {
         return _getTokenURI(tokenId, Presentation.Image);
     }
 
+    /**
+    @notice Retrieves the token data URI for a given token ID, with a given presentation style. Includes both the image and its accompanying metadata.
+    @param tokenId Token ID referring to an existing CrypToadz NFT Token ID
+    @param presentation Image (tokenURI has image data URI), ImageData (tokenURI has image_data SVG data URI that scales to its container), or Both (tokenURI has both image representations)
+    */
     function tokenURIWithPresentation(uint256 tokenId, Presentation presentation) external view returns (string memory) {
         return _getTokenURI(tokenId, presentation);
     }
 
-    function _random(uint64 seed) private view returns (string memory) {
+    /**
+    @notice Retrieves a random token data URI. This generates a completely new CrypToadz, not officially part of the collection.    
+    */
+    function randomTokenURI() external view returns (string memory) {
+        return _randomTokenURI(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
+    }
+
+    /**
+    @notice Retrieves a random token data URI from a given seed. This generates a completely new CrypToadz, not officially part of the collection.
+    @param seed An unsigned 64-bit integer representing the image. To recreate a random token made without a seed, pass the CrypToadz # supplied by its tokenURI
+    */
+    function randomTokenURIFromSeed(uint64 seed) external view returns (string memory) {
+        return _randomTokenURI(seed);
+    }
+
+    /**
+    @notice Retrieves a random image data URI. This generates a completely new CrypToadz image, not officially part of the collection.
+    */
+    function randomImageURI() external view returns (string memory imageUri) {
+        (imageUri,) = _randomImageURI(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
+    }
+
+    /**
+    @notice Retrieves a random image data URI from a given seed. This generates a completely new CrypToadz image, not officially part of the collection.
+    @param seed An unsigned 64-bit integer representing the image. To recreate a random token made without a seed, pass the CrypToadz # supplied by its tokenURI
+    */
+    function randomImageURIFromSeed(uint64 seed) external view returns (string memory imageUri) {
+        (imageUri,) = _randomImageURI(seed);
+    }
+
+    function _randomTokenURI(uint64 seed) private view returns (string memory) {
+        (string memory imageUri, uint8[] memory meta) = _randomImageURI(seed);        
+        string memory json = _getJsonPreamble(seed);
+        json = string(
+            abi.encodePacked(
+                json,
+                '"image":"', imageUri, '",',
+                '"image_data":"', _getWrappedImage(imageUri), '",',
+                _getAttributes(meta),
+                "}"
+            )
+        );
+        return _encodeJson(json);
+    }
+
+    function _randomImageURI(uint64 seed) private view returns (string memory imageUri, uint8[] memory meta) {
+        meta = _randomMeta(seed);
+        imageUri = IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
+        return (imageUri, meta);
+    }
+
+    function _randomMeta(uint64 seed) private pure returns (uint8[] memory meta) {
         PRNG.Source src = PRNG.newSource(keccak256(abi.encodePacked(seed)));
 
         uint8 traits = 2 + uint8(PRNG.readLessThan(src, 6, 8));            
         if(traits < 2 || traits > 7) revert BadTraitCount(traits);
         
-        uint8[] memory meta = new uint8[](1 + traits + 1);
+        meta = new uint8[](1 + traits + 1);
         meta[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size
         meta[1] = uint8(PRNG.readLessThan(src, 17, 8));      // Background
         meta[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
@@ -350,21 +412,6 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         } else { 
             revert BadTraitCount(traits);
         }
-        
-        string memory imageUri = IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
-        string memory json = getJsonPreamble(seed);
-
-        json = string(
-            abi.encodePacked(
-                json,
-                '"image":"', imageUri, '",',
-                '"image_data":"', getWrappedImage(imageUri), '",',
-                getAttributes(meta),
-                "}"
-            )
-        );
-
-        return encodeJson(json);
     }
 
     function _getTokenURI(uint256 tokenId, Presentation presentation) private view returns (string memory) {
@@ -372,13 +419,12 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         require (meta.length > 0, LEGACY_URI_NOT_FOUND);
 
         string memory imageUri = _getImageURI(tokenId, meta);
-
         string memory imageDataUri;
         if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
-            imageDataUri = getWrappedImage(imageUri);
+            imageDataUri = _getWrappedImage(imageUri);
         }
 
-        string memory json = getJsonPreamble(tokenId);
+        string memory json = _getJsonPreamble(tokenId);
 
         if(presentation == Presentation.Image || presentation == Presentation.Both) {
             json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
@@ -388,7 +434,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
         }
 
-        return encodeJson(string(abi.encodePacked(json, getAttributes(meta), '}')));   
+        return _encodeJson(string(abi.encodePacked(json, _getAttributes(meta), '}')));   
     }
 
     function _getImageURI(uint tokenId, uint8[] memory meta) private view returns (string memory imageUri) {
@@ -416,7 +462,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         }
     }
 
-    function getJsonPreamble(uint tokenId) private pure returns (string memory json) {
+    function _getJsonPreamble(uint tokenId) private pure returns (string memory json) {
         json = string(
             abi.encodePacked(
                 '{"description":"', DESCRIPTION,
@@ -427,7 +473,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         );
     }
 
-    function getWrappedImage(string memory imageUri) private pure returns (string memory imageDataUri) {
+    function _getWrappedImage(string memory imageUri) private pure returns (string memory imageDataUri) {
         string memory imageData = string(abi.encodePacked(
             '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">',
             '<image style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100" height="100" xlink:href="', 
@@ -436,7 +482,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         imageDataUri = string(abi.encodePacked(SVG_URI_PREFIX, Base64.encode(bytes(imageData), bytes(imageData).length)));
     }
 
-    function encodeJson(string memory json) private pure returns (string memory) {
+    function _encodeJson(string memory json) private pure returns (string memory) {
         return
             string(
                 abi.encodePacked(
@@ -444,15 +490,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                     Base64.encode(bytes(json), bytes(json).length)
                 )
             );
-    }
+    }   
 
-    address immutable _stop;
-
-    constructor() {
-        _stop = SSTORE2.write(hex"7b2274726169745f74797065223a22437573746f6d222c2276616c7565223a22312f31227d2c7b2274726169745f74797065223a224e616d65222c2276616c7565223a22467265616b792046726f677a227d2c7b2274726169745f74797065223a222320547261697473222c2276616c7565223a327d");
-    }
-
-    function getAttributes(uint8[] memory meta)
+    function _getAttributes(uint8[] memory meta)
         private
         view
         returns (string memory attributes)
@@ -473,7 +513,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                 value == 252 ? 37 : 
                 value == 253 ? 20 : value);
 
-            (string memory a, uint8 t) = appendTrait(
+            (string memory a, uint8 t) = _appendTrait(
                 value >= 112 && value < 119,
                 attributes,
                 traitName,
@@ -486,7 +526,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         attributes = string(abi.encodePacked(attributes, "]"));
     }
 
-    function appendTrait(
+    function _appendTrait(
         bool isNumber,
         string memory attributes,
         string memory trait_type,
