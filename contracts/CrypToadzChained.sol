@@ -244,6 +244,20 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         return _random(seed);
     }
 
+    function imageURI(uint256 tokenId) external view returns (string memory) {
+        (uint8[] memory meta) = metadata.getMetadata(tokenId);
+        require (meta.length > 0, LEGACY_URI_NOT_FOUND);
+        return _getImageURI(tokenId, meta);
+    }
+
+    function tokenURI(uint256 tokenId) external view returns (string memory) {
+        return _getTokenURI(tokenId, Presentation.Image);
+    }
+
+    function tokenURIWithPresentation(uint256 tokenId, Presentation presentation) external view returns (string memory) {
+        return _getTokenURI(tokenId, presentation);
+    }
+
     function _random(uint64 seed) private view returns (string memory) {
         PRNG.Source src = PRNG.newSource(keccak256(abi.encodePacked(seed)));
 
@@ -353,19 +367,31 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         return encodeJson(json);
     }
 
-    function tokenURI(uint256 tokenId) external view returns (string memory) {
-        return _getTokenURI(tokenId, Presentation.Image);
-    }
-
-    function tokenURIWithPresentation(uint256 tokenId, Presentation presentation) external view returns (string memory) {
-        return _getTokenURI(tokenId, presentation);
-    }
-
     function _getTokenURI(uint256 tokenId, Presentation presentation) private view returns (string memory) {
         (uint8[] memory meta) = metadata.getMetadata(tokenId);
         require (meta.length > 0, LEGACY_URI_NOT_FOUND);
 
-        string memory imageUri;
+        string memory imageUri = _getImageURI(tokenId, meta);
+
+        string memory imageDataUri;
+        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
+            imageDataUri = getWrappedImage(imageUri);
+        }
+
+        string memory json = getJsonPreamble(tokenId);
+
+        if(presentation == Presentation.Image || presentation == Presentation.Both) {
+            json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
+        }
+
+        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
+            json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
+        }
+
+        return encodeJson(string(abi.encodePacked(json, getAttributes(meta), '}')));   
+    }
+
+    function _getImageURI(uint tokenId, uint8[] memory meta) private view returns (string memory imageUri) {
         if (customImages.isCustomImage(tokenId)) {
             bytes memory customImage = customImages.getCustomImage(tokenId);
             imageUri = string(
@@ -388,23 +414,6 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             GIF memory gif = builder.getImage(meta, tokenId);
             imageUri = IGIFEncoder(encoder).getDataUri(gif);
         }
-
-        string memory imageDataUri;
-        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
-            imageDataUri = getWrappedImage(imageUri);
-        }
-
-        string memory json = getJsonPreamble(tokenId);
-
-        if(presentation == Presentation.Image || presentation == Presentation.Both) {
-                json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
-        }
-
-        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
-            json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
-        }
-
-        return encodeJson(string(abi.encodePacked(json, getAttributes(meta), '}')));   
     }
 
     function getJsonPreamble(uint tokenId) private pure returns (string memory json) {
