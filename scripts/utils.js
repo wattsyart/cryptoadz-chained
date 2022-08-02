@@ -20,7 +20,7 @@ module.exports = {
         if(!seed) {
             seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
         }
-        var tokenDataUri = await contract.fromSeed(seed);
+        var tokenDataUri = await contract.randomTokenURIFromSeed(seed);
         
         // convert base64 tokenURI to JSON
         var jsonData = tokenDataUri.match(pattern)[2];
@@ -34,6 +34,27 @@ module.exports = {
 
         // convert image URI to GIF buffer
         var imageDataUri = JSON.parse(json).image;
+        var imageData = imageDataUri.match(pattern)[2];
+        let imageBuffer = Buffer.from(imageData, 'base64');
+
+        // save image
+        const imagePath = `./scripts/output/random/${seed}.gif`;
+        fs.writeFileSync(imagePath, imageBuffer);
+        console.log(gutil.colors.green(imagePath));
+    },
+
+    randomImage: async function randomImage(contract, seed) {
+        createDirectoryIfNotExists('./scripts/output/random');
+
+        const pattern = /^data:.+\/(.+);base64,(.*)$/;
+
+        // call contract to get tokenURI
+        if(!seed) {
+            seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
+        }
+        var imageDataUri = await contract.randomImageURIFromSeed(seed);
+        
+        // convert image URI to GIF buffer
         var imageData = imageDataUri.match(pattern)[2];
         let imageBuffer = Buffer.from(imageData, 'base64');
 
