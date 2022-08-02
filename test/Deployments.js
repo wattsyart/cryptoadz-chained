@@ -3,9 +3,9 @@ const utils = require('../scripts/deploy.js');
 
 describe("Deployments", function () {
   it("deploys all contracts", async function () {
-    const network = await ethers.getDefaultProvider().getNetwork();
-    console.log(`Network: ${network}`);
-    if(network !== "privatenode") {
+    const network = await ethers.provider.getNetwork();
+    console.log(`Network: ${network.chainId}`);
+    if(network.chainId !== 8134646) {
       await utils.deployContracts(hre.ethers, false, false, getTxOptions());
     } else {
       await utils.deployContracts(hre.ethers, false, false);
