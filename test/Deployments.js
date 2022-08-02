@@ -5,7 +5,9 @@ describe("Deployments", function () {
   it("deploys all contracts", async function () {
     const network = await ethers.provider.getNetwork();
     console.log(`Network: ${network.chainId}`);
-    if(network.chainId !== 8134646) {
+    if(network.chainId == 4) {
+      await utils.deployContracts(hre.ethers, false, false, getTxOptions(), "m/44'/60'/0'/0/0");
+    } else if(network.chainId !== 8134646) {
       await utils.deployContracts(hre.ethers, false, false, getTxOptions());
     } else {
       await utils.deployContracts(hre.ethers, false, false);
