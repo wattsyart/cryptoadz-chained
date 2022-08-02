@@ -5,18 +5,12 @@ module.exports = {
   deployContracts: deployContracts
 }
 
+var signer;
+
 // https://docs.ethers.io/v5/api/contract/contract-factory/
 async function deployContract(manifest, ethers, contractName, quiet, trace, txOptions, hid) {
   
-  if(manifest[contractName] && !trace) {
-    var output = {};
-    output.address = manifest[contractName];
-    console.log(`${contractName} already deployed to ${output.address}`);
-    return output;
-  }
-  
-  var signer;
-  if(hid) {
+  if(hid && !signer) {
     signer = new LedgerSigner(ethers.provider, "hid", hid);
     // see: https://github.com/ethers-io/ethers.js/issues/2078    
     txOptions.type = 1;
@@ -24,14 +18,22 @@ async function deployContract(manifest, ethers, contractName, quiet, trace, txOp
     delete txOptions["maxFeePerGas"];
     delete txOptions["maxPriorityFeePerGas"];
     txOptions.gasPrice = maxFeePerGas;
-  } else {
+  } else if(!signer) {
     [owner] = await ethers.getSigners();
     signer = owner;
   }
 
+  if(manifest[contractName] && !trace) {
+    var factory = await ethers.getContractFactory(contractName);
+    var output = factory.attach(manifest[contractName]);
+    output = output.connect(signer);
+    console.log(`${contractName} already deployed to ${output.address}`);
+    return output;
+  }
+
   console.log("Account Address:", (await signer.getAddress()).toString());
   console.log("Account Balance:", (await signer.getBalance()).toString());
-
+  
   const contract = await (await ethers.getContractFactory(contractName)).connect(signer);
   if (trace) {
     // https://docs.ethers.io/v5/api/utils/transactions/#UnsignedTransaction
@@ -319,90 +321,91 @@ async function deployContracts(ethers, quiet, trace, txOptions, hw) {
   // Post-Deployment: Link all dependencies
   //
   if (!trace) {
-    await output["CrypToadzChained"].setEncoder(output["GIFEncoder"].address);
-    await output["CrypToadzDeltas"].setRenderer(output["PixelRenderer"].address);
-    await output["CrypToadzBuilder"].setRenderer(output["PixelRenderer"].address);
+    await output["CrypToadzChained"].setEncoder(output["GIFEncoder"].address, txOptions);
+    await output["CrypToadzDeltas"].setRenderer(output["PixelRenderer"].address, txOptions);
+    await output["CrypToadzBuilder"].setRenderer(output["PixelRenderer"].address, txOptions);
 
     await output["CrypToadzDeltas"].setAddresses({
       _a: output["CrypToadzDeltasA"].address,
       _b: output["CrypToadzDeltasB"].address,
       _c: output["CrypToadzDeltasC"].address
-    });
+    }, txOptions);
     if (!quiet) console.log("CrypToadzDeltas linked with dependencies");
 
     await output["CrypToadzBuilderAny"].setAddresses(
       output["CrypToadzBuilderAnyA"].address,
-      output["CrypToadzBuilderAnyB"].address
+      output["CrypToadzBuilderAnyB"].address, 
+      txOptions
     );
     if (!quiet) console.log("CrypToadzBuilderAny linked with dependencies");
 
-    await output["CrypToadzBuilder"].setAny(output["CrypToadzBuilderAny"].address);
-    await output["CrypToadzBuilder"].setTall(output["CrypToadzBuilderTall"].address);
-    await output["CrypToadzBuilder"].setShort(output["CrypToadzBuilderShort"].address);
-    await output["CrypToadzBuilder"].setDeltas(output["CrypToadzDeltas"].address);
+    await output["CrypToadzBuilder"].setAny(output["CrypToadzBuilderAny"].address, txOptions);
+    await output["CrypToadzBuilder"].setTall(output["CrypToadzBuilderTall"].address, txOptions);
+    await output["CrypToadzBuilder"].setShort(output["CrypToadzBuilderShort"].address, txOptions);
+    await output["CrypToadzBuilder"].setDeltas(output["CrypToadzDeltas"].address, txOptions);
     if (!quiet) console.log("CrypToadzBuilder linked with dependencies");
 
-    await output["CrypToadzCustomImage1005"].setAddresses(output["CrypToadzCustomImage1005A"].address, output["CrypToadzCustomImage1005B"].address);
+    await output["CrypToadzCustomImage1005"].setAddresses(output["CrypToadzCustomImage1005A"].address, output["CrypToadzCustomImage1005B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage1005 linked with dependencies");
 
-    await output["CrypToadzCustomImage1812"].setAddresses(output["CrypToadzCustomImage1812A"].address, output["CrypToadzCustomImage1812B"].address);
+    await output["CrypToadzCustomImage1812"].setAddresses(output["CrypToadzCustomImage1812A"].address, output["CrypToadzCustomImage1812B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage1812 linked with dependencies");
 
-    await output["CrypToadzCustomImage1975"].setAddresses(output["CrypToadzCustomImage1975A"].address, output["CrypToadzCustomImage1975B"].address);
+    await output["CrypToadzCustomImage1975"].setAddresses(output["CrypToadzCustomImage1975A"].address, output["CrypToadzCustomImage1975B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage1975 linked with dependencies");
 
-    await output["CrypToadzCustomImage2232"].setAddresses(output["CrypToadzCustomImage2232A"].address, output["CrypToadzCustomImage2232B"].address);
+    await output["CrypToadzCustomImage2232"].setAddresses(output["CrypToadzCustomImage2232A"].address, output["CrypToadzCustomImage2232B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage2232 linked with dependencies");
 
-    await output["CrypToadzCustomImage2327"].setAddresses(output["CrypToadzCustomImage2327A"].address, output["CrypToadzCustomImage2327B"].address);
+    await output["CrypToadzCustomImage2327"].setAddresses(output["CrypToadzCustomImage2327A"].address, output["CrypToadzCustomImage2327B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage2327 linked with dependencies");
 
-    await output["CrypToadzCustomImage2489"].setAddresses(output["CrypToadzCustomImage2489A"].address, output["CrypToadzCustomImage2489B"].address);
+    await output["CrypToadzCustomImage2489"].setAddresses(output["CrypToadzCustomImage2489A"].address, output["CrypToadzCustomImage2489B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage2489 linked with dependencies");
 
-    await output["CrypToadzCustomImage2825"].setAddresses(output["CrypToadzCustomImage2825A"].address, output["CrypToadzCustomImage2825B"].address);
+    await output["CrypToadzCustomImage2825"].setAddresses(output["CrypToadzCustomImage2825A"].address, output["CrypToadzCustomImage2825B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage2825 linked with dependencies");
 
-    await output["CrypToadzCustomImage2959"].setAddresses(output["CrypToadzCustomImage2959A"].address, output["CrypToadzCustomImage2959B"].address);
+    await output["CrypToadzCustomImage2959"].setAddresses(output["CrypToadzCustomImage2959A"].address, output["CrypToadzCustomImage2959B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage2959 linked with dependencies");
 
-    await output["CrypToadzCustomImage3196"].setAddresses(output["CrypToadzCustomImage3196A"].address, output["CrypToadzCustomImage3196B"].address);
+    await output["CrypToadzCustomImage3196"].setAddresses(output["CrypToadzCustomImage3196A"].address, output["CrypToadzCustomImage3196B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage3196 linked with dependencies");
 
-    await output["CrypToadzCustomImage3309"].setAddresses(output["CrypToadzCustomImage3309A"].address, output["CrypToadzCustomImage3309B"].address, output["CrypToadzCustomImage3309C"].address);
+    await output["CrypToadzCustomImage3309"].setAddresses(output["CrypToadzCustomImage3309A"].address, output["CrypToadzCustomImage3309B"].address, output["CrypToadzCustomImage3309C"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage3309 linked with dependencies");
 
-    await output["CrypToadzCustomImage3382"].setAddresses(output["CrypToadzCustomImage3382A"].address, output["CrypToadzCustomImage3382B"].address);
+    await output["CrypToadzCustomImage3382"].setAddresses(output["CrypToadzCustomImage3382A"].address, output["CrypToadzCustomImage3382B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage3382 linked with dependencies");
 
-    await output["CrypToadzCustomImage4152"].setAddresses(output["CrypToadzCustomImage4152A"].address, output["CrypToadzCustomImage4152B"].address);
+    await output["CrypToadzCustomImage4152"].setAddresses(output["CrypToadzCustomImage4152A"].address, output["CrypToadzCustomImage4152B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage4152 linked with dependencies");
 
-    await output["CrypToadzCustomImage4238"].setAddresses(output["CrypToadzCustomImage4238A"].address, output["CrypToadzCustomImage4238B"].address);
+    await output["CrypToadzCustomImage4238"].setAddresses(output["CrypToadzCustomImage4238A"].address, output["CrypToadzCustomImage4238B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage4238 linked with dependencies");
 
-    await output["CrypToadzCustomImage4580"].setAddresses(output["CrypToadzCustomImage4580A"].address, output["CrypToadzCustomImage4580B"].address);
+    await output["CrypToadzCustomImage4580"].setAddresses(output["CrypToadzCustomImage4580A"].address, output["CrypToadzCustomImage4580B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage4580 linked with dependencies");
 
-    await output["CrypToadzCustomImage4896"].setAddresses(output["CrypToadzCustomImage4896A"].address, output["CrypToadzCustomImage4896B"].address, output["CrypToadzCustomImage4896C"].address);
+    await output["CrypToadzCustomImage4896"].setAddresses(output["CrypToadzCustomImage4896A"].address, output["CrypToadzCustomImage4896B"].address, output["CrypToadzCustomImage4896C"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage4896 linked with dependencies");
 
-    await output["CrypToadzCustomImage5471"].setAddresses(output["CrypToadzCustomImage5471A"].address, output["CrypToadzCustomImage5471B"].address, output["CrypToadzCustomImage5471C"].address);
+    await output["CrypToadzCustomImage5471"].setAddresses(output["CrypToadzCustomImage5471A"].address, output["CrypToadzCustomImage5471B"].address, output["CrypToadzCustomImage5471C"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage5471 linked with dependencies");
 
-    await output["CrypToadzCustomImage5902"].setAddresses(output["CrypToadzCustomImage5902A"].address, output["CrypToadzCustomImage5902B"].address);
+    await output["CrypToadzCustomImage5902"].setAddresses(output["CrypToadzCustomImage5902A"].address, output["CrypToadzCustomImage5902B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage5902 linked with dependencies");
 
-    await output["CrypToadzCustomImage6214"].setAddresses(output["CrypToadzCustomImage6214A"].address, output["CrypToadzCustomImage6214B"].address);
+    await output["CrypToadzCustomImage6214"].setAddresses(output["CrypToadzCustomImage6214A"].address, output["CrypToadzCustomImage6214B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage6214 linked with dependencies");
 
-    await output["CrypToadzCustomImage6382"].setAddresses(output["CrypToadzCustomImage6382A"].address, output["CrypToadzCustomImage6382B"].address);
+    await output["CrypToadzCustomImage6382"].setAddresses(output["CrypToadzCustomImage6382A"].address, output["CrypToadzCustomImage6382B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage6382 linked with dependencies");
 
-    await output["CrypToadzCustomImage916"].setAddresses(output["CrypToadzCustomImage916A"].address, output["CrypToadzCustomImage916B"].address);
+    await output["CrypToadzCustomImage916"].setAddresses(output["CrypToadzCustomImage916A"].address, output["CrypToadzCustomImage916B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage916 linked with dependencies");
 
-    await output["CrypToadzCustomImage936"].setAddresses(output["CrypToadzCustomImage936A"].address, output["CrypToadzCustomImage936B"].address);
+    await output["CrypToadzCustomImage936"].setAddresses(output["CrypToadzCustomImage936A"].address, output["CrypToadzCustomImage936B"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage936 linked with dependencies");
 
     await output["CrypToadzCustomImages"].setAddresses({
@@ -536,28 +539,28 @@ async function deployContracts(ethers, quiet, trace, txOptions, hw) {
       _54000000: output["CrypToadzCustomImage54000000"].address,
       _55000000: output["CrypToadzCustomImage55000000"].address,
       _56000000: output["CrypToadzCustomImage56000000"].address
-    });
+    }, txOptions);
     if (!quiet) console.log("CrypToadzCustomImages linked with dependencies");
 
-    await output["CrypToadzCustomImage1943"].setAddresses(output["CrypToadzCustomImage1943A"].address, output["CrypToadzCustomImage1943B"].address, output["CrypToadzCustomImage1943C"].address, output["CrypToadzCustomImage1943D"].address, output["CrypToadzCustomImage1943E"].address);
+    await output["CrypToadzCustomImage1943"].setAddresses(output["CrypToadzCustomImage1943A"].address, output["CrypToadzCustomImage1943B"].address, output["CrypToadzCustomImage1943C"].address, output["CrypToadzCustomImage1943D"].address, output["CrypToadzCustomImage1943E"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage1943 linked with dependencies");
 
-    await output["CrypToadzCustomImage318"].setAddresses(output["CrypToadzCustomImage318A"].address, output["CrypToadzCustomImage318B"].address, output["CrypToadzCustomImage318C"].address, output["CrypToadzCustomImage318D"].address, output["CrypToadzCustomImage318E"].address, output["CrypToadzCustomImage318F"].address);
+    await output["CrypToadzCustomImage318"].setAddresses(output["CrypToadzCustomImage318A"].address, output["CrypToadzCustomImage318B"].address, output["CrypToadzCustomImage318C"].address, output["CrypToadzCustomImage318D"].address, output["CrypToadzCustomImage318E"].address, output["CrypToadzCustomImage318F"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage318 linked with dependencies");
 
-    await output["CrypToadzCustomImage3661"].setAddresses(output["CrypToadzCustomImage3661A"].address, output["CrypToadzCustomImage3661B"].address, output["CrypToadzCustomImage3661C"].address, output["CrypToadzCustomImage3661D"].address, output["CrypToadzCustomImage3661E"].address, output["CrypToadzCustomImage3661F"].address, output["CrypToadzCustomImage3661G"].address);
+    await output["CrypToadzCustomImage3661"].setAddresses(output["CrypToadzCustomImage3661A"].address, output["CrypToadzCustomImage3661B"].address, output["CrypToadzCustomImage3661C"].address, output["CrypToadzCustomImage3661D"].address, output["CrypToadzCustomImage3661E"].address, output["CrypToadzCustomImage3661F"].address, output["CrypToadzCustomImage3661G"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage3661 linked with dependencies");
 
-    await output["CrypToadzCustomImage37"].setAddresses(output["CrypToadzCustomImage37A"].address, output["CrypToadzCustomImage37B"].address, output["CrypToadzCustomImage37C"].address, output["CrypToadzCustomImage37D"].address, output["CrypToadzCustomImage37E"].address, output["CrypToadzCustomImage37F"].address);
+    await output["CrypToadzCustomImage37"].setAddresses(output["CrypToadzCustomImage37A"].address, output["CrypToadzCustomImage37B"].address, output["CrypToadzCustomImage37C"].address, output["CrypToadzCustomImage37D"].address, output["CrypToadzCustomImage37E"].address, output["CrypToadzCustomImage37F"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage37 linked with dependencies");
 
-    await output["CrypToadzCustomImage4035"].setAddresses(output["CrypToadzCustomImage4035A"].address, output["CrypToadzCustomImage4035B"].address, output["CrypToadzCustomImage4035C"].address, output["CrypToadzCustomImage4035D"].address, output["CrypToadzCustomImage4035E"].address, output["CrypToadzCustomImage4035F"].address);
+    await output["CrypToadzCustomImage4035"].setAddresses(output["CrypToadzCustomImage4035A"].address, output["CrypToadzCustomImage4035B"].address, output["CrypToadzCustomImage4035C"].address, output["CrypToadzCustomImage4035D"].address, output["CrypToadzCustomImage4035E"].address, output["CrypToadzCustomImage4035F"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage4035 linked with dependencies");
 
-    await output["CrypToadzCustomImage466"].setAddresses(output["CrypToadzCustomImage466A"].address, output["CrypToadzCustomImage466B"].address, output["CrypToadzCustomImage466C"].address, output["CrypToadzCustomImage466D"].address, output["CrypToadzCustomImage466E"].address, output["CrypToadzCustomImage466F"].address);
+    await output["CrypToadzCustomImage466"].setAddresses(output["CrypToadzCustomImage466A"].address, output["CrypToadzCustomImage466B"].address, output["CrypToadzCustomImage466C"].address, output["CrypToadzCustomImage466D"].address, output["CrypToadzCustomImage466E"].address, output["CrypToadzCustomImage466F"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage466 linked with dependencies");
 
-    await output["CrypToadzCustomImage4911"].setAddresses(output["CrypToadzCustomImage4911A"].address, output["CrypToadzCustomImage4911B"].address, output["CrypToadzCustomImage4911C"].address, output["CrypToadzCustomImage4911D"].address, output["CrypToadzCustomImage4911E"].address, output["CrypToadzCustomImage4911F"].address, output["CrypToadzCustomImage4911G"].address);
+    await output["CrypToadzCustomImage4911"].setAddresses(output["CrypToadzCustomImage4911A"].address, output["CrypToadzCustomImage4911B"].address, output["CrypToadzCustomImage4911C"].address, output["CrypToadzCustomImage4911D"].address, output["CrypToadzCustomImage4911E"].address, output["CrypToadzCustomImage4911F"].address, output["CrypToadzCustomImage4911G"].address, txOptions);
     if (!quiet) console.log("CrypToadzCustomImage4911 linked with dependencies");
 
     await output["CrypToadzCustomAnimations"].setAddresses({
@@ -576,14 +579,14 @@ async function deployContracts(ethers, quiet, trace, txOptions, hw) {
       _6131: output["CrypToadzCustomImage6131"].address,
       _43000000: output["CrypToadzCustomImage43000000"].address,
       _48000000: output["CrypToadzCustomImage48000000"].address
-    });
+    }, txOptions);
     if (!quiet) console.log("CrypToadzCustomAnimations linked with dependencies");
 
-    await output["CrypToadzChained"].setStrings(output["CrypToadzStrings"].address);
-    await output["CrypToadzChained"].setMetadata(output["CrypToadzMetadata"].address);
-    await output["CrypToadzChained"].setCustomImages(output["CrypToadzCustomImages"].address);
-    await output["CrypToadzChained"].setCustomAnimations(output["CrypToadzCustomAnimations"].address);
-    await output["CrypToadzChained"].setBuilder(output["CrypToadzBuilder"].address);
+    await output["CrypToadzChained"].setStrings(output["CrypToadzStrings"].address, txOptions);
+    await output["CrypToadzChained"].setMetadata(output["CrypToadzMetadata"].address, txOptions);
+    await output["CrypToadzChained"].setCustomImages(output["CrypToadzCustomImages"].address, txOptions);
+    await output["CrypToadzChained"].setCustomAnimations(output["CrypToadzCustomAnimations"].address, txOptions);
+    await output["CrypToadzChained"].setBuilder(output["CrypToadzBuilder"].address, txOptions);
     if (!quiet) console.log("CrypToadzChained linked with dependencies");
 
     //
