@@ -48,6 +48,8 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     bytes private constant EXTERNAL_URL = "https://cryptoadz.io";
     bytes private constant NAME = "CrypToadz";
 
+    string private constant LEGACY_URI_NOT_FOUND = "ERC721Metadata: URI query for nonexistent token";
+
     /** @notice Contract responsible for building non-custom toadz images. */
     ICrypToadzBuilder public builder;
 
@@ -334,34 +336,21 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         } else { 
             revert BadTraitCount(traits);
         }
+        
+        string memory imageUri = IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
+        string memory json = getJsonPreamble(seed);
 
-        string memory attributes = getAttributes(meta);
-
-        string memory json = string(
+        json = string(
             abi.encodePacked(
-                '{"description":"',
-                DESCRIPTION,
-                '","external_url":"',
-                EXTERNAL_URL,
-                '","name":"',
-                NAME,
-                " #",
-                Strings.toString(seed),
-                '","image":"',
-                IGIFEncoder(encoder).getDataUri(builder.getImage(meta)),
-                '",',
-                attributes,
+                json,
+                '"image":"', imageUri, '",',
+                '"image_data":"', getWrappedImage(imageUri), '",',
+                getAttributes(meta),
                 "}"
             )
         );
 
-        return
-            string(
-                abi.encodePacked(
-                    JSON_URI_PREFIX,
-                    Base64.encode(bytes(json), bytes(json).length)
-                )
-            );
+        return encodeJson(json);
     }
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
@@ -374,6 +363,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
 
     function _getTokenURI(uint256 tokenId, Presentation presentation) private view returns (string memory) {
         (uint8[] memory meta) = metadata.getMetadata(tokenId);
+        require (meta.length > 0, LEGACY_URI_NOT_FOUND);
 
         string memory imageUri;
         if (customImages.isCustomImage(tokenId)) {
@@ -401,17 +391,23 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
 
         string memory imageDataUri;
         if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
-
-            string memory imageData = string(abi.encodePacked(
-            '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">',
-            '<image style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100" height="100" xlink:href="', 
-            imageUri, '"/></svg>'));
-            
-            imageDataUri = string(abi.encodePacked(SVG_URI_PREFIX, Base64.encode(bytes(imageData), bytes(imageData).length)));
+            imageDataUri = getWrappedImage(imageUri);
         }
 
-        string memory json;
+        string memory json = getJsonPreamble(tokenId);
 
+        if(presentation == Presentation.Image || presentation == Presentation.Both) {
+                json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
+        }
+
+        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
+            json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
+        }
+
+        return encodeJson(string(abi.encodePacked(json, getAttributes(meta), '}')));   
+    }
+
+    function getJsonPreamble(uint tokenId) private pure returns (string memory json) {
         json = string(
             abi.encodePacked(
                 '{"description":"', DESCRIPTION,
@@ -420,17 +416,18 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                 '",'
             )
         );
+    }
 
-        if(presentation == Presentation.Image || presentation == Presentation.Both) {
-            json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
-        }
+    function getWrappedImage(string memory imageUri) private pure returns (string memory imageDataUri) {
+        string memory imageData = string(abi.encodePacked(
+            '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">',
+            '<image style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100" height="100" xlink:href="', 
+            imageUri, '"/></svg>'));
+            
+        imageDataUri = string(abi.encodePacked(SVG_URI_PREFIX, Base64.encode(bytes(imageData), bytes(imageData).length)));
+    }
 
-        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
-            json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
-        }
-
-        json = string(abi.encodePacked(json, getAttributes(meta), '}'));
-
+    function encodeJson(string memory json) private pure returns (string memory) {
         return
             string(
                 abi.encodePacked(
@@ -440,12 +437,19 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             );
     }
 
+    address immutable _stop;
+
+    constructor() {
+        _stop = SSTORE2.write(hex"7b2274726169745f74797065223a22437573746f6d222c2276616c7565223a22312f31227d2c7b2274726169745f74797065223a224e616d65222c2276616c7565223a22467265616b792046726f677a227d2c7b2274726169745f74797065223a222320547261697473222c2276616c7565223a327d");
+    }
+
     function getAttributes(uint8[] memory meta)
         private
         view
         returns (string memory attributes)
     {
         attributes = string(abi.encodePacked('"attributes":['));
+        if(meta[0] == 255) return string(abi.encodePacked(attributes, SSTORE2.read(_stop), "]"));
         uint8 numberOfTraits;
         for (uint8 i = 1; i < meta.length; i++) {
             uint8 value = meta[i];            
@@ -576,5 +580,5 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         returns (bool)
     {
         return interfaceId == type(IERC721).interfaceId;
-    }
+    }    
 }
