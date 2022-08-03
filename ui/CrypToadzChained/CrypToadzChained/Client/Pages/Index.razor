@@ -133,6 +133,7 @@
         {
             Metadata = null;
             ImageUri = null;
+            TokenId = null;
 
             var response = await Http.GetAsync($"toadz/random/{TokenSeed}");
             await WithResponse(response, true);
@@ -155,6 +156,7 @@
         {
             Metadata = null;
             ImageUri = null;
+            TokenId = null;
 
             var response = await Http.GetAsync($"toadz/random");
             await WithResponse(response, true);
