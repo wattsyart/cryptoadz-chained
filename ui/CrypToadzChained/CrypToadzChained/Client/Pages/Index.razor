@@ -1,0 +1,138 @@
+﻿@page "/"
+
+@using System.Text
+@using System.Text.Json
+@using CrypToadzChained.Shared
+
+@inject HttpClient Http;
+@inject ILogger<Index> Logger;
+
+<PageTitle>CrypToadzChained</PageTitle>
+
+<label for="tokenId">Token ID:</label>
+<input id="tokenId" type="text" @bind="TokenId"/>
+<button @onclick="OnFetchClicked">Fetch</button>
+<button @onclick="OnRandomClicked">I'm Feeling Lucky</button>
+
+<br />
+<br />
+
+<div>
+    <section>
+        <div class="container">
+            @if (Metadata != null)
+            {
+                <div class="row align-items-start justify-content-around">
+                    <div class="col-md-9 col-lg col-xl-4 sticky-lg-top mb-5 mb-lg-0">
+                        <ul class="list-group">
+                            @foreach (var metadataAttribute in Metadata.Attributes)
+                            {
+                                <li class="list-group-item px-4 py-3 d-flex justify-content-between">
+                                    <h6 class="mb-0">@metadataAttribute.TraitType</h6>
+                                    <div><strong>@metadataAttribute.Value?.ToString()</strong></div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-xl-7 col-lg-8 col-md-9">
+                        <article>
+                            <h2 class="h2">@Metadata.Name</h2>
+                            <p class="mb-5">
+                                <img class="img-fluid border shadow" src="@ImageUri" alt="@Metadata.Name"/>
+                            </p>
+                            <p class="lead text-center">
+                                @Metadata.Description
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            }
+            else if(IsLoading)
+            {
+                <div class="spinner"></div>
+            }
+        </div>
+    </section>
+</div>
+
+@code
+{
+    [Parameter]
+    public string? TokenUri { get; set; }
+
+    [Parameter]
+    public string? TokenId { get; set; }
+
+    [Parameter]
+    public string? ImageUri { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public JsonTokenMetadata? Metadata { get; set; }
+
+    private async Task OnFetchClicked()
+    {
+        if (string.IsNullOrWhiteSpace(TokenId) || !ulong.TryParse(TokenId, out var tokenId))
+            return;
+
+
+        IsLoading = true;
+
+        try
+        {
+            Metadata = null;
+            ImageUri = null;
+
+            var response = await Http.GetAsync($"toadz/tokenURI/{tokenId}");
+            await WithResponse(response);
+        }
+        catch(Exception ex)
+        {
+            Logger.LogError(ex, "Failed to fetch tokenURI");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task OnRandomClicked()
+    {
+        IsLoading = true;
+
+        try
+        {
+            Metadata = null;
+            ImageUri = null;
+
+            var response = await Http.GetAsync($"toadz/random");
+            await WithResponse(response);
+        }
+        catch(Exception ex)
+        {
+            Logger.LogError(ex, "Failed to fetch random tokenURI");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task WithResponse(HttpResponseMessage response)
+    {
+        if (response.IsSuccessStatusCode)
+        {
+            TokenUri = await response.Content.ReadAsStringAsync();
+            if (!string.IsNullOrWhiteSpace(TokenUri))
+            {
+                var data = TokenUri.Replace("data:application/json;base64,", "");
+                var buffer = Convert.FromBase64String(data);
+                var json = Encoding.UTF8.GetString(buffer);
+                Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
+                ImageUri = Metadata?.ImageData ?? Metadata?.Image;
+            }
+        }
+    }
+}

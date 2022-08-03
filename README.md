@@ -33,11 +33,13 @@ npx hardhat toadz-all-images              Validates correctness of all CrypToadz
 npx hardhat toadz-all-metadata            Validates correctness of all CrypToadz token metadata
 npx hardhat toadz-custom-animations       Validates correctness of CrypToadz custom animations
 npx hardhat toadz-custom-images           Validates correctness of CrypToadz custom images
+npx hardhat toadz-deploy-bundle           Produces a JSON file containing unsigned transactions for all deployments at a set price budget
 npx hardhat toadz-gas                     Produces ETH cost breakdown for deployment by component
 npx hardhat toadz-image-deltas            Validates correctness of CrypToadz token images that have deltas
-npx hardhat toadz-random                  Generates a random toadz and saves the metadata and image to disk
 npx hardhat toadz-random-batch            Batch-based random generation for stress testing
-npx hardhat toadz-wrapped                 Validates correctness of a single, wrapped CrypToadz
+npx hardhat toadz-random-image            Generates a random toadz imageURI and saves the image to disk
+npx hardhat toadz-random-token            Generates a random toadz tokenURI and saves the metadata and image to disk
+toadz-wrapped                 Validates correctness of a single, wrapped CrypToadz
 ```
 
 ## Design Notes

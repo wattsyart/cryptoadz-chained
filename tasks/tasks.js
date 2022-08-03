@@ -65,16 +65,28 @@ task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadat
       await checkToadz('./scripts/tokenIds.txt', null, true, false);
     });
 
-task("toadz-random", "Generates a random toadz and saves the metadata and image to disk")
+task("toadz-random-token", "Generates a random toadz tokenURI and saves the metadata and image to disk")
+  .addOptionalParam("seed", "The random seed to use")
+  .setAction(
+    async (taskArgs) => {
+      var toadz = await getToadz();
+      if (!taskArgs.seed) {
+        await utils.random(toadz)
+      } else {
+        await utils.random(toadz, parseInt(taskArgs.seed));
+      }
+    });
+
+task("toadz-random-image", "Generates a random toadz imageURI and saves the image to disk")
   .addOptionalParam("seed", "The random seed to use")
   .setAction(
     async (taskArgs) => {
       var toadz = await getToadz();
 
       if (!taskArgs.seed) {
-        await utils.random(toadz)
+        await utils.randomImage(toadz)
       } else {
-        await utils.random(toadz, parseInt(taskArgs.seed));
+        await utils.randomImage(toadz, parseInt(taskArgs.seed));
       }
     });
 
