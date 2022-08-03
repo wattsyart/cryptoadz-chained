@@ -299,7 +299,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         (imageUri,) = _randomImageURI(seed);
     }
 
-    function _randomTokenURI(uint64 seed) private view returns (string memory) {
+    function _randomTokenURI(uint64 seed) private view returns (string memory) {        
         (string memory imageUri, uint8[] memory meta) = _randomImageURI(seed);        
         string memory json = _getJsonPreamble(seed);
         json = string(
@@ -330,7 +330,13 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         meta[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size
         meta[1] = uint8(PRNG.readLessThan(src, 17, 8));      // Background
         meta[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
-        
+
+        if(meta[0] == 120) {
+            if(meta[2] == 19 || meta[2] == 36 || meta[2] = 44 || meta[2] == 45 || meta[2] == 47 || meta[2] == 50) {
+                meta[0] = 119; // these body types are exclusively short
+            }
+        }
+
         uint8 picked;
         uint8 count;
         uint8 maxCount = 30;
@@ -358,8 +364,12 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             count++;
         }
 
+        if(flags[1] && flags[3]) {
+            flags[1] = false; // clothes cancel heads
+        }
+
         uint8 index = 3;
-        if(flags[0]) {
+        if(flags[0]) {            
             uint8 mouth = uint8(121) + uint8(PRNG.readLessThan(src, 18 + 1, 8));
             if(mouth < 121 || mouth > 139) revert TraitOutOfRange(mouth);
             if(mouth == 139) mouth = 55; // Vampire
@@ -378,8 +388,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             if(eyes == 169) eyes = 252; // Undead
             if(eyes == 170) eyes = 253; // Creep            
             meta[index++] = eyes;
-        } 
-
+        }
         if(flags[3]) {
             uint8 clothes = uint8(246) + uint8(PRNG.readLessThan(src, 3, 8));
             if(clothes < 246 || clothes > 248) revert TraitOutOfRange(clothes);
@@ -391,7 +400,11 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             meta[index++] = accessoryII;
         }
         if(flags[5]) {
-            uint8 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
+            uint8 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));            
+            while((flags[1] || flags[3]) && accessoryI == 245) {                
+                // if we have a head or clothes, don't pick the hoodie
+                accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
+            }
             if(accessoryI < 237 || accessoryI > 245) revert TraitOutOfRange(accessoryI);
             meta[index++] = accessoryI;
         }
@@ -490,7 +503,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                     Base64.encode(bytes(json), bytes(json).length)
                 )
             );
-    }   
+    }
 
     function _getAttributes(uint8[] memory meta)
         private
