@@ -332,7 +332,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         meta[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
 
         if(meta[0] == 120) {
-            if(meta[2] == 19 || meta[2] == 36 || meta[2] = 44 || meta[2] == 45 || meta[2] == 47 || meta[2] == 50) {
+            if(meta[2] == 19 || meta[2] == 36 || meta[2] == 44 || meta[2] == 45 || meta[2] == 47 || meta[2] == 50) {
                 meta[0] = 119; // these body types are exclusively short
             }
         }
