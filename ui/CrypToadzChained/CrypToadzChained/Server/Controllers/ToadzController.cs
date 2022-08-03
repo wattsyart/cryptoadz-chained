@@ -58,8 +58,22 @@ namespace CrypToadzChained.Server.Controllers
         {
             var web3 = new Web3(_options.Value.Url);
             var contract = web3.Eth.ERC721.GetContractService(_options.Value.ContractAddress);
-            var function = new FromSeedFunction {Seed = (ulong) new Random().NextInt64()};
-            var tokenUri = await contract.ContractHandler.QueryAsync<FromSeedFunction, string>(function);
+            var function = new RandomTokenURIFromSeed {Seed = (ulong) new Random().NextInt64()};
+            var tokenUri = await contract.ContractHandler.QueryAsync<RandomTokenURIFromSeed, string>(function);
+            return tokenUri;
+        }
+
+        [HttpGet("random/{seed}")]
+        public async Task<string> GetRandomTokenURIFromSeed(string seed)
+        {
+            if (!ulong.TryParse(seed, out var realSeed))
+            {
+                realSeed = (ulong) new Random().NextInt64();
+            }
+            var web3 = new Web3(_options.Value.Url);
+            var contract = web3.Eth.ERC721.GetContractService(_options.Value.ContractAddress);
+            var function = new RandomTokenURIFromSeed { Seed = realSeed };
+            var tokenUri = await contract.ContractHandler.QueryAsync<RandomTokenURIFromSeed, string>(function);
             return tokenUri;
         }
 
@@ -75,8 +89,8 @@ namespace CrypToadzChained.Server.Controllers
             public BigInteger Presentation { get; set; }
         }
 
-        [Function("fromSeed", "string")]
-        public sealed class FromSeedFunction : FunctionMessage
+        [Function("randomTokenURIFromSeed", "string")]
+        public sealed class RandomTokenURIFromSeed : FunctionMessage
         {
             [Parameter("uint64", "seed", 1)]
             public BigInteger Seed { get; set; }

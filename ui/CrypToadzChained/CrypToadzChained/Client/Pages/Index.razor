@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/{TokenSeed?}"
 
 @using System.Text
 @using System.Text.Json
@@ -6,13 +6,24 @@
 
 @inject HttpClient Http;
 @inject ILogger<Index> Logger;
+@inject NavigationManager Nav;
 
 <PageTitle>CrypToadzChained</PageTitle>
 
-<label for="tokenId">Token ID:</label>
-<input id="tokenId" type="text" @bind="TokenId"/>
-<button @onclick="OnFetchClicked">Fetch</button>
-<button @onclick="OnRandomClicked">I'm Feeling Lucky</button>
+<div class="container">
+    <label for="tokenId">Token ID:</label>
+    <input id="tokenId" type="text" @bind="TokenId"/>
+    <button @onclick="OnFetchClicked">Fetch</button>
+</div>
+
+<br />
+
+<div class="container">
+    <label for="tokenSeed">Token Seed:</label>
+    <input id="tokenSeed" type="text" @bind="TokenSeed"/>
+    <button @onclick="OnRandomClicked">Generate</button>
+    <button @onclick="OnLuckyClicked">I'm Feeling Lucky</button>
+</div>
 
 <br />
 <br />
@@ -46,6 +57,10 @@
                         </article>
                     </div>
                 </div>
+                @if (!string.IsNullOrWhiteSpace(TokenSeed))
+                {
+                    <a href="/@TokenSeed" target="_blank">Share This Random Toad</a>
+                }
             }
             else if(IsLoading)
             {
@@ -64,6 +79,9 @@
     public string? TokenId { get; set; }
 
     [Parameter]
+    public string? TokenSeed { get; set; }
+
+    [Parameter]
     public string? ImageUri { get; set; }
 
     [Parameter]
@@ -71,6 +89,14 @@
 
     [Parameter]
     public JsonTokenMetadata? Metadata { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(TokenSeed))
+        {
+            await OnRandomClicked();
+        }
+    }
 
     private async Task OnFetchClicked()
     {
@@ -82,11 +108,12 @@
 
         try
         {
+            TokenSeed = null;
             Metadata = null;
             ImageUri = null;
 
             var response = await Http.GetAsync($"toadz/tokenURI/{tokenId}");
-            await WithResponse(response);
+            await WithResponse(response, false);
         }
         catch(Exception ex)
         {
@@ -107,8 +134,8 @@
             Metadata = null;
             ImageUri = null;
 
-            var response = await Http.GetAsync($"toadz/random");
-            await WithResponse(response);
+            var response = await Http.GetAsync($"toadz/random/{TokenSeed}");
+            await WithResponse(response, true);
         }
         catch(Exception ex)
         {
@@ -120,7 +147,29 @@
         }
     }
 
-    private async Task WithResponse(HttpResponseMessage response)
+    private async Task OnLuckyClicked()
+    {
+        IsLoading = true;
+
+        try
+        {
+            Metadata = null;
+            ImageUri = null;
+
+            var response = await Http.GetAsync($"toadz/random");
+            await WithResponse(response, true);
+        }
+        catch(Exception ex)
+        {
+            Logger.LogError(ex, "Failed to fetch random tokenURI");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task WithResponse(HttpResponseMessage response, bool random)
     {
         if (response.IsSuccessStatusCode)
         {
@@ -132,6 +181,13 @@
                 var json = Encoding.UTF8.GetString(buffer);
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
                 ImageUri = Metadata?.ImageData ?? Metadata?.Image;
+
+                if (random)
+                {
+                    TokenSeed = Metadata?.Name?.Replace("CrypToadz #", "");
+                }
+
+                Nav.NavigateTo(TokenSeed ?? "/");
             }
         }
     }
