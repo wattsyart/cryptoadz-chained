@@ -345,13 +345,13 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             if(!flags[0] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[0] = true;
                 picked++;
-            } else if(!flags[1] && (PRNG.readBool(src) || count > maxCount)) {
+            } else if(!flags[3] && !flags[1] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[1] = true;
                 picked++;
             } else if(!flags[2] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[2] = true;
                 picked++;
-            } else if(!flags[3] && (PRNG.readBool(src) || count > maxCount)) {
+            } else if(!flags[1] && !flags[3] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[3] = true;
                 picked++;
             } else if(!flags[4] && (PRNG.readBool(src) || count > maxCount)) {
@@ -363,11 +363,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             }
             count++;
         }
-
-        if(flags[1] && flags[3]) {
-            flags[1] = false; // clothes cancel heads
-        }
-
+        
         uint8 index = 3;
         if(flags[0]) {            
             uint8 mouth = uint8(121) + uint8(PRNG.readLessThan(src, 18 + 1, 8));
