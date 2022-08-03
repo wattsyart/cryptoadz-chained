@@ -299,8 +299,74 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         (imageUri,) = _randomImageURI(seed);
     }
 
+    /**
+    @notice Retrieves a specific token URI built from raw metadata. This generates a user-defined CrypToadz, not officially part of the collection.
+    @dev The data passed here is not validated, so can result in illogical Toadz, or rendering errors, if the format is not valid.
+    @dev The following serves as a guideline for forming the input metadata buffer:
+         - The array must be between 2 and 7 elements in length
+         - The first byte must be `119` (Short) or `120` (Tall)
+         - The second byte must be between 0 and 16, and defines the Background         
+         - The third byte must be between 17 and 50, and defines the Body
+         - The next (up to 5) bytes must define traits in this order: 
+           Mouth: between 121 and 139
+           Head: between 51 and  104
+           Eyes: between 139 and 170
+           Clothes: between 246 and clothes 248
+           Accessory II: between 104 and 111
+           Accessory I: between 237 and 245
+         - Trait values can be determined by checking comments in `CrypToadzStrings.sol`
+         - The last byte defines the number of traits, based on this look-up table:
+           | # Traits | Value |
+           | -------- | ----- |
+           |        2 |   114 |
+           |        3 |   116 |
+           |        4 |   112 |
+           |        5 |   113 |
+           |        6 |   115 |
+           |        7 |   118 |
+    */
+    function buildTokenURI(uint8[] memory meta)  external view returns (string memory) {
+        string memory imageUri = IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
+        uint64 metaHash = uint64(uint(keccak256(abi.encodePacked(meta))));
+        return _tokenURIFromMetadata(metaHash, imageUri, meta);
+    }
+
+    /**
+    @notice Retrieves a specific image URI built from raw metadata. This generates a user-defined CrypToadz image, not officially part of the collection.
+    @dev The data passed here is not validated, so can result in illogical Toadz, or rendering errors, if the format is not valid.
+    @dev The following serves as a guideline for forming the input metadata buffer:
+         - The array must be between 2 and 7 elements in length
+         - The first byte must be `119` (Short) or `120` (Tall)
+         - The second byte must be between 0 and 16, and defines the Background         
+         - The third byte must be between 17 and 50, and defines the Body
+         - The next (up to 5) bytes must define traits in this order: 
+           Mouth: between 121 and 139
+           Head: between 51 and  104
+           Eyes: between 139 and 170
+           Clothes: between 246 and clothes 248
+           Accessory II: between 104 and 111
+           Accessory I: between 237 and 245
+         - Trait values can be determined by checking comments in `CrypToadzStrings.sol`
+         - The last byte defines the number of traits, based on this look-up table:
+           | # Traits | Value |
+           | -------- | ----- |
+           |        2 |   114 |
+           |        3 |   116 |
+           |        4 |   112 |
+           |        5 |   113 |
+           |        6 |   115 |
+           |        7 |   118 |
+    */
+    function buildImageURI(uint8[] memory meta)  external view returns (string memory) {
+        return IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
+    }
+
     function _randomTokenURI(uint64 seed) private view returns (string memory) {        
         (string memory imageUri, uint8[] memory meta) = _randomImageURI(seed);        
+        return _tokenURIFromMetadata(seed, imageUri, meta);
+    }
+
+    function _tokenURIFromMetadata(uint64 seed, string memory imageUri, uint8[] memory meta) private view returns (string memory) {
         string memory json = _getJsonPreamble(seed);
         json = string(
             abi.encodePacked(
