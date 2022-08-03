@@ -1,6 +1,10 @@
 # CrypToadzChained
 The same CrypToadz you know and love, preserved on-chain.
 
+## Where To Find It?
+
+The contracts are currently [live on Rinkeby](https://rinkeby.etherscan.io/address/0x1546bed87a61B98199326D6742478a2b1f8b55fA#code) and you can use the [Viewer App](https://cryptoadzchained.azurewebsites.net) to play with it. The code for the viewer is [in this repository](https://github.com/wattsyart/cryptoadz-chained/tree/main/ui).
+
 ## Setting Up
 
 Due to complexity, hardhat on its own cannot deploy the project without a private geth client deployed to Docker.
