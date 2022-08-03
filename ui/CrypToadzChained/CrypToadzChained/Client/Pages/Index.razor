@@ -49,7 +49,16 @@
                         <article>
                             <h2 class="h2">@Metadata.Name</h2>
                             <p class="mb-5">
-                                <img class="img-fluid border shadow" src="@ImageUri" alt="@Metadata.Name"/>
+                                @if (!string.IsNullOrWhiteSpace(ImageDataUri))
+                                {
+                                    var data = ImageDataUri.Replace("data:image/svg+xml;base64,", "");
+                                    var svg = Encoding.UTF8.GetString(Convert.FromBase64String(data));
+                                    @((MarkupString)svg)
+                                }
+                                else
+                                {
+                                    <img class="img-fluid border shadow" src="@ImageUri" alt="@Metadata.Name"/>
+                                }
                             </p>
                             <p class="lead text-center">
                                 @Metadata.Description
@@ -83,6 +92,9 @@
 
     [Parameter]
     public string? ImageUri { get; set; }
+
+    [Parameter]
+    public string? ImageDataUri { get; set; }
 
     [Parameter]
     public bool IsLoading { get; set; }
@@ -133,6 +145,7 @@
         {
             Metadata = null;
             ImageUri = null;
+            ImageDataUri = null;
             TokenId = null;
 
             var response = await Http.GetAsync($"toadz/random/{TokenSeed}");
@@ -156,6 +169,7 @@
         {
             Metadata = null;
             ImageUri = null;
+            ImageDataUri = null;
             TokenId = null;
 
             var response = await Http.GetAsync($"toadz/random");
@@ -182,7 +196,8 @@
                 var buffer = Convert.FromBase64String(data);
                 var json = Encoding.UTF8.GetString(buffer);
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-                ImageUri = Metadata?.ImageData ?? Metadata?.Image;
+                ImageUri = Metadata?.Image;
+                ImageDataUri = Metadata?.ImageData;
 
                 if (random)
                 {
