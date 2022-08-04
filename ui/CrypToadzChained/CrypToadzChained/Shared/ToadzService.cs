@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Microsoft.Extensions.Logging;
+using Nethereum.ABI.FunctionEncoding;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using Nethereum.Contracts.Standards.ERC721.ContractDefinition;
@@ -22,6 +23,11 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
+                if (ex is SmartContractRevertException revert)
+                {
+                    return revert.RevertMessage;
+                }
+
                 switch (ex.Message)
                 {
                     case "out of gas: eth_call":
