@@ -11,19 +11,31 @@
 <PageTitle>CrypToadzChained</PageTitle>
 
 <div class="container">
-    <label for="tokenId">Token ID:</label>
-    <input id="tokenId" type="text" @bind="TokenId"/>
-    <button @onclick="OnFetchClicked">Fetch</button>
+    
+    <div class="form-group">
+        <label for="url">Web3 URL:</label>
+        <input id="url" type="text" class="form-control" @bind="Url" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+    </div>
+    
+    <br/>
+
+    <div class="form-group">
+        <label for="tokenId">Token ID:</label>
+        <input id="tokenId" type="text" class="form-control" @bind="TokenId" placeholder="Enter the Token ID of a real CrypToadz NFT"/>
+        <button class="btn btn-secondary" @onclick="OnFetchClicked">Fetch</button>
+    </div>
+
+    <br/>
+
+    <div class="form-group">
+        <label for="tokenSeed">Token Seed:</label>
+        <input id="tokenSeed" type="text" class="form-control" @bind="TokenSeed" placeholder="Enter a random seed for a random, unofficial CrypToadz NFT"/>
+        <button class="btn btn-secondary" @onclick="OnRandomClicked">Generate</button>
+        <button class="btn btn-secondary" @onclick="OnLuckyClicked">I'm Feeling Lucky</button>
+    </div>
+
 </div>
 
-<br />
-
-<div class="container">
-    <label for="tokenSeed">Token Seed:</label>
-    <input id="tokenSeed" type="text" @bind="TokenSeed"/>
-    <button @onclick="OnRandomClicked">Generate</button>
-    <button @onclick="OnLuckyClicked">I'm Feeling Lucky</button>
-</div>
 
 <br />
 <br />
@@ -93,6 +105,9 @@
 @code
 {
     [Parameter]
+    public string? Url { get; set; }
+
+    [Parameter]
     public string? TokenUri { get; set; }
 
     [Parameter]
@@ -126,7 +141,7 @@
 
     private async Task OnFetchClicked()
     {
-        if (string.IsNullOrWhiteSpace(TokenId) || !ulong.TryParse(TokenId, out var tokenId))
+        if (string.IsNullOrWhiteSpace(TokenId) || !uint.TryParse(TokenId, out var tokenId))
             return;
 
 
@@ -140,8 +155,17 @@
             ImageDataUri = null;
             Error = null;
 
-            var response = await Http.GetAsync($"toadz/tokenURI/{tokenId}");
-            await WithResponse(response, false);
+            if (!string.IsNullOrWhiteSpace(Url))
+            {
+                var service = new ToadzService();
+                var body = await service.GetCanonicalTokenURIAsync(tokenId, Url, "0x1546bed87a61B98199326D6742478a2b1f8b55fA", Logger);
+                WithBody(body, false);
+            }
+            else
+            {
+                var response = await Http.GetAsync($"toadz/tokenURI/{tokenId}");
+                await WithResponse(response, false);
+            }
         }
         catch(Exception ex)
         {
@@ -155,18 +179,32 @@
 
     private async Task OnRandomClicked()
     {
+        if (string.IsNullOrWhiteSpace(TokenSeed))
+        {
+            await OnLuckyClicked();
+            return;
+        }
+
         IsLoading = true;
 
         try
         {
-            TokenSeed = null;
             Metadata = null;
             ImageUri = null;
             ImageDataUri = null;
             Error = null;
 
-            var response = await Http.GetAsync($"toadz/random/{TokenSeed}");
-            await WithResponse(response, true);
+            if (!string.IsNullOrWhiteSpace(Url))
+            {
+                var service = new ToadzService();
+                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Url, "0x1546bed87a61B98199326D6742478a2b1f8b55fA");
+                WithBody(body, true);
+            }
+            else
+            {
+                var response = await Http.GetAsync($"toadz/random/{TokenSeed}");
+                await WithResponse(response, true);
+            }
         }
         catch(Exception ex)
         {
@@ -184,13 +222,23 @@
 
         try
         {
+            TokenSeed = null;
             Metadata = null;
             ImageUri = null;
             ImageDataUri = null;
             TokenId = null;
 
-            var response = await Http.GetAsync($"toadz/random");
-            await WithResponse(response, true);
+            if (!string.IsNullOrWhiteSpace(Url))
+            {
+                var service = new ToadzService();
+                var body = await service.GetRandomTokenURIAsync(Url, "0x1546bed87a61B98199326D6742478a2b1f8b55fA");
+                WithBody(body, true);
+            }
+            else
+            {
+                var response = await Http.GetAsync($"toadz/random");
+                await WithResponse(response, true);
+            }
         }
         catch(Exception ex)
         {
@@ -206,37 +254,42 @@
     {
         if (response.IsSuccessStatusCode)
         {
-            TokenUri = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("TokenURI = " + TokenUri);
+            var body = await response.Content.ReadAsStringAsync();
 
-            if (!TokenUri.StartsWith("data:application/json;base64,"))
-            {
-                Error = TokenUri;
-                TokenUri = null;                
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(TokenUri))
-                {
-                    var data = TokenUri.Replace("data:application/json;base64,", "");
-                    var buffer = Convert.FromBase64String(data);
-                    var json = Encoding.UTF8.GetString(buffer);
-                    Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-                    ImageUri = Metadata?.Image;
-                    ImageDataUri = Metadata?.ImageData;
-
-                    if (random)
-                    {
-                        TokenSeed = Metadata?.Name?.Replace("CrypToadz #", "");
-                    }
-
-                    Nav.NavigateTo(TokenSeed ?? "/");
-                }
-            }
+            WithBody(body, random);
         }
         else
         {
             Error = $"{response.StatusCode}: {response.ReasonPhrase}";
+        }
+    }
+
+    private void WithBody(string body, bool random)
+    {
+        TokenUri = body;
+        if (!TokenUri.StartsWith("data:application/json;base64,"))
+        {
+            Error = TokenUri;
+            TokenUri = null;
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(TokenUri))
+            {
+                var data = TokenUri.Replace("data:application/json;base64,", "");
+                var buffer = Convert.FromBase64String(data);
+                var json = Encoding.UTF8.GetString(buffer);
+                Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
+                ImageUri = Metadata?.Image;
+                ImageDataUri = Metadata?.ImageData;
+
+                if (random)
+                {
+                    TokenSeed = Metadata?.Name?.Replace("CrypToadz #", "");
+                }
+
+                Nav.NavigateTo(TokenSeed ?? "/");
+            }
         }
     }
 }

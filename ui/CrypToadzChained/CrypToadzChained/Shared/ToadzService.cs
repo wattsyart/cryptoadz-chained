@@ -10,7 +10,7 @@ namespace CrypToadzChained.Shared
 {
     public sealed class ToadzService
     {
-        public async Task<string> GetCanonicalTokenURI(uint tokenId, string url, string contractAddress, ILogger logger)
+        public async Task<string> GetCanonicalTokenURIAsync(uint tokenId, string url, string contractAddress, ILogger logger)
         {
             var web3 = new Web3(url);
             var contract = web3.Eth.ERC721.GetContractService(contractAddress);
@@ -45,7 +45,7 @@ namespace CrypToadzChained.Shared
             }
         }
 
-        public async Task<string> GetRandomTokenURI(string url, string contractAddress)
+        public async Task<string> GetRandomTokenURIAsync(string url, string contractAddress)
         {
             var web3 = new Web3(url);
             var contract = web3.Eth.ERC721.GetContractService(contractAddress);
@@ -54,7 +54,7 @@ namespace CrypToadzChained.Shared
             return tokenUri;
         }
 
-        public async Task<string> GetRandomTokenURIFromSeed(string seed, string url, string contractAddress)
+        public async Task<string> GetRandomTokenURIFromSeedAsync(string seed, string url, string contractAddress)
         {
             if (!ulong.TryParse(seed, out var realSeed))
                 realSeed = (ulong)new Random().NextInt64();

@@ -23,19 +23,19 @@ namespace CrypToadzChained.Server.Controllers
         [HttpGet("tokenURI/{tokenId}")]
         public async Task<string> GetCanonicalTokenUri(uint tokenId)
         {
-            return await _service.GetCanonicalTokenURI(tokenId, _options.Value.Url, _options.Value.ContractAddress, _logger);
+            return await _service.GetCanonicalTokenURIAsync(tokenId, _options.Value.Url, _options.Value.ContractAddress, _logger);
         }
 
         [HttpGet("random")]
         public async Task<string> GetRandomTokenURI()
         {
-            return await _service.GetRandomTokenURI(_options.Value.Url, _options.Value.ContractAddress);
+            return await _service.GetRandomTokenURIAsync(_options.Value.Url, _options.Value.ContractAddress);
         }
 
         [HttpGet("random/{seed}")]
         public async Task<string> GetRandomTokenURIFromSeed(string seed)
         {
-            return await _service.GetRandomTokenURIFromSeed(seed, _options.Value.Url, _options.Value.ContractAddress);
+            return await _service.GetRandomTokenURIFromSeedAsync(seed, _options.Value.Url, _options.Value.ContractAddress);
         }
     }
 }
