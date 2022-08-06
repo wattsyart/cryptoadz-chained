@@ -463,10 +463,17 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         }
         if(flags[5]) {
             uint8 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));            
-            while((flags[1] || flags[3]) && accessoryI == 245) {                
-                // if we have a head or clothes, don't pick the hoodie
+
+            // if we have a head or clothes, don't pick the hoodie
+            while((flags[1] || flags[3]) && accessoryI == 245) {                                
                 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
             }
+
+            // if we have a head, don't pick drive-thru
+            while(flags[1] && accessoryI == 241) {                                
+                accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
+            }
+
             if(accessoryI < 237 || accessoryI > 245) revert TraitOutOfRange(accessoryI);
             meta[index++] = accessoryI;
         }
