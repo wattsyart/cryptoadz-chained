@@ -588,11 +588,12 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             string memory traitName = getTraitName(value);
             
             string memory label = strings.getString(
-                // Undead
+                // Vampire
                 value == 249 ? 55 : 
                 value == 250 ? 55 : 
-                // Creep
+                // Undead
                 value == 252 ? 37 : 
+                // Creep
                 value == 253 ? 20 : value);
 
             (string memory a, uint8 t) = _appendTrait(
