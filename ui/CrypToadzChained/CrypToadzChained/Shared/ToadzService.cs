@@ -4,6 +4,7 @@ using Nethereum.ABI.FunctionEncoding;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using Nethereum.Contracts.Standards.ERC721.ContractDefinition;
+using Nethereum.JsonRpc.Client;
 using Nethereum.Web3;
 
 namespace CrypToadzChained.Shared
@@ -17,31 +18,25 @@ namespace CrypToadzChained.Shared
 
             try
             {
-                var function = new TokenURIWithPresentationFunction { TokenId = tokenId, Presentation = 2 };
-                var tokenUri = await contract.ContractHandler.QueryAsync<TokenURIWithPresentationFunction, string>(function);
+                var function = new TokenURIFunction { TokenId = tokenId };
+                var tokenUri = await contract.ContractHandler.QueryAsync<TokenURIFunction, string>(function);
                 return tokenUri;
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Failed to fetch canonical token ID");
+
                 if (ex is SmartContractRevertException revert)
                 {
                     return revert.RevertMessage;
                 }
 
-                switch (ex.Message)
+                if (ex is RpcResponseException rpc)
                 {
-                    case "out of gas: eth_call":
-                    {
-                        var function = new TokenURIFunction { TokenId = tokenId };
-                        var tokenUri = await contract.ContractHandler.QueryAsync<TokenURIFunction, string>(function);
-                        return tokenUri;
-                    }
-                    default:
-                    {
-                        logger.LogError(ex, "Failed to fetch canonical token ID");
-                        throw;
-                    }
+                    return rpc.RpcError.Message;
                 }
+
+                throw;
             }
         }
 
@@ -66,16 +61,6 @@ namespace CrypToadzChained.Shared
         }
 
         #region Functions
-
-        [Function("tokenURIWithPresentation", "string")]
-        public sealed class TokenURIWithPresentationFunction : FunctionMessage
-        {
-            [Parameter("uint256", "tokenId", 1)]
-            public BigInteger TokenId { get; set; }
-
-            [Parameter("uint8", "presentation", 2)]
-            public BigInteger Presentation { get; set; }
-        }
 
         [Function("randomTokenURIFromSeed", "string")]
         public sealed class RandomTokenURIFromSeed : FunctionMessage
