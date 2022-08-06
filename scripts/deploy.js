@@ -2,15 +2,16 @@ const fs = require('fs');
 const { LedgerSigner } = require("@ethersproject/hardware-wallets");
 
 module.exports = {
-  deployContracts: deployContracts
+  deployContracts: deployContracts,
+  deployRandomContracts: deployRandomContracts
 }
 
 var signer;
 
 // https://docs.ethers.io/v5/api/contract/contract-factory/
 async function deployContract(manifest, ethers, contractName, quiet, trace, txOptions, hid) {
-  
-  if(hid && !signer) {
+
+  if (hid && !signer) {
     signer = new LedgerSigner(ethers.provider, "hid", hid);
     // see: https://github.com/ethers-io/ethers.js/issues/2078    
     txOptions.type = 1;
@@ -18,12 +19,12 @@ async function deployContract(manifest, ethers, contractName, quiet, trace, txOp
     delete txOptions["maxFeePerGas"];
     delete txOptions["maxPriorityFeePerGas"];
     txOptions.gasPrice = maxFeePerGas;
-  } else if(!signer) {
+  } else if (!signer) {
     [owner] = await ethers.getSigners();
     signer = owner;
   }
 
-  if(manifest[contractName] && !trace) {
+  if (manifest[contractName] && !trace) {
     var factory = await ethers.getContractFactory(contractName);
     var output = factory.attach(manifest[contractName]);
     output = output.connect(signer);
@@ -33,7 +34,7 @@ async function deployContract(manifest, ethers, contractName, quiet, trace, txOp
 
   console.log("Account Address:", (await signer.getAddress()).toString());
   console.log("Account Balance:", (await signer.getBalance()).toString());
-  
+
   const contract = await (await ethers.getContractFactory(contractName)).connect(signer);
   if (trace) {
     // https://docs.ethers.io/v5/api/utils/transactions/#UnsignedTransaction
@@ -334,7 +335,7 @@ async function deployContracts(ethers, quiet, trace, txOptions, hw) {
 
     await output["CrypToadzBuilderAny"].setAddresses(
       output["CrypToadzBuilderAnyA"].address,
-      output["CrypToadzBuilderAnyB"].address, 
+      output["CrypToadzBuilderAnyB"].address,
       txOptions
     );
     if (!quiet) console.log("CrypToadzBuilderAny linked with dependencies");
@@ -636,4 +637,51 @@ async function deployContracts(ethers, quiet, trace, txOptions, hw) {
   }
 
   return output;
+}
+
+async function deployRandomContracts(ethers, quiet, trace, txOptions, hw) {
+  if (!txOptions) txOptions = {};
+
+  var output = {};
+  var manifest = {};
+
+  output["CrypToadzChained"] = await deployContract(manifest, ethers, "CrypToadzChained", quiet, trace, txOptions, hw);
+
+  output["GIFEncoder"] = await deployContract(manifest, ethers, "GIFEncoder", quiet, trace, txOptions, hw);
+  output["PixelRenderer"] = await deployContract(manifest, ethers, "PixelRenderer", quiet, trace, txOptions, hw);
+
+  output["CrypToadzStrings"] = await deployContract(manifest, ethers, "CrypToadzStrings", quiet, trace, txOptions, hw);
+  output["CrypToadzMetadata"] = await deployContract(manifest, ethers, "CrypToadzMetadata", quiet, trace, txOptions, hw);
+  
+  output["CrypToadzBuilder"] = await deployContract(manifest, ethers, "CrypToadzBuilder", quiet, trace, txOptions, hw);
+  output["CrypToadzBuilderAny"] = await deployContract(manifest, ethers, "CrypToadzBuilderAny", quiet, trace, txOptions, hw);
+  output["CrypToadzBuilderAnyA"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyA", quiet, trace, txOptions, hw);
+  output["CrypToadzBuilderAnyB"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyB", quiet, trace, txOptions, hw);
+  output["CrypToadzBuilderShort"] = await deployContract(manifest, ethers, "CrypToadzBuilderShort", quiet, trace, txOptions, hw);  
+  output["CrypToadzBuilderTall"] = await deployContract(manifest, ethers, "CrypToadzBuilderTall", quiet, trace, txOptions, hw);
+
+  //
+  // Post-Deployment: Link all dependencies
+  //
+  if (!trace) {
+    await output["CrypToadzChained"].setEncoder(output["GIFEncoder"].address, txOptions);
+    await output["CrypToadzBuilder"].setRenderer(output["PixelRenderer"].address, txOptions);
+
+    await output["CrypToadzBuilderAny"].setAddresses(
+      output["CrypToadzBuilderAnyA"].address,
+      output["CrypToadzBuilderAnyB"].address,
+      txOptions
+    );
+    if (!quiet) console.log("CrypToadzBuilderAny linked with dependencies");
+
+    await output["CrypToadzBuilder"].setAny(output["CrypToadzBuilderAny"].address, txOptions);
+    await output["CrypToadzBuilder"].setTall(output["CrypToadzBuilderTall"].address, txOptions);
+    await output["CrypToadzBuilder"].setShort(output["CrypToadzBuilderShort"].address, txOptions);
+    await output["CrypToadzChained"].setStrings(output["CrypToadzStrings"].address, txOptions);
+    await output["CrypToadzChained"].setMetadata(output["CrypToadzMetadata"].address, txOptions);
+    await output["CrypToadzChained"].setBuilder(output["CrypToadzBuilder"].address, txOptions);
+    if (!quiet) console.log("CrypToadzChained linked with dependencies");
+
+    return output;
+  }
 }
