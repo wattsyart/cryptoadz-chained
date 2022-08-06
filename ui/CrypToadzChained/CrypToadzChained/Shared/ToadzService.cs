@@ -87,7 +87,57 @@ namespace CrypToadzChained.Shared
             return tokenUri;
         }
 
-        private static byte[] ConvertToadToMeta(Toad toad)
+        public static Toad ConvertMetadataToToad(JsonTokenMetadata metadata)
+        {
+            var toad = new Toad();
+
+            TrySetEnumValueMatch<Size>(toad, metadata);
+            TrySetEnumValueMatch<Background>(toad, metadata);
+            TrySetEnumValueMatch<Body>(toad, metadata);
+            TrySetEnumValueMatch<Mouth>(toad, metadata);
+            TrySetEnumValueMatch<Head>(toad, metadata);
+            TrySetEnumValueMatch<Eyes>(toad, metadata);
+            TrySetEnumValueMatch<Clothes>(toad, metadata);
+            TrySetEnumValueMatch<AccessoryIi>(toad, metadata);
+            TrySetEnumValueMatch<AccessoryI>(toad, metadata);
+
+            return toad;
+        }
+
+        private static void TrySetEnumValueMatch<T>(Toad toad, JsonTokenMetadata metadata) where T : Enum
+        {
+            var propertyName = typeof(T).Name;
+
+            var traitType = propertyName switch
+            {
+                nameof(Toad.AccessoryI) => "Accessory I",
+                nameof(Toad.AccessoryIi) => "Accessory II",
+                _ => propertyName
+            };
+
+            var traitValue = metadata.Attributes.SingleOrDefault(x => x.TraitType == traitType)?.Value?.ToString()
+                ?.Replace(" ", "")
+                 .Replace("-", "")
+                ;
+
+            Console.WriteLine($"{propertyName} = {traitValue}");
+
+            foreach (var value in Enum.GetValues(typeof(T)))
+            {
+                if (traitValue == Enum.GetName(typeof(T), value))
+                {
+                    var property = typeof(Toad).GetProperty(propertyName);
+                    if (property != null)
+                    {
+                        property.SetValue(toad, value);
+                        Console.WriteLine($"set {property.Name} to {value}");
+                    }
+                }
+            }
+        }
+
+
+        public static byte[] ConvertToadToMeta(Toad toad)
         {
             var buffer = new List<byte>
             {

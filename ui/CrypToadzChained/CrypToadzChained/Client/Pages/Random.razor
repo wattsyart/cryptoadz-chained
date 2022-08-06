@@ -2,7 +2,7 @@
 
 @using System.Text
 @using System.Text.Json
-@using CrypToadzChained.Shared
+@using CrypToadzChained.Shared;
 
 @inject HttpClient Http;
 @inject ILogger<Index> Logger;
@@ -54,6 +54,10 @@
                                         <div><strong>@metadataAttribute.Value?.ToString()</strong></div>
                                     </li>
                                 }
+                                
+                                <li class="list-group-item px-4 py-3 d-flex justify-content-between">
+                                    <button class="btn btn-dark" @onclick="OnEditInBuilderClicked">Edit in Builder</button>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-xl-7 col-lg-8 col-md-9">
@@ -226,5 +230,18 @@
             if(!string.IsNullOrWhiteSpace(TokenSeed))
                 Nav.NavigateTo($"random/{TokenSeed ?? "/"}");
         }
+    }
+
+    private Task OnEditInBuilderClicked()
+    {
+        if (Metadata == null)
+            return Task.CompletedTask;
+            
+        var toad = ToadzService.ConvertMetadataToToad(Metadata);
+        var meta = ToadzService.ConvertToadToMeta(toad);
+        var seed = Convert.ToBase64String(meta);
+
+        Nav.NavigateTo($"/builder/{seed}");
+        return Task.CompletedTask;
     }
 }
