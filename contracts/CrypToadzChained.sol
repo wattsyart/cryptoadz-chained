@@ -373,7 +373,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                 json,
                 '"image":"', imageUri, '",',
                 '"image_data":"', _getWrappedImage(imageUri), '",',
-                _getAttributes(meta),
+                _getAttributes(meta, true),
                 "}"
             )
         );
@@ -384,6 +384,11 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         meta = _randomMeta(seed);
         imageUri = IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
         return (imageUri, meta);
+    }
+
+    struct Toad {
+        uint8 head;
+        uint8 accessoryI;
     }
 
     function _randomMeta(uint64 seed) private pure returns (uint8[] memory meta) {
@@ -398,8 +403,13 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         meta[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
 
         if(meta[0] == 120) {
-            if(meta[2] == 19 || meta[2] == 36 || meta[2] == 44 || meta[2] == 45 || meta[2] == 47 || meta[2] == 50) {
-                meta[0] = 119; // these body types are exclusively short
+            if(meta[2] == 19 || // Sleepy
+               meta[2] == 36 || // Gargoyle
+               meta[2] == 44 || // Blood Bones
+               meta[2] == 45 || // Pox
+               meta[2] == 47 || // Ghost
+               meta[2] == 50) { // Big Ghost
+               meta[0] = 119; // these body types are exclusively short
             }
         }
 
@@ -429,6 +439,8 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             }
             count++;
         }
+
+        Toad memory toad;
         
         uint8 index = 3;
         if(flags[0]) {            
@@ -438,10 +450,10 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             meta[index++] = mouth;
         }
         if(flags[1]) {
-            uint8 head = uint8(51) + uint8(PRNG.readLessThan(src, 53 + 1, 8));
-            if(head < 51 || head > 104) revert TraitOutOfRange(head);
-            if(head == 104) head = 249; // Vampire
-            meta[index++] = head;
+            toad.head = uint8(51) + uint8(PRNG.readLessThan(src, 53 + 1, 8));
+            if(toad.head < 51 || toad.head > 104) revert TraitOutOfRange(toad.head);
+            if(toad.head == 104) toad.head = 249; // Vampire
+            meta[index++] = toad.head;
         }
         if(flags[2]) {            
             uint8 eyes = uint8(138) + uint8(PRNG.readLessThan(src, 30 + 3, 8));
@@ -461,21 +473,73 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             if(accessoryII < 104 || accessoryII > 111) revert TraitOutOfRange(accessoryII);
             meta[index++] = accessoryII;
         }
+
         if(flags[5]) {
-            uint8 accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));            
+            _rollAccessoryI(src, toad);
 
             // if we have a head or clothes, don't pick the hoodie
-            while((flags[1] || flags[3]) && accessoryI == 245) {                                
-                accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
+            while((flags[1] || flags[3]) && toad.accessoryI == 245) {                                
+                _rollAccessoryI(src, toad);
             }
 
             // if we have a head, don't pick drive-thru
-            while(flags[1] && accessoryI == 241) {                                
-                accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
+            while(flags[1] && toad.accessoryI == 241) {                                
+                _rollAccessoryI(src, toad);
             }
 
-            if(accessoryI < 237 || accessoryI > 245) revert TraitOutOfRange(accessoryI);
-            meta[index++] = accessoryI;
+            // if we are short with any of these heads, don't pick explorer
+            if(flags[1] && toad.accessoryI == 238) {
+               if(meta[0] == 119) {
+                if(toad.head == 65 ||   // Wizard
+                   toad.head == 71 ||   // Red Gnome                               
+                   toad.head == 88 ||   // Teal Gnome
+                   toad.head == 94      // Tophat
+                ) {
+                    while(toad.accessoryI == 238) {
+                        _rollAccessoryI(src, toad);
+                    }
+                }
+               } else if(meta[1] == 120) {
+                if(toad.head == 52 ||   // Swampy Crazy
+                   toad.head == 53 ||   // Wild Black                       
+                   toad.head == 54 ||   // Fez
+                   toad.head == 57 ||   // Teal Knit Hat
+                   toad.head == 60 ||   // Backward Cap
+                   toad.head == 63 ||   // Rusty Cap
+                   toad.head == 64 ||   // Swept Purple
+                   toad.head == 65 ||   // Wizard
+                   toad.head == 66 ||   // Orange Tall Hat
+                   toad.head == 60 ||   // Swept Orange
+                   toad.head == 70 ||   // Super Stringy
+                   toad.head == 71 ||   // Red Gnome
+                   toad.head == 72 ||   // Orange Knit Hat
+                   toad.head == 73 ||   // Aqua Mohawk
+                   toad.head == 78 ||   // Aqua Shave
+                   toad.head == 79 ||   // Rainbow Mohawk
+                   toad.head == 81 ||   // Blue Shave
+                   toad.head == 84 ||   // Grey Knit Hat
+                   toad.head == 86 ||   // Periwinkle Cap
+                   toad.head == 88 ||   // Teal Gnome
+                   toad.head == 89 ||   // Wild White
+                   toad.head == 91 ||   // Bowlcut
+                   toad.head == 94 ||   // Tophat
+                   toad.head == 96 ||   // Orange Shave
+                   toad.head == 97 ||   // Wild Orange
+                   toad.head == 98 ||   // Crazy Blonde
+                   toad.head == 100 ||  // Toadstool
+                   toad.head == 101 ||  // Dark Tall Hat
+                   toad.head == 101 ||  // Swept Teal
+                   toad.head == 103     // Truffle
+                ) {
+                    while(toad.accessoryI == 238) {
+                        _rollAccessoryI(src, toad);
+                    }
+                }
+               }
+            }          
+
+            if(toad.accessoryI < 237 || toad.accessoryI > 245) revert TraitOutOfRange(toad.accessoryI);
+            meta[index++] = toad.accessoryI;
         }
         
         // # Traits
@@ -494,6 +558,10 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         } else { 
             revert BadTraitCount(traits);
         }
+    }
+
+    function _rollAccessoryI(PRNG.Source src, Toad memory toad) private pure  {
+        toad.accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
     }
 
     function _getTokenURI(uint256 tokenId, Presentation presentation) private view returns (string memory) {
@@ -516,7 +584,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
         }
 
-        return _encodeJson(string(abi.encodePacked(json, _getAttributes(meta), '}')));   
+        return _encodeJson(string(abi.encodePacked(json, _getAttributes(meta, false), '}')));   
     }
 
     function _getImageURI(uint tokenId, uint8[] memory meta) private view returns (string memory imageUri) {
@@ -574,15 +642,16 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             );
     }
 
-    function _getAttributes(uint8[] memory meta)
+    function _getAttributes(uint8[] memory meta, bool includeSize)
         private
         view
         returns (string memory attributes)
     {
         attributes = string(abi.encodePacked('"attributes":['));
         if(meta[0] == 255) return string(abi.encodePacked(attributes, SSTORE2.read(_stop), "]"));
+
         uint8 numberOfTraits;
-        for (uint8 i = 1; i < meta.length; i++) {
+        for (uint8 i = includeSize ? 0 : 1; i < meta.length; i++) {
             uint8 value = meta[i];            
             if(value == 254) continue; // stop byte            
             string memory traitName = getTraitName(value);
