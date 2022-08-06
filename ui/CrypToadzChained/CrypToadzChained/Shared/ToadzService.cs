@@ -1,4 +1,7 @@
 ﻿using System.Numerics;
+using System.Text;
+using System.Text.Json;
+using CrypToadzChained.Shared.Traits;
 using Microsoft.Extensions.Logging;
 using Nethereum.ABI.FunctionEncoding;
 using Nethereum.ABI.FunctionEncoding.Attributes;
@@ -60,6 +63,65 @@ namespace CrypToadzChained.Shared
             return tokenUri;
         }
 
+        public async Task<string> BuildTokenURIAsync(Toad toad, string url, string contractAddress)
+        {
+            var meta = ConvertToadToMeta(toad);
+
+            var web3 = new Web3(url);
+            var contract = web3.Eth.ERC721.GetContractService(contractAddress);
+            var function = new BuildTokenURI { Meta = meta };
+            var tokenUri = await contract.ContractHandler.QueryAsync<BuildTokenURI, string>(function);
+
+            if (tokenUri.StartsWith("data:application/json;base64,"))
+            {
+                var json = tokenUri.Replace("data:application/json;base64,", "");
+                var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(Encoding.UTF8.GetString(Convert.FromBase64String(json)));
+                if (metadata == null)
+                    return tokenUri;
+
+                var metaString = Convert.ToBase64String(meta);
+                metadata.Name = $"CrypToadz #{metaString}";
+                tokenUri = $"data:application/json;base64,{Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(metadata)))}";
+            }
+
+            return tokenUri;
+        }
+
+        private static byte[] ConvertToadToMeta(Toad toad)
+        {
+            var buffer = new List<byte>
+            {
+                (byte) toad.Size,
+                (byte) toad.Background
+            };
+
+            if (toad.Body != Body.None)
+                buffer.Add((byte) toad.Body);
+
+            if (toad.Mouth != Mouth.None)
+                buffer.Add((byte) toad.Mouth);
+
+            if (toad.Head != Head.None)
+                buffer.Add((byte) toad.Head);
+
+            if (toad.Eyes != Eyes.None)
+                buffer.Add((byte) toad.Eyes);
+
+            if (toad.Clothes != Clothes.None)
+                buffer.Add((byte) toad.Clothes);
+
+            if (toad.AccessoryIi != AccessoryIi.None)
+                buffer.Add((byte) toad.AccessoryIi);
+
+            if (toad.AccessoryI != AccessoryI.None)
+                buffer.Add((byte) toad.AccessoryI);
+
+            buffer.Add((byte) toad.NumberOfTraits);
+
+            var meta = buffer.ToArray();
+            return meta;
+        }
+
         #region Functions
 
         [Function("randomTokenURIFromSeed", "string")]
@@ -67,6 +129,13 @@ namespace CrypToadzChained.Shared
         {
             [Parameter("uint64", "seed", 1)]
             public BigInteger Seed { get; set; }
+        }
+
+        [Function("buildTokenURI", "string")]
+        public sealed class BuildTokenURI : FunctionMessage
+        {
+            [Parameter("uint8[]", "meta", 1)]
+            public byte[] Meta { get; set; } = null!;
         }
 
         #endregion

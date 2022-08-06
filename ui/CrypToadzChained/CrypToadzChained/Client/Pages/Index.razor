@@ -143,7 +143,6 @@
             TokenSeed = null;
             Metadata = null;
             ImageUri = null;
-            ImageDataUri = null;
             Error = null;
 
             if (!string.IsNullOrWhiteSpace(Url))
@@ -182,7 +181,6 @@
         {
             Metadata = null;
             ImageUri = null;
-            ImageDataUri = null;
             Error = null;
 
             if (!string.IsNullOrWhiteSpace(Url))
@@ -216,7 +214,6 @@
             TokenSeed = null;
             Metadata = null;
             ImageUri = null;
-            ImageDataUri = null;
             TokenId = null;
 
             if (!string.IsNullOrWhiteSpace(Url))
@@ -251,7 +248,7 @@
         }
         else
         {
-            Error = $"{response.StatusCode}: {response.ReasonPhrase}";
+            Error = $"{(int) response.StatusCode} {response.ReasonPhrase}";
         }
     }
 
@@ -272,7 +269,6 @@
                 var json = Encoding.UTF8.GetString(buffer);
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
                 ImageUri = Metadata?.Image;
-                ImageDataUri = Metadata?.ImageData;
 
                 if (random)
                 {

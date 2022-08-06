@@ -37,5 +37,11 @@ namespace CrypToadzChained.Server.Controllers
         {
             return await _service.GetRandomTokenURIFromSeedAsync(seed, _options.Value.Url, _options.Value.ContractAddress);
         }
+
+        [HttpPost("build")]
+        public async Task<string> BuildTokenURI([FromBody] Toad toad)
+        {
+            return await _service.BuildTokenURIAsync(toad, _options.Value.Url, _options.Value.ContractAddress);
+        }
     }
 }

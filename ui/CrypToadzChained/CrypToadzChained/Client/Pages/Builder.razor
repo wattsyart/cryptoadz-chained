@@ -1,0 +1,502 @@
+﻿@page "/builder/{BuilderSeed?}"
+
+@using CrypToadzChained.Shared
+@using CrypToadzChained.Shared.Traits
+@using System.ComponentModel
+@using System.Text
+@using System.Text.Json
+
+@inject HttpClient Http;
+@inject ILogger<Index> Logger;
+@inject NavigationManager Nav;
+
+<PageTitle>CrypToadzChained - Builder</PageTitle>
+
+<div class="container">
+    <div class="form-group">
+        <label for="url">Web3 URL:</label>
+        <input id="url" type="text" class="form-control" @bind="Url" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+    </div>
+</div>
+
+<div>
+    <section>
+        <div class="container">
+
+            <div class="row align-items-start justify-content-around">
+                <div class="col-md-9 col-lg col-xl-4 sticky-lg-top mb-5 mb-lg-0">
+                    
+                    <EditForm EditContext="@_editContext">
+                        
+                        <div class="form-group">
+                            <label for="size">Size:</label>
+                            <InputSelect id="size" class="form-control"
+                                         ValueExpression="@(() => Toad.Size)" 
+                                         Value="@Toad.Size" 
+                                         ValueChanged="@((Size value) => @OnSizeChanged(value))">
+                                @foreach (var value in GetValues<Size>())
+                                {
+                                    <option value="@value">@value</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="background">Background:</label>
+                            <InputSelect id="background" class="form-control"
+                                         ValueExpression="@(() => Toad.Background)" 
+                                         Value="@Toad.Background" 
+                                         ValueChanged="@((Background value) => @OnBackgroundChanged(value))">
+                                @foreach (var value in GetValues<Background>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="body">Body:</label>
+                            <InputSelect id="body" class="form-control"
+                                         ValueExpression="@(() => Toad.Body)" 
+                                         Value="@Toad.Body" 
+                                         ValueChanged="@((Body value) => @OnBodyChanged(value))">
+                                @foreach (var value in GetValues<Body>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mouth">Mouth:</label>
+                            <InputSelect id="mouth" class="form-control" 
+                                         ValueExpression="@(() => Toad.Mouth)" 
+                                         Value="@Toad.Mouth" 
+                                         ValueChanged="@((Mouth value) => OnMouthChanged(value))">
+                                @foreach (var value in GetValues<Mouth>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="head">Head:</label>
+                            <InputSelect id="head" class="form-control" 
+                                         ValueExpression="@(() => Toad.Head)" 
+                                         Value="@Toad.Head" 
+                                         ValueChanged="@((Head value) => OnHeadChanged(value))">
+                                @foreach (var value in GetValues<Head>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="eyes">Eyes:</label>
+                            <InputSelect id="eyes" class="form-control" 
+                                         ValueExpression="@(() => Toad.Eyes)" 
+                                         Value="@Toad.Eyes" 
+                                         ValueChanged="@((Eyes value) => OnEyesChanged(value))">
+                                @foreach (var value in GetValues<Eyes>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="clothes">Clothes:</label>
+                            <InputSelect id="clothes" class="form-control" 
+                                         ValueExpression="@(() => Toad.Clothes)" 
+                                         Value="@Toad.Clothes" 
+                                         ValueChanged="@((Clothes value) => OnClothesChanged(value))">
+                                @foreach (var value in GetValues<Clothes>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessoryII">Accessory II:</label>
+                            <InputSelect id="accessoryII" class="form-control" 
+                                         ValueExpression="@(() => Toad.AccessoryIi)" 
+                                         Value="@Toad.AccessoryIi" 
+                                         ValueChanged="@((AccessoryIi value) => OnAccessoryIiChanged(value))">
+                                @foreach (var value in GetValues<AccessoryIi>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessoryI">Accessory I:</label>
+                            <InputSelect id="accessoryI" class="form-control" 
+                                         ValueExpression="@(() => Toad.AccessoryI)" 
+                                         Value="@Toad.AccessoryI" 
+                                         ValueChanged="@((AccessoryI value) => OnAccessoryIChanged(value))">
+                                @foreach (var value in GetValues<AccessoryI>())
+                                {
+                                    <option value="@value">@Describe(value)</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="traits"># Traits:</label>
+                            @if (Traits > 7)
+                            {
+                                <input disabled id="traits" type="text" class="form-control invalid" value="@Traits / 7"/>
+                            }
+                            else
+                            {
+                                <input disabled id="traits" type="text" class="form-control" value="@Traits / 7"/>
+                            }
+                            
+                        </div>
+
+                    </EditForm>
+                </div>
+                
+                @if (!string.IsNullOrWhiteSpace(Error))
+                {
+                    <div class="alert alert-danger">@Error</div>
+                }
+                else
+                {
+                    @if (Metadata != null)
+                    {
+                        <div class="col-xl-7 col-lg-8 col-md-9">
+                            <article>
+                                <h2 class="h2">@Metadata.Name</h2>
+                                <p class="mb-5">
+                                    <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 100%; height: 100%" src="@ImageUri" alt="@Metadata.Name" />
+                                </p>
+                                <p class="lead text-center">
+                                    @Metadata.Description
+                                </p>
+                            </article>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(BuilderSeed))
+                        {
+                            <a href="/builder/@BuilderSeed" target="_blank">Share This Built Toad</a>
+                        }
+                    }
+                    else if (IsLoading)
+                    {
+                        <div class="col-xl-7 col-lg-8 col-md-9">
+                            <article>
+                                <h2 class="h2">Building...</h2>
+                                <p class="mb-5">
+                                    <div class="spinner"></div>
+                                </p>
+                                <p class="lead text-center">
+                                </p>
+                            </article>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+@code
+{
+    private EditContext _editContext = new(new Toad());
+    private Toad Toad => (Toad) _editContext.Model;
+
+    [Parameter]
+    public string? Url { get; set; }
+
+    [Parameter]
+    public string? BuilderSeed { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public JsonTokenMetadata? Metadata { get; set; }
+
+    [Parameter]
+    public string? ImageUri { get; set; }
+
+    [Parameter]
+    public string? TokenUri { get; set; }
+
+    [Parameter]
+    public string? Error { get; set; }
+
+    public int Traits
+    {
+        get
+        {
+            var count = 1; // Background
+
+            if (Toad.Body != Body.None)
+                count++;
+
+            if (Toad.Mouth != Mouth.None)
+                count++;
+
+            if (Toad.Head != Head.None)
+                count++;
+
+            if (Toad.Eyes != Eyes.None)
+                count++;
+
+            if (Toad.Clothes != Clothes.None)
+                count++;
+
+            if (Toad.AccessoryIi != AccessoryIi.None)
+                count++;
+
+            if (Toad.AccessoryI != AccessoryI.None)
+                count++;
+
+            return count;
+        }
+    }
+
+    bool _initializing;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _editContext = new EditContext(Toad);
+
+        if (!string.IsNullOrWhiteSpace(BuilderSeed))
+        {
+            _initializing = true;
+            
+            var meta = Convert.FromBase64String(BuilderSeed);
+            
+            Toad.Size = (Size) meta.First();
+
+            for (var i = 1; i < meta.Length - 1; i++)
+            {
+                var value = meta[i];
+
+                switch (value)
+                {
+                    case 20:
+                        Toad.Body = Body.Creep;
+                        break;
+                    case 37:
+                        Toad.Body = Body.Undead;
+                        break;
+                    case 55:
+                        Toad.Mouth = Mouth.Vampire;
+                        break;
+                    case 249:
+                        Toad.Head = Head.Vampire;
+                        break;
+                    case 250:
+                        Toad.Eyes = Eyes.Vampire;
+                        break;
+                    case 252:
+                        Toad.Eyes = Eyes.Undead;
+                        break;
+                    case 253:
+                        Toad.Eyes = Eyes.Creep;
+                        break;
+                    default:
+                    {
+                        switch (value)
+                        {
+                            case >= (byte) Background._95 and <= (byte) Background.Matrix:
+                                Toad.Background = (Background) value;
+                                break;
+                            case >= (byte) Body.Albino and <= (byte) Body.BigGhost:
+                                Toad.Body = (Body) value;
+                                break;
+                            case >= (byte) Mouth.Beard and <= (byte) Mouth.WellActually:
+                                Toad.Mouth = (Mouth) value;
+                                break;
+                            case >= (byte) Eyes.BigYellowSideeye and <= (byte) Eyes.Nerd:
+                                Toad.Eyes = (Eyes) value;
+                                break;
+                            case >= (byte) Head.FunCap and <= (byte) Head.Truffle:
+                                Toad.Head = (Head) value;
+                                break;
+                            case >= (byte) Clothes.GreyHoodie and <= (byte) Clothes.ForceHoodie:
+                                Toad.Clothes = (Clothes) value;
+                                break;
+                            case >= (byte) AccessoryIi.LongCigarette and <= (byte) AccessoryIi.JustForTheLooks:
+                                Toad.AccessoryIi = (AccessoryIi) value;
+                                break;
+                            case >= (byte) AccessoryI.ThreeFlies and <= (byte) AccessoryI.MysteriousHoodie:
+                                Toad.AccessoryI = (AccessoryI) value;
+                                break;
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            Toad.NumberOfTraits = (NumberOfTraits) meta.Last();
+
+            _initializing = false;
+        }
+
+        await OnToadChangedAsync();
+    }
+
+    private async Task OnSizeChanged(Size value)
+    {
+        Toad.Size = value;
+        await OnToadChangedAsync();
+    }
+
+    private async Task OnBackgroundChanged(Background value)
+    {
+        Toad.Background = value;
+        await OnToadChangedAsync();
+    } 
+
+    private async Task OnBodyChanged(Body value)
+    {
+        Toad.Body = value;
+        await OnToadChangedAsync();
+    } 
+
+    private async Task OnMouthChanged(Mouth value)
+    {
+        Toad.Mouth = value;
+        await OnToadChangedAsync();
+    } 
+
+    private async Task OnHeadChanged(Head value)
+    {
+        Toad.Head = value;
+        await OnToadChangedAsync();
+    } 
+
+    private async Task OnEyesChanged(Eyes value)
+    {
+        Toad.Eyes = value;
+        await OnToadChangedAsync();
+    } 
+
+    private async Task OnClothesChanged(Clothes value)
+    {
+        Toad.Clothes = value;
+        await OnToadChangedAsync();
+    } 
+
+    private async Task OnAccessoryIiChanged(AccessoryIi value)
+    {
+        Toad.AccessoryIi = value;
+        await OnToadChangedAsync();
+    } 
+
+    private async Task OnAccessoryIChanged(AccessoryI value)
+    {
+        Toad.AccessoryI = value;
+        await OnToadChangedAsync();
+    }
+
+    private async Task OnToadChangedAsync()
+    {
+        if (_initializing) return;
+
+        IsLoading = true;
+        try
+        {
+            Metadata = null;
+            TokenUri = null;
+            ImageUri = null;
+            Error = null;
+
+            Toad.NumberOfTraits = Traits switch
+            {
+                1 => NumberOfTraits._1,
+                2 => NumberOfTraits._2,
+                3 => NumberOfTraits._3,
+                4 => NumberOfTraits._4,
+                5 => NumberOfTraits._5,
+                6 => NumberOfTraits._6,
+                7 => NumberOfTraits._7,
+                _ => NumberOfTraits._1
+                };
+
+            if (!string.IsNullOrWhiteSpace(Url))
+            {
+                var service = new ToadzService();
+                var body = await service.BuildTokenURIAsync(Toad, Url, "0x8E20336F2eF96bd9e2636937Bf53af8783a4bA0B");
+                WithBody(body);
+            }
+            else
+            {
+                var response = await Http.PostAsJsonAsync("toadz/build", Toad);
+                await WithResponse(response);
+            }
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task WithResponse(HttpResponseMessage response)
+    {
+        if (response.IsSuccessStatusCode)
+        {
+            var body = await response.Content.ReadAsStringAsync();
+
+            WithBody(body);
+        }
+        else
+        {
+            Error = $"{(int)response.StatusCode} {response.ReasonPhrase}";
+        }
+    }
+
+    private void WithBody(string body)
+    {
+        TokenUri = body;
+        if (!TokenUri.StartsWith("data:application/json;base64,"))
+        {
+            Error = TokenUri;
+            TokenUri = null;
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(TokenUri))
+            {
+                var data = TokenUri.Replace("data:application/json;base64,", "");
+                var buffer = Convert.FromBase64String(data);
+                var json = Encoding.UTF8.GetString(buffer);
+                
+                Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
+                ImageUri = Metadata?.Image;
+                BuilderSeed = Metadata?.Name?.Replace("CrypToadz #", "");
+
+                if(!string.IsNullOrWhiteSpace(BuilderSeed))
+                    Nav.NavigateTo($"/builder/{BuilderSeed}");
+            }
+        }
+    }
+
+    public static string? Describe<T>(T @enum)
+    {
+        var field = @enum!.GetType().GetField(@enum.ToString()!);
+        var attributes = (DescriptionAttribute[])field!.GetCustomAttributes(typeof(DescriptionAttribute), false);
+        return attributes is { Length: > 0 } ? attributes[0].Description : @enum.ToString();
+    }
+
+    private static IEnumerable<object> GetValues<T>() where T : Enum
+    {
+        var values = Enum.GetValues(typeof(T));
+        var list = new HashSet<object>();
+        foreach (var value in values)
+        {
+            list.Add(value);
+        }
+        return list;
+    }
+}
