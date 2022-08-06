@@ -184,7 +184,7 @@ contract CrypToadzStrings is ICrypToadzStrings {
         strings[119] = "Short";
         strings[120] = "Tall";
 
-        // Mouth (18 + 1 Vampire)
+        // Mouth (17 + 1 Vampire)
         strings[121] = "Beard";
         strings[122] = "Pink Bucktooth";
         strings[123] = "Lincoln";
@@ -201,10 +201,10 @@ contract CrypToadzStrings is ICrypToadzStrings {
         strings[134] = "Bandit Wide";
         strings[135] = "Green Bucktooth";
         strings[136] = "Croak";
-        strings[137] = "Well Actually";
-        strings[138] = "Big Yellow Side-eye";
+        strings[137] = "Well Actually";        
 
-        // Eyes (29 + 3 Vampire, Creep, Undead)
+        // Eyes (30 + 3 Vampire, Creep, Undead)
+        strings[138] = "Big Yellow Side-eye";
         strings[139] = "Butthole";
         strings[140] = "Nounish Blue";
         strings[141] = "Violet Goggles";

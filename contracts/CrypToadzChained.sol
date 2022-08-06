@@ -432,9 +432,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         
         uint8 index = 3;
         if(flags[0]) {            
-            uint8 mouth = uint8(121) + uint8(PRNG.readLessThan(src, 18 + 1, 8));
-            if(mouth < 121 || mouth > 139) revert TraitOutOfRange(mouth);
-            if(mouth == 139) mouth = 55; // Vampire
+            uint8 mouth = uint8(121) + uint8(PRNG.readLessThan(src, 17 + 1, 8));
+            if(mouth < 121 || mouth > 138) revert TraitOutOfRange(mouth);
+            if(mouth == 138) mouth = 55; // Vampire
             meta[index++] = mouth;
         }
         if(flags[1]) {
@@ -443,9 +443,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             if(head == 104) head = 249; // Vampire
             meta[index++] = head;
         }
-        if(flags[2]) {
-            uint8 eyes = uint8(139) + uint8(PRNG.readLessThan(src, 29 + 3, 8));
-            if(eyes < 139 || eyes > 170) revert TraitOutOfRange(eyes);
+        if(flags[2]) {            
+            uint8 eyes = uint8(138) + uint8(PRNG.readLessThan(src, 30 + 3, 8));
+            if(eyes < 138 || eyes > 170) revert TraitOutOfRange(eyes);
             if(eyes == 168) eyes = 250; // Vampire
             if(eyes == 169) eyes = 252; // Undead
             if(eyes == 170) eyes = 253; // Creep            
