@@ -106,7 +106,7 @@ contract CrypToadzStrings is ICrypToadzStrings {
         strings[49] = "Ghost Bones";
         strings[50] = "Big Ghost";
 
-        // Head (53 + 1 Vampire)
+        // Head (53)
         strings[51] = "Fun Cap";
         strings[52] = "Swampy Crazy";
         strings[53] = "Wild Black";
