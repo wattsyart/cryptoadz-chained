@@ -2729,6 +2729,27 @@
     "Bottom": 21,
     "IsEmpty": false
   },
+  "Swept Teal": {
+    "Location": {
+      "IsEmpty": false,
+      "X": 10,
+      "Y": 7
+    },
+    "Size": {
+      "IsEmpty": false,
+      "Width": 22,
+      "Height": 14
+    },
+    "X": 10,
+    "Y": 7,
+    "Width": 22,
+    "Height": 14,
+    "Left": 10,
+    "Top": 7,
+    "Right": 32,
+    "Bottom": 21,
+    "IsEmpty": false
+  },
   "Teal Gnome": {
     "Location": {
       "IsEmpty": false,
