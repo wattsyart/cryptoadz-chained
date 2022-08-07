@@ -43,9 +43,9 @@ import "./PixelRenderer.sol";
 import "./Presentation.sol";
 
 contract CrypToadzChained is Ownable, IERC721, IERC165 {
-
     // https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt
-    bytes32 constant COPYRIGHT_CC0_1_0_UNIVERSAL_LICENSE = 0xa2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499;
+    bytes32 constant COPYRIGHT_CC0_1_0_UNIVERSAL_LICENSE =
+        0xa2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499;
 
     using ERC165Checker for address;
 
@@ -228,9 +228,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
      */
     function lockEncoder() external onlyOwner {
         require(
-            address(builder).supportsInterface(
-                type(IGIFEncoder).interfaceId
-            ),
+            address(builder).supportsInterface(type(IGIFEncoder).interfaceId),
             "Not IGIFEncoder"
         );
         encoderLocked = true;
@@ -249,7 +247,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     address immutable _stop;
 
     constructor() {
-        _stop = SSTORE2.write(hex"7b2274726169745f74797065223a22437573746f6d222c2276616c7565223a22312f31227d2c7b2274726169745f74797065223a224e616d65222c2276616c7565223a22467265616b792046726f677a227d2c7b2274726169745f74797065223a222320547261697473222c2276616c7565223a327d");
+        _stop = SSTORE2.write(
+            hex"7b2274726169745f74797065223a22437573746f6d222c2276616c7565223a22312f31227d2c7b2274726169745f74797065223a224e616d65222c2276616c7565223a22467265616b792046726f677a227d2c7b2274726169745f74797065223a222320547261697473222c2276616c7565223a327d"
+        );
     }
 
     /**
@@ -257,8 +257,8 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     @param tokenId Token ID referring to an existing CrypToadz NFT Token ID
     */
     function imageURI(uint256 tokenId) external view returns (string memory) {
-        (uint8[] memory meta) = metadata.getMetadata(tokenId);
-        require (meta.length > 0, LEGACY_URI_NOT_FOUND);
+        uint8[] memory meta = metadata.getMetadata(tokenId);
+        require(meta.length > 0, LEGACY_URI_NOT_FOUND);
         return _getImageURI(tokenId, meta);
     }
 
@@ -275,7 +275,10 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     @param tokenId Token ID referring to an existing CrypToadz NFT Token ID
     @param presentation Image (tokenURI has image data URI), ImageData (tokenURI has image_data SVG data URI that scales to its container), or Both (tokenURI has both image representations)
     */
-    function tokenURIWithPresentation(uint256 tokenId, Presentation presentation) external view returns (string memory) {
+    function tokenURIWithPresentation(
+        uint256 tokenId,
+        Presentation presentation
+    ) external view returns (string memory) {
         return _getTokenURI(tokenId, presentation);
     }
 
@@ -283,14 +286,32 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     @notice Retrieves a random token data URI. This generates a completely new CrypToadz, not officially part of the collection.    
     */
     function randomTokenURI() external view returns (string memory) {
-        return _randomTokenURI(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
+        return
+            _randomTokenURI(
+                uint64(
+                    uint256(
+                        keccak256(
+                            abi.encodePacked(
+                                address(this),
+                                address(msg.sender),
+                                block.coinbase,
+                                block.number
+                            )
+                        )
+                    )
+                )
+            );
     }
 
     /**
     @notice Retrieves a random token data URI from a given seed. This generates a completely new CrypToadz, not officially part of the collection.
     @param seed An unsigned 64-bit integer representing the image. To recreate a random token made without a seed, pass the CrypToadz # supplied by its tokenURI
     */
-    function randomTokenURIFromSeed(uint64 seed) external view returns (string memory) {
+    function randomTokenURIFromSeed(uint64 seed)
+        external
+        view
+        returns (string memory)
+    {
         return _randomTokenURI(seed);
     }
 
@@ -298,15 +319,32 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     @notice Retrieves a random image data URI. This generates a completely new CrypToadz image, not officially part of the collection.
     */
     function randomImageURI() external view returns (string memory imageUri) {
-        (imageUri,) = _randomImageURI(uint64(uint(keccak256(abi.encodePacked(address(this), address(msg.sender), block.coinbase, block.number)))));
+        (imageUri, ) = _randomImageURI(
+            uint64(
+                uint256(
+                    keccak256(
+                        abi.encodePacked(
+                            address(this),
+                            address(msg.sender),
+                            block.coinbase,
+                            block.number
+                        )
+                    )
+                )
+            )
+        );
     }
 
     /**
     @notice Retrieves a random image data URI from a given seed. This generates a completely new CrypToadz image, not officially part of the collection.
     @param seed An unsigned 64-bit integer representing the image. To recreate a random token made without a seed, pass the CrypToadz # supplied by its tokenURI
     */
-    function randomImageURIFromSeed(uint64 seed) external view returns (string memory imageUri) {
-        (imageUri,) = _randomImageURI(seed);
+    function randomImageURIFromSeed(uint64 seed)
+        external
+        view
+        returns (string memory imageUri)
+    {
+        (imageUri, ) = _randomImageURI(seed);
     }
 
     /**
@@ -336,9 +374,15 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
            |        6 |   115 |
            |        7 |   118 |
     */
-    function buildTokenURI(uint8[] memory meta)  external view returns (string memory) {
-        string memory imageUri = IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
-        uint64 metaHash = uint64(uint(keccak256(abi.encodePacked(meta))));
+    function buildTokenURI(uint8[] memory meta)
+        external
+        view
+        returns (string memory)
+    {
+        string memory imageUri = IGIFEncoder(encoder).getDataUri(
+            builder.getImage(meta)
+        );
+        uint64 metaHash = uint64(uint256(keccak256(abi.encodePacked(meta))));
         return _tokenURIFromMetadata(metaHash, imageUri, meta);
     }
 
@@ -368,7 +412,11 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
            |        6 |   115 |
            |        7 |   118 |
     */
-    function buildImageURI(uint8[] memory meta)  external view returns (string memory) {
+    function buildImageURI(uint8[] memory meta)
+        external
+        view
+        returns (string memory)
+    {
         return IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
     }
 
@@ -378,22 +426,30 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     @return `true` if the toad is tall, `false` if the toad is short, or size isn't applicable.
     @param tokenId Token ID referring to an existing CrypToadz NFT Token ID
     */
-    function isTall(uint tokenId) external view returns (bool) {
+    function isTall(uint256 tokenId) external view returns (bool) {
         return metadata.isTall(tokenId);
     }
 
-    function _randomTokenURI(uint64 seed) private view returns (string memory) {        
-        (string memory imageUri, uint8[] memory meta) = _randomImageURI(seed);        
+    function _randomTokenURI(uint64 seed) private view returns (string memory) {
+        (string memory imageUri, uint8[] memory meta) = _randomImageURI(seed);
         return _tokenURIFromMetadata(seed, imageUri, meta);
     }
 
-    function _tokenURIFromMetadata(uint64 seed, string memory imageUri, uint8[] memory meta) private view returns (string memory) {
+    function _tokenURIFromMetadata(
+        uint64 seed,
+        string memory imageUri,
+        uint8[] memory meta
+    ) private view returns (string memory) {
         string memory json = _getJsonPreamble(seed);
         json = string(
             abi.encodePacked(
                 json,
-                '"image":"', imageUri, '",',
-                '"image_data":"', _getWrappedImage(imageUri), '",',
+                '"image":"',
+                imageUri,
+                '",',
+                '"image_data":"',
+                _getWrappedImage(imageUri),
+                '",',
                 _getAttributes(meta, true),
                 "}"
             )
@@ -401,7 +457,11 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         return _encodeJson(json);
     }
 
-    function _randomImageURI(uint64 seed) private view returns (string memory imageUri, uint8[] memory meta) {
+    function _randomImageURI(uint64 seed)
+        private
+        view
+        returns (string memory imageUri, uint8[] memory meta)
+    {
         meta = _randomMeta(seed);
         imageUri = IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
         return (imageUri, meta);
@@ -412,25 +472,32 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         uint8 accessoryI;
     }
 
-    function _randomMeta(uint64 seed) private pure returns (uint8[] memory meta) {
+    function _randomMeta(uint64 seed)
+        private
+        pure
+        returns (uint8[] memory meta)
+    {
         PRNG.Source src = PRNG.newSource(keccak256(abi.encodePacked(seed)));
 
-        uint8 traits = 2 + uint8(PRNG.readLessThan(src, 6, 8));            
-        if(traits < 2 || traits > 7) revert BadTraitCount(traits);
-        
+        uint8 traits = 2 + uint8(PRNG.readLessThan(src, 6, 8));
+        if (traits < 2 || traits > 7) revert BadTraitCount(traits);
+
         meta = new uint8[](1 + traits + 1);
-        meta[0] = uint8(PRNG.readBool(src) ? 120 : 119);     // Size
-        meta[1] = uint8(PRNG.readLessThan(src, 17, 8));      // Background
+        meta[0] = uint8(PRNG.readBool(src) ? 120 : 119); // Size
+        meta[1] = uint8(PRNG.readLessThan(src, 17, 8)); // Background
         meta[2] = 17 + uint8(PRNG.readLessThan(src, 34, 8)); // Body
 
-        if(meta[0] == 120) {
-            if(meta[2] == 19 || // Sleepy
-               meta[2] == 36 || // Gargoyle
-               meta[2] == 44 || // Blood Bones
-               meta[2] == 45 || // Pox
-               meta[2] == 47 || // Ghost
-               meta[2] == 50) { // Big Ghost
-               meta[0] = 119; // these body types are exclusively short
+        if (meta[0] == 120) {
+            if (
+                meta[2] == 19 || // Sleepy
+                meta[2] == 36 || // Gargoyle
+                meta[2] == 44 || // Blood Bones
+                meta[2] == 45 || // Pox
+                meta[2] == 47 || // Ghost
+                meta[2] == 50
+            ) {
+                // Big Ghost
+                meta[0] = 119; // these body types are exclusively short
             }
         }
 
@@ -438,23 +505,31 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         uint8 count;
         uint8 maxCount = 30;
         bool[] memory flags = new bool[](6);
-        while(picked < traits - 2) {
-            if(!flags[0] && (PRNG.readBool(src) || count > maxCount)) {
+        while (picked < traits - 2) {
+            if (!flags[0] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[0] = true;
                 picked++;
-            } else if(!flags[3] && !flags[1] && (PRNG.readBool(src) || count > maxCount)) {
+            } else if (
+                !flags[3] &&
+                !flags[1] &&
+                (PRNG.readBool(src) || count > maxCount)
+            ) {
                 flags[1] = true;
                 picked++;
-            } else if(!flags[2] && (PRNG.readBool(src) || count > maxCount)) {
+            } else if (!flags[2] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[2] = true;
                 picked++;
-            } else if(!flags[1] && !flags[3] && (PRNG.readBool(src) || count > maxCount)) {
+            } else if (
+                !flags[1] &&
+                !flags[3] &&
+                (PRNG.readBool(src) || count > maxCount)
+            ) {
                 flags[3] = true;
                 picked++;
-            } else if(!flags[4] && (PRNG.readBool(src) || count > maxCount)) {
+            } else if (!flags[4] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[4] = true;
                 picked++;
-            } else if(!flags[5] && (PRNG.readBool(src) || count > maxCount)) {
+            } else if (!flags[5] && (PRNG.readBool(src) || count > maxCount)) {
                 flags[5] = true;
                 picked++;
             }
@@ -462,153 +537,181 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         }
 
         Toad memory toad;
-        
+
         uint8 index = 3;
-        if(flags[0]) {            
+        if (flags[0]) {
             uint8 mouth = uint8(121) + uint8(PRNG.readLessThan(src, 17 + 1, 8));
-            if(mouth < 121 || mouth > 138) revert TraitOutOfRange(mouth);
-            if(mouth == 138) mouth = 55; // Vampire
+            if (mouth < 121 || mouth > 138) revert TraitOutOfRange(mouth);
+            if (mouth == 138) mouth = 55; // Vampire
             meta[index++] = mouth;
         }
-        if(flags[1]) {
+        if (flags[1]) {
             toad.head = uint8(51) + uint8(PRNG.readLessThan(src, 53 + 1, 8));
-            if(toad.head < 51 || toad.head > 104) revert TraitOutOfRange(toad.head);
-            if(toad.head == 104) toad.head = 249; // Vampire
+            if (toad.head < 51 || toad.head > 104)
+                revert TraitOutOfRange(toad.head);
+            if (toad.head == 104) toad.head = 249; // Vampire
             meta[index++] = toad.head;
         }
-        if(flags[2]) {            
+        if (flags[2]) {
             uint8 eyes = uint8(138) + uint8(PRNG.readLessThan(src, 30 + 3, 8));
-            if(eyes < 138 || eyes > 170) revert TraitOutOfRange(eyes);
-            if(eyes == 168) eyes = 250; // Vampire
-            if(eyes == 169) eyes = 252; // Undead
-            if(eyes == 170) eyes = 253; // Creep            
+            if (eyes < 138 || eyes > 170) revert TraitOutOfRange(eyes);
+            if (eyes == 168) eyes = 250; // Vampire
+            if (eyes == 169) eyes = 252; // Undead
+            if (eyes == 170) eyes = 253; // Creep
             meta[index++] = eyes;
         }
-        if(flags[3]) {
+        if (flags[3]) {
             uint8 clothes = uint8(246) + uint8(PRNG.readLessThan(src, 3, 8));
-            if(clothes < 246 || clothes > 248) revert TraitOutOfRange(clothes);
+            if (clothes < 246 || clothes > 248) revert TraitOutOfRange(clothes);
             meta[index++] = clothes;
         }
-        if(flags[4]) {
-            uint8 accessoryII = uint8(104) + uint8(PRNG.readLessThan(src, 8, 8));
-            if(accessoryII < 104 || accessoryII > 111) revert TraitOutOfRange(accessoryII);
+        if (flags[4]) {
+            uint8 accessoryII = uint8(104) +
+                uint8(PRNG.readLessThan(src, 8, 8));
+            if (accessoryII < 104 || accessoryII > 111)
+                revert TraitOutOfRange(accessoryII);
             meta[index++] = accessoryII;
         }
 
-        if(flags[5]) {
+        if (flags[5]) {
             _rollAccessoryI(src, toad);
 
             // if we have a head or clothes, don't pick the hoodie
-            while((flags[1] || flags[3]) && toad.accessoryI == 245) {                                
+            while ((flags[1] || flags[3]) && toad.accessoryI == 245) {
                 _rollAccessoryI(src, toad);
             }
 
             // if we have a head, don't pick drive-thru
-            while(flags[1] && toad.accessoryI == 241) {                                
+            while (flags[1] && toad.accessoryI == 241) {
                 _rollAccessoryI(src, toad);
             }
 
             // if we are short with any of these heads, don't pick explorer
-            if(flags[1] && toad.accessoryI == 238) {
-               if(meta[0] == 119) {
-                if(toad.head == 65 ||   // Wizard
-                   toad.head == 71 ||   // Red Gnome                               
-                   toad.head == 88 ||   // Teal Gnome
-                   toad.head == 94      // Tophat
-                ) {
-                    while(toad.accessoryI == 238) {
-                        _rollAccessoryI(src, toad);
+            if (flags[1] && toad.accessoryI == 238) {
+                if (meta[0] == 119) {
+                    if (
+                        toad.head == 65 || // Wizard
+                        toad.head == 71 || // Red Gnome
+                        toad.head == 88 || // Teal Gnome
+                        toad.head == 94 // Tophat
+                    ) {
+                        while (toad.accessoryI == 238) {
+                            _rollAccessoryI(src, toad);
+                        }
+                    }
+                } else if (meta[0] == 120) {
+                    if (
+                        toad.head == 52 || // Swampy Crazy
+                        toad.head == 53 || // Wild Black
+                        toad.head == 54 || // Fez
+                        toad.head == 57 || // Teal Knit Hat
+                        toad.head == 60 || // Backward Cap
+                        toad.head == 63 || // Rusty Cap
+                        toad.head == 64 || // Swept Purple
+                        toad.head == 65 || // Wizard
+                        toad.head == 66 || // Orange Tall Hat
+                        toad.head == 60 || // Swept Orange
+                        toad.head == 70 || // Super Stringy
+                        toad.head == 71 || // Red Gnome
+                        toad.head == 72 || // Orange Knit Hat
+                        toad.head == 73 || // Aqua Mohawk
+                        toad.head == 78 || // Aqua Shave
+                        toad.head == 79 || // Rainbow Mohawk
+                        toad.head == 81 || // Blue Shave
+                        toad.head == 84 || // Grey Knit Hat
+                        toad.head == 86 || // Periwinkle Cap
+                        toad.head == 88 || // Teal Gnome
+                        toad.head == 89 || // Wild White
+                        toad.head == 91 || // Bowlcut
+                        toad.head == 94 || // Tophat
+                        toad.head == 96 || // Orange Shave
+                        toad.head == 97 || // Wild Orange
+                        toad.head == 98 || // Crazy Blonde
+                        toad.head == 100 || // Toadstool
+                        toad.head == 101 || // Dark Tall Hat
+                        toad.head == 101 || // Swept Teal
+                        toad.head == 103 // Truffle
+                    ) {
+                        while (toad.accessoryI == 238) {
+                            _rollAccessoryI(src, toad);
+                        }
                     }
                 }
-               } else if(meta[0] == 120) {
-                if(toad.head == 52 ||   // Swampy Crazy
-                   toad.head == 53 ||   // Wild Black                       
-                   toad.head == 54 ||   // Fez
-                   toad.head == 57 ||   // Teal Knit Hat
-                   toad.head == 60 ||   // Backward Cap
-                   toad.head == 63 ||   // Rusty Cap
-                   toad.head == 64 ||   // Swept Purple
-                   toad.head == 65 ||   // Wizard
-                   toad.head == 66 ||   // Orange Tall Hat
-                   toad.head == 60 ||   // Swept Orange
-                   toad.head == 70 ||   // Super Stringy
-                   toad.head == 71 ||   // Red Gnome
-                   toad.head == 72 ||   // Orange Knit Hat
-                   toad.head == 73 ||   // Aqua Mohawk
-                   toad.head == 78 ||   // Aqua Shave
-                   toad.head == 79 ||   // Rainbow Mohawk
-                   toad.head == 81 ||   // Blue Shave
-                   toad.head == 84 ||   // Grey Knit Hat
-                   toad.head == 86 ||   // Periwinkle Cap
-                   toad.head == 88 ||   // Teal Gnome
-                   toad.head == 89 ||   // Wild White
-                   toad.head == 91 ||   // Bowlcut
-                   toad.head == 94 ||   // Tophat
-                   toad.head == 96 ||   // Orange Shave
-                   toad.head == 97 ||   // Wild Orange
-                   toad.head == 98 ||   // Crazy Blonde
-                   toad.head == 100 ||  // Toadstool
-                   toad.head == 101 ||  // Dark Tall Hat
-                   toad.head == 101 ||  // Swept Teal
-                   toad.head == 103     // Truffle
-                ) {
-                    while(toad.accessoryI == 238) {
-                        _rollAccessoryI(src, toad);
-                    }
-                }
-               }
-            }          
+            }
 
-            if(toad.accessoryI < 237 || toad.accessoryI > 245) revert TraitOutOfRange(toad.accessoryI);
+            if (toad.accessoryI < 237 || toad.accessoryI > 245)
+                revert TraitOutOfRange(toad.accessoryI);
             meta[index++] = toad.accessoryI;
         }
-        
+
         // # Traits
-        if(traits == 2) {
+        if (traits == 2) {
             meta[index++] = 114;
-        } else if(traits == 3) {
+        } else if (traits == 3) {
             meta[index++] = 116;
-        } else if(traits == 4) {
+        } else if (traits == 4) {
             meta[index++] = 112;
-        } else if(traits == 5) {
+        } else if (traits == 5) {
             meta[index++] = 113;
-        } else if(traits == 6) {
+        } else if (traits == 6) {
             meta[index++] = 115;
-        } else if(traits == 7) {
+        } else if (traits == 7) {
             meta[index++] = 118;
-        } else { 
+        } else {
             revert BadTraitCount(traits);
         }
     }
 
-    function _rollAccessoryI(PRNG.Source src, Toad memory toad) private pure  {
+    function _rollAccessoryI(PRNG.Source src, Toad memory toad) private pure {
         toad.accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
     }
 
-    function _getTokenURI(uint256 tokenId, Presentation presentation) private view returns (string memory) {
-        (uint8[] memory meta) = metadata.getMetadata(tokenId);
-        require (meta.length > 0, LEGACY_URI_NOT_FOUND);
+    function _getTokenURI(uint256 tokenId, Presentation presentation)
+        private
+        view
+        returns (string memory)
+    {
+        uint8[] memory meta = metadata.getMetadata(tokenId);
+        require(meta.length > 0, LEGACY_URI_NOT_FOUND);
 
         string memory imageUri = _getImageURI(tokenId, meta);
         string memory imageDataUri;
-        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
+        if (
+            presentation == Presentation.ImageData ||
+            presentation == Presentation.Both
+        ) {
             imageDataUri = _getWrappedImage(imageUri);
         }
 
         string memory json = _getJsonPreamble(tokenId);
 
-        if(presentation == Presentation.Image || presentation == Presentation.Both) {
+        if (
+            presentation == Presentation.Image ||
+            presentation == Presentation.Both
+        ) {
             json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
         }
 
-        if(presentation == Presentation.ImageData || presentation == Presentation.Both) {
-            json = string(abi.encodePacked(json, '"image_data":"', imageDataUri, '",'));
+        if (
+            presentation == Presentation.ImageData ||
+            presentation == Presentation.Both
+        ) {
+            json = string(
+                abi.encodePacked(json, '"image_data":"', imageDataUri, '",')
+            );
         }
 
-        return _encodeJson(string(abi.encodePacked(json, _getAttributes(meta, false), '}')));   
+        return
+            _encodeJson(
+                string(abi.encodePacked(json, _getAttributes(meta, false), "}"))
+            );
     }
 
-    function _getImageURI(uint tokenId, uint8[] memory meta) private view returns (string memory imageUri) {
+    function _getImageURI(uint256 tokenId, uint8[] memory meta)
+        private
+        view
+        returns (string memory imageUri)
+    {
         if (customImages.isCustomImage(tokenId)) {
             bytes memory customImage = customImages.getCustomImage(tokenId);
             imageUri = string(
@@ -633,27 +736,53 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         }
     }
 
-    function _getJsonPreamble(uint tokenId) private pure returns (string memory json) {
+    function _getJsonPreamble(uint256 tokenId)
+        private
+        pure
+        returns (string memory json)
+    {
         json = string(
             abi.encodePacked(
-                '{"description":"', DESCRIPTION,
-                '","external_url":"', EXTERNAL_URL,
-                '","name":"', NAME, " #", Strings.toString(tokenId),
+                '{"description":"',
+                DESCRIPTION,
+                '","external_url":"',
+                EXTERNAL_URL,
+                '","name":"',
+                NAME,
+                " #",
+                Strings.toString(tokenId),
                 '",'
             )
         );
     }
 
-    function _getWrappedImage(string memory imageUri) private pure returns (string memory imageDataUri) {
-        string memory imageData = string(abi.encodePacked(
-            '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">',
-            '<image style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100" height="100" xlink:href="', 
-            imageUri, '"/></svg>'));
-            
-        imageDataUri = string(abi.encodePacked(SVG_URI_PREFIX, Base64.encode(bytes(imageData), bytes(imageData).length)));
+    function _getWrappedImage(string memory imageUri)
+        private
+        pure
+        returns (string memory imageDataUri)
+    {
+        string memory imageData = string(
+            abi.encodePacked(
+                '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">',
+                '<image style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100" height="100" xlink:href="',
+                imageUri,
+                '"/></svg>'
+            )
+        );
+
+        imageDataUri = string(
+            abi.encodePacked(
+                SVG_URI_PREFIX,
+                Base64.encode(bytes(imageData), bytes(imageData).length)
+            )
+        );
     }
 
-    function _encodeJson(string memory json) private pure returns (string memory) {
+    function _encodeJson(string memory json)
+        private
+        pure
+        returns (string memory)
+    {
         return
             string(
                 abi.encodePacked(
@@ -669,22 +798,28 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         returns (string memory attributes)
     {
         attributes = string(abi.encodePacked('"attributes":['));
-        if(meta[0] == 255) return string(abi.encodePacked(attributes, SSTORE2.read(_stop), "]"));
+        if (meta[0] == 255)
+            return
+                string(abi.encodePacked(attributes, SSTORE2.read(_stop), "]"));
 
         uint8 numberOfTraits;
         for (uint8 i = includeSize ? 0 : 1; i < meta.length; i++) {
-            uint8 value = meta[i];            
-            if(value == 254) continue; // stop byte            
+            uint8 value = meta[i];
+            if (value == 254) continue; // stop byte
             string memory traitName = getTraitName(value);
-            
+
             string memory label = strings.getString(
                 // Vampire
-                value == 249 ? 55 : 
-                value == 250 ? 55 : 
-                // Undead
-                value == 252 ? 37 : 
-                // Creep
-                value == 253 ? 20 : value);
+                value == 249 ? 55 : value == 250
+                    ? 55
+                    : // Undead
+                    value == 252
+                    ? 37
+                    : // Creep
+                    value == 253
+                    ? 20
+                    : value
+            );
 
             (string memory a, uint8 t) = _appendTrait(
                 value >= 112 && value < 119,
@@ -750,7 +885,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             return "Body";
         }
         if (traitValue >= 51 && traitValue < 104) {
-            if(traitValue == 55) return "Mouth"; // Vampire
+            if (traitValue == 55) return "Mouth"; // Vampire
             return "Head";
         }
         if (traitValue >= 104 && traitValue < 112) {
@@ -781,13 +916,13 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
             return "Clothes";
         }
 
-        if(traitValue == 249) return "Head"; // Vampire
-        if(traitValue == 250) return "Eyes"; // Vampire
+        if (traitValue == 249) return "Head"; // Vampire
+        if (traitValue == 250) return "Eyes"; // Vampire
 
-        if(traitValue == 251) return "Size";
+        if (traitValue == 251) return "Size";
 
-        if(traitValue == 252) return "Eyes"; // Undead
-        if(traitValue == 253) return "Eyes"; // Creep  
+        if (traitValue == 252) return "Eyes"; // Undead
+        if (traitValue == 253) return "Eyes"; // Creep
 
         revert TraitOutOfRange(traitValue);
     }
@@ -802,5 +937,5 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         returns (bool)
     {
         return interfaceId == type(IERC721).interfaceId;
-    }    
+    }
 }
