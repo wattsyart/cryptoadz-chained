@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: CC0-1.0
 
 /*
 CrypToadz Created By:
@@ -8,6 +8,9 @@ CrypToadz Created By:
  \___/(_)\_)(____)(_/\/\_)(__)  (____)(____)(_)\_) 
 (https://cryptoadz.io)
 
+To the extent possible under law, the artist known as Gremplin has waived all copyright and related or neighboring rights to CrypToadz by Gremplin. 
+This work is published from: United States.
+
 CrypToadzChained Programmed By:
  __      __         __    __                 
 /  \    /  \_____ _/  |__/  |_  _________.__.
@@ -16,6 +19,9 @@ CrypToadzChained Programmed By:
   \__/\  /  (____  /__|  |__| /____  >/ ____|
        \/        \/                \/ \/     
 (https://wattsy.art)
+
+To the extent possible under law, the artist known as Wattsy has waived all copyright and related or neighboring rights to CrypToadzChained. 
+This work is published from: Canada.
 */
 
 pragma solidity ^0.8.13;
@@ -37,6 +43,10 @@ import "./PixelRenderer.sol";
 import "./Presentation.sol";
 
 contract CrypToadzChained is Ownable, IERC721, IERC165 {
+
+    // https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt
+    bytes32 constant COPYRIGHT_CC0_1_0_UNIVERSAL_LICENSE = 0xa2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499;
+
     using ERC165Checker for address;
 
     bytes private constant JSON_URI_PREFIX = "data:application/json;base64,";
