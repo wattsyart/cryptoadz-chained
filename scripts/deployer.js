@@ -2,18 +2,46 @@ const utils = require('./deploy.js');
 const hre = require("hardhat");
 
 async function main() {
-  const network = await ethers.provider.getNetwork();
-
-  // private node has throw-away key, doesn't need a hardware wallet
-  if(network.chainId == 8134646) {    
-    console.log("Deploying to private node...")  
-    await utils.deployContracts(hre.ethers, false, false);
-    return;
+  // Use explicit gas if running on a real network
+  var txOptions;
+  if(network.chainId == 8134646) {      
+    txOptions = null; // privatenode
+  } else {
+    txOptions = getTxOptions();
   }
 
-  // Deploy to real network (using HID or adding a local signer is left to the caller to override):
-  console.log("Deploying with implicit signer...")
-  await utils.deployContracts(hre.ethers, false, false, getTxOptions());
+  // Deploy to real network w/ hardware wallet HID:
+  //
+  // Example:
+  // --------
+  // await utils.deployContracts(hre.ethers, 
+  //   false /* quiet */, 
+  //   false /* trace */, 
+  //   getTxOptions() /* txOptions */, 
+  //   "HID_FRESH_ADDRESS_PATH_GOES_HERE" /* hid */, 
+  //   null /* signerOverride */
+  // );
+
+  // Deploy to real network w/ signer override:
+  //
+  // Example:
+  // --------
+  // var signerOverride = new ethers.Wallet("PRIVATE_KEY_NEVER_DO_THIS_HONESTLY", ethers.provider);
+  // await utils.deployContracts(hre.ethers, 
+  //   false /* quiet */, 
+  //   false /* trace */, 
+  //   getTxOptions() /* txOptions */, 
+  //   null /* hid */, 
+  //   signerOverride /* signerOverride */
+  // );
+
+  await utils.deployContracts(hre.ethers, 
+    false /* quiet */, 
+    false /* trace */, 
+    txOptions /* txOptions */, 
+    null /* hid */, 
+    null /* signerOverride */
+  );
 }
 
 function getTxOptions() {

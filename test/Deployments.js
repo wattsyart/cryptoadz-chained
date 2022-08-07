@@ -3,30 +3,47 @@ const utils = require('../scripts/deploy.js');
 
 describe("Deployments", function () {
   it("deploys all contracts", async function () {
-    const network = await ethers.provider.getNetwork();
-    console.log(`network: ${network.chainId}`);    
 
-    // private node has throw-away key, doesn't need a hardware wallet
+    // Use explicit gas if running on a real network
+    var txOptions;
     if(network.chainId == 8134646) {      
-      console.log("Deploying to private node...")
-      await utils.deployContracts(hre.ethers, false, false);
-      return;
+      txOptions = null; // privatenode
+    } else {
+      txOptions = getTxOptions();
     }
 
     // Deploy to real network w/ hardware wallet HID:
-    // console.log("Deploying with hardware wallet...")
-    // await utils.deployContracts(hre.ethers, false, false, getTxOptions(), "HID_FRESH_ADDRESS_PATH_GOES_HERE");
+    //
+    // Example:
+    // --------
+    // await utils.deployContracts(hre.ethers, 
+    //   false /* quiet */, 
+    //   false /* trace */, 
+    //   getTxOptions() /* txOptions */, 
+    //   "HID_FRESH_ADDRESS_PATH_GOES_HERE" /* hid */, 
+    //   null /* signerOverride */
+    // );
 
-    // Deploy to real network without hardware wallet (adding a signer override is left to the caller)
-    console.log("Deploying with implicit signer...")
-    await utils.deployContracts(hre.ethers, false, false, getTxOptions());
+    // Deploy to real network w/ signer override:
+    //
+    // Example:
+    // --------
+    // var signerOverride = new ethers.Wallet("PRIVATE_KEY_NEVER_DO_THIS_HONESTLY", ethers.provider);
+    // await utils.deployContracts(hre.ethers, 
+    //   false /* quiet */, 
+    //   false /* trace */, 
+    //   getTxOptions() /* txOptions */, 
+    //   null /* hid */, 
+    //   signerOverride /* signerOverride */
+    // );
 
-    // Random Testing:
-    /*
-    var output = await utils.deployRandomContracts(hre.ethers, false, false);
-    var tokenURI = await output["CrypToadzChained"].randomTokenURIFromSeed("2439799993720087534");
-    console.log(tokenURI);
-    */
+    await utils.deployContracts(hre.ethers, 
+      false /* quiet */, 
+      false /* trace */, 
+      txOptions /* txOptions */, 
+      null /* hid */, 
+      null /* signerOverride */
+    );    
   });
 });
 
@@ -39,3 +56,10 @@ function getTxOptions() {
   }
   return txOptions;
 }
+
+/*
+// Random Testing:
+var output = await utils.deployRandomContracts(hre.ethers, false, false);
+var tokenURI = await output["CrypToadzChained"].randomTokenURIFromSeed("2439799993720087534");
+console.log(tokenURI);
+*/

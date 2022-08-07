@@ -9,10 +9,16 @@ module.exports = {
 var signer;
 
 // https://docs.ethers.io/v5/api/contract/contract-factory/
-async function deployContract(manifest, ethers, contractName, quiet, trace, txOptions, hid) {
+async function deployContract(manifest, ethers, contractName, quiet, trace, txOptions, hid, signerOverride) {
+
+  if (!signer && signerOverride) {
+    console.log("using signer override");
+    signer = signerOverride;
+  }
 
   if (hid && !signer) {
     signer = new LedgerSigner(ethers.provider, "hid", hid);
+    // ethers ledger plugin *STILL* doesn't have EIP-1559 support, so we have to drop to legacy transactions
     // see: https://github.com/ethers-io/ethers.js/issues/2078    
     txOptions.type = 1;
     var maxFeePerGas = txOptions.maxFeePerGas;
@@ -21,7 +27,7 @@ async function deployContract(manifest, ethers, contractName, quiet, trace, txOp
     txOptions.gasPrice = maxFeePerGas;
   } else if (!signer) {
     [owner] = await ethers.getSigners();
-    signer = owner;    
+    signer = owner;
   }
 
   if (manifest[contractName] && !trace) {
@@ -32,8 +38,8 @@ async function deployContract(manifest, ethers, contractName, quiet, trace, txOp
     return output;
   }
 
-  console.log("Account Address:", (await signer.getAddress()).toString());
-  console.log("Account Balance:", (await signer.getBalance()).toString());
+  console.log("signer:", (await signer.getAddress()).toString());
+  console.log("balance:", (await signer.getBalance()).toString());
 
   const contract = await (await ethers.getContractFactory(contractName)).connect(signer);
   if (trace) {
@@ -51,278 +57,295 @@ async function deployContract(manifest, ethers, contractName, quiet, trace, txOp
   }
 }
 
-async function deployContracts(ethers, quiet, trace, txOptions, hid) {
+async function deployContracts(ethers, quiet, trace, txOptions, hid, signerOverride) {
+
+  if (hid && signerOverride) {
+    console.log("ERROR: cannot specify both an HID and a signer override!");
+    return;
+  }
+
+  if (!quiet) quiet = false;
+  if (!trace) trace = false;
 
   console.log("quiet: " + quiet);
-  console.log("trace: " + quiet);
-  console.log("txOptions: " + JSON.stringify(txOptions));
-  console.log("hid: " + hid);
+  console.log("trace: " + trace);
+
+  if (txOptions) {
+    console.log("txOptions: " + JSON.stringify(txOptions));
+  }
+  if (hid) {
+    console.log("hid: " + hid);
+  }
+  if (signerOverride) {
+    console.log("signerOverride: " + signerOverride.address);
+  }
+
   console.log();
-  
+
   if (!txOptions) txOptions = {};
 
   var output = {};
   var manifest = JSON.parse(fs.readFileSync("./scripts/manifest.json").toString('utf8'));
 
-  output["CrypToadzChained"] = await deployContract(manifest, ethers, "CrypToadzChained", quiet, trace, txOptions, hid);
+  output["CrypToadzChained"] = await deployContract(manifest, ethers, "CrypToadzChained", quiet, trace, txOptions, hid, signerOverride);
 
-  output["GIFEncoder"] = await deployContract(manifest, ethers, "GIFEncoder", quiet, trace, txOptions, hid);
-  output["PixelRenderer"] = await deployContract(manifest, ethers, "PixelRenderer", quiet, trace, txOptions, hid);
+  output["GIFEncoder"] = await deployContract(manifest, ethers, "GIFEncoder", quiet, trace, txOptions, hid, signerOverride);
+  output["PixelRenderer"] = await deployContract(manifest, ethers, "PixelRenderer", quiet, trace, txOptions, hid, signerOverride);
 
-  output["CrypToadzStrings"] = await deployContract(manifest, ethers, "CrypToadzStrings", quiet, trace, txOptions, hid);
-  output["CrypToadzMetadata"] = await deployContract(manifest, ethers, "CrypToadzMetadata", quiet, trace, txOptions, hid);
-  output["CrypToadzDeltas"] = await deployContract(manifest, ethers, "CrypToadzDeltas", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilder"] = await deployContract(manifest, ethers, "CrypToadzBuilder", quiet, trace, txOptions, hid);
-  output["CrypToadzCustomImages"] = await deployContract(manifest, ethers, "CrypToadzCustomImages", quiet, trace, txOptions, hid);
-  output["CrypToadzCustomAnimations"] = await deployContract(manifest, ethers, "CrypToadzCustomAnimations", quiet, trace, txOptions, hid);
+  output["CrypToadzStrings"] = await deployContract(manifest, ethers, "CrypToadzStrings", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzMetadata"] = await deployContract(manifest, ethers, "CrypToadzMetadata", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzDeltas"] = await deployContract(manifest, ethers, "CrypToadzDeltas", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilder"] = await deployContract(manifest, ethers, "CrypToadzBuilder", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzCustomImages"] = await deployContract(manifest, ethers, "CrypToadzCustomImages", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzCustomAnimations"] = await deployContract(manifest, ethers, "CrypToadzCustomAnimations", quiet, trace, txOptions, hid, signerOverride);
 
-  output["CrypToadzDeltasA"] = await deployContract(manifest, ethers, "CrypToadzDeltasA", quiet, trace, txOptions, hid);
-  output["CrypToadzDeltasB"] = await deployContract(manifest, ethers, "CrypToadzDeltasB", quiet, trace, txOptions, hid);
-  output["CrypToadzDeltasC"] = await deployContract(manifest, ethers, "CrypToadzDeltasC", quiet, trace, txOptions, hid);
+  output["CrypToadzDeltasA"] = await deployContract(manifest, ethers, "CrypToadzDeltasA", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzDeltasB"] = await deployContract(manifest, ethers, "CrypToadzDeltasB", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzDeltasC"] = await deployContract(manifest, ethers, "CrypToadzDeltasC", quiet, trace, txOptions, hid, signerOverride);
 
-  output["CrypToadzBuilderAny"] = await deployContract(manifest, ethers, "CrypToadzBuilderAny", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderAnyA"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyA", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderAnyB"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyB", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderShort"] = await deployContract(manifest, ethers, "CrypToadzBuilderShort", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderTall"] = await deployContract(manifest, ethers, "CrypToadzBuilderTall", quiet, trace, txOptions, hid);
+  output["CrypToadzBuilderAny"] = await deployContract(manifest, ethers, "CrypToadzBuilderAny", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderAnyA"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyA", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderAnyB"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyB", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderShort"] = await deployContract(manifest, ethers, "CrypToadzBuilderShort", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderTall"] = await deployContract(manifest, ethers, "CrypToadzBuilderTall", quiet, trace, txOptions, hid, signerOverride);
 
   if (true) {
-    output["CrypToadzCustomImage1000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage10000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage10000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1005A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1005A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1005B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1005B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1005"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1005", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage11000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage11000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1165"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1165", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage12000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage12000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage123"] = await deployContract(manifest, ethers, "CrypToadzCustomImage123", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage13000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage13000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage14000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage14000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1423"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1423", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage15000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage15000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1559"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1559", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage16000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage16000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1637"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1637", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage17000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage17000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1703"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1703", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1754"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1754", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1793"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1793", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage18000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage18000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1812A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1812A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1812B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1812B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1812"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1812", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage19000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage19000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1935"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1935", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1975A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1975A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1975B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1975B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1975"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1975", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage20000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage20000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage21000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage21000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2124"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2124", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage22000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage22000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2232A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2232A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2232B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2232B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2232"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2232", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage23000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage23000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2327A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2327A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2327B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2327B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2327"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2327", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage24000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage24000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2469"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2469", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2471"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2471", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2482"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2482", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2489A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2489A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2489B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2489B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2489"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2489", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage25000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage25000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2521"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2521", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2569"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2569", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2579"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2579", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage26000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage26000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage27000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage27000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2709"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2709", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage28000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage28000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2825A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2825A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2825B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2825B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2825"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2825", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2839"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2839", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2846"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2846", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2865"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2865", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage29000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage29000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2959A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2959A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2959B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2959B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2959"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2959", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2986"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2986", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage30000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage30000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage31000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage31000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage316"] = await deployContract(manifest, ethers, "CrypToadzCustomImage316", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3196A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3196A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3196B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3196B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3196"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3196", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage32000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage32000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage33000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage33000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3309A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3309B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3309C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3309"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3382A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3382A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3382B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3382B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3382"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3382", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage34000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage34000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage35000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage35000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage36000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage36000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3703"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3703", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage38000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage38000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage39000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage39000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage40000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage40000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4096"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4096", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage41000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage41000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4126"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4126", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4152A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4152A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4152B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4152B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4152"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4152", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4192"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4192", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage42000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage42000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4201"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4201", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4221"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4221", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4238A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4238A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4238B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4238B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4238"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4238", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4368"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4368", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage44000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage44000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage45000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage45000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4578"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4578", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4580A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4580A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4580B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4580B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4580"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4580", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage46000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage46000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4604"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4604", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage47000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage47000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4714"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4714", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage472"] = await deployContract(manifest, ethers, "CrypToadzCustomImage472", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4773"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4773", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4845"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4845", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4896A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4896B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4896C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4896"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage49000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage49000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage491"] = await deployContract(manifest, ethers, "CrypToadzCustomImage491", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage50000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage50000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage51000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage51000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5128"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5128", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5150"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5150", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage52000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage52000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5262"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5262", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage53000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage53000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage54000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage54000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5441"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5441", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5471A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5471B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5471C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5471"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage55000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage55000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage56000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage56000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5730"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5730", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5836"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5836", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5848"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5848", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5902A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5902A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5902B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5902B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5902"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5902", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6214A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6214A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6214B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6214B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6214"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6214", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6382A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6382A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6382B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6382B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6382"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6382", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6491"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6491", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6572"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6572", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6578"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6578", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6631"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6631", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6719"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6719", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6736"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6736", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6852"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6852", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6894"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6894", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6916"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6916", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage7000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage7000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage703"] = await deployContract(manifest, ethers, "CrypToadzCustomImage703", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage8000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage8000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage864"] = await deployContract(manifest, ethers, "CrypToadzCustomImage864", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage9000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage9000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage916A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage916A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage916B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage916B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage916"] = await deployContract(manifest, ethers, "CrypToadzCustomImage916", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage936A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage936A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage936B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage936B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage936"] = await deployContract(manifest, ethers, "CrypToadzCustomImage936", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage966"] = await deployContract(manifest, ethers, "CrypToadzCustomImage966", quiet, trace, txOptions, hid);
+    output["CrypToadzCustomImage1000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage10000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage10000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1005A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1005A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1005B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1005B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1005"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1005", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage11000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage11000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1165"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1165", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage12000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage12000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage123"] = await deployContract(manifest, ethers, "CrypToadzCustomImage123", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage13000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage13000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage14000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage14000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1423"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1423", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage15000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage15000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1559"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1559", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage16000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage16000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1637"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1637", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage17000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage17000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1703"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1703", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1754"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1754", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1793"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1793", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage18000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage18000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1812A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1812A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1812B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1812B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1812"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1812", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage19000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage19000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1935"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1935", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1975A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1975A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1975B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1975B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1975"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1975", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage20000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage20000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage21000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage21000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2124"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2124", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage22000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage22000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2232A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2232A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2232B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2232B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2232"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2232", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage23000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage23000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2327A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2327A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2327B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2327B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2327"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2327", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage24000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage24000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2469"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2469", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2471"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2471", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2482"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2482", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2489A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2489A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2489B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2489B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2489"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2489", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage25000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage25000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2521"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2521", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2569"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2569", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2579"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2579", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage26000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage26000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage27000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage27000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2709"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2709", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage28000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage28000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2825A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2825A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2825B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2825B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2825"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2825", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2839"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2839", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2846"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2846", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2865"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2865", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage29000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage29000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2959A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2959A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2959B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2959B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2959"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2959", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2986"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2986", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage30000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage30000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage31000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage31000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage316"] = await deployContract(manifest, ethers, "CrypToadzCustomImage316", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3196A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3196A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3196B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3196B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3196"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3196", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage32000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage32000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage33000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage33000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3309A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3309B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3309C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3309"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3309", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3382A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3382A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3382B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3382B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3382"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3382", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage34000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage34000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage35000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage35000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage36000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage36000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3703"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3703", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage38000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage38000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage39000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage39000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage40000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage40000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4096"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4096", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage41000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage41000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4126"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4126", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4152A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4152A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4152B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4152B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4152"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4152", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4192"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4192", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage42000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage42000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4201"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4201", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4221"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4221", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4238A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4238A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4238B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4238B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4238"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4238", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4368"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4368", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage44000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage44000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage45000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage45000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4578"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4578", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4580A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4580A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4580B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4580B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4580"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4580", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage46000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage46000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4604"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4604", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage47000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage47000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4714"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4714", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage472"] = await deployContract(manifest, ethers, "CrypToadzCustomImage472", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4773"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4773", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4845"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4845", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4896A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4896B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4896C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4896"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4896", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage49000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage49000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage491"] = await deployContract(manifest, ethers, "CrypToadzCustomImage491", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage50000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage50000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage51000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage51000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5128"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5128", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5150"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5150", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage52000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage52000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5262"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5262", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage53000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage53000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage54000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage54000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5441"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5441", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5471A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5471B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5471C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5471"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5471", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage55000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage55000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage56000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage56000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5730"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5730", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5836"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5836", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5848"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5848", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5902A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5902A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5902B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5902B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5902"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5902", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6214A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6214A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6214B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6214B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6214"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6214", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6382A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6382A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6382B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6382B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6382"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6382", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6491"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6491", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6572"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6572", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6578"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6578", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6631"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6631", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6719"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6719", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6736"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6736", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6852"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6852", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6894"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6894", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6916"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6916", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage7000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage7000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage703"] = await deployContract(manifest, ethers, "CrypToadzCustomImage703", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage8000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage8000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage864"] = await deployContract(manifest, ethers, "CrypToadzCustomImage864", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage9000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage9000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage916A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage916A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage916B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage916B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage916"] = await deployContract(manifest, ethers, "CrypToadzCustomImage916", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage936A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage936A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage936B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage936B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage936"] = await deployContract(manifest, ethers, "CrypToadzCustomImage936", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage966"] = await deployContract(manifest, ethers, "CrypToadzCustomImage966", quiet, trace, txOptions, hid, signerOverride);
   }
 
   if (true) {
-    output["CrypToadzCustomImage1519"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1519", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1943A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1943B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1943C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1943D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943D", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1943E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943E", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage1943"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage2208"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2208", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage318A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage318B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage318C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage318D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318D", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage318E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318E", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage318F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318F", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage318"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3250"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3250", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661D", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661E", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661F", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661G"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661G", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage3661"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37D", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37E", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37F", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage37"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4035A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4035B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4035C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4035D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035D", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4035E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035E", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4035F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035F", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4035"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage43000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage43000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage466A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage466B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage466C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage466D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466D", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage466E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466E", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage466F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466F", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage466"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage48000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage48000000", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911A", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911B", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911C", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911D", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911E", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911F", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911G"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911G", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage4911"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5086"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5086", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage5844"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5844", quiet, trace, txOptions, hid);
-    output["CrypToadzCustomImage6131"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6131", quiet, trace, txOptions, hid);
+    output["CrypToadzCustomImage1519"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1519", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1943A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1943B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1943C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1943D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943D", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1943E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943E", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage1943"] = await deployContract(manifest, ethers, "CrypToadzCustomImage1943", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage2208"] = await deployContract(manifest, ethers, "CrypToadzCustomImage2208", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage318A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage318B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage318C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage318D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318D", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage318E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318E", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage318F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318F", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage318"] = await deployContract(manifest, ethers, "CrypToadzCustomImage318", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3250"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3250", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661D", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661E", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661F", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661G"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661G", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage3661"] = await deployContract(manifest, ethers, "CrypToadzCustomImage3661", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37D", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37E", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37F", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage37"] = await deployContract(manifest, ethers, "CrypToadzCustomImage37", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4035A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4035B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4035C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4035D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035D", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4035E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035E", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4035F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035F", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4035"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4035", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage43000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage43000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage466A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage466B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage466C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage466D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466D", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage466E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466E", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage466F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466F", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage466"] = await deployContract(manifest, ethers, "CrypToadzCustomImage466", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage48000000"] = await deployContract(manifest, ethers, "CrypToadzCustomImage48000000", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911A"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911A", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911B"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911B", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911C"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911C", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911D"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911D", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911E"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911E", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911F"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911F", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911G"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911G", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage4911"] = await deployContract(manifest, ethers, "CrypToadzCustomImage4911", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5086"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5086", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage5844"] = await deployContract(manifest, ethers, "CrypToadzCustomImage5844", quiet, trace, txOptions, hid, signerOverride);
+    output["CrypToadzCustomImage6131"] = await deployContract(manifest, ethers, "CrypToadzCustomImage6131", quiet, trace, txOptions, hid, signerOverride);
   }
 
   //
@@ -330,10 +353,10 @@ async function deployContracts(ethers, quiet, trace, txOptions, hid) {
   //
   if (!trace) {
 
-    if(!quiet) console.log("Linking contract dependencies...");    
+    if (!quiet) console.log("Linking contract dependencies...");
 
     var tx;
-    
+
     tx = await output["CrypToadzChained"].setEncoder(output["GIFEncoder"].address, txOptions);
     await tx.wait();
 
@@ -595,27 +618,27 @@ async function deployContracts(ethers, quiet, trace, txOptions, hid) {
     tx = await output["CrypToadzCustomImage1943"].setAddresses(output["CrypToadzCustomImage1943A"].address, output["CrypToadzCustomImage1943B"].address, output["CrypToadzCustomImage1943C"].address, output["CrypToadzCustomImage1943D"].address, output["CrypToadzCustomImage1943E"].address, txOptions);
     await tx.wait();
     if (!quiet) console.log("CrypToadzCustomImage1943 linked with dependencies");
-    
+
     tx = await output["CrypToadzCustomImage318"].setAddresses(output["CrypToadzCustomImage318A"].address, output["CrypToadzCustomImage318B"].address, output["CrypToadzCustomImage318C"].address, output["CrypToadzCustomImage318D"].address, output["CrypToadzCustomImage318E"].address, output["CrypToadzCustomImage318F"].address, txOptions);
     await tx.wait();
     if (!quiet) console.log("CrypToadzCustomImage318 linked with dependencies");
-    
+
     tx = await output["CrypToadzCustomImage3661"].setAddresses(output["CrypToadzCustomImage3661A"].address, output["CrypToadzCustomImage3661B"].address, output["CrypToadzCustomImage3661C"].address, output["CrypToadzCustomImage3661D"].address, output["CrypToadzCustomImage3661E"].address, output["CrypToadzCustomImage3661F"].address, output["CrypToadzCustomImage3661G"].address, txOptions);
     await tx.wait();
     if (!quiet) console.log("CrypToadzCustomImage3661 linked with dependencies");
-    
+
     tx = await output["CrypToadzCustomImage37"].setAddresses(output["CrypToadzCustomImage37A"].address, output["CrypToadzCustomImage37B"].address, output["CrypToadzCustomImage37C"].address, output["CrypToadzCustomImage37D"].address, output["CrypToadzCustomImage37E"].address, output["CrypToadzCustomImage37F"].address, txOptions);
     await tx.wait();
     if (!quiet) console.log("CrypToadzCustomImage37 linked with dependencies");
-    
+
     tx = await output["CrypToadzCustomImage4035"].setAddresses(output["CrypToadzCustomImage4035A"].address, output["CrypToadzCustomImage4035B"].address, output["CrypToadzCustomImage4035C"].address, output["CrypToadzCustomImage4035D"].address, output["CrypToadzCustomImage4035E"].address, output["CrypToadzCustomImage4035F"].address, txOptions);
     await tx.wait();
     if (!quiet) console.log("CrypToadzCustomImage4035 linked with dependencies");
-    
+
     tx = await output["CrypToadzCustomImage466"].setAddresses(output["CrypToadzCustomImage466A"].address, output["CrypToadzCustomImage466B"].address, output["CrypToadzCustomImage466C"].address, output["CrypToadzCustomImage466D"].address, output["CrypToadzCustomImage466E"].address, output["CrypToadzCustomImage466F"].address, txOptions);
     await tx.wait();
     if (!quiet) console.log("CrypToadzCustomImage466 linked with dependencies");
-    
+
     tx = await output["CrypToadzCustomImage4911"].setAddresses(output["CrypToadzCustomImage4911A"].address, output["CrypToadzCustomImage4911B"].address, output["CrypToadzCustomImage4911C"].address, output["CrypToadzCustomImage4911D"].address, output["CrypToadzCustomImage4911E"].address, output["CrypToadzCustomImage4911F"].address, output["CrypToadzCustomImage4911G"].address, txOptions);
     await tx.wait();
     if (!quiet) console.log("CrypToadzCustomImage4911 linked with dependencies");
@@ -712,20 +735,20 @@ async function deployRandomContracts(ethers, quiet, trace, txOptions, hid) {
   var output = {};
   var manifest = {};
 
-  output["CrypToadzChained"] = await deployContract(manifest, ethers, "CrypToadzChained", quiet, trace, txOptions, hid);
+  output["CrypToadzChained"] = await deployContract(manifest, ethers, "CrypToadzChained", quiet, trace, txOptions, hid, signerOverride);
 
-  output["GIFEncoder"] = await deployContract(manifest, ethers, "GIFEncoder", quiet, trace, txOptions, hid);
-  output["PixelRenderer"] = await deployContract(manifest, ethers, "PixelRenderer", quiet, trace, txOptions, hid);
+  output["GIFEncoder"] = await deployContract(manifest, ethers, "GIFEncoder", quiet, trace, txOptions, hid, signerOverride);
+  output["PixelRenderer"] = await deployContract(manifest, ethers, "PixelRenderer", quiet, trace, txOptions, hid, signerOverride);
 
-  output["CrypToadzStrings"] = await deployContract(manifest, ethers, "CrypToadzStrings", quiet, trace, txOptions, hid);
-  output["CrypToadzMetadata"] = await deployContract(manifest, ethers, "CrypToadzMetadata", quiet, trace, txOptions, hid);
-  
-  output["CrypToadzBuilder"] = await deployContract(manifest, ethers, "CrypToadzBuilder", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderAny"] = await deployContract(manifest, ethers, "CrypToadzBuilderAny", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderAnyA"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyA", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderAnyB"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyB", quiet, trace, txOptions, hid);
-  output["CrypToadzBuilderShort"] = await deployContract(manifest, ethers, "CrypToadzBuilderShort", quiet, trace, txOptions, hid);  
-  output["CrypToadzBuilderTall"] = await deployContract(manifest, ethers, "CrypToadzBuilderTall", quiet, trace, txOptions, hid);
+  output["CrypToadzStrings"] = await deployContract(manifest, ethers, "CrypToadzStrings", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzMetadata"] = await deployContract(manifest, ethers, "CrypToadzMetadata", quiet, trace, txOptions, hid, signerOverride);
+
+  output["CrypToadzBuilder"] = await deployContract(manifest, ethers, "CrypToadzBuilder", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderAny"] = await deployContract(manifest, ethers, "CrypToadzBuilderAny", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderAnyA"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyA", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderAnyB"] = await deployContract(manifest, ethers, "CrypToadzBuilderAnyB", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderShort"] = await deployContract(manifest, ethers, "CrypToadzBuilderShort", quiet, trace, txOptions, hid, signerOverride);
+  output["CrypToadzBuilderTall"] = await deployContract(manifest, ethers, "CrypToadzBuilderTall", quiet, trace, txOptions, hid, signerOverride);
 
   //
   // Post-Deployment: Link all dependencies
