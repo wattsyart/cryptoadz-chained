@@ -484,6 +484,15 @@
                 var json = Encoding.UTF8.GetString(buffer);
 
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
+
+                if (Traits > 7 && Metadata != null)
+                {
+                    // While on-chain has no data for 8 traits, we'll fudge it for invalid toadz
+                    var traits = Metadata.Attributes.SingleOrDefault(x => x.TraitType == "# Traits");
+                    if (traits != null)
+                        traits.Value = Traits;
+                }
+
                 ImageUri = Metadata?.Image;
                 BuilderSeed = Metadata?.Name?.Replace("CrypToadz #", "");
 
