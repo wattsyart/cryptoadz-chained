@@ -499,7 +499,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                         _rollAccessoryI(src, toad);
                     }
                 }
-               } else if(meta[1] == 120) {
+               } else if(meta[0] == 120) {
                 if(toad.head == 52 ||   // Swampy Crazy
                    toad.head == 53 ||   // Wild Black                       
                    toad.head == 54 ||   // Fez
