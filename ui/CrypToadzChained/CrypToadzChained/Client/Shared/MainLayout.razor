@@ -1,6 +1,4 @@
-﻿@using Microsoft.Extensions.Options
-@using CrypToadzChained.Shared
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject IOptionsSnapshot<Web3Options> Options
 
 <div class="page">
@@ -10,7 +8,8 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://rinkeby.etherscan.io/address/@Options.Value.ContractAddress#code" 
+            <a href="https://cryptoadz.io" target="_blank">Visit CrypToadz</a>
+            <a href="https://rinkeby.etherscan.io/address/@Options.Value.ContractAddress#code"
                data-toggle="tooltip" data-placement="bottom" title="Etherscan currently truncates data URIs, using it directly will produce incorrect results!"
                target="_blank">View On Etherscan</a>
         </div>
@@ -19,11 +18,11 @@
             @Body
         </article>
         
-        <footer>
+        <footer class="footer">
             <div class="container" style="margin-top:10px">
                 <div class="alert alert-info">
-                    <span class="text-muted">To the extent possible under law, the artist known as Gremplin has waived all copyright and related or neighboring rights to CrypToadz by Gremplin.
-                        This work is published from: United States.</span>
+                    <h3 class="text-muted">To the extent possible under law, the artist known as Gremplin has waived all copyright and related or neighboring rights to CrypToadz by Gremplin.
+                        This work is published from: United States.</h3>
                 </div>
             </div>
         </footer>

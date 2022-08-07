@@ -121,8 +121,6 @@ namespace CrypToadzChained.Shared
                  .Replace("&", "")
                 ;
 
-            Console.WriteLine($"{propertyName} = {traitValue}");
-
             foreach (var value in Enum.GetValues(typeof(T)))
             {
                 if (traitValue == Enum.GetName(typeof(T), value))
@@ -131,7 +129,6 @@ namespace CrypToadzChained.Shared
                     if (property != null)
                     {
                         property.SetValue(toad, value);
-                        Console.WriteLine($"set {property.Name} to {value}");
                     }
                 }
             }

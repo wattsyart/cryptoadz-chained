@@ -1,7 +1,17 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+@font-face {
+    font-family: Superscratchy;
+    src: url("../fonts/Superscratchy.otf") format("otf"), url("../fonts/Superscratchy.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: BoxingWizards;
+    src: url("../fonts/BoxingWizards-Regular.otf") format("otf"), url("../fonts/BoxingWizards-Regular.otf") format("truetype");
+}
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Superscratchy', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1:focus {
