@@ -13,7 +13,10 @@ describe("Deployments", function () {
     }
 
     // Deploy to real network w/ hardware wallet HID:
-    await utils.deployContracts(hre.ethers, false, false, getTxOptions(), "HID_FRESH_ADDRESS_PATH_GOES_HERE");
+    // await utils.deployContracts(hre.ethers, false, false, getTxOptions(), "HID_FRESH_ADDRESS_PATH_GOES_HERE");
+
+    // Deploy to real network without hardware wallet (adding a signer override is left to the caller)
+    await utils.deployContracts(hre.ethers, false, false, getTxOptions());
 
     // Random Testing:
     /*
