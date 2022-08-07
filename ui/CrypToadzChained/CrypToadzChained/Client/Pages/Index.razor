@@ -134,7 +134,7 @@
             if (!string.IsNullOrWhiteSpace(Url))
             {
                 var service = new ToadzService();
-                var body = await service.GetCanonicalTokenURIAsync(tokenId, Url, "0x8E20336F2eF96bd9e2636937Bf53af8783a4bA0B", Logger);
+                var body = await service.GetCanonicalTokenURIAsync(tokenId, Url, "0xE7159Dc843287a66A111CCBC54F43B9E1138ed44", Logger);
                 WithBody(body, false);
             }
             else
