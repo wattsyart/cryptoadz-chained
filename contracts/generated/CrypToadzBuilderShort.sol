@@ -173,6 +173,7 @@ contract CrypToadzBuilderShort is ICrypToadzFeatureBuilder {
         rects[99] = Rectangle(13, 12);
         rects[100] = Rectangle(8, 6);
         rects[101] = Rectangle(11, 5);
+        rects[102] = Rectangle(10, 7);
         rects[103] = Rectangle(8, 6);
         rects[104] = Rectangle(4, 13);
         rects[105] = Rectangle(5, 12);

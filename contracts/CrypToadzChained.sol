@@ -600,6 +600,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                         }
                     }
                 } else if (meta[0] == 120) {
+                    // if we are tall with any of these heads, don't pick explorer
                     if (
                         toad.head == 52 || // Swampy Crazy
                         toad.head == 53 || // Wild Black
