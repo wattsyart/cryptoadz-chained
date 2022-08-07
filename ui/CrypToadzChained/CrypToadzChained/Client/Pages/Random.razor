@@ -4,10 +4,12 @@
 @using System.Text.Json
 @using CrypToadzChained.Shared;
 @using System.Net
+@using Microsoft.Extensions.Options
 
 @inject HttpClient Http;
 @inject ILogger<Index> Logger;
 @inject NavigationManager Nav;
+@inject IOptionsSnapshot<Web3Options> Options;
 
 <PageTitle>CrypToadzChained - Random</PageTitle>
 
@@ -15,7 +17,7 @@
     
     <div class="form-group">
         <label for="url">Web3 URL:</label>
-        <input id="url" type="text" class="form-control" @bind="Url" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+        <input id="url" type="text" class="form-control" @bind="Options.Value.Url" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
     </div>
     
     <br/>
@@ -93,9 +95,6 @@
 @code
 {
     [Parameter]
-    public string? Url { get; set; }
-
-    [Parameter]
     public string? TokenUri { get; set; }
 
     [Parameter]
@@ -140,10 +139,10 @@
             ImageUri = null;
             Error = null;
 
-            if (!string.IsNullOrWhiteSpace(Url))
+            if (!string.IsNullOrWhiteSpace(Options.Value.Url))
             {
                 var service = new ToadzService();
-                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Url, "0x98f1c49dE0DeEf08c0273287d784dC6D2e7A4a0d");
+                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.Url, Options.Value.ContractAddress);
                 WithBody(body);
             }
             else
@@ -172,10 +171,10 @@
             Metadata = null;
             ImageUri = null;
 
-            if (!string.IsNullOrWhiteSpace(Url))
+            if (!string.IsNullOrWhiteSpace(Options.Value.Url))
             {
                 var service = new ToadzService();
-                var body = await service.GetRandomTokenURIAsync(Url, "0x98f1c49dE0DeEf08c0273287d784dC6D2e7A4a0d");
+                var body = await service.GetRandomTokenURIAsync(Options.Value.Url, Options.Value.ContractAddress);
                 WithBody(body);
             }
             else

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CrypToadzChained.Server.Models
+namespace CrypToadzChained.Shared
 {
     public sealed class Web3Options
     {

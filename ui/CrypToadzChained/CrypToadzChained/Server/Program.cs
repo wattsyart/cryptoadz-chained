@@ -1,4 +1,3 @@
-using CrypToadzChained.Server.Models;
 using CrypToadzChained.Shared;
 
 var builder = WebApplication.CreateBuilder(args);

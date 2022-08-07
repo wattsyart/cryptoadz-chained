@@ -1,4 +1,3 @@
-using CrypToadzChained.Server.Models;
 using CrypToadzChained.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

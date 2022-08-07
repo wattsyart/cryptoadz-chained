@@ -1,4 +1,5 @@
 using CrypToadzChained.Client;
+using CrypToadzChained.Shared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -7,5 +8,9 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.Configure<Web3Options>(o =>
+{
+    o.ContractAddress = "0x4190aC5bc2499dC0285AC344F92c6E87dF99f93A";
+});
 
 await builder.Build().RunAsync();
