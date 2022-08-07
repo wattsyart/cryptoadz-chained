@@ -1,14 +1,5 @@
 ﻿@page "/{TokenId?}"
-
-@using System.Text
-@using System.Text.Json
-@using CrypToadzChained.Shared
-@using Microsoft.Extensions.Options
-
-@inject HttpClient Http;
-@inject ILogger<Index> Logger;
-@inject NavigationManager Nav;
-@inject IOptionsSnapshot<Web3Options> Options;
+@inherits PageBase
 
 <PageTitle>CrypToadzChained</PageTitle>
 
@@ -56,6 +47,26 @@
                                     </li>
                                 }
                             </ul>
+                            
+                            @if (!string.IsNullOrWhiteSpace(TokenId))
+                            {
+                                <br />
+                    
+                                <button class="btn btn-dark" @onclick="DownloadImageAsync">
+                                    <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Image</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="DownloadMetadataAsync">
+                                    <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Metadata</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareAsync" target="_blank">
+                                    <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Share</span>
+                                </button>
+                            }
                         </div>
                         <div class="col-xl-7 col-lg-8 col-md-9">
                             <article>
@@ -77,11 +88,6 @@
                             </article>
                         </div>
                     </div>
-
-                    @if (!string.IsNullOrWhiteSpace(TokenId))
-                    {
-                        <a href="/@TokenId" target="_blank">Share This Toad</a>
-                    }
                 }
                 else if (IsLoading)
                 {
@@ -157,7 +163,7 @@
             {
                 var service = new ToadzService();
                 var body = await service.GetCanonicalTokenURIAsync(tokenId, Options.Value.Url, Options.Value.ContractAddress, Logger);
-                WithBody(body, false);
+                WithBody(body);
             }
             else
             {
@@ -181,7 +187,7 @@
         {
             var body = await response.Content.ReadAsStringAsync();
 
-            WithBody(body, random);
+            WithBody(body);
         }
         else
         {
@@ -189,10 +195,10 @@
         }
     }
 
-    private void WithBody(string body, bool random)
+    private void WithBody(string body)
     {
         TokenUri = body;
-        if (!TokenUri.StartsWith("data:application/json;base64,"))
+        if (!TokenUri.StartsWith(JsonDataUri))
         {
             Error = TokenUri;
             TokenUri = null;
@@ -201,7 +207,7 @@
         {
             if (!string.IsNullOrWhiteSpace(TokenUri))
             {
-                var data = TokenUri.Replace("data:application/json;base64,", "");
+                var data = TokenUri.Replace(JsonDataUri, "");
                 var buffer = Convert.FromBase64String(data);
                 var json = Encoding.UTF8.GetString(buffer);
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
@@ -210,4 +216,10 @@
             }
         }
     }
+    
+    private async Task DownloadImageAsync() => await DownloadImageAsync(ImageUri!, $"TOADZ_{TokenId}");
+
+    private async Task DownloadMetadataAsync() => await DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenId}");
+
+    private async Task ShareAsync() => await ShareAsync($"/{TokenId}");
 }

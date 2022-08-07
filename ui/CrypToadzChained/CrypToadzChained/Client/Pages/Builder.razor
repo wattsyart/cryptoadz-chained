@@ -1,17 +1,5 @@
 ﻿@page "/builder"
-
-@using CrypToadzChained.Shared
-@using CrypToadzChained.Shared.Traits
-@using System.ComponentModel
-@using System.Text
-@using System.Text.Json
-@using Microsoft.AspNetCore.WebUtilities
-@using Microsoft.Extensions.Options
-
-@inject HttpClient Http;
-@inject ILogger<Index> Logger;
-@inject NavigationManager Nav;
-@inject IOptionsSnapshot<Web3Options> Options;
+@inherits PageBase
 
 <PageTitle>CrypToadzChained - Builder</PageTitle>
 
@@ -22,7 +10,7 @@
     </div>
 </div>
 
-<br/>
+<br />
 
 <div>
     <section>
@@ -30,14 +18,14 @@
 
             <div class="row align-items-start justify-content-around">
                 <div class="col-md-9 col-lg col-xl-4 sticky-lg-top mb-5 mb-lg-0">
-                    
+
                     <EditForm EditContext="@_editContext">
-                        
+
                         <div class="form-group">
                             <label for="size">Size:</label>
                             <InputSelect id="size" class="form-control"
-                                         ValueExpression="@(() => Toad.Size)" 
-                                         Value="@Toad.Size" 
+                                         ValueExpression="@(() => Toad.Size)"
+                                         Value="@Toad.Size"
                                          ValueChanged="@((Size value) => @OnSizeChanged(value))">
                                 @foreach (var value in GetValues<Size>())
                                 {
@@ -49,8 +37,8 @@
                         <div class="form-group">
                             <label for="background">Background:</label>
                             <InputSelect id="background" class="form-control"
-                                         ValueExpression="@(() => Toad.Background)" 
-                                         Value="@Toad.Background" 
+                                         ValueExpression="@(() => Toad.Background)"
+                                         Value="@Toad.Background"
                                          ValueChanged="@((Background value) => @OnBackgroundChanged(value))">
                                 @foreach (var value in GetValues<Background>())
                                 {
@@ -62,8 +50,8 @@
                         <div class="form-group">
                             <label for="body">Body:</label>
                             <InputSelect id="body" class="form-control"
-                                         ValueExpression="@(() => Toad.Body)" 
-                                         Value="@Toad.Body" 
+                                         ValueExpression="@(() => Toad.Body)"
+                                         Value="@Toad.Body"
                                          ValueChanged="@((Body value) => @OnBodyChanged(value))">
                                 @foreach (var value in GetValues<Body>())
                                 {
@@ -74,9 +62,9 @@
 
                         <div class="form-group">
                             <label for="mouth">Mouth:</label>
-                            <InputSelect id="mouth" class="form-control" 
-                                         ValueExpression="@(() => Toad.Mouth)" 
-                                         Value="@Toad.Mouth" 
+                            <InputSelect id="mouth" class="form-control"
+                                         ValueExpression="@(() => Toad.Mouth)"
+                                         Value="@Toad.Mouth"
                                          ValueChanged="@((Mouth value) => OnMouthChanged(value))">
                                 @foreach (var value in GetValues<Mouth>())
                                 {
@@ -87,9 +75,9 @@
 
                         <div class="form-group">
                             <label for="head">Head:</label>
-                            <InputSelect id="head" class="form-control" 
-                                         ValueExpression="@(() => Toad.Head)" 
-                                         Value="@Toad.Head" 
+                            <InputSelect id="head" class="form-control"
+                                         ValueExpression="@(() => Toad.Head)"
+                                         Value="@Toad.Head"
                                          ValueChanged="@((Head value) => OnHeadChanged(value))">
                                 @foreach (var value in GetValues<Head>())
                                 {
@@ -100,9 +88,9 @@
 
                         <div class="form-group">
                             <label for="eyes">Eyes:</label>
-                            <InputSelect id="eyes" class="form-control" 
-                                         ValueExpression="@(() => Toad.Eyes)" 
-                                         Value="@Toad.Eyes" 
+                            <InputSelect id="eyes" class="form-control"
+                                         ValueExpression="@(() => Toad.Eyes)"
+                                         Value="@Toad.Eyes"
                                          ValueChanged="@((Eyes value) => OnEyesChanged(value))">
                                 @foreach (var value in GetValues<Eyes>())
                                 {
@@ -113,9 +101,9 @@
 
                         <div class="form-group">
                             <label for="clothes">Clothes:</label>
-                            <InputSelect id="clothes" class="form-control" 
-                                         ValueExpression="@(() => Toad.Clothes)" 
-                                         Value="@Toad.Clothes" 
+                            <InputSelect id="clothes" class="form-control"
+                                         ValueExpression="@(() => Toad.Clothes)"
+                                         Value="@Toad.Clothes"
                                          ValueChanged="@((Clothes value) => OnClothesChanged(value))">
                                 @foreach (var value in GetValues<Clothes>())
                                 {
@@ -126,9 +114,9 @@
 
                         <div class="form-group">
                             <label for="accessoryII">Accessory II:</label>
-                            <InputSelect id="accessoryII" class="form-control" 
-                                         ValueExpression="@(() => Toad.AccessoryIi)" 
-                                         Value="@Toad.AccessoryIi" 
+                            <InputSelect id="accessoryII" class="form-control"
+                                         ValueExpression="@(() => Toad.AccessoryIi)"
+                                         Value="@Toad.AccessoryIi"
                                          ValueChanged="@((AccessoryIi value) => OnAccessoryIiChanged(value))">
                                 @foreach (var value in GetValues<AccessoryIi>())
                                 {
@@ -139,9 +127,9 @@
 
                         <div class="form-group">
                             <label for="accessoryI">Accessory I:</label>
-                            <InputSelect id="accessoryI" class="form-control" 
-                                         ValueExpression="@(() => Toad.AccessoryI)" 
-                                         Value="@Toad.AccessoryI" 
+                            <InputSelect id="accessoryI" class="form-control"
+                                         ValueExpression="@(() => Toad.AccessoryI)"
+                                         Value="@Toad.AccessoryI"
                                          ValueChanged="@((AccessoryI value) => OnAccessoryIChanged(value))">
                                 @foreach (var value in GetValues<AccessoryI>())
                                 {
@@ -154,18 +142,38 @@
                             <label for="traits"># Traits:</label>
                             @if (Traits > 7)
                             {
-                                <input disabled id="traits" type="text" class="form-control invalid" value="@Traits / 7"/>
+                                <input disabled id="traits" type="text" class="form-control invalid" value="@Traits / 7" />
                             }
                             else
                             {
-                                <input disabled id="traits" type="text" class="form-control" value="@Traits / 7"/>
+                                <input disabled id="traits" type="text" class="form-control" value="@Traits / 7" />
                             }
-                            
+
                         </div>
 
                     </EditForm>
+                    
+                    @if (!string.IsNullOrWhiteSpace(BuilderSeed))
+                    {
+                        <br />
+                    
+                        <button class="btn btn-dark" @onclick="DownloadImageAsync">
+                            <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                            <span class="align-middle">Image</span>
+                        </button>
+
+                        <button style="margin-left: 5px" class="btn btn-dark" @onclick="DownloadMetadataAsync">
+                            <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                            <span class="align-middle">Metadata</span>
+                        </button>
+
+                        <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareAsync" target="_blank">
+                            <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                            <span class="align-middle">Share</span>
+                        </button>
+                    }
                 </div>
-                
+
                 @if (!string.IsNullOrWhiteSpace(Error))
                 {
                     <div class="alert alert-danger">@Error</div>
@@ -185,11 +193,6 @@
                                 </p>
                             </article>
                         </div>
-
-                        @if (!string.IsNullOrWhiteSpace(BuilderSeed))
-                        {
-                            <a href="/builder/@BuilderSeed" target="_blank">Share This Built Toad</a>
-                        }
                     }
                     else if (IsLoading)
                     {
@@ -210,10 +213,12 @@
     </section>
 </div>
 
+
+
 @code
 {
     private EditContext _editContext = new(new Toad());
-    private Toad Toad => (Toad) _editContext.Model;
+    private Toad Toad => (Toad)_editContext.Model;
 
     [Parameter]
     public string? BuilderSeed { get; set; }
@@ -271,19 +276,18 @@
         _editContext = new EditContext(Toad);
 
         var uri = Nav.ToAbsoluteUri(Nav.Uri);
+        var query = QueryHelpers.ParseQuery(uri.Query);
 
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("seed", out var seed))
-        {
+        if (query.TryGetValue("seed", out var seed))
             BuilderSeed = seed;
-        }
 
         if (!string.IsNullOrWhiteSpace(BuilderSeed))
         {
             _initializing = true;
-            
+
             var meta = Convert.FromBase64String(BuilderSeed);
-            
-            Toad.Size = (Size) meta.First();
+
+            Toad.Size = (Size)meta.First();
 
             for (var i = 1; i < meta.Length - 1; i++)
             {
@@ -313,41 +317,41 @@
                         Toad.Eyes = Eyes.Creep;
                         break;
                     default:
-                    {
-                        switch (value)
                         {
-                            case >= (byte) Background._95 and <= (byte) Background.Matrix:
-                                Toad.Background = (Background) value;
-                                break;
-                            case >= (byte) Body.Albino and <= (byte) Body.BigGhost:
-                                Toad.Body = (Body) value;
-                                break;
-                            case >= (byte) Mouth.Beard and <= (byte) Mouth.WellActually:
-                                Toad.Mouth = (Mouth) value;
-                                break;
-                            case >= (byte) Eyes.BigYellowSideeye and <= (byte) Eyes.Nerd:
-                                Toad.Eyes = (Eyes) value;
-                                break;
-                            case >= (byte) Head.FunCap and <= (byte) Head.Truffle:
-                                Toad.Head = (Head) value;
-                                break;
-                            case >= (byte) Clothes.GreyHoodie and <= (byte) Clothes.ForceHoodie:
-                                Toad.Clothes = (Clothes) value;
-                                break;
-                            case >= (byte) AccessoryIi.LongCigarette and <= (byte) AccessoryIi.JustForTheLooks:
-                                Toad.AccessoryIi = (AccessoryIi) value;
-                                break;
-                            case >= (byte) AccessoryI.ThreeFlies and <= (byte) AccessoryI.MysteriousHoodie:
-                                Toad.AccessoryI = (AccessoryI) value;
-                                break;
-                        }
+                            switch (value)
+                            {
+                                case >= (byte)Background._95 and <= (byte)Background.Matrix:
+                                    Toad.Background = (Background)value;
+                                    break;
+                                case >= (byte)Body.Albino and <= (byte)Body.BigGhost:
+                                    Toad.Body = (Body)value;
+                                    break;
+                                case >= (byte)Mouth.Beard and <= (byte)Mouth.WellActually:
+                                    Toad.Mouth = (Mouth)value;
+                                    break;
+                                case >= (byte)Eyes.BigYellowSideeye and <= (byte)Eyes.Nerd:
+                                    Toad.Eyes = (Eyes)value;
+                                    break;
+                                case >= (byte)Head.FunCap and <= (byte)Head.Truffle:
+                                    Toad.Head = (Head)value;
+                                    break;
+                                case >= (byte)Clothes.GreyHoodie and <= (byte)Clothes.ForceHoodie:
+                                    Toad.Clothes = (Clothes)value;
+                                    break;
+                                case >= (byte)AccessoryIi.LongCigarette and <= (byte)AccessoryIi.JustForTheLooks:
+                                    Toad.AccessoryIi = (AccessoryIi)value;
+                                    break;
+                                case >= (byte)AccessoryI.ThreeFlies and <= (byte)AccessoryI.MysteriousHoodie:
+                                    Toad.AccessoryI = (AccessoryI)value;
+                                    break;
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
 
-            Toad.NumberOfTraits = (NumberOfTraits) meta.Last();
+            Toad.NumberOfTraits = (NumberOfTraits)meta.Last();
 
             _initializing = false;
         }
@@ -365,43 +369,43 @@
     {
         Toad.Background = value;
         await OnToadChangedAsync();
-    } 
+    }
 
     private async Task OnBodyChanged(Body value)
     {
         Toad.Body = value;
         await OnToadChangedAsync();
-    } 
+    }
 
     private async Task OnMouthChanged(Mouth value)
     {
         Toad.Mouth = value;
         await OnToadChangedAsync();
-    } 
+    }
 
     private async Task OnHeadChanged(Head value)
     {
         Toad.Head = value;
         await OnToadChangedAsync();
-    } 
+    }
 
     private async Task OnEyesChanged(Eyes value)
     {
         Toad.Eyes = value;
         await OnToadChangedAsync();
-    } 
+    }
 
     private async Task OnClothesChanged(Clothes value)
     {
         Toad.Clothes = value;
         await OnToadChangedAsync();
-    } 
+    }
 
     private async Task OnAccessoryIiChanged(AccessoryIi value)
     {
         Toad.AccessoryIi = value;
         await OnToadChangedAsync();
-    } 
+    }
 
     private async Task OnAccessoryIChanged(AccessoryI value)
     {
@@ -431,7 +435,7 @@
                 6 => NumberOfTraits._6,
                 7 => NumberOfTraits._7,
                 _ => NumberOfTraits._1
-                };
+            };
 
             if (!string.IsNullOrWhiteSpace(Options.Value.Url))
             {
@@ -468,7 +472,7 @@
     private void WithBody(string body)
     {
         TokenUri = body;
-        if (!TokenUri.StartsWith("data:application/json;base64,"))
+        if (!TokenUri.StartsWith(JsonDataUri))
         {
             Error = TokenUri;
             TokenUri = null;
@@ -477,15 +481,15 @@
         {
             if (!string.IsNullOrWhiteSpace(TokenUri))
             {
-                var data = TokenUri.Replace("data:application/json;base64,", "");
+                var data = TokenUri.Replace(JsonDataUri, "");
                 var buffer = Convert.FromBase64String(data);
                 var json = Encoding.UTF8.GetString(buffer);
-                
+
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
                 ImageUri = Metadata?.Image;
                 BuilderSeed = Metadata?.Name?.Replace("CrypToadz #", "");
 
-                if(!string.IsNullOrWhiteSpace(BuilderSeed))
+                if (!string.IsNullOrWhiteSpace(BuilderSeed))
                     Nav.NavigateTo($"/builder/?seed={BuilderSeed}");
             }
         }
@@ -508,4 +512,10 @@
         }
         return list;
     }
+
+    private async Task DownloadImageAsync() => await base.DownloadImageAsync(ImageUri!, $"TOADZ_{BuilderSeed}");
+
+    private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{BuilderSeed}");
+
+    private async Task ShareAsync() => await ShareAsync($"/builder/?seed={@BuilderSeed}");
 }

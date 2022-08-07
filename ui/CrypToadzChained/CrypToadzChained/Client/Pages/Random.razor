@@ -1,15 +1,5 @@
 ﻿@page "/random/{TokenSeed?}"
-
-@using System.Text
-@using System.Text.Json
-@using CrypToadzChained.Shared;
-@using System.Net
-@using Microsoft.Extensions.Options
-
-@inject HttpClient Http;
-@inject ILogger<Index> Logger;
-@inject NavigationManager Nav;
-@inject IOptionsSnapshot<Web3Options> Options;
+@inherits PageBase
 
 <PageTitle>CrypToadzChained - Random</PageTitle>
 
@@ -62,6 +52,26 @@
                                     <button class="btn btn-dark" @onclick="OnEditInBuilderClicked">Edit in Builder</button>
                                 </li>
                             </ul>
+
+                            @if (!string.IsNullOrWhiteSpace(TokenSeed))
+                            {
+                                <br />
+                    
+                                <button class="btn btn-dark" @onclick="DownloadImageAsync">
+                                    <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Image</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="DownloadMetadataAsync">
+                                    <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Metadata</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareAsync" target="_blank">
+                                    <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Share</span>
+                                </button>
+                            }
                         </div>
                         <div class="col-xl-7 col-lg-8 col-md-9">
                             <article>
@@ -75,11 +85,6 @@
                             </article>
                         </div>
                     </div>
-
-                    @if (!string.IsNullOrWhiteSpace(TokenSeed))
-                    {
-                        <a href="/random/@TokenSeed" target="_blank">Share This Random Toad</a>
-                    }
                 }
                 else if (IsLoading)
                 {
@@ -210,7 +215,7 @@
     private void WithBody(string body)
     {
         TokenUri = body;
-        if (!TokenUri.StartsWith("data:application/json;base64,"))
+        if (!TokenUri.StartsWith(JsonDataUri))
         {
             Error = TokenUri;
             TokenUri = null;
@@ -220,7 +225,7 @@
             if (string.IsNullOrWhiteSpace(TokenUri))
                 return;
 
-            var data = TokenUri.Replace("data:application/json;base64,", "");
+            var data = TokenUri.Replace(JsonDataUri, "");
             var buffer = Convert.FromBase64String(data);
             var json = Encoding.UTF8.GetString(buffer);
             Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
@@ -244,4 +249,10 @@
         Nav.NavigateTo($"/builder/?seed={WebUtility.UrlEncode(seed)}");
         return Task.CompletedTask;
     }
+
+    private async Task DownloadImageAsync() => await base.DownloadImageAsync(ImageUri!, $"TOADZ_{TokenSeed}");
+
+    private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenSeed}");
+
+    private async Task ShareAsync() => await ShareAsync($"/random/{@TokenSeed}");
 }
