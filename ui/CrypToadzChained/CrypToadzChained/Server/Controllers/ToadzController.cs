@@ -28,19 +28,25 @@ namespace CrypToadzChained.Server.Controllers
         [HttpGet("random")]
         public async Task<string> GetRandomTokenURI()
         {
-            return await _service.GetRandomTokenURIAsync(_options.Value.Url, _options.Value.ContractAddress);
+            return await _service.GetRandomTokenURIAsync(_options.Value.Url, _options.Value.ContractAddress, _logger);
         }
 
         [HttpGet("random/{seed}")]
         public async Task<string> GetRandomTokenURIFromSeed(string seed)
         {
-            return await _service.GetRandomTokenURIFromSeedAsync(seed, _options.Value.Url, _options.Value.ContractAddress);
+            return await _service.GetRandomTokenURIFromSeedAsync(seed, _options.Value.Url, _options.Value.ContractAddress, _logger);
+        }
+
+        [HttpGet("tall/{tokenId}")]
+        public async Task<bool> GetIsTall(uint tokenId)
+        {
+            return await _service.GetIsTallAsync(tokenId, _options.Value.Url, _options.Value.ContractAddress, _logger);
         }
 
         [HttpPost("build")]
         public async Task<string> BuildTokenURI([FromBody] Toad toad)
         {
-            return await _service.BuildTokenURIAsync(toad, _options.Value.Url, _options.Value.ContractAddress);
+            return await _service.BuildTokenURIAsync(toad, _options.Value.Url, _options.Value.ContractAddress, _logger);
         }
     }
 }

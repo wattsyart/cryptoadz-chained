@@ -440,7 +440,7 @@
             if (!string.IsNullOrWhiteSpace(Options.Value.Url))
             {
                 var service = new ToadzService();
-                var body = await service.BuildTokenURIAsync(Toad, Options.Value.Url, Options.Value.ContractAddress);
+                var body = await service.BuildTokenURIAsync(Toad, Options.Value.Url, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -515,7 +515,7 @@
 
     private async Task DownloadImageAsync() => await base.DownloadImageAsync(ImageUri!, $"TOADZ_{BuilderSeed}");
 
-    private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{BuilderSeed}");
+    private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{BuilderSeed}", false);
 
     private async Task ShareAsync() => await ShareAsync($"/builder/?seed={@BuilderSeed}");
 }

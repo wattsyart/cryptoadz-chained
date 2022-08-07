@@ -29,7 +29,7 @@ namespace CrypToadzChained.Client.Pages
         [Inject]
         public IJSRuntime Js { get; set; } = null!;
 
-        protected async Task DownloadImageAsync(string imageUri, string filename = "toad")
+        protected async Task DownloadImageAsync(string imageUri, string filename)
         {
             if (string.IsNullOrWhiteSpace(imageUri))
                 return;
@@ -54,12 +54,17 @@ namespace CrypToadzChained.Client.Pages
             await Js.InvokeVoidAsync("downloadFileFromStream", $"{filename}.{extension}", stream);
         }
 
-        protected async Task DownloadMetadataAsync(JsonTokenMetadata? metadata, string filename = "toad")
+        protected async Task DownloadMetadataAsync(JsonTokenMetadata? metadata, string filename, bool canonical)
         {
             if (metadata == null)
                 return;
 
             var imageData = metadata.ImageData;
+
+            var size = metadata.Attributes.SingleOrDefault(x => x.TraitType == "Size");
+            if (canonical && size != null)
+                metadata.Attributes.Remove(size); // remove size attribute if it was augmented through the app via `isTall`
+            
             byte[] buffer;
             try
             {
@@ -73,6 +78,9 @@ namespace CrypToadzChained.Client.Pages
             finally
             {
                 metadata.ImageData = imageData;
+
+                if (canonical && size != null)
+                    metadata.Attributes.Insert(0, size); // add size attribute back for display purposes
             }
             
             var fileStream = new MemoryStream(buffer);

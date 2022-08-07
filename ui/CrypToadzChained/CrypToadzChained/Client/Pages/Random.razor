@@ -147,7 +147,7 @@
             if (!string.IsNullOrWhiteSpace(Options.Value.Url))
             {
                 var service = new ToadzService();
-                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.Url, Options.Value.ContractAddress);
+                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.Url, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -179,7 +179,7 @@
             if (!string.IsNullOrWhiteSpace(Options.Value.Url))
             {
                 var service = new ToadzService();
-                var body = await service.GetRandomTokenURIAsync(Options.Value.Url, Options.Value.ContractAddress);
+                var body = await service.GetRandomTokenURIAsync(Options.Value.Url, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -252,7 +252,7 @@
 
     private async Task DownloadImageAsync() => await base.DownloadImageAsync(ImageUri!, $"TOADZ_{TokenSeed}");
 
-    private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenSeed}");
+    private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenSeed}", false);
 
     private async Task ShareAsync() => await ShareAsync($"/random/{@TokenSeed}");
 }
