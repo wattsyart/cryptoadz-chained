@@ -51,7 +51,7 @@ library CrypToadzCustomImageBank {
         return BufferUtils.decompress(data, length);
     }
 
-    function getCustomImageSingleUncompressed(uint16 length, address data)
+    function getCustomImageSingleUncompressed(address data)
         internal
         view
         returns (bytes memory buffer)
