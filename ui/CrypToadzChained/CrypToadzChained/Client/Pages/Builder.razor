@@ -1,10 +1,11 @@
-﻿@page "/builder/{BuilderSeed?}"
+﻿@page "/builder"
 
 @using CrypToadzChained.Shared
 @using CrypToadzChained.Shared.Traits
 @using System.ComponentModel
 @using System.Text
 @using System.Text.Json
+@using Microsoft.AspNetCore.WebUtilities
 
 @inject HttpClient Http;
 @inject ILogger<Index> Logger;
@@ -270,6 +271,13 @@
     {
         _editContext = new EditContext(Toad);
 
+        var uri = Nav.ToAbsoluteUri(Nav.Uri);
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("seed", out var seed))
+        {
+            BuilderSeed = seed;
+        }
+
         if (!string.IsNullOrWhiteSpace(BuilderSeed))
         {
             _initializing = true;
@@ -479,7 +487,7 @@
                 BuilderSeed = Metadata?.Name?.Replace("CrypToadz #", "");
 
                 if(!string.IsNullOrWhiteSpace(BuilderSeed))
-                    Nav.NavigateTo($"/builder/{BuilderSeed}");
+                    Nav.NavigateTo($"/builder/?seed={BuilderSeed}");
             }
         }
     }

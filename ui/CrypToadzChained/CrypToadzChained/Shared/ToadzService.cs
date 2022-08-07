@@ -118,6 +118,7 @@ namespace CrypToadzChained.Shared
             var traitValue = metadata.Attributes.SingleOrDefault(x => x.TraitType == traitType)?.Value?.ToString()
                 ?.Replace(" ", "")
                  .Replace("-", "")
+                 .Replace("&", "")
                 ;
 
             Console.WriteLine($"{propertyName} = {traitValue}");
