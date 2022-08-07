@@ -311,6 +311,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
 
     /**
     @notice Retrieves a specific token URI built from raw metadata. This generates a user-defined CrypToadz, not officially part of the collection.
+    @param meta An array of unsigned 8-bit integers (bytes) to use to produce the raw image.
     @dev The data passed here is not validated, so can result in illogical Toadz, or rendering errors, if the format is not valid.
     @dev The following serves as a guideline for forming the input metadata buffer:
          - The array must be between 2 and 7 elements in length
@@ -369,6 +370,16 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     */
     function buildImageURI(uint8[] memory meta)  external view returns (string memory) {
         return IGIFEncoder(encoder).getDataUri(builder.getImage(meta));
+    }
+
+    /**
+    @notice Retrieves whether or not the specified token ID is a tall toad.
+    @dev This method returns `false` even if the given token ID points to a non-existent token.
+    @return `true` if the toad is tall, `false` if the toad is short, or size isn't applicable.
+    @param tokenId Token ID referring to an existing CrypToadz NFT Token ID
+    */
+    function isTall(uint tokenId) external view returns (bool) {
+        return metadata.isTall(tokenId);
     }
 
     function _randomTokenURI(uint64 seed) private view returns (string memory) {        

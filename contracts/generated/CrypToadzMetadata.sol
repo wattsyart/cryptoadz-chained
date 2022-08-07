@@ -43,15 +43,20 @@ import "../ICrypToadzMetadata.sol";
 import "../BufferUtils.sol";
 
 contract CrypToadzMetadata is ICrypToadzMetadata {
+
     mapping(uint8 => uint16) metadataLengths;
     mapping(uint8 => address) metadataData;
 
     function isTall(uint tokenId) external view returns (bool) {
         uint8 metadataFile = getMetadataFileForToken(tokenId);
+        if(metadataFile > 12) return false;
+
         bytes memory buffer = BufferUtils.decompress(metadataData[metadataFile], metadataLengths[metadataFile]);
-        (uint position,) = BufferUtils.advanceToTokenPosition(tokenId, buffer);
+        (uint position, uint8 length) = BufferUtils.advanceToTokenPosition(tokenId, buffer);
+
+        if(length == 0) return false;
         return buffer[position] == bytes1(uint8(120));
-    }    
+    }
 
     function getMetadata(uint256 tokenId) external view returns (uint8[] memory metadata)
     {
