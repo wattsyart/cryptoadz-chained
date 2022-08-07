@@ -8,14 +8,17 @@ describe("Deployments", function () {
 
     // private node has throw-away key, doesn't need a hardware wallet
     if(network.chainId == 8134646) {      
+      console.log("Deploying to private node...")
       await utils.deployContracts(hre.ethers, false, false);
       return;
     }
 
     // Deploy to real network w/ hardware wallet HID:
+    // console.log("Deploying with hardware wallet...")
     // await utils.deployContracts(hre.ethers, false, false, getTxOptions(), "HID_FRESH_ADDRESS_PATH_GOES_HERE");
 
     // Deploy to real network without hardware wallet (adding a signer override is left to the caller)
+    console.log("Deploying with implicit signer...")
     await utils.deployContracts(hre.ethers, false, false, getTxOptions());
 
     // Random Testing:

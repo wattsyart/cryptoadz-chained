@@ -5,12 +5,14 @@ async function main() {
   const network = await ethers.provider.getNetwork();
 
   // private node has throw-away key, doesn't need a hardware wallet
-  if(network.chainId == 8134646) {      
+  if(network.chainId == 8134646) {    
+    console.log("Deploying to private node...")  
     await utils.deployContracts(hre.ethers, false, false);
     return;
   }
 
   // Deploy to real network (using HID or adding a local signer is left to the caller to override):
+  console.log("Deploying with implicit signer...")
   await utils.deployContracts(hre.ethers, false, false, getTxOptions());
 }
 
