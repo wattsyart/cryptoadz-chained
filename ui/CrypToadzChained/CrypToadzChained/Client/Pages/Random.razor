@@ -5,7 +5,7 @@
     
     <div class="form-group">
         <label for="url">Web3 URL:</label>
-        <input id="url" type="text" class="form-control" @bind="Options.Value.Url" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+        <input id="url" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
     </div>
     
     <br/>
@@ -142,10 +142,10 @@
             ImageUri = null;
             Error = null;
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.Url))
+            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
                 var service = new ToadzService();
-                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.Url, Options.Value.ContractAddress, Logger);
+                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -174,10 +174,10 @@
             Metadata = null;
             ImageUri = null;
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.Url))
+            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
                 var service = new ToadzService();
-                var body = await service.GetRandomTokenURIAsync(Options.Value.Url, Options.Value.ContractAddress, Logger);
+                var body = await service.GetRandomTokenURIAsync(Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else

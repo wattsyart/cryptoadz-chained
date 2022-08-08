@@ -4,7 +4,7 @@
 <div class="container">
     <div class="form-group">
         <label for="url">Web3 URL:</label>
-        <input id="url" type="text" class="form-control" @bind="Options.Value.Url" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+        <input id="url" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
     </div>
 </div>
 
@@ -25,7 +25,7 @@
                                          ValueExpression="@(() => Toad.Size)"
                                          Value="@Toad.Size"
                                          ValueChanged="@((Size value) => @OnSizeChanged(value))">
-                                @foreach (var value in GetValues<Size>())
+                                @foreach (var value in EnumExtensions.GetValues<Size>())
                                 {
                                     <option value="@value">@value</option>
                                 }
@@ -38,9 +38,9 @@
                                          ValueExpression="@(() => Toad.Background)"
                                          Value="@Toad.Background"
                                          ValueChanged="@((Background value) => @OnBackgroundChanged(value))">
-                                @foreach (var value in GetValues<Background>())
+                                @foreach (var value in EnumExtensions.GetValues<Background>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -51,9 +51,9 @@
                                          ValueExpression="@(() => Toad.Body)"
                                          Value="@Toad.Body"
                                          ValueChanged="@((Body value) => @OnBodyChanged(value))">
-                                @foreach (var value in GetValues<Body>())
+                                @foreach (var value in EnumExtensions.GetValues<Body>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -64,9 +64,9 @@
                                          ValueExpression="@(() => Toad.Mouth)"
                                          Value="@Toad.Mouth"
                                          ValueChanged="@((Mouth value) => OnMouthChanged(value))">
-                                @foreach (var value in GetValues<Mouth>())
+                                @foreach (var value in EnumExtensions.GetValues<Mouth>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -77,9 +77,9 @@
                                          ValueExpression="@(() => Toad.Head)"
                                          Value="@Toad.Head"
                                          ValueChanged="@((Head value) => OnHeadChanged(value))">
-                                @foreach (var value in GetValues<Head>())
+                                @foreach (var value in EnumExtensions.GetValues<Head>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -90,9 +90,9 @@
                                          ValueExpression="@(() => Toad.Eyes)"
                                          Value="@Toad.Eyes"
                                          ValueChanged="@((Eyes value) => OnEyesChanged(value))">
-                                @foreach (var value in GetValues<Eyes>())
+                                @foreach (var value in EnumExtensions.GetValues<Eyes>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -103,9 +103,9 @@
                                          ValueExpression="@(() => Toad.Clothes)"
                                          Value="@Toad.Clothes"
                                          ValueChanged="@((Clothes value) => OnClothesChanged(value))">
-                                @foreach (var value in GetValues<Clothes>())
+                                @foreach (var value in EnumExtensions.GetValues<Clothes>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -116,9 +116,9 @@
                                          ValueExpression="@(() => Toad.AccessoryIi)"
                                          Value="@Toad.AccessoryIi"
                                          ValueChanged="@((AccessoryIi value) => OnAccessoryIiChanged(value))">
-                                @foreach (var value in GetValues<AccessoryIi>())
+                                @foreach (var value in EnumExtensions.GetValues<AccessoryIi>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -129,9 +129,9 @@
                                          ValueExpression="@(() => Toad.AccessoryI)"
                                          Value="@Toad.AccessoryI"
                                          ValueChanged="@((AccessoryI value) => OnAccessoryIChanged(value))">
-                                @foreach (var value in GetValues<AccessoryI>())
+                                @foreach (var value in EnumExtensions.GetValues<AccessoryI>())
                                 {
-                                    <option value="@value">@Describe(value)</option>
+                                    <option value="@value">@value.Describe()</option>
                                 }
                             </InputSelect>
                         </div>
@@ -435,10 +435,10 @@
                 _ => NumberOfTraits._1
             };
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.Url))
+            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
                 var service = new ToadzService();
-                var body = await service.BuildTokenURIAsync(Toad, Options.Value.Url, Options.Value.ContractAddress, Logger);
+                var body = await service.BuildTokenURIAsync(Toad, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -500,24 +500,6 @@
                     Nav.NavigateTo($"/builder/?seed={BuilderSeed}");
             }
         }
-    }
-
-    public static string? Describe<T>(T @enum)
-    {
-        var field = @enum!.GetType().GetField(@enum.ToString()!);
-        var attributes = (DescriptionAttribute[])field!.GetCustomAttributes(typeof(DescriptionAttribute), false);
-        return attributes is { Length: > 0 } ? attributes[0].Description : @enum.ToString();
-    }
-
-    private static IEnumerable<object> GetValues<T>() where T : Enum
-    {
-        var values = Enum.GetValues(typeof(T));
-        var list = new HashSet<object>();
-        foreach (var value in values)
-        {
-            list.Add(value);
-        }
-        return list;
     }
 
     private async Task DownloadImageAsync() => await base.DownloadImageAsync(ImageUri!, $"TOADZ_{BuilderSeed}");

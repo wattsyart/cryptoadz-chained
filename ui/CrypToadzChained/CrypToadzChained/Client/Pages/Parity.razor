@@ -1,0 +1,187 @@
+﻿@page "/parity"
+@inherits PageBase
+
+<div class="container">
+    
+    <EditForm Model="@Model">
+        <DataAnnotationsValidator />
+        
+        <div class="form-group">
+            <label for="contractAddress">Contract Address:</label>
+            <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.ContractAddress" placeholder="CrypToadzChained Contract Address" />
+        </div>
+
+        <div class="form-group">
+            <label for="rpcUrl">RPC URL:</label>
+            <input id="rpcUrl" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Web3 RPC URL"/>
+        </div>
+
+        <div class="form-group">
+            <label for="parity">Parity Source:</label>
+            <InputSelect id="parity" class="form-control"
+                         ValueExpression="@(() => Model.Source)"
+                         Value="Model.Source"
+                         ValueChanged="@((ParitySource value) => @OnSourceChanged(value))">
+                @foreach (var value in EnumExtensions.GetValues<ParitySource>())
+                {
+                    <option value="@value">@value.Describe()</option>
+                }
+            </InputSelect>
+        </div>
+        
+        @if (Model.Source == ParitySource.Provenance)
+        {
+            <div class="form-group">
+                <label for="ipfsUrl">IPFS URL:</label>
+                <input id="ipfsUrl" type="text" class="form-control" @bind="Options.Value.IpfsUrl" placeholder="IPFS Gateway URL"/>
+            </div>
+        }
+        
+        @if (IsRunning)
+        {
+            <button class="btn btn-dark" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Running...
+            </button>
+
+            <button class="btn btn-danger" @onclick="StopAsync">Cancel</button>
+        }
+        else
+        {
+            <button class="btn btn-dark" @onclick="StartAsync">Start Test</button>
+        }
+
+    </EditForm>
+    
+    <br/>
+    <br/>
+    
+    @if (!string.IsNullOrWhiteSpace(Error))
+    {
+        <div class="alert alert-danger">@Error</div>
+    }
+    else if(_state != null)
+    {
+
+    }
+</div>
+
+
+<br />
+<br />
+
+<div>
+    <section>
+        <div class="container">
+        </div>
+    </section>
+</div>
+
+@code
+{
+    [Parameter]
+    public ParityOptions Model { get; set; } = new();
+
+    [Parameter]
+    public bool IsRunning { get; set; }
+
+    [Parameter]
+    public string? Error { get; set; }
+
+    private Task OnSourceChanged(ParitySource source)
+    {
+        Model.Source = source;
+        return Task.CompletedTask;
+    }
+    
+    private CancellationTokenSource? _cancellationTokenSource;
+    private CancellationToken? _cancellationToken;
+    private ParityState? _state;
+    private Task<ParityState>? _pending;
+
+    private async Task StartAsync()
+    {
+        if (IsRunning)
+            return;
+
+        Error = null;
+
+        try
+        {
+            IsRunning = true;
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationToken = _cancellationTokenSource.Token;
+            _pending = DoWorkAsync(_cancellationToken.GetValueOrDefault(CancellationToken.None));
+
+            var result = await _pending;
+
+            if (!IsCancelled)
+            {
+                _state = result;
+            }
+        }
+        catch (Exception e)
+        {
+            var cancelled = IsCancelled;
+
+            Error = cancelled
+                ? "Parity check was cancelled by the user" 
+                : e.Message;
+
+            if (!cancelled)
+            {
+                Logger.LogError(e, "Failed parity check");
+            }
+        }
+        finally
+        {
+            FinishTask();
+        }
+    }
+
+    private static async Task<ParityState> DoWorkAsync(CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        await Task.Delay(3000, cancellationToken);
+        return new ParityState();
+    }
+
+    private Task StopAsync()
+    {
+        try
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationToken?.ThrowIfCancellationRequested();
+        }
+        catch (Exception e)
+        {
+            var cancelled = IsCancelled;
+
+            Error = cancelled
+                ? "Parity check was cancelled by the user" 
+                : e.Message;
+
+            if (!cancelled)
+            {
+                Logger.LogError(e, "Failed parity check");
+            }
+        }
+        finally
+        {
+            FinishTask();
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    private bool IsCancelled => (_cancellationTokenSource?.IsCancellationRequested).GetValueOrDefault();
+
+    private void FinishTask()
+    {
+        IsRunning = false;
+        _cancellationTokenSource = null;
+        _cancellationToken = null;
+        StateHasChanged();
+    }
+}

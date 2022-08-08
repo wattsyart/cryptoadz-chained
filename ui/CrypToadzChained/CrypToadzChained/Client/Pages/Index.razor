@@ -5,7 +5,7 @@
     
     <div class="form-group">
         <label for="url">Web3 URL:</label>
-        <input id="url" type="text" class="form-control" @bind="Options.Value.Url" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+        <input id="url" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
     </div>
     
     <br/>
@@ -120,6 +120,8 @@
     [Parameter]
     public string? Error { get; set; }
 
+    public bool IsLargeAnimation => (uint.TryParse(Metadata?.Name?.Replace("CrypToadz #", ""), out var tokenId) && LUT.LargeAnimationTokenIds.Contains(tokenId));
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -143,10 +145,10 @@
             ImageUri = null;
             Error = null;
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.Url))
+            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
                 var service = new ToadzService();
-                var body = await service.GetCanonicalTokenURIAsync(tokenId, Options.Value.Url, Options.Value.ContractAddress, Logger);
+                var body = await service.GetCanonicalTokenURIAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 await WithBodyAsync(body);
             }
             else
@@ -205,13 +207,13 @@
                 {
                     uint.TryParse(TokenId, out var tokenId);
 
-                    if (!CustomAnimationTokenIds.Contains(tokenId) && !CustomAnimationTokenIds.Contains(tokenId))
+                    if (!LUT.CustomAnimationTokenIds.Contains(tokenId) && !LUT.CustomAnimationTokenIds.Contains(tokenId))
                     {
                         bool isTall;
-                        if (!string.IsNullOrWhiteSpace(Options.Value.Url))
+                        if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
                         {
                             var service = new ToadzService();
-                            isTall = await service.GetIsTallAsync(tokenId, Options.Value.Url, Options.Value.ContractAddress, Logger);                            
+                            isTall = await service.GetIsTallAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);                            
                         }
                         else
                         {
@@ -237,177 +239,5 @@
 
     private async Task DownloadMetadataAsync() => await DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenId}", true);
 
-    private async Task ShareAsync() => await ShareAsync($"/{TokenId}");
-
-    
-    #region LUTs
-
-    private static readonly HashSet<uint> LargeAnimationTokenIds = new()
-    {
-        37,
-        318,
-        466,
-        1943,
-        3661,
-        4035,
-        4911,
-        5086
-    };
-
-    private static readonly HashSet<uint> CustomAnimationTokenIds = new()
-    {
-        37,
-        318,
-        466,
-        1519,
-        1943,
-        2208,
-        3250,
-        3661,
-        4035,
-        4911,
-        5086,
-        5844,
-        6131,
-        43000000,
-        48000000
-    };
-
-    private static readonly HashSet<uint> CustomImageTokenIds = new()
-    {
-        123,
-        316,
-        472,
-        491,
-        703,
-        864,
-        916,
-        936,
-        966,
-        1005,
-        1165,
-        1423,
-        1559,
-        1637,
-        1703,
-        1754,
-        1793,
-        1812,
-        1935,
-        1975,
-        2124,
-        2232,
-        2327,
-        2469,
-        2471,
-        2482,
-        2489,
-        2521,
-        2569,
-        2579,
-        2709,
-        2825,
-        2839,
-        2846,
-        2865,
-        2959,
-        2986,
-        3196,
-        3309,
-        3382,
-        3703,
-        4096,
-        4126,
-        4152,
-        4192,
-        4201,
-        4221,
-        4238,
-        4368,
-        4578,
-        4580,
-        4604,
-        4714,
-        4773,
-        4845,
-        4896,
-        5128,
-        5150,
-        5262,
-        5441,
-        5471,
-        5730,
-        5836,
-        5848,
-        5902,
-        6214,
-        6382,
-        6491,
-        6572,
-        6578,
-        6631,
-        6719,
-        6736,
-        6852,
-        6894,
-        6916,
-        1000000,
-        2000000,
-        3000000,
-        4000000,
-        5000000,
-        6000000,
-        7000000,
-        8000000,
-        9000000,
-        10000000,
-        11000000,
-        12000000,
-        13000000,
-        14000000,
-        15000000,
-        16000000,
-        17000000,
-        18000000,
-        19000000,
-        20000000,
-        21000000,
-        22000000,
-        23000000,
-        24000000,
-        25000000,
-        26000000,
-        27000000,
-        28000000,
-        29000000,
-        30000000,
-        31000000,
-        32000000,
-        33000000,
-        34000000,
-        35000000,
-        36000000,
-        37000000,
-        38000000,
-        39000000,
-        40000000,
-        41000000,
-        42000000,
-        44000000,
-        45000000,
-        46000000,
-        47000000,
-        49000000,
-        50000000,
-        51000000,
-        52000000,
-        53000000,
-        54000000,
-        55000000,
-        56000000
-    };
-
-    public bool IsLargeAnimation => (uint.TryParse(Metadata?.Name?.Replace("CrypToadz #", ""), out var tokenId) && LargeAnimationTokenIds.Contains(tokenId));
-
-    #endregion
+    private async Task ShareAsync() => await ShareAsync($"/{TokenId}");    
 }
