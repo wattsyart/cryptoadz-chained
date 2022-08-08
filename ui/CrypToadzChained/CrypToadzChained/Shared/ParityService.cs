@@ -220,7 +220,6 @@ namespace CrypToadzChained.Shared
             
             row.BadPixels = badPixels;
             row.DeltaImageUri = Image.Load<Rgba32>(await File.ReadAllBytesAsync(deltaImagePath, cancellationToken), Png).ToBase64String(PngFormat.Instance);
-
             return row;
         }
 

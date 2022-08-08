@@ -66,9 +66,16 @@
 
         <br />
         
-        @if (!IsRunning && string.IsNullOrWhiteSpace(Error) && _state != null && _state.Errors.Count == 0)
+        @if (!IsRunning && string.IsNullOrWhiteSpace(Error) && _state != null)
         {
-            <div class="alert alert-success">Tests passed!</div>
+            if (_state.Errors.Count == 0)
+            {
+                <div class="alert alert-success">Tests passed :)</div>
+            }
+            else
+            {
+                <div class="alert alert-danger">Tests failed :(</div>
+            }
         }
 
         @if (IsRunning)
@@ -201,6 +208,13 @@
     {
         Logger?.LogInformation("StateHasChangedAsync invoking");
 
+        await TryRunDeltasAsync();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task TryRunDeltasAsync()
+    {
         if (_state != null)
         {
             foreach (var row in _state.Rows)
@@ -216,16 +230,21 @@
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var newRow = JsonSerializer.Deserialize<ParityStateRow>(json, new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
                     if (newRow != null)
                     {
                         row.BadPixels = newRow.BadPixels;
                         row.DeltaImageUri = newRow.DeltaImageUri;
+
+                        _state.Errors.Add(new ParityError { TokenId = row.TokenId, Message = $"Found {row.BadPixels} bad pixels in on-chain image"});
                     }
+                }
+                else
+                {
+                    _state.Errors.Add(new ParityError { TokenId = row.TokenId, Message = $"Error calling endpoint to compare images: {(int) response.StatusCode} {response.ReasonPhrase}"});
                 }
             }
         }
-
-        await InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()
