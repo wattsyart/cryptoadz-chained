@@ -80,8 +80,8 @@
     else if(_state != null)
     {
         <Table TableItem="ParityStateRow" Items="@_state.Rows" PageSize="15">
-            <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" Width="10%" />
-            <Column TableItem="ParityStateRow" Title="Source Image" Field="@(x => x.SourceImageUri!)" Sortable="true" Filterable="true" Width="20%">
+            <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" />
+            <Column TableItem="ParityStateRow" Title="Source Image" Field="@(x => x.SourceImageUri!)" Sortable="true" Filterable="true">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(@context.SourceImageUri))
                     {
@@ -89,7 +89,7 @@
                     }
                 </Template>
             </Column>
-            <Column TableItem="ParityStateRow" Title="Source Image" Field="@(x => x.TargetImageUri!)" Sortable="true" Filterable="true" Width="20%">
+            <Column TableItem="ParityStateRow" Title="Target Image" Field="@(x => x.TargetImageUri!)" Sortable="true" Filterable="true">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(@context.TargetImageUri))
                     {
