@@ -40,7 +40,7 @@
             case ParitySource.Current:
                 <div class="form-group">
                     <label for="mainNetRpcUrl">MainNet RPC URL:</label>
-                    <input id="mainNetRpcUrl" type="text" class="form-control" @bind="@MainNetRpcUrl" placeholder="MainNet Web3 RPC URL"/>
+                    <input id="mainNetRpcUrl" type="text" class="form-control" @bind="@Options.Value.MainNetRpcUrl" placeholder="MainNet Web3 RPC URL"/>
                 </div>
                 break;
         }
@@ -58,7 +58,7 @@
         }
         else
         {
-            if (Model.Source == ParitySource.Current && !string.IsNullOrWhiteSpace(MainNetRpcUrl))
+            if (Model.Source == ParitySource.Current && !string.IsNullOrWhiteSpace(Options.Value.MainNetRpcUrl))
             {
                 <button class="btn btn-dark" @onclick="StartAsync">Start Test</button>
             }
@@ -118,9 +118,6 @@
 
     [Parameter]
     public string? Error { get; set; }
-
-    [Parameter]
-    public string? MainNetRpcUrl { get; set; }
 
     [Inject]
     public ParityService Service { get; set; } = null!;
@@ -242,7 +239,7 @@
         _state = new ParityState();
         cancellationToken.ThrowIfCancellationRequested();
 
-        await Service.StartAsync(Model, _state, Http, MainNetRpcUrl!, 
+        await Service.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!, 
             continueOnError: false,
             logger: Logger,
             cancellationToken: cancellationToken);
