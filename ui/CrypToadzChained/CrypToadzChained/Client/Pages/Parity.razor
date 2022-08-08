@@ -89,11 +89,28 @@
                     }
                 </Template>
             </Column>
+            <Column TableItem="ParityStateRow" Title="Source Image" Field="@(x => x.TargetImageUri!)" Sortable="true" Filterable="true" Width="20%">
+                <Template>
+                    @if (!string.IsNullOrWhiteSpace(@context.TargetImageUri))
+                    {
+                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.SourceImageUri" alt=""/>
+                    }
+                </Template>
+            </Column>
             <Pager ShowPageNumber="true" ShowTotalCount="true" />
             <EmptyDataTemplate>
                 No results yet.
             </EmptyDataTemplate>
         </Table>
+
+        @if (_state.Errors.Count > 0)
+        {
+            <h4>Errors</h4>
+            <Table TableItem="string" Items="@_state.Errors" PageSize="15">
+                <Column TableItem="string" Title="Error Message" Field="@(r => r)" Sortable="true" Filterable="true" Width="10%" />
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
     }
 </div>
 
@@ -239,7 +256,9 @@
         _state = new ParityState();
         cancellationToken.ThrowIfCancellationRequested();
 
-        await Service.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!, 
+        await Service.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!,
+            rinkebyRpcUrl: Options.Value.RpcUrl,
+            contractAddress: Options.Value.ContractAddress,
             continueOnError: false,
             logger: Logger,
             cancellationToken: cancellationToken);

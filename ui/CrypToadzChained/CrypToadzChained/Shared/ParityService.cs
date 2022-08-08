@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Nethereum.Web3;
@@ -15,6 +16,7 @@ namespace CrypToadzChained.Shared
 
         private readonly GifDecoder _gif;
         private readonly PngDecoder _png;
+        private readonly ToadzService _service;
 
         public event Func<Task>? OnChangeAsync;
 
@@ -22,10 +24,26 @@ namespace CrypToadzChained.Shared
         {
             _gif = new GifDecoder();
             _png = new PngDecoder();
+            _service = new ToadzService();
         }
 
-        public async Task StartAsync(ParityOptions options, ParityState state, HttpClient http, string mainNetRpcUrl, bool continueOnError, ILogger logger, CancellationToken cancellationToken)
+        public async Task StartAsync(ParityOptions options, ParityState state, HttpClient http, string mainNetRpcUrl, string rinkebyRpcUrl, string contractAddress, bool continueOnError, ILogger logger, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrWhiteSpace(mainNetRpcUrl))
+            {
+                throw new InvalidOperationException("Must provide MainNet RPC URL (Source)");
+            }
+
+            if (string.IsNullOrWhiteSpace(rinkebyRpcUrl))
+            {
+                throw new InvalidOperationException("Must provide Rinkeby RPC URL (Target)");
+            }
+
+            if (string.IsNullOrWhiteSpace(contractAddress))
+            {
+                throw new InvalidOperationException("Must provide Rinkeby RPC URL");
+            }
+
             if (options.Source != ParitySource.Current)
             {
                 throw new NotImplementedException("Parity testing currently supports BaseURI only");
@@ -49,9 +67,9 @@ namespace CrypToadzChained.Shared
                         TokenId = tokenId
                     };
 
-                    var tokenUri = await service.TokenURIQueryAsync(tokenId);
+                    var sourceTokenUri = await service.TokenURIQueryAsync(tokenId);
 
-                    if (string.IsNullOrWhiteSpace(tokenUri))
+                    if (string.IsNullOrWhiteSpace(sourceTokenUri))
                     {
                         state.Errors.Add($"No tokenURI returned for CrypToadz #{tokenId}");
                         if (!continueOnError)
@@ -59,10 +77,10 @@ namespace CrypToadzChained.Shared
                         continue;
                     }
 
-                    var json = await http.GetStringAsync(tokenUri, cancellationToken);
+                    var sourceJson = await http.GetStringAsync(sourceTokenUri, cancellationToken);
 
-                    var metadata = JsonSerializer.Deserialize<JsonTokenMetadata?>(json);
-                    if (metadata == null)
+                    var sourceMetadata = JsonSerializer.Deserialize<JsonTokenMetadata?>(sourceJson);
+                    if (sourceMetadata == null)
                     {
                         state.Errors.Add($"Failed to parse metadata for CrypToadz #{tokenId}");
                         if (!continueOnError)
@@ -70,25 +88,11 @@ namespace CrypToadzChained.Shared
                         continue;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(metadata.Image))
+                    if (!string.IsNullOrWhiteSpace(sourceMetadata.Image))
                     {
-                        var buffer = await http.GetByteArrayAsync(metadata.Image, cancellationToken);
-
-                        var isGif = LUT.CustomAnimationTokenIds.Contains(tokenId);
-
-                        var sw = Stopwatch.StartNew();
-
-                        Image image = isGif
-                            ? Image.Load<Rgba32>(buffer, _gif)
-                            : Image.Load<Rgba32>(buffer, _png);
-
-                        var imageUri = isGif
-                            ? image.ToBase64String(GifFormat.Instance)
-                            : image.ToBase64String(PngFormat.Instance);
-
+                        var buffer = await http.GetByteArrayAsync(sourceMetadata.Image, cancellationToken);
+                        TryGetImageUriFromBuffer(tokenId, buffer, out var imageUri, logger);
                         row.SourceImageUri = imageUri;
-
-                        logger?.LogInformation("Image conversion took {Elapsed}", sw.Elapsed);
                     }
                     else
                     {
@@ -98,6 +102,46 @@ namespace CrypToadzChained.Shared
                             return;
                         continue;
                     }
+
+                    var targetTokenUri = await _service.GetCanonicalTokenURIAsync(tokenId, rinkebyRpcUrl, contractAddress, logger);
+                    if (!string.IsNullOrWhiteSpace(targetTokenUri))
+                    {
+                        var targetJson =
+                            Encoding.UTF8.GetString(
+                                Convert.FromBase64String(targetTokenUri.Replace(Constants.JsonDataUri, "")));
+
+                        var targetMetadata = JsonSerializer.Deserialize<JsonTokenMetadata?>(targetJson);
+                        if (targetMetadata == null)
+                        {
+                            state.Errors.Add($"Failed to parse target metadata for CrypToadz #{tokenId}");
+                            if (!continueOnError)
+                                return;
+                            continue;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(targetMetadata.Image))
+                        {
+                            row.TargetImageUri = targetMetadata.Image;
+                        }
+                        else 
+                        {
+                            state.Errors.Add($"Missing target metadata image URI for CrypToadz #{tokenId}");
+
+                            if (!continueOnError)
+                                return;
+                            continue;
+                        }
+                    }
+
+                    else
+                    {
+                        state.Errors.Add($"Missing target tokenURI for CrypToadz #{tokenId}");
+
+                        if (!continueOnError)
+                            return;
+                        continue;
+                    }
+
 
                     state.Rows.Add(row);
                 }
@@ -121,10 +165,33 @@ namespace CrypToadzChained.Shared
 
                     if (OnChangeAsync == null)
                     {
-                        logger?.LogWarning("OnChange was not registered");
+                        logger?.LogWarning("OnChange was not registered!");
                     }
                 }
             }
+        }
+
+        private void TryGetImageUriFromBuffer(uint tokenId, byte[] buffer, out string imageUri, ILogger? logger)
+        {
+            var isGif = IsGif(tokenId);
+
+            var sw = Stopwatch.StartNew();
+
+            Image image = isGif
+                ? Image.Load<Rgba32>(buffer, _gif)
+                : Image.Load<Rgba32>(buffer, _png);
+
+            imageUri = isGif
+                ? image.ToBase64String(GifFormat.Instance)
+                : image.ToBase64String(PngFormat.Instance);
+
+            logger?.LogInformation("Image conversion took {Elapsed}", sw.Elapsed);
+        }
+
+        private static bool IsGif(uint tokenId)
+        {
+            var isGif = LUT.CustomAnimationTokenIds.Contains(tokenId);
+            return isGif;
         }
     }
 }

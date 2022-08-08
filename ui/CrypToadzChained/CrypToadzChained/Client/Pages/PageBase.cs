@@ -10,10 +10,6 @@ namespace CrypToadzChained.Client.Pages
 {
     public class PageBase : ComponentBase
     {
-        public const string PngDataUri = "data:image/png;base64,";
-        public const string GifDataUri = "data:image/gif;base64,";
-        public const string JsonDataUri = "data:application/json;base64,";
-
         [Inject]
         public HttpClient Http { get; set; } = null!;
 
@@ -36,15 +32,15 @@ namespace CrypToadzChained.Client.Pages
 
             string extension;
             string data;
-            if (imageUri.StartsWith(PngDataUri))
+            if (imageUri.StartsWith(Constants.PngDataUri))
             {
                 extension = "png";
-                data = imageUri.Replace(PngDataUri, "");
+                data = imageUri.Replace(Constants.PngDataUri, "");
             }
             else
             {
                 extension = "gif";
-                data = imageUri.Replace(GifDataUri, "");
+                data = imageUri.Replace(Constants.GifDataUri, "");
             }
             
             var buffer = Convert.FromBase64String(data);

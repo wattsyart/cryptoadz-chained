@@ -213,7 +213,7 @@
     private void WithBody(string body)
     {
         TokenUri = body;
-        if (!TokenUri.StartsWith(JsonDataUri))
+        if (!TokenUri.StartsWith(Constants.JsonDataUri))
         {
             Error = TokenUri;
             TokenUri = null;
@@ -223,7 +223,7 @@
             if (string.IsNullOrWhiteSpace(TokenUri))
                 return;
 
-            var data = TokenUri.Replace(JsonDataUri, "");
+            var data = TokenUri.Replace(Constants.JsonDataUri, "");
             var buffer = Convert.FromBase64String(data);
             var json = Encoding.UTF8.GetString(buffer);
             Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);

@@ -13,7 +13,7 @@ namespace CrypToadzChained.Shared
 {
     public sealed class ToadzService
     {
-        public async Task<bool> GetIsTallAsync(uint tokenId, string url, string contractAddress, ILogger logger)
+        public async Task<bool> GetIsTallAsync(uint tokenId, string url, string contractAddress, ILogger? logger)
         {
             var web3 = new Web3(url);
             var contract = web3.Eth.ERC721.GetContractService(contractAddress);
@@ -25,12 +25,12 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Failed to fetch tallness by token ID");
+                logger?.LogError(ex, "Failed to fetch tallness by token ID");
                 return false;
             }
         }
 
-        public async Task<string> GetCanonicalTokenURIAsync(uint tokenId, string url, string contractAddress, ILogger logger)
+        public async Task<string> GetCanonicalTokenURIAsync(uint tokenId, string url, string contractAddress, ILogger? logger)
         {
             var web3 = new Web3(url);
             var contract = web3.Eth.ERC721.GetContractService(contractAddress);
@@ -43,7 +43,7 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch canonical token ID");
 
                 if (ex is SmartContractRevertException revert)
                 {
@@ -59,7 +59,7 @@ namespace CrypToadzChained.Shared
             }
         }
 
-        public async Task<string> GetRandomTokenURIAsync(string url, string contractAddress, ILogger logger)
+        public async Task<string> GetRandomTokenURIAsync(string url, string contractAddress, ILogger? logger)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch canonical token ID");
 
                 if (ex is SmartContractRevertException revert)
                 {
@@ -87,7 +87,7 @@ namespace CrypToadzChained.Shared
             }
         }
 
-        public async Task<string> GetRandomTokenURIFromSeedAsync(string seed, string url, string contractAddress, ILogger logger)
+        public async Task<string> GetRandomTokenURIFromSeedAsync(string seed, string url, string contractAddress, ILogger? logger)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch canonical token ID");
 
                 if (ex is SmartContractRevertException revert)
                 {
@@ -117,7 +117,7 @@ namespace CrypToadzChained.Shared
             }
         }
 
-        public async Task<string> BuildTokenURIAsync(Toad toad, string url, string contractAddress, ILogger logger)
+        public async Task<string> BuildTokenURIAsync(Toad toad, string url, string contractAddress, ILogger? logger)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch canonical token ID");
 
                 if (ex is SmartContractRevertException revert)
                 {
