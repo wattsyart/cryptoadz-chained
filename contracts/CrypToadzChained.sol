@@ -468,6 +468,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     }
 
     struct Toad {
+        uint8 size;
         uint8 head;
         uint8 accessoryI;
     }
@@ -537,6 +538,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         }
 
         Toad memory toad;
+        toad.size = meta[0];
 
         uint8 index = 3;
         if (flags[0]) {
@@ -574,72 +576,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         }
 
         if (flags[5]) {
-            _rollAccessoryI(src, toad);
-
-            // if we have a head or clothes, don't pick the hoodie
-            while ((flags[1] || flags[3]) && toad.accessoryI == 245) {
+            while(!_isAccessoryIValid(flags, toad)) {
                 _rollAccessoryI(src, toad);
             }
-
-            // if we have a head, don't pick drive-thru
-            while (flags[1] && toad.accessoryI == 241) {
-                _rollAccessoryI(src, toad);
-            }
-
-            // if we are short with any of these heads, don't pick explorer
-            if (flags[1] && toad.accessoryI == 238) {
-                if (meta[0] == 119) {
-                    if (
-                        toad.head == 65 || // Wizard
-                        toad.head == 71 || // Red Gnome
-                        toad.head == 88 || // Teal Gnome
-                        toad.head == 94 // Tophat
-                    ) {
-                        while (toad.accessoryI == 238) {
-                            _rollAccessoryI(src, toad);
-                        }
-                    }
-                } else if (meta[0] == 120) {
-                    // if we are tall with any of these heads, don't pick explorer
-                    if (
-                        toad.head == 52 || // Swampy Crazy
-                        toad.head == 53 || // Wild Black
-                        toad.head == 54 || // Fez
-                        toad.head == 57 || // Teal Knit Hat
-                        toad.head == 60 || // Backward Cap
-                        toad.head == 63 || // Rusty Cap
-                        toad.head == 64 || // Swept Purple
-                        toad.head == 65 || // Wizard
-                        toad.head == 66 || // Orange Tall Hat
-                        toad.head == 60 || // Swept Orange
-                        toad.head == 70 || // Super Stringy
-                        toad.head == 71 || // Red Gnome
-                        toad.head == 72 || // Orange Knit Hat
-                        toad.head == 73 || // Aqua Mohawk
-                        toad.head == 78 || // Aqua Shave
-                        toad.head == 79 || // Rainbow Mohawk
-                        toad.head == 81 || // Blue Shave
-                        toad.head == 84 || // Grey Knit Hat
-                        toad.head == 86 || // Periwinkle Cap
-                        toad.head == 88 || // Teal Gnome
-                        toad.head == 89 || // Wild White
-                        toad.head == 91 || // Bowlcut
-                        toad.head == 94 || // Tophat
-                        toad.head == 96 || // Orange Shave
-                        toad.head == 97 || // Wild Orange
-                        toad.head == 98 || // Crazy Blonde
-                        toad.head == 100 || // Toadstool
-                        toad.head == 101 || // Dark Tall Hat
-                        toad.head == 101 || // Swept Teal
-                        toad.head == 103 // Truffle
-                    ) {
-                        while (toad.accessoryI == 238) {
-                            _rollAccessoryI(src, toad);
-                        }
-                    }
-                }
-            }
-
             if (toad.accessoryI < 237 || toad.accessoryI > 245)
                 revert TraitOutOfRange(toad.accessoryI);
             meta[index++] = toad.accessoryI;
@@ -661,6 +600,79 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         } else {
             revert BadTraitCount(traits);
         }
+    }
+
+    function _isAccessoryIValid(bool[] memory flags, Toad memory toad) private pure returns (bool) {
+        // if we have a mouth, don't pick fly lick
+        if (flags[0] && toad.accessoryI == 242) {
+            return false;
+        }
+
+        // if we have a head or clothes, don't pick the hoodie
+        if ((flags[1] || flags[3]) && toad.accessoryI == 245) {
+            return false;
+        }
+
+        // if we have a head, don't pick drive-thru
+        if (flags[1] && toad.accessoryI == 241) {
+            return false;
+        }
+
+        // if we are short with any of these heads, don't pick explorer
+        if (flags[1] && toad.accessoryI == 238) {
+            if (toad.size == 119) {
+                if (
+                    toad.head == 65 || // Wizard
+                    toad.head == 71 || // Red Gnome
+                    toad.head == 88 || // Teal Gnome
+                    toad.head == 94    // Tophat
+                ) {
+                    if (toad.accessoryI == 238) {
+                        return false;
+                    }
+                }
+            } else if (toad.size == 120) {
+                // if we are tall with any of these heads, don't pick explorer
+                if (
+                    toad.head == 52 ||  // Swampy Crazy
+                    toad.head == 53 ||  // Wild Black
+                    toad.head == 54 ||  // Fez
+                    toad.head == 57 ||  // Teal Knit Hat
+                    toad.head == 60 ||  // Backward Cap
+                    toad.head == 63 ||  // Rusty Cap
+                    toad.head == 64 ||  // Swept Purple
+                    toad.head == 65 ||  // Wizard
+                    toad.head == 66 ||  // Orange Tall Hat
+                    toad.head == 60 ||  // Swept Orange
+                    toad.head == 70 ||  // Super Stringy
+                    toad.head == 71 ||  // Red Gnome
+                    toad.head == 72 ||  // Orange Knit Hat
+                    toad.head == 73 ||  // Aqua Mohawk
+                    toad.head == 78 ||  // Aqua Shave
+                    toad.head == 79 ||  // Rainbow Mohawk
+                    toad.head == 81 ||  // Blue Shave
+                    toad.head == 84 ||  // Grey Knit Hat
+                    toad.head == 86 ||  // Periwinkle Cap
+                    toad.head == 88 ||  // Teal Gnome
+                    toad.head == 89 ||  // Wild White
+                    toad.head == 91 ||  // Bowlcut
+                    toad.head == 94 ||  // Tophat
+                    toad.head == 96 ||  // Orange Shave
+                    toad.head == 97 ||  // Wild Orange
+                    toad.head == 98 ||  // Crazy Blonde
+                    toad.head == 100 || // Toadstool
+                    toad.head == 101 || // Dark Tall Hat
+                    toad.head == 101 || // Swept Teal
+                    toad.head == 103    // Truffle
+                ) {
+                    if (toad.accessoryI == 238) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     function _rollAccessoryI(PRNG.Source src, Toad memory toad) private pure {
