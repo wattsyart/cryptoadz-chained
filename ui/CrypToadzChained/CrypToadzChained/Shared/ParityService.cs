@@ -27,7 +27,7 @@ namespace CrypToadzChained.Shared
             _service = new ToadzService();
         }
 
-        public async Task StartAsync(ParityOptions options, ParityState state, HttpClient http, string mainNetRpcUrl, string rinkebyRpcUrl, string contractAddress, bool continueOnError, ILogger logger, CancellationToken cancellationToken)
+        public async Task StartAsync(ParityOptions options, ParityState state, HttpClient http, string mainNetRpcUrl, string rinkebyRpcUrl, string contractAddress, bool continueOnError, ILogger? logger, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(mainNetRpcUrl))
             {

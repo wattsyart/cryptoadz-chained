@@ -97,6 +97,14 @@
                     }
                 </Template>
             </Column>
+            <Column TableItem="ParityStateRow" Title="Delta Image" Field="@(x => x.DeltaImageUri!)" Sortable="true" Filterable="true">
+                <Template>
+                    @if (!string.IsNullOrWhiteSpace(@context.DeltaImageUri))
+                    {
+                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
+                    }
+                </Template>
+            </Column>
             <Pager ShowPageNumber="true" ShowTotalCount="true" />
             <EmptyDataTemplate>
                 No results yet.
@@ -146,10 +154,36 @@
         return Task.CompletedTask;
     }
 
-    private Task StateHasChangedAsync()
+    private async Task StateHasChangedAsync()
     {
         Logger?.LogInformation("StateHasChangedAsync invoking");
-        return InvokeAsync(StateHasChanged);
+
+        if (_state != null)
+        {
+            foreach (var row in _state.Rows)
+            {
+                if (string.IsNullOrWhiteSpace(row.SourceImageUri) || string.IsNullOrWhiteSpace(row.TargetImageUri))
+                    continue; // delta can't be processed
+
+                if (!string.IsNullOrWhiteSpace(row.DeltaImageUri))
+                    continue; // delta already processed
+
+                var response = await Http.PostAsJsonAsync("toadz/compare", row);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var newRow = JsonSerializer.Deserialize<ParityStateRow>(json);
+                    if (newRow != null)
+                    {
+                        row.DeltaImageUri = newRow.DeltaImageUri;
+                        Logger?.LogInformation("Delta image: " + row.DeltaImageUri);
+                        StateHasChanged();
+                    }
+                }
+            }
+        }
+
+        await InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()
@@ -201,7 +235,7 @@
 
             if (!cancelled)
             {
-                Logger.LogError(e, "Failed parity check");
+                Logger?.LogError(e, "Failed parity check");
             }
         }
         finally
@@ -227,7 +261,7 @@
 
             if (!cancelled)
             {
-                Logger.LogError(e, "Failed parity check");
+                Logger?.LogError(e, "Failed parity check");
             }
         }
         finally
@@ -264,5 +298,5 @@
             cancellationToken: cancellationToken);
 
         return _state;
-    }
+    }    
 }

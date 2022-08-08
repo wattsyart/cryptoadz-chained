@@ -14,7 +14,7 @@ namespace CrypToadzChained.Client.Pages
         public HttpClient Http { get; set; } = null!;
 
         [Inject]
-        public ILogger<PageBase> Logger { get; set; } = null!;
+        public ILogger<PageBase>? Logger { get; set; }
 
         [Inject]
         public NavigationManager Nav { get; set; } = null!;

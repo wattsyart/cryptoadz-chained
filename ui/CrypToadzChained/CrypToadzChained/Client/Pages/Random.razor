@@ -156,7 +156,7 @@
         }
         catch(Exception ex)
         {
-            Logger.LogError(ex, "Failed to fetch random tokenURI");
+            Logger?.LogError(ex, "Failed to fetch random tokenURI");
         }
         finally
         {
@@ -182,13 +182,13 @@
             }
             else
             {
-                var response = await Http.GetAsync($"toadz/random");
+                var response = await Http.GetAsync("toadz/random");
                 await WithResponse(response);
             }
         }
         catch(Exception ex)
         {
-            Logger.LogError(ex, "Failed to fetch random tokenURI");
+            Logger?.LogError(ex, "Failed to fetch random tokenURI");
         }
         finally
         {
