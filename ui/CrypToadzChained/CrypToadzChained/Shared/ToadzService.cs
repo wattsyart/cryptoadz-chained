@@ -11,9 +11,9 @@ using Nethereum.Web3;
 
 namespace CrypToadzChained.Shared
 {
-    public sealed class ToadzService
+    public static class ToadzService
     {
-        public async Task<bool> GetIsTallAsync(uint tokenId, string url, string contractAddress, ILogger? logger)
+        public static async Task<bool> GetIsTallAsync(uint tokenId, string url, string contractAddress, ILogger? logger)
         {
             var web3 = new Web3(url);
             var contract = web3.Eth.ERC721.GetContractService(contractAddress);
@@ -30,7 +30,7 @@ namespace CrypToadzChained.Shared
             }
         }
 
-        public async Task<string> GetCanonicalTokenURIAsync(uint tokenId, string url, string contractAddress, ILogger? logger)
+        public static async Task<string> GetCanonicalTokenURIAsync(uint tokenId, string url, string contractAddress, ILogger? logger)
         {
             var web3 = new Web3(url);
             var contract = web3.Eth.ERC721.GetContractService(contractAddress);
@@ -43,23 +43,21 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch canonical token ID {TokenID}", tokenId);
 
-                if (ex is SmartContractRevertException revert)
+                switch (ex)
                 {
-                    return revert.RevertMessage;
+                    case SmartContractRevertException revert:
+                        return revert.RevertMessage;
+                    case RpcResponseException rpc:
+                        return rpc.RpcError.Message;
+                    default:
+                        throw;
                 }
-
-                if (ex is RpcResponseException rpc)
-                {
-                    return rpc.RpcError.Message;
-                }
-
-                throw;
             }
         }
 
-        public async Task<string> GetRandomTokenURIAsync(string url, string contractAddress, ILogger? logger)
+        public static async Task<string> GetRandomTokenURIAsync(string url, string contractAddress, ILogger? logger)
         {
             try
             {
@@ -71,23 +69,21 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch random token");
 
-                if (ex is SmartContractRevertException revert)
+                switch (ex)
                 {
-                    return revert.RevertMessage;
+                    case SmartContractRevertException revert:
+                        return revert.RevertMessage;
+                    case RpcResponseException rpc:
+                        return rpc.RpcError.Message;
+                    default:
+                        throw;
                 }
-
-                if (ex is RpcResponseException rpc)
-                {
-                    return rpc.RpcError.Message;
-                }
-
-                throw;
             }
         }
 
-        public async Task<string> GetRandomTokenURIFromSeedAsync(string seed, string url, string contractAddress, ILogger? logger)
+        public static async Task<string> GetRandomTokenURIFromSeedAsync(string seed, string url, string contractAddress, ILogger? logger)
         {
             try
             {
@@ -101,7 +97,7 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch random token with Seed {Seed}", seed);
 
                 if (ex is SmartContractRevertException revert)
                 {
@@ -117,12 +113,12 @@ namespace CrypToadzChained.Shared
             }
         }
 
-        public async Task<string> BuildTokenURIAsync(Toad toad, string url, string contractAddress, ILogger? logger)
+        public static async Task<string> BuildTokenURIAsync(Toad toad, string url, string contractAddress, ILogger? logger)
         {
+            var meta = toad.ToMetadataBuffer();
+
             try
             {
-                var meta = toad.ToMetadataBuffer();
-
                 var web3 = new Web3(url);
                 var contract = web3.Eth.ERC721.GetContractService(contractAddress);
                 var function = new BuildTokenURIFunction { Meta = meta };
@@ -144,7 +140,7 @@ namespace CrypToadzChained.Shared
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "Failed to fetch canonical token ID");
+                logger?.LogError(ex, "Failed to fetch builder token with BuilderSeed {BuilderSeed}", Convert.ToBase64String(meta));
 
                 if (ex is SmartContractRevertException revert)
                 {
@@ -159,8 +155,6 @@ namespace CrypToadzChained.Shared
                 throw;
             }
         }
-
-        
         
         #region Functions
 

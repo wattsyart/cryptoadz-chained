@@ -7,23 +7,69 @@
         <DataAnnotationsValidator />
         
         <div class="form-group">
-            <label for="contractAddress">CrypToadz Address:</label>
-            <input disabled id="contractAddress" type="text" class="form-control" @bind="Options.Value.ContractAddress" placeholder="CrypToadzChained Contract Address" />
+            <label for="contractAddress">CrypToadzChained Address:</label>
+            <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.ContractAddress" placeholder="CrypToadzChained Contract Address" />
         </div>
         
+        <br />
+        
         <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+        
+        <div class="form-group">
+            <label for="source">Source:</label>
+            <InputSelect id="source" class="form-control"
+                         ValueExpression="@(() => Model.Source)"
+                         Value="Model.Source"
+                         ValueChanged="@((ParitySource value) => @OnSourceChanged(value))">
+                @foreach (var value in EnumExtensions.GetValues<ParitySource>())
+                {
+                    <option value="@value">@value.Describe()</option>
+                }
+            </InputSelect>
+        </div>
+        
+        <br />
         
         @switch (Model.Source)
         {
             case ParitySource.Provenance:
                 <ToggleInputText Label="IPFS Gateway URL" @bind-Text="@Options.Value.IpfsUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
-            case ParitySource.Current:
+            case ParitySource.Arweave:
                 <ToggleInputText Label="MainNet Web3 RPC URL" @bind-Text="@Options.Value.MainNetRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
-        <br/>
+        <br />
+        
+        <div class="form-group">
+            <label for="scope">Scope:</label>
+            <InputSelect id="scope" class="form-control"
+                         ValueExpression="@(() => Model.Scope)"
+                         Value="Model.Scope"
+                         ValueChanged="@((ParityScope value) => @OnScopeChanged(value))">
+                @foreach (var value in EnumExtensions.GetValues<ParityScope>())
+                {
+                    <option value="@value">@value.Describe() (@ParityService.GetScopeIdCount((ParityScope) @value))</option>
+                }
+            </InputSelect>
+        </div>
+        
+        <br /> 
+
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="continueOnError" @bind="Model.ContinueOnError">
+            <label class="form-check-label" for="continueOnError">Continue on error</label>
+        </div>
+
+        <br />
+        
+        @if (!IsRunning && string.IsNullOrWhiteSpace(Error) && _state != null && _state.Errors.Count == 0)
+        {
+            <div class="alert alert-success">Tests passed!</div>
+        }
 
         @if (IsRunning)
         {
@@ -36,7 +82,7 @@
         }
         else
         {
-            if (Model.Source == ParitySource.Current && !string.IsNullOrWhiteSpace(Options.Value.MainNetRpcUrl))
+            if (Model.Source == ParitySource.Arweave && !string.IsNullOrWhiteSpace(Options.Value.MainNetRpcUrl))
             {
                 <button class="btn btn-dark" @onclick="StartAsync">Start Test</button>
             }
@@ -55,33 +101,34 @@
     {
         <div class="alert alert-danger">@Error</div>
     }
-    else if(_state != null)
+
+    @if(_state != null)
     {
         <Table TableItem="ParityStateRow" Items="@_state.Rows" PageSize="15">
-            <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" />
-            <Column TableItem="ParityStateRow" Title="Source Image" Field="@(x => x.SourceImageUri!)" Sortable="true" Filterable="true">
+            <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" Width="72px"/>
+            <Column TableItem="ParityStateRow" Title="@Enum.GetName(Model.Source)" Field="@(x => x.SourceImageUri!)" Sortable="true" Filterable="true" Width="72px">
                 <Template>
-                    @if (!string.IsNullOrWhiteSpace(@context.SourceImageUri))
+                    @if (!string.IsNullOrWhiteSpace(context.SourceImageUri))
                     {
                         <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.SourceImageUri" alt=""/>
                     }
                 </Template>
             </Column>
-            <Column TableItem="ParityStateRow" Title="Target Image" Field="@(x => x.TargetImageUri!)" Sortable="true" Filterable="true">
+            <Column TableItem="ParityStateRow" Title="On-Chain" Field="@(x => x.TargetImageUri!)" Sortable="true" Filterable="true" Width="72px">
                 <Template>
-                    @if (!string.IsNullOrWhiteSpace(@context.TargetImageUri))
+                    @if (!string.IsNullOrWhiteSpace(context.TargetImageUri))
                     {
                         <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.SourceImageUri" alt=""/>
                     }
                 </Template>
             </Column>
-            <Column TableItem="ParityStateRow" Title="Delta Image" Field="@(x => x.DeltaImageUri!)" Sortable="true" Filterable="true">
+            <Column TableItem="ParityStateRow" Title="Image Delta" Field="@(x => x.DeltaImageUri!)" Sortable="true" Filterable="true" Width="72px">
                 <Template>
-                    @if (!string.IsNullOrWhiteSpace(@context.DeltaImageUri))
+                    @if (!string.IsNullOrWhiteSpace(context.DeltaImageUri))
                     {
                         <div class="imageOverlay">
                             <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
-                            @if (@context.BadPixels.GetValueOrDefault() == 0)
+                            @if (context.BadPixels.GetValueOrDefault() == 0)
                             {
                                 <div class="centeredOverImage" style="color: green;">
                                     <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
@@ -105,10 +152,14 @@
 
         @if (_state.Errors.Count > 0)
         {
+            <br/>
+
             <h4>Errors</h4>
-            <Table TableItem="string" Items="@_state.Errors" PageSize="15">
-                <Column TableItem="string" Title="Error Message" Field="@(r => r)" Sortable="true" Filterable="true" Width="10%" />
-                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+
+            <Table TableItem="ParityError" Items="@_state.Errors" PageSize="15">
+                <Column TableItem="ParityError" Title="TokenId" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" />
+                <Column TableItem="ParityError" Title="Message" Field="@(r => r.Message)" Sortable="true" Filterable="true"/>
+                <Pager ShowPageNumber="true" ShowTotalCount="true"/>
             </Table>
         }
     }
@@ -139,7 +190,6 @@
     [Inject]
     public ParityService Service { get; set; } = null!;
     
-
     protected override Task OnInitializedAsync()
     {
         Logger?.LogInformation("OnChangeAsync registered");
@@ -187,6 +237,12 @@
     private Task OnSourceChanged(ParitySource source)
     {
         Model.Source = source;
+        return Task.CompletedTask;
+    }
+
+    private Task OnScopeChanged(ParityScope scope)
+    {
+        Model.Scope = scope;
         return Task.CompletedTask;
     }
     
@@ -285,7 +341,6 @@
         await Service.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!,
             rinkebyRpcUrl: Options.Value.RpcUrl,
             contractAddress: Options.Value.ContractAddress,
-            continueOnError: false,
             logger: Logger,
             cancellationToken: cancellationToken);
 

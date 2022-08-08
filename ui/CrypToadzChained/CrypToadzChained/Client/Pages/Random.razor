@@ -141,8 +141,7 @@
 
             if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
-                var service = new ToadzService();
-                var body = await service.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -173,8 +172,7 @@
 
             if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
-                var service = new ToadzService();
-                var body = await service.GetRandomTokenURIAsync(Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.GetRandomTokenURIAsync(Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else

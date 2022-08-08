@@ -143,8 +143,7 @@
 
             if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
-                var service = new ToadzService();
-                var body = await service.GetCanonicalTokenURIAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.GetCanonicalTokenURIAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 await WithBodyAsync(body);
             }
             else
@@ -208,8 +207,7 @@
                         bool isTall;
                         if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
                         {
-                            var service = new ToadzService();
-                            isTall = await service.GetIsTallAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);                            
+                            isTall = await ToadzService.GetIsTallAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);                            
                         }
                         else
                         {

@@ -4,6 +4,7 @@ public static class LUT
 {
     public static readonly HashSet<uint> LargeAnimationTokenIds = new()
     {
+        // Custom - Legendary (7)
         37,
         318,
         466,
@@ -11,7 +12,50 @@ public static class LUT
         3661,
         4035,
         4911,
+
+        // Don't Look in the Mirror (1)
         5086
+    };
+
+    public static readonly HashSet<uint> LargeImageTokenIds = new()
+    {
+        // Don't Look in the Mirror (22 - 1 animation)
+        916,
+        936,
+        1005,
+        1812,
+        1975,
+        2232,
+        2327,
+        2489,
+        2959,
+        2825,
+        3196,
+        3309,
+        3382,
+        4238,
+        4152,
+        4580,
+        4896,
+        5471,
+        5902,
+        6214,
+        6382,
+
+        // Murdered by Fronkz (13)
+        316,
+        703,
+        1793,
+        2521,
+        2709,
+        2846,
+        4096,
+        4714,
+        4773,
+        5128,
+        6491,
+        6572,
+        6631
     };
 
     public static readonly HashSet<uint> CustomAnimationTokenIds = new()
@@ -167,7 +211,7 @@ public static class LUT
         56000000
     };
 
-    public static readonly HashSet<uint> TokenIds = new()
+    public static readonly HashSet<uint> AllTokenIds = new()
     {
         1,
         2,

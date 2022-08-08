@@ -1,9 +1,13 @@
 using CrypToadzChained.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<ParityService>();
+
 builder.Services.Configure<Web3Options>(builder.Configuration.GetSection("Web3"));
-builder.Services.AddSingleton<ToadzService>();
+
 
 var app = builder.Build();
 

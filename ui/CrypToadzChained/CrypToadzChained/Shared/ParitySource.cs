@@ -5,7 +5,7 @@ namespace CrypToadzChained.Shared;
 public enum ParitySource
 {
     [Description("Current BaseURI (Arweave)")]
-    Current,
+    Arweave,
     [Description("Provenance CID (IPFS)")]
     Provenance
 }

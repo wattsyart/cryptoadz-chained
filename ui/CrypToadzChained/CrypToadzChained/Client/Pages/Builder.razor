@@ -434,8 +434,7 @@
 
             if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
             {
-                var service = new ToadzService();
-                var body = await service.BuildTokenURIAsync(Toad, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.BuildTokenURIAsync(Toad, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
                 WithBody(body);
             }
             else
