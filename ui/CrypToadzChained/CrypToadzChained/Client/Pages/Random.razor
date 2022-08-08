@@ -240,8 +240,8 @@
         if (Metadata == null)
             return Task.CompletedTask;
             
-        var toad = ToadzService.ConvertMetadataToToad(Metadata);
-        var meta = ToadzService.ConvertToadToMeta(toad);
+        var toad = Metadata.ToToad();
+        var meta = toad.ToMetadataBuffer();
         var seed = Convert.ToBase64String(meta);
 
         Nav.NavigateTo($"/builder/?seed={WebUtility.UrlEncode(seed)}");

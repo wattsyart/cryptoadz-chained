@@ -12,8 +12,8 @@
         </div>
 
         <div class="form-group">
-            <label for="rpcUrl">RPC URL:</label>
-            <input id="rpcUrl" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Web3 RPC URL"/>
+            <label for="rpcUrl">Rinkeby RPC URL:</label>
+            <input id="rpcUrl" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Rinkeby Web3 RPC URL"/>
         </div>
 
         <div class="form-group">
@@ -28,15 +28,25 @@
                 }
             </InputSelect>
         </div>
-        
-        @if (Model.Source == ParitySource.Provenance)
+
+        @switch (Model.Source)
         {
-            <div class="form-group">
-                <label for="ipfsUrl">IPFS URL:</label>
-                <input id="ipfsUrl" type="text" class="form-control" @bind="Options.Value.IpfsUrl" placeholder="IPFS Gateway URL"/>
-            </div>
+            case ParitySource.Provenance:
+                <div class="form-group">
+                    <label for="ipfsUrl">IPFS URL:</label>
+                    <input id="ipfsUrl" type="text" class="form-control" @bind="@Options.Value.IpfsUrl" placeholder="IPFS Gateway URL"/>
+                </div>
+                break;
+            case ParitySource.Current:
+                <div class="form-group">
+                    <label for="mainNetRpcUrl">MainNet RPC URL:</label>
+                    <input id="mainNetRpcUrl" type="text" class="form-control" @bind="@MainNetRpcUrl" placeholder="MainNet Web3 RPC URL"/>
+                </div>
+                break;
         }
-        
+
+        <br/>
+
         @if (IsRunning)
         {
             <button class="btn btn-dark" disabled>
@@ -48,7 +58,14 @@
         }
         else
         {
-            <button class="btn btn-dark" @onclick="StartAsync">Start Test</button>
+            if (Model.Source == ParitySource.Current && !string.IsNullOrWhiteSpace(MainNetRpcUrl))
+            {
+                <button class="btn btn-dark" @onclick="StartAsync">Start Test</button>
+            }
+            else
+            {
+                <button class="btn btn-dark" @onclick="StartAsync" disabled>Start Test</button>
+            }
         }
 
     </EditForm>
@@ -62,7 +79,21 @@
     }
     else if(_state != null)
     {
-
+        <Table TableItem="ParityStateRow" Items="@_state.Rows" PageSize="15">
+            <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" Width="10%" />
+            <Column TableItem="ParityStateRow" Title="Source Image" Field="@(x => x.SourceImageUri!)" Sortable="true" Filterable="true" Width="20%">
+                <Template>
+                    @if (!string.IsNullOrWhiteSpace(@context.SourceImageUri))
+                    {
+                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.SourceImageUri" alt=""/>
+                    }
+                </Template>
+            </Column>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            <EmptyDataTemplate>
+                No results yet.
+            </EmptyDataTemplate>
+        </Table>
     }
 </div>
 
@@ -87,6 +118,31 @@
 
     [Parameter]
     public string? Error { get; set; }
+
+    [Parameter]
+    public string? MainNetRpcUrl { get; set; }
+
+    [Inject]
+    public ParityService Service { get; set; } = null!;
+
+    protected override Task OnInitializedAsync()
+    {
+        Logger?.LogInformation("OnChangeAsync registered");
+        Service.OnChangeAsync += StateHasChangedAsync;
+        return Task.CompletedTask;
+    }
+
+    private Task StateHasChangedAsync()
+    {
+        Logger?.LogInformation("StateHasChangedAsync invoking");
+        return InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Service.OnChangeAsync -= StateHasChangedAsync;
+        Logger?.LogInformation("OnChangeAsync unregistered");
+    }
 
     private Task OnSourceChanged(ParitySource source)
     {
@@ -140,13 +196,6 @@
         }
     }
 
-    private static async Task<ParityState> DoWorkAsync(CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-        await Task.Delay(3000, cancellationToken);
-        return new ParityState();
-    }
-
     private Task StopAsync()
     {
         try
@@ -180,8 +229,24 @@
     private void FinishTask()
     {
         IsRunning = false;
-        _cancellationTokenSource = null;
-        _cancellationToken = null;
+        {
+            _cancellationToken = null;
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+        }
         StateHasChanged();
+    }
+
+    private async Task<ParityState> DoWorkAsync(CancellationToken cancellationToken)
+    {
+        _state = new ParityState();
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await Service.StartAsync(Model, _state, Http, MainNetRpcUrl!, 
+            continueOnError: false,
+            logger: Logger,
+            cancellationToken: cancellationToken);
+
+        return _state;
     }
 }
