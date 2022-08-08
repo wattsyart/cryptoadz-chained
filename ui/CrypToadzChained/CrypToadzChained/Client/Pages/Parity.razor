@@ -13,7 +13,7 @@
         
         <br />
         
-        <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+        <ToggleInputText Label="CrypToadzChained RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
         
         <div class="form-group">
             <label for="source">Source:</label>
@@ -199,15 +199,12 @@
     
     protected override Task OnInitializedAsync()
     {
-        Logger?.LogInformation("OnChangeAsync registered");
         Service.OnChangeAsync += StateHasChangedAsync;
         return Task.CompletedTask;
     }
 
     private async Task StateHasChangedAsync()
     {
-        Logger?.LogInformation("StateHasChangedAsync invoking");
-
         await TryRunDeltasAsync();
 
         await InvokeAsync(StateHasChanged);
@@ -215,7 +212,7 @@
 
     private async Task TryRunDeltasAsync()
     {
-        if (_state != null)
+        if (IsRunning && _state != null)
         {
             foreach (var row in _state.Rows)
             {
@@ -235,13 +232,25 @@
                     {
                         row.BadPixels = newRow.BadPixels;
                         row.DeltaImageUri = newRow.DeltaImageUri;
+                        
+                        if (!(row.BadPixels > 0)) continue;
 
                         _state.Errors.Add(new ParityError { TokenId = row.TokenId, Message = $"Found {row.BadPixels} bad pixels in on-chain image"});
+                        if (Model.ContinueOnError) continue;
+
+                        await StopAsync();
+                        Error = "Tests failed :(";
+                        return;
                     }
                 }
                 else
                 {
                     _state.Errors.Add(new ParityError { TokenId = row.TokenId, Message = $"Error calling endpoint to compare images: {(int) response.StatusCode} {response.ReasonPhrase}"});
+                    if (Model.ContinueOnError) continue;
+
+                    await StopAsync();
+                    Error = "Tests failed :(";
+                    return;
                 }
             }
         }
@@ -250,7 +259,6 @@
     public void Dispose()
     {
         Service.OnChangeAsync -= StateHasChangedAsync;
-        Logger?.LogInformation("OnChangeAsync unregistered");
     }
 
     private Task OnSourceChanged(ParitySource source)
@@ -296,14 +304,14 @@
         {
             var cancelled = IsCancelled;
 
-            Error = cancelled
-                ? "Parity check was cancelled by the user" 
-                : e.Message;
-
             if (!cancelled)
             {
                 Logger?.LogError(e, "Failed parity check");
             }
+
+            Error = cancelled
+                ? "Parity check was cancelled by the user" 
+                : e.Message;
         }
         finally
         {
@@ -322,14 +330,14 @@
         {
             var cancelled = IsCancelled;
 
-            Error = cancelled
-                ? "Parity check was cancelled by the user" 
-                : e.Message;
-
             if (!cancelled)
             {
                 Logger?.LogError(e, "Failed parity check");
             }
+
+            Error = cancelled
+                ? "Parity check was cancelled by the user" 
+                : e.Message;
         }
         finally
         {
@@ -358,7 +366,7 @@
         cancellationToken.ThrowIfCancellationRequested();
 
         await Service.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!,
-            rinkebyRpcUrl: Options.Value.RpcUrl,
+            onChainRpcUrl: Options.Value.RpcUrl,
             contractAddress: Options.Value.ContractAddress,
             logger: Logger,
             cancellationToken: cancellationToken);

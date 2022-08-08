@@ -21,14 +21,14 @@ namespace CrypToadzChained.Shared
 
         public event Func<Task>? OnChangeAsync;
         
-        public async Task StartAsync(ParityOptions options, ParityState state, HttpClient http, string mainNetRpcUrl, string rinkebyRpcUrl, string contractAddress, ILogger? logger, CancellationToken cancellationToken)
+        public async Task StartAsync(ParityOptions options, ParityState state, HttpClient http, string mainNetRpcUrl, string onChainRpcUrl, string contractAddress, ILogger? logger, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(mainNetRpcUrl))
             {
                 throw new InvalidOperationException("Must provide MainNet RPC URL (Source)");
             }
 
-            if (string.IsNullOrWhiteSpace(rinkebyRpcUrl))
+            if (string.IsNullOrWhiteSpace(onChainRpcUrl))
             {
                 throw new InvalidOperationException("Must provide Rinkeby RPC URL (Target)");
             }
@@ -112,7 +112,7 @@ namespace CrypToadzChained.Shared
                         continue;
                     }
 
-                    var targetTokenUri = await ToadzService.GetCanonicalTokenURIAsync(tokenId, rinkebyRpcUrl, contractAddress, logger);
+                    var targetTokenUri = await ToadzService.GetCanonicalTokenURIAsync(tokenId, onChainRpcUrl, contractAddress, logger);
 
                     if (!string.IsNullOrWhiteSpace(targetTokenUri))
                     {
@@ -173,7 +173,7 @@ namespace CrypToadzChained.Shared
                 }
                 catch (Exception e)
                 {
-                    logger?.LogInformation("Error encountered while fetching CrypToadz #{TokenId}: {Error}", tokenId, e);
+                    logger?.LogError("Error encountered while fetching CrypToadz #{TokenId}: {Error}", tokenId, e);
 
                     state.Errors.Add($"Error encountered while fetching CrypToadz #{tokenId}: ${e}");
 
@@ -283,8 +283,6 @@ namespace CrypToadzChained.Shared
             var buffer = await http.GetByteArrayAsync(externalImageUri, cancellationToken);
             var isGif = LUT.CustomAnimationTokenIds.Contains(tokenId);
 
-            var sw = Stopwatch.StartNew();
-
             string imageUri;
 
             if (runningOnServer)
@@ -304,8 +302,6 @@ namespace CrypToadzChained.Shared
                 imageUri = await http.GetStringAsync($"toadz/image/?url={Uri.EscapeDataString(url)}",
                     CancellationToken.None);
             }
-
-            logger?.LogInformation("Image conversion took {Elapsed}", sw.Elapsed);
 
             return imageUri;
         }
