@@ -127,7 +127,7 @@ module.exports = (callback, sourceImagePath, targetImagePath, deltaImagePath) =>
     callback(null, badPixels);
 }";
 
-            await StaticNodeJSService.InvokeFromStringAsync<int>(diffModule, args: new object[]
+            var badPixels = await StaticNodeJSService.InvokeFromStringAsync<int>(diffModule, args: new object[]
             {
                 // sourceImagePath
                 sourceImagePath,
@@ -139,11 +139,9 @@ module.exports = (callback, sourceImagePath, targetImagePath, deltaImagePath) =>
                 deltaImagePath
             }, cancellationToken: cancellationToken);
 
-            var deltaImage = await System.IO.File.ReadAllBytesAsync(deltaImagePath, cancellationToken);
 
-            Image delta = Image.Load<Rgba32>(deltaImage, _png);
-
-            row.DeltaImageUri = delta.ToBase64String(PngFormat.Instance);
+            row.BadPixels = badPixels;
+            row.DeltaImageUri = Image.Load<Rgba32>(await System.IO.File.ReadAllBytesAsync(deltaImagePath, cancellationToken), _png).ToBase64String(PngFormat.Instance);
 
             return row;
         }

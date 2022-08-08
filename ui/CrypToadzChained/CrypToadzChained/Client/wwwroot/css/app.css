@@ -97,3 +97,15 @@ a, .btn-link {
         transform: rotate(360deg)
     }
 }
+
+.imageOverlay {
+    position: relative;
+    text-align: center;
+}
+
+.centeredOverImage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

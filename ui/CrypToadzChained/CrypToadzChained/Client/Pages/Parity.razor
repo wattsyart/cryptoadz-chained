@@ -101,7 +101,21 @@
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(@context.DeltaImageUri))
                     {
-                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
+                        <div class="imageOverlay">
+                            <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
+                            @if (@context.BadPixels.GetValueOrDefault() == 0)
+                            {
+                                <div class="centeredOverImage" style="color: green;">
+                                    <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="centeredOverImage" style="color: red;">
+                                    <i class="oi oi-circle-x align-middle" aria-hidden="true"></i>
+                                </div>
+                            }
+                        </div>
                     }
                 </Template>
             </Column>
@@ -172,12 +186,11 @@
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var newRow = JsonSerializer.Deserialize<ParityStateRow>(json);
+                    var newRow = JsonSerializer.Deserialize<ParityStateRow>(json, new JsonSerializerOptions(JsonSerializerDefaults.Web));
                     if (newRow != null)
                     {
+                        row.BadPixels = newRow.BadPixels;
                         row.DeltaImageUri = newRow.DeltaImageUri;
-                        Logger?.LogInformation("Delta image: " + row.DeltaImageUri);
-                        StateHasChanged();
                     }
                 }
             }

@@ -6,4 +6,5 @@ public sealed class ParityStateRow
     public string? SourceImageUri { get; set; }
     public string? TargetImageUri { get; set; }
     public string? DeltaImageUri { get; set; }
+    public int? BadPixels { get; set; }
 }
