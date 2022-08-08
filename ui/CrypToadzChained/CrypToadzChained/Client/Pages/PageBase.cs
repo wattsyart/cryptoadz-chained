@@ -20,7 +20,7 @@ namespace CrypToadzChained.Client.Pages
         public NavigationManager Nav { get; set; } = null!;
 
         [Inject]
-        public IOptionsSnapshot<Web3Options> Options { get; set; } = null!;
+        public IOptions<Web3Options> Options { get; set; } = null!;
 
         [Inject]
         public IJSRuntime Js { get; set; } = null!;

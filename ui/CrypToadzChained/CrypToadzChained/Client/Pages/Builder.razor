@@ -2,10 +2,7 @@
 @inherits PageBase
 
 <div class="container">
-    <div class="form-group">
-        <label for="url">Web3 URL:</label>
-        <input id="url" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
-    </div>
+    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
 </div>
 
 <br />

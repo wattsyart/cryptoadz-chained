@@ -7,41 +7,19 @@
         <DataAnnotationsValidator />
         
         <div class="form-group">
-            <label for="contractAddress">Contract Address:</label>
-            <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.ContractAddress" placeholder="CrypToadzChained Contract Address" />
+            <label for="contractAddress">CrypToadz Address:</label>
+            <input disabled id="contractAddress" type="text" class="form-control" @bind="Options.Value.ContractAddress" placeholder="CrypToadzChained Contract Address" />
         </div>
-
-        <div class="form-group">
-            <label for="rpcUrl">Rinkeby RPC URL:</label>
-            <input id="rpcUrl" type="text" class="form-control" @bind="Options.Value.RpcUrl" placeholder="Rinkeby Web3 RPC URL"/>
-        </div>
-
-        <div class="form-group">
-            <label for="parity">Parity Source:</label>
-            <InputSelect id="parity" class="form-control"
-                         ValueExpression="@(() => Model.Source)"
-                         Value="Model.Source"
-                         ValueChanged="@((ParitySource value) => @OnSourceChanged(value))">
-                @foreach (var value in EnumExtensions.GetValues<ParitySource>())
-                {
-                    <option value="@value">@value.Describe()</option>
-                }
-            </InputSelect>
-        </div>
-
+        
+        <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+        
         @switch (Model.Source)
         {
             case ParitySource.Provenance:
-                <div class="form-group">
-                    <label for="ipfsUrl">IPFS URL:</label>
-                    <input id="ipfsUrl" type="text" class="form-control" @bind="@Options.Value.IpfsUrl" placeholder="IPFS Gateway URL"/>
-                </div>
+                <ToggleInputText Label="IPFS Gateway URL" @bind-Text="@Options.Value.IpfsUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
             case ParitySource.Current:
-                <div class="form-group">
-                    <label for="mainNetRpcUrl">MainNet RPC URL:</label>
-                    <input id="mainNetRpcUrl" type="text" class="form-control" @bind="@Options.Value.MainNetRpcUrl" placeholder="MainNet Web3 RPC URL"/>
-                </div>
+                <ToggleInputText Label="MainNet Web3 RPC URL" @bind-Text="@Options.Value.MainNetRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
         }
 
@@ -160,6 +138,7 @@
 
     [Inject]
     public ParityService Service { get; set; } = null!;
+    
 
     protected override Task OnInitializedAsync()
     {
@@ -311,5 +290,5 @@
             cancellationToken: cancellationToken);
 
         return _state;
-    }    
+    }
 }

@@ -1,0 +1,56 @@
+﻿<div class="form-group">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label for="textField">@Label:</label>
+    }
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button class="@ButtonCss" type="button" @onclick="OnHideClicked">
+                <i class="oi oi-eye align-items-center" aria-hidden="true"></i>
+            </button>
+        </div>
+        <input id="textField" type="@InputType" class="form-control" value="@Text" @onchange="OnTextChanged" placeholder="@PlaceholderText"/>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public bool HideFields { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> HideFieldsChanged { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public EventCallback<string> TextChanged { get; set; }
+
+    public string? PlaceholderText => !string.IsNullOrWhiteSpace(Placeholder) ? Placeholder : Label;
+
+    public string InputType => string.IsNullOrWhiteSpace(Text) ? "text" : HideFields ? "password" : "text";
+
+    public string ButtonCss => HideFields ? "btn btn-dark" : "btn btn-secondary";
+
+    private async Task OnHideClicked()
+    {
+        HideFields = !HideFields;
+
+        await HideFieldsChanged.InvokeAsync(HideFields);
+    }
+
+    private async Task OnTextChanged(ChangeEventArgs e)
+    {
+        var previous = Text;
+        Text = e.Value?.ToString();
+        if(previous != Text)
+            await TextChanged.InvokeAsync(Text);
+    }
+
+}

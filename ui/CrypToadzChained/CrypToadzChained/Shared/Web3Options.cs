@@ -8,5 +8,6 @@ namespace CrypToadzChained.Shared
         [Required] public string MainNetRpcUrl { get; set; } = null!;
         [Required] public string IpfsUrl { get; set; } = null!;
         [Required] public string ContractAddress { get; set; } = null!;
+        [Required] public bool HideSensitiveFields { get; set; }
     }
 }
