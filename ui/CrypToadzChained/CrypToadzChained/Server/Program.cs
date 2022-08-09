@@ -4,7 +4,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<ParityService>();
 
 builder.Services.Configure<Web3Options>(builder.Configuration.GetSection("Web3"));
 

@@ -8,17 +8,14 @@ namespace CrypToadzChained.Server.Controllers
     [Route("toadz")]
     public class ToadzController : ControllerBase
     {
-        private readonly ParityService _service;
         private readonly HttpClient _http;
 
         private readonly IOptionsSnapshot<Web3Options> _options;
         private readonly ILogger<ToadzController> _logger;
 
-        public ToadzController(ParityService service, HttpClient http, IOptionsSnapshot<Web3Options> options, ILogger<ToadzController> logger)
+        public ToadzController(HttpClient http, IOptionsSnapshot<Web3Options> options, ILogger<ToadzController> logger)
         {
-            _service = service;
             _http = http;
-
             _options = options;
             _logger = logger;
         }
@@ -56,14 +53,14 @@ namespace CrypToadzChained.Server.Controllers
         [HttpPost("compare")]
         public async Task<ParityStateRow> CompareImagesAsync([FromBody] ParityStateRow row, CancellationToken cancellationToken)
         {
-            return await _service.CompareImagesAsync(row, cancellationToken);
+            return await ParityService.CompareImagesAsync(row, cancellationToken);
         }
 
         [HttpGet("image")]
         public async Task<string?> GetImageUriAsync([FromQuery(Name = "url")] string url, CancellationToken cancellationToken)
         {
             if (Uri.TryCreate(url, UriKind.Absolute, out var externalImageUrl))
-                return await _service.GetExternalImageUriAsync(true, _http, externalImageUrl, _logger, cancellationToken);
+                return await ParityService.GetExternalImageUriAsync(true, _http, externalImageUrl, _logger, cancellationToken);
 
             _logger.LogError("Invalid URL {Url} passed to image download", url);
             return null;

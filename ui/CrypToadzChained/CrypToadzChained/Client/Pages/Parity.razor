@@ -59,11 +59,17 @@
         
         <br /> 
 
-        <div class="form-check">
+        <div class="form-check form-switch form-check-inline">
             <input type="checkbox" class="form-check-input" id="continueOnError" @bind="Model.ContinueOnError">
             <label class="form-check-label" for="continueOnError">Continue on error</label>
         </div>
+        
+        <div class="form-check form-switch form-check-inline">
+            <input type="checkbox" class="form-check-input" id="onlyShowErrors" @bind="OnlyShowErrors">
+            <label class="form-check-label" for="onlyShowErrors">Only show errors</label>
+        </div>
 
+        <br />
         <br />
         
         @if (!IsRunning && string.IsNullOrWhiteSpace(Error) && _state != null)
@@ -111,9 +117,11 @@
 
     @if(_state != null)
     {
-        <Table TableItem="ParityStateRow" Items="@_state.Rows" PageSize="15">
+        <br />
+
+        <Table TableItem="ParityStateRow" Items="@Rows" PageSize="15">
             <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" Width="72px"/>
-            <Column TableItem="ParityStateRow" Title="@Enum.GetName(Model.Source)" Field="@(x => x.SourceImageUri!)" Sortable="true" Filterable="true" Width="72px">
+            <Column TableItem="ParityStateRow" Title="@Enum.GetName(Model.Source)" Field="@(x => x.SourceImageUri!)" Width="72px">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(context.SourceImageUri))
                     {
@@ -121,7 +129,7 @@
                     }
                 </Template>
             </Column>
-            <Column TableItem="ParityStateRow" Title="On-Chain" Field="@(x => x.TargetImageUri!)" Sortable="true" Filterable="true" Width="72px">
+            <Column TableItem="ParityStateRow" Title="On-Chain" Field="@(x => x.TargetImageUri!)" Width="72px">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(context.TargetImageUri))
                     {
@@ -129,7 +137,7 @@
                     }
                 </Template>
             </Column>
-            <Column TableItem="ParityStateRow" Title="Image Delta" Field="@(x => x.DeltaImageUri!)" Sortable="true" Filterable="true" Width="72px">
+            <Column TableItem="ParityStateRow" Title="Image" Field="@(x => x.DeltaImageUri!)" Width="72px">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(context.DeltaImageUri))
                     {
@@ -151,9 +159,35 @@
                     }
                 </Template>
             </Column>
+            <Column TableItem="ParityStateRow" Title="Metadata" Field="@(x => x.DeltaJson!)" Width="72px">
+                <Template>
+                    <div class="imageOverlay">
+                        <img style="width: 72px; height: 72px" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt=""/>
+                        @if (string.IsNullOrWhiteSpace(context.DeltaJson))
+                        {
+                            <div class="centeredOverImage" style="color: green;">
+                                <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="centeredOverImage" style="color: red;">
+                                <i class="oi oi-circle-x align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                    </div>
+                </Template>
+            </Column>
             <Pager ShowPageNumber="true" ShowTotalCount="true" />
             <EmptyDataTemplate>
-                No results yet.
+                @if (OnlyShowErrors)
+                {
+                    <span>No errors.</span>
+                }
+                else
+                {
+                    <span>No results.</span>
+                }
             </EmptyDataTemplate>
         </Table>
 
@@ -164,7 +198,9 @@
             <h4>Errors</h4>
 
             <Table TableItem="ParityError" Items="@_state.Errors" PageSize="15">
-                <Column TableItem="ParityError" Title="TokenId" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" />
+                <Column TableItem="ParityError" Title="Source" Field="@(r => r.Source!)" Sortable="true" Filterable="true" />
+                <Column TableItem="ParityError" Title="TokenId" Field="@(r => r.TokenId!)" Sortable="true" Filterable="true"/>
+                <Column TableItem="ParityError" Title="Category" Field="@(r => r.Category!)" Sortable="true" Filterable="true"/>
                 <Column TableItem="ParityError" Title="Message" Field="@(r => r.Message)" Sortable="true" Filterable="true"/>
                 <Pager ShowPageNumber="true" ShowTotalCount="true"/>
             </Table>
@@ -194,12 +230,43 @@
     [Parameter]
     public string? Error { get; set; }
 
-    [Inject]
-    public ParityService Service { get; set; } = null!;
-    
+    [Parameter]
+    public bool OnlyShowErrors { get; set; }
+
+    private IEnumerable<ParityStateRow> Rows
+    {
+        get
+        {
+            if (_state == null)
+                return Enumerable.Empty<ParityStateRow>();
+
+            var source = _state.Rows.AsEnumerable();
+            
+            switch (OnlyShowErrors)
+            {
+                case false when _state.Errors.Count == 0:
+                    return source;
+                case true when _state.Errors.Count == 0:
+                    return Enumerable.Empty<ParityStateRow>();
+                case true:
+                    source = source.Where(r => _state.Errors.Any(e => e.TokenId == r.TokenId));
+                    break;
+            }
+
+            return source;
+        }
+    }
+
+    public bool HasError(uint tokenId)
+    {
+        if (_state == null)
+            return false;
+        return _state.Errors.Any(x => x.TokenId == tokenId);
+    }
+
     protected override Task OnInitializedAsync()
     {
-        Service.OnChangeAsync += StateHasChangedAsync;
+        ParityService.OnChangeAsync += StateHasChangedAsync;
         return Task.CompletedTask;
     }
 
@@ -235,7 +302,13 @@
                         
                         if (!(row.BadPixels > 0)) continue;
 
-                        _state.Errors.Add(new ParityError { TokenId = row.TokenId, Message = $"Found {row.BadPixels} bad pixels in on-chain image"});
+                        _state.Errors.Add(new ParityError
+                        {
+                            Source = ParityService.OnChainSource,
+                            TokenId = row.TokenId, 
+                            Category = ParityErrorCategory.Image,
+                            Message = $"{row.BadPixels} bad pixels"
+                        });
                         if (Model.ContinueOnError) continue;
 
                         await StopAsync();
@@ -258,7 +331,7 @@
 
     public void Dispose()
     {
-        Service.OnChangeAsync -= StateHasChangedAsync;
+        ParityService.OnChangeAsync -= StateHasChangedAsync;
     }
 
     private Task OnSourceChanged(ParitySource source)
@@ -365,7 +438,7 @@
         _state = new ParityState();
         cancellationToken.ThrowIfCancellationRequested();
 
-        await Service.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!,
+        await ParityService.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!,
             onChainRpcUrl: Options.Value.RpcUrl,
             contractAddress: Options.Value.ContractAddress,
             logger: Logger,
