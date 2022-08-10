@@ -5,7 +5,6 @@ using System.Text.Json.JsonDiffPatch;
 using System.Text.Json.JsonDiffPatch.Diffs.Formatters;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using Jering.Javascript.NodeJS;
 using Microsoft.Extensions.Logging;
 using Nethereum.Web3;
 using SixLabors.ImageSharp;
@@ -329,11 +328,28 @@ namespace CrypToadzChained.Shared
                 if (sourceFrame.Size != targetFrame.Size)
                     ResizeImage(sourceFrame, targetFrame.Size);
 
-                var (deltaImagePath, badPixels) = await CompareFrameAsync(sourceFrame.Uri, targetFrame.Uri, cancellationToken);
-                totalBadPixels += badPixels;
 
+                var deltaImage = sourceFrame.Image.Clone(x => 
+                    x.Lightness(1.7f).Grayscale()
+                );
+
+                var badPixels = 0;
+
+                for (var x = 0; x < sourceFrame.Image.Width; x++)
+                {
+                    for (var y = 0; y < sourceFrame.Image.Height; y++)
+                    {
+                        var sourcePixel = sourceFrame.Image[x, y];
+                        var targetPixel = targetFrame.Image[x, y];
+                        if (sourcePixel.Equals(targetPixel)) continue;
+                        badPixels++;
+                        deltaImage[x, y] = Color.Red;
+                    }
+                }
+
+                totalBadPixels += badPixels;
                 if (badPixels > 0 || lastDelta == null)
-                    lastDelta = Image.Load<Rgba32>(await File.ReadAllBytesAsync(deltaImagePath, cancellationToken), Png);
+                    lastDelta = deltaImage;
             }
 
             row.BadPixels = totalBadPixels;
@@ -341,26 +357,7 @@ namespace CrypToadzChained.Shared
 
             return row;
         }
-
-        private static async Task<(string, int)> CompareFrameAsync(string sourceUri, string targetUri, CancellationToken cancellationToken)
-        {
-            var sourcePath = Path.GetTempFileName();
-            await File.WriteAllBytesAsync(sourcePath, Convert.FromBase64String(sourceUri), cancellationToken);
-
-            var targetPath = Path.GetTempFileName();
-            await File.WriteAllBytesAsync(targetPath, Convert.FromBase64String(targetUri), cancellationToken);
-
-            var deltaImagePath = Path.GetTempFileName();
-            var badPixels = await StaticNodeJSService.InvokeFromStringAsync<int>(CompareImagesModule, args: new object[]
-            {
-                sourcePath,
-                targetPath,
-                deltaImagePath
-            }, cancellationToken: cancellationToken);
-
-            return (deltaImagePath, badPixels);
-        }
-
+        
         private static ImageInfo GetImageInfo(string? imageUri, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -389,27 +386,5 @@ namespace CrypToadzChained.Shared
                 throw new InvalidOperationException("Image is already the requested size");
             info.Image.Mutate(x => x.Resize(new ResizeOptions { Size = newSize, Sampler = KnownResamplers.NearestNeighbor }));
         }
-
-        #region NodeJS
-
-        private const string CompareImagesModule = @"
-const PNG = require('pngjs').PNG;
-const pixelmatch = require('pixelmatch');
-const fs = require('fs');
-
-module.exports = (callback, sourceImagePath, targetImagePath, deltaImagePath) => {
-
-    const source = PNG.sync.read(fs.readFileSync(sourceImagePath));
-    const target = PNG.sync.read(fs.readFileSync(targetImagePath));
-
-    const { width, height } = source;
-    const diff = new PNG({ width, height });
-    const badPixels = pixelmatch(source.data, target.data, diff.data, width, height, { threshold: 0 });
-    
-    fs.writeFileSync(deltaImagePath, PNG.sync.write(diff));
-    callback(null, badPixels);
-}";
-
-        #endregion
     }
 }
