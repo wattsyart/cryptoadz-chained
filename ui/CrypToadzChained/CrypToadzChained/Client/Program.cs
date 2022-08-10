@@ -9,7 +9,12 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddBlazorTable();
+
+#if DEBUG
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+#else
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("https://cryptoadzchained.com") });
+#endif
 
 builder.Services.Configure<Web3Options>(o =>
 {

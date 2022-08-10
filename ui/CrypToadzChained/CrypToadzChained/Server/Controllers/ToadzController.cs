@@ -20,8 +20,6 @@ namespace CrypToadzChained.Server.Controllers
         [HttpGet("tokenURI/{tokenId}")]
         public async Task<string> GetCanonicalTokenUri(uint tokenId)
         {
-            _logger.LogInformation("GetCanonicalTokenUri: {OnChainRpcUrl}", _options.Value.OnChainRpcUrl);
-
             return await ToadzService.GetCanonicalTokenURIAsync(tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         }
 

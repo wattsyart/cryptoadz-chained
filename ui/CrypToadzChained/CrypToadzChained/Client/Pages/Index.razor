@@ -141,8 +141,6 @@
             ImageUri = null;
             Error = null;
 
-            Logger?.LogInformation("OnChainRpcUrl: {OnChainRpcUrl}", Options.Value.OnChainRpcUrl);
-
             if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
             {
                 Logger?.LogInformation("Calling client...");
