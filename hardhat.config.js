@@ -25,7 +25,7 @@ require("./tasks/tasks.js");
       gasPrice: "auto",
       gas: "auto",
       timeout: 43200000
-    },
+    }
   },
   solidity: {
     version: "0.8.13",
