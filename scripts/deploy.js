@@ -85,6 +85,12 @@ async function deployContracts(ethers, quiet, trace, txOptions, hid, signerOverr
   if (!txOptions) txOptions = {};
 
   var output = {};
+
+  if (!fs.existsSync(path)) {
+    console.log("creating ./scripts/manifest.json");
+    fs.writeFileSync("./scripts/manifest.json", "{}");
+  }
+
   var manifest = JSON.parse(fs.readFileSync("./scripts/manifest.json").toString('utf8'));
 
   output["CrypToadzChained"] = await deployContract(manifest, ethers, "CrypToadzChained", quiet, trace, txOptions, hid, signerOverride);
