@@ -8,14 +8,11 @@ namespace CrypToadzChained.Server.Controllers
     [Route("toadz")]
     public class ToadzController : ControllerBase
     {
-        private readonly HttpClient _http;
-
         private readonly IOptionsSnapshot<Web3Options> _options;
         private readonly ILogger<ToadzController> _logger;
 
-        public ToadzController(HttpClient http, IOptionsSnapshot<Web3Options> options, ILogger<ToadzController> logger)
+        public ToadzController(IOptionsSnapshot<Web3Options> options, ILogger<ToadzController> logger)
         {
-            _http = http;
             _options = options;
             _logger = logger;
         }
@@ -23,6 +20,8 @@ namespace CrypToadzChained.Server.Controllers
         [HttpGet("tokenURI/{tokenId}")]
         public async Task<string> GetCanonicalTokenUri(uint tokenId)
         {
+            _logger.LogInformation("GetCanonicalTokenUri: {OnChainRpcUrl}", _options.Value.OnChainRpcUrl);
+
             return await ToadzService.GetCanonicalTokenURIAsync(tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         }
 
