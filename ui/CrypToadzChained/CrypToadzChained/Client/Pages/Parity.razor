@@ -64,8 +64,27 @@
         <br /> 
 
         <div class="form-check form-switch form-check-inline">
-            <input type="checkbox" class="form-check-input" id="continueOnError" @bind="Model.ContinueOnError">
+            @if (!IsRunning)
+            {
+                <input type="checkbox" class="form-check-input" id="continueOnError" @bind="Model.ContinueOnError">
+            }
+            else
+            {
+                <input type="checkbox" class="form-check-input" id="continueOnError" @bind="Model.ContinueOnError" disabled>
+            }
             <label class="form-check-label" for="continueOnError">Continue on error</label>
+        </div>
+        
+        <div class="form-check form-switch form-check-inline">
+            @if (!IsRunning)
+            {
+                <input type="checkbox" class="form-check-input" id="compareImagesOnClient" @bind="Model.CompareImagesOnClient">
+            }
+            else
+            {
+                <input type="checkbox" class="form-check-input" id="compareImagesOnClient" @bind="Model.CompareImagesOnClient" disabled>
+            }
+            <label class="form-check-label" for="compareImagesOnClient">Compare images on client</label>
         </div>
         
         <div class="form-check form-switch form-check-inline">
@@ -304,12 +323,13 @@
 
     private async Task StateHasChangedAsync()
     {
-        await TryRunDeltasAsync();
+        if(!Model.CompareImagesOnClient)
+            await CompareImagesOnServerAsync();
 
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task TryRunDeltasAsync()
+    private async Task CompareImagesOnServerAsync()
     {
         if (IsRunning && _state != null)
         {

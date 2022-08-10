@@ -252,6 +252,26 @@ namespace CrypToadzChained.Shared
                         continue;
                     }
 
+                    if (parityOptions.CompareImagesOnClient)
+                    {
+                        CompareImages(row, cancellationToken);
+
+                        if (row.BadPixels > 0)
+                        {
+                            state.Errors.Add(new ParityError
+                            {
+                                Source = OnChainSource,
+                                TokenId = row.TokenId, 
+                                Category = ParityErrorCategory.Image,
+                                Message = $"{row.BadPixels} bad pixels"
+                            });
+
+                            if (!parityOptions.ContinueOnError)
+                                return;
+                            continue;
+                        }
+                    }
+
                     state.Rows.Add(row);
                 }
                 catch (OperationCanceledException)
@@ -304,14 +324,27 @@ namespace CrypToadzChained.Shared
             var source = GetImageInfo(row.SourceImageUri, cancellationToken);
             var target = GetImageInfo(row.TargetImageUri, cancellationToken);
 
-            if(string.IsNullOrWhiteSpace(row.SourceTokenUri) || string.IsNullOrWhiteSpace(row.TargetTokenUri))
+            if (string.IsNullOrWhiteSpace(row.SourceTokenUri) || string.IsNullOrWhiteSpace(row.TargetTokenUri))
+            {
                 throw new InvalidOperationException($"ID #{row.TokenId}: images are missing token URI provenance");
+            }
 
             if (row.SourceTokenUri.Equals(row.TargetTokenUri))
+            {
                 throw new InvalidOperationException($"ID #{row.TokenId}: the same token URI was compared to itself");
+            }
 
             if (source.FrameCount != target.FrameCount)
+            {
                 throw new InvalidOperationException($"ID #{row.TokenId}: animation frame count mismatch");
+            }
+
+            // take advantage of a rare case where the URIs are identical, saving a tonne of compute
+            if (source.Uri == target.Uri)
+            {
+                row.BadPixels = 0;
+                row.DeltaImageUri = GetDeltaImageBase(source).ToBase64String(PngFormat.Instance);
+            }
 
             var sourceFrames = source.Image.Frames;
             var targetFrames = target.Image.Frames;
@@ -339,9 +372,7 @@ namespace CrypToadzChained.Shared
                 if (sourceFrame.Size != targetFrame.Size)
                     throw new InvalidOperationException($"ID #{row.TokenId}: failed to resize");
 
-                var deltaImage = sourceFrame.Image.Clone(x => 
-                    x.Lightness(1.7f).Grayscale()
-                );
+                var deltaImage = GetDeltaImageBase(sourceFrame);
 
                 var badPixels = 0;
 
@@ -364,10 +395,16 @@ namespace CrypToadzChained.Shared
 
             row.BadPixels = totalBadPixels;
             row.DeltaImageUri = lastDelta.ToBase64String(PngFormat.Instance);
-
             return row;
         }
-        
+
+        private static Image<Rgba32> GetDeltaImageBase(ImageInfo sourceFrame)
+        {
+            return sourceFrame.Image.Clone(x => 
+                x.Lightness(1.7f).Grayscale()
+            );
+        }
+
         private static ImageInfo GetImageInfo(string? imageUri, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
