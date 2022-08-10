@@ -50,9 +50,9 @@ namespace CrypToadzChained.Server.Controllers
         }
 
         [HttpPost("compare")]
-        public async Task<ParityStateRow> CompareImagesAsync([FromBody] ParityStateRow row, CancellationToken cancellationToken)
+        public ParityStateRow CompareImages([FromBody] ParityStateRow row, CancellationToken cancellationToken)
         {
-            return await ParityService.CompareImagesAsync(row, cancellationToken);
+            return ParityService.CompareImages(row, cancellationToken);
         }
     }
 }

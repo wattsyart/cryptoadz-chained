@@ -297,7 +297,7 @@ namespace CrypToadzChained.Shared
             return payload;
         }
 
-        public static async Task<ParityStateRow> CompareImagesAsync(ParityStateRow row, CancellationToken cancellationToken)
+        public static ParityStateRow CompareImages(ParityStateRow row, CancellationToken cancellationToken)
         {
             var source = GetImageInfo(row.SourceImageUri, cancellationToken);
             var target = GetImageInfo(row.TargetImageUri, cancellationToken);
