@@ -3,7 +3,7 @@ The same CrypToadz you know and love, preserved on-chain.
 
 ## Where To Find It?
 
-The contracts are currently [live on Rinkeby](https://rinkeby.etherscan.io/address/0x4190aC5bc2499dC0285AC344F92c6E87dF99f93A#code) 
+The contracts are currently [live on Rinkeby](https://rinkeby.etherscan.io/address/0x3aA95802dF552896040F063d05CEF7A436fF05e2#code) 
 and you can use the [Viewer App](https://cryptoadzchained.azurewebsites.net) to play with it. 
 
 The code for the viewer is [in this repository](https://github.com/wattsyart/cryptoadz-chained/tree/main/ui).
@@ -46,7 +46,7 @@ npx hardhat toadz-image-deltas            Validates correctness of CrypToadz tok
 npx hardhat toadz-random-batch            Batch-based random generation for stress testing
 npx hardhat toadz-random-image            Generates a random toadz imageURI and saves the image to disk
 npx hardhat toadz-random-token            Generates a random toadz tokenURI and saves the metadata and image to disk
-toadz-wrapped                 Validates correctness of a single, wrapped CrypToadz
+npx hardhat toadz-wrapped                 Validates correctness of a single, wrapped CrypToadz
 ```
 
 ## Design Notes
