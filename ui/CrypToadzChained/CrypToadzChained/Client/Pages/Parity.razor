@@ -56,7 +56,7 @@
                          ValueChanged="@((ParityScope value) => OnScopeChanged(value))">
                 @foreach (var value in EnumExtensions.GetValues<ParityScope>())
                 {
-                    <option value="@value">@value.Describe() (@ParityScopeExtensions.Count((ParityScope) @value))</option>
+                    <option value="@value">@value.Describe() (@(((ParityScope) @value).Count()))</option>
                 }
             </InputSelect>
         </div>
