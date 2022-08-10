@@ -6,7 +6,7 @@ import "@divergencetech/ethier/contracts/utils/DynamicBuffer.sol";
 import "./BufferUtils.sol";
 
 library CrypToadzCustomImageBank {
-    function getCustomImage(mapping(uint8 => uint16) storage lengths, mapping(uint8 => address) storage data)
+    function getCustomImageCompressed(mapping(uint8 => uint16) storage lengths, mapping(uint8 => address) storage data)
         internal
         view
         returns (bytes memory buffer)
@@ -43,7 +43,7 @@ library CrypToadzCustomImageBank {
         }
     }
 
-    function getCustomImageSingle(uint16 length, address data)
+    function getCustomImageSingleCompressed(uint16 length, address data)
         internal
         view
         returns (bytes memory buffer)
