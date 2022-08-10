@@ -97,7 +97,7 @@ namespace CrypToadzChained.Shared
                     {
                         if (sourceTokenUri.StartsWith("execution reverted") || sourceTokenUri.StartsWith("ipfs"))
                         {
-                            state.Errors.Add(source, tokenId, ParityErrorCategory.TokenUri, $"{ParityErrorMessage.ErrorFetchingTokenUri}: ${sourceTokenUri}");
+                            state.Errors.Add(source, tokenId, ParityErrorCategory.TokenUri, $"{ParityErrorMessage.ErrorFetchingTokenUri}: {sourceTokenUri}");
                             if (!parityOptions.ContinueOnError)
                                 return;
                             continue;
@@ -175,7 +175,7 @@ namespace CrypToadzChained.Shared
                     {
                         if (targetTokenUri.StartsWith("execution reverted"))
                         {
-                            state.Errors.Add(OnChainSource, tokenId, ParityErrorCategory.TokenUri, $"{ParityErrorMessage.ErrorFetchingTokenUri}: ${sourceTokenUri}");
+                            state.Errors.Add(OnChainSource, tokenId, ParityErrorCategory.TokenUri, $"{ParityErrorMessage.ErrorFetchingTokenUri}: {targetTokenUri}");
                             if (!parityOptions.ContinueOnError)
                                 return;
                             continue;
