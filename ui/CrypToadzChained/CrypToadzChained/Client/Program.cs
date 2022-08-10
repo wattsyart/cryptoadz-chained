@@ -22,7 +22,7 @@ builder.Services.Configure<Web3Options>(o =>
     o.OnChainRpcUrl = null!;
 
     // contract address for the on-chain project
-    o.OnChainContractAddress = "0x4190aC5bc2499dC0285AC344F92c6E87dF99f93A";
+    o.OnChainContractAddress = "0x3aA95802dF552896040F063d05CEF7A436fF05e2";
     
     // contract address for mainnet project
     o.MainnetContractAddress = "0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6";
