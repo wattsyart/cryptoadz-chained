@@ -1,7 +1,0 @@
-{
-  "name": "hardhat-project",
-  "devDependencies": {
-    "pixelmatch": "^5.3.0",
-    "pngjs": "^6.0.0"
-  }
-}

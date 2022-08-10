@@ -1,10 +1,5 @@
 using CrypToadzChained.Shared;
 
-const string nodeDir = "/usr/local/bin";
-var path = Environment.GetEnvironmentVariable("PATH") ?? "";
-if(!path.Contains(nodeDir))
-    Environment.SetEnvironmentVariable("PATH", $"{path};{nodeDir}");
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
