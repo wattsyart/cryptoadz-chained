@@ -14,11 +14,12 @@ public sealed class ImageInfo
 
     public string Uri => Type switch
     {
-        ImageType.Png => Image.ToBase64String(PngFormat.Instance)[Constants.PngDataUri.Length..]!,
-        ImageType.Gif => Image.ToBase64String(GifFormat.Instance)[Constants.GifDataUri.Length..]!,
+        ImageType.Png => Image.ToBase64String(PngFormat.Instance)[DataUri.Png.Length..]!,
+        ImageType.Gif => Image.ToBase64String(GifFormat.Instance)[DataUri.Gif.Length..]!,
         null => throw new NullReferenceException(),
         _ => throw new ArgumentOutOfRangeException()
     };
 
     public Size Size => Image.Size();
+    public int FrameCount => Image.Frames.Count;
 }

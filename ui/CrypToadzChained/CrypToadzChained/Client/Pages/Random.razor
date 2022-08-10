@@ -3,7 +3,7 @@
 
 <div class="container">
     
-    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
     
     <br/>
 
@@ -139,9 +139,9 @@
             ImageUri = null;
             Error = null;
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
+            if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
             {
-                var body = await ToadzService.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -170,9 +170,9 @@
             Metadata = null;
             ImageUri = null;
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
+            if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
             {
-                var body = await ToadzService.GetRandomTokenURIAsync(Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.GetRandomTokenURIAsync(Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -208,7 +208,7 @@
     private void WithBody(string body)
     {
         TokenUri = body;
-        if (!TokenUri.StartsWith(Constants.JsonDataUri))
+        if (!TokenUri.StartsWith(DataUri.Json))
         {
             Error = TokenUri;
             TokenUri = null;
@@ -218,7 +218,7 @@
             if (string.IsNullOrWhiteSpace(TokenUri))
                 return;
 
-            var data = TokenUri.Replace(Constants.JsonDataUri, "");
+            var data = TokenUri.Replace(DataUri.Json, "");
             var buffer = Convert.FromBase64String(data);
             var json = Encoding.UTF8.GetString(buffer);
             Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);

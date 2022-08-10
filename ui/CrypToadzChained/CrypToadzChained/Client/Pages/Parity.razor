@@ -7,13 +7,13 @@
         <DataAnnotationsValidator />
         
         <div class="form-group">
-            <label for="contractAddress">CrypToadzChained Address:</label>
-            <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.ContractAddress" placeholder="CrypToadzChained Contract Address" />
+            <label for="contractAddress">On-Chain Contract Address:</label>
+            <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.OnChainContractAddress" />
         </div>
         
         <br />
         
-        <ToggleInputText Label="CrypToadzChained RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+        <ToggleInputText Label="On-Chain RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
         
         <div class="form-group">
             <label for="source">Source:</label>
@@ -32,11 +32,17 @@
         
         @switch (Model.Source)
         {
-            case ParitySource.Provenance:
+            case ParitySource.IPFS:
+                <div class="form-group mb-3">
+                    <label for="ipfsCid">IPFS CID:</label>
+                    <input id="ipfsCid" type="text" class="form-control" @bind="Options.Value.IpfsCid" />
+                </div>
                 <ToggleInputText Label="IPFS Gateway URL" @bind-Text="@Options.Value.IpfsUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+                <ToggleInputText Label="IPFS Username" @bind-Text="@Options.Value.IpfsUsername" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+                <ToggleInputText Label="IPFS Password" @bind-Text="@Options.Value.IpfsPassword" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
-            case ParitySource.Arweave:
-                <ToggleInputText Label="MainNet Web3 RPC URL" @bind-Text="@Options.Value.MainNetRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+            case ParitySource.Mainnet:
+                <ToggleInputText Label="MainNet RPC URL" @bind-Text="@Options.Value.MainnetRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -49,28 +55,41 @@
             <InputSelect id="scope" class="form-control"
                          ValueExpression="@(() => Model.Scope)"
                          Value="Model.Scope"
-                         ValueChanged="@((ParityScope value) => @OnScopeChanged(value))">
+                         ValueChanged="@((ParityScope value) => OnScopeChanged(value))">
                 @foreach (var value in EnumExtensions.GetValues<ParityScope>())
                 {
-                    <option value="@value">@value.Describe() (@ParityService.GetScopeIdCount((ParityScope) @value))</option>
+                    <option value="@value">@value.Describe() (@ParityScopeExtensions.Count((ParityScope) @value))</option>
                 }
             </InputSelect>
         </div>
         
         <br /> 
 
-        <div class="form-check">
+        <div class="form-check form-switch form-check-inline">
             <input type="checkbox" class="form-check-input" id="continueOnError" @bind="Model.ContinueOnError">
             <label class="form-check-label" for="continueOnError">Continue on error</label>
         </div>
+        
+        <div class="form-check form-switch form-check-inline">
+            <input type="checkbox" class="form-check-input" id="onlyShowErrors" @bind="OnlyShowErrors">
+            <label class="form-check-label" for="onlyShowErrors">Only show errors</label>
+        </div>
 
+        <br />
         <br />
         
         @if (!IsRunning && string.IsNullOrWhiteSpace(Error) && _state != null)
         {
             if (_state.Errors.Count == 0)
             {
-                <div class="alert alert-success">Tests passed :)</div>
+                if (_state.Rows.Any(x => !x.BadPixels.HasValue))
+                {
+                    <div class="alert alert-warning">Waiting for image deltas...</div>    
+                }
+                else
+                {
+                    <div class="alert alert-success">Tests passed :)</div>    
+                }
             }
             else
             {
@@ -89,7 +108,7 @@
         }
         else
         {
-            if (Model.Source == ParitySource.Arweave && !string.IsNullOrWhiteSpace(Options.Value.MainNetRpcUrl))
+            if (CanRunArweave || CanRunIpfs)
             {
                 <button class="btn btn-dark" @onclick="StartAsync">Start Test</button>
             }
@@ -111,9 +130,20 @@
 
     @if(_state != null)
     {
-        <Table TableItem="ParityStateRow" Items="@_state.Rows" PageSize="15">
+        <div class="form-group mb-3">
+            <label for="pageSize">Show:</label>
+            <select id="pageSize" class="form-control" @bind="@PageSize">
+                <option value="15">15 rows</option>
+                <option value="25">25 rows</option>
+                <option value="50">50 rows</option>
+                <option value="100">100 rows</option>
+                <option value="@Model.Scope.Count()">All rows</option>
+            </select>
+        </div>
+
+        <Table TableItem="ParityStateRow" Items="@Rows" PageSize="@PageSize">
             <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" Width="72px"/>
-            <Column TableItem="ParityStateRow" Title="@Enum.GetName(Model.Source)" Field="@(x => x.SourceImageUri!)" Sortable="true" Filterable="true" Width="72px">
+            <Column TableItem="ParityStateRow" Title="@Enum.GetName(Model.Source)" Field="@(x => x.SourceImageUri!)" Width="72px">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(context.SourceImageUri))
                     {
@@ -121,7 +151,7 @@
                     }
                 </Template>
             </Column>
-            <Column TableItem="ParityStateRow" Title="On-Chain" Field="@(x => x.TargetImageUri!)" Sortable="true" Filterable="true" Width="72px">
+            <Column TableItem="ParityStateRow" Title="On-Chain" Field="@(x => x.TargetImageUri!)" Width="72px">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(context.TargetImageUri))
                     {
@@ -129,31 +159,64 @@
                     }
                 </Template>
             </Column>
-            <Column TableItem="ParityStateRow" Title="Image Delta" Field="@(x => x.DeltaImageUri!)" Sortable="true" Filterable="true" Width="72px">
+            <Column TableItem="ParityStateRow" Title="Image" Field="@(x => x.DeltaImageUri!)" Width="72px">
                 <Template>
+                    <div class="imageOverlay">
                     @if (!string.IsNullOrWhiteSpace(context.DeltaImageUri))
                     {
-                        <div class="imageOverlay">
-                            <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
-                            @if (context.BadPixels.GetValueOrDefault() == 0)
-                            {
-                                <div class="centeredOverImage" style="color: green;">
-                                    <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="centeredOverImage" style="color: red;">
-                                    <i class="oi oi-circle-x align-middle" aria-hidden="true"></i>
-                                </div>
-                            }
+                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
+                        if (context.BadPixels is 0)
+                        {
+                            <div class="centeredOverImage" style="color: green;">
+                                <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="centeredOverImage" style="color: red;">
+                                <i class="oi oi-circle-x align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <img style="width: 72px; height: 72px" src="@EmptyImage" alt="Loading..."/>
+                        <div class="centeredOverImage" style="color: darkkhaki;">
+                            <i class="oi oi-reload align-middle" aria-hidden="true"></i>
                         </div>
                     }
+                    </div>
+                </Template>
+            </Column>
+            <Column TableItem="ParityStateRow" Title="Metadata" Field="@(x => x.DeltaJson!)" Width="72px">
+                <Template>
+                    <div class="imageOverlay">
+                        <img style="width: 72px; height: 72px" src="@EmptyImage" alt="Loading..."/>
+                        @if (string.IsNullOrWhiteSpace(context.DeltaJson))
+                        {
+                            <div class="centeredOverImage" style="color: green;">
+                                <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="centeredOverImage" style="color: red;">
+                                <i class="oi oi-circle-x align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                    </div>
                 </Template>
             </Column>
             <Pager ShowPageNumber="true" ShowTotalCount="true" />
             <EmptyDataTemplate>
-                No results yet.
+                @if (OnlyShowErrors)
+                {
+                    <span>No errors.</span>
+                }
+                else
+                {
+                    <span>No results.</span>
+                }
             </EmptyDataTemplate>
         </Table>
 
@@ -164,7 +227,9 @@
             <h4>Errors</h4>
 
             <Table TableItem="ParityError" Items="@_state.Errors" PageSize="15">
-                <Column TableItem="ParityError" Title="TokenId" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" />
+                <Column TableItem="ParityError" Title="Source" Field="@(r => r.Source!)" Sortable="true" Filterable="true" />
+                <Column TableItem="ParityError" Title="TokenId" Field="@(r => r.TokenId!)" Sortable="true" Filterable="true"/>
+                <Column TableItem="ParityError" Title="Category" Field="@(r => r.Category!)" Sortable="true" Filterable="true"/>
                 <Column TableItem="ParityError" Title="Message" Field="@(r => r.Message)" Sortable="true" Filterable="true"/>
                 <Pager ShowPageNumber="true" ShowTotalCount="true"/>
             </Table>
@@ -185,6 +250,8 @@
 
 @code
 {
+    private const string EmptyImage = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+
     [Parameter]
     public ParityOptions Model { get; set; } = new();
 
@@ -194,12 +261,46 @@
     [Parameter]
     public string? Error { get; set; }
 
-    [Inject]
-    public ParityService Service { get; set; } = null!;
-    
+    [Parameter]
+    public bool OnlyShowErrors { get; set; }
+
+    [Parameter]
+    public int PageSize { get; set; } = 15;
+
+    private IEnumerable<ParityStateRow> Rows
+    {
+        get
+        {
+            if (_state == null)
+                return Enumerable.Empty<ParityStateRow>();
+
+            var source = _state.Rows.AsEnumerable();
+            
+            switch (OnlyShowErrors)
+            {
+                case false when _state.Errors.Count == 0:
+                    return source;
+                case true when _state.Errors.Count == 0:
+                    return Enumerable.Empty<ParityStateRow>();
+                case true:
+                    source = source.Where(r => _state.Errors.Any(e => e.TokenId == r.TokenId));
+                    break;
+            }
+
+            return source;
+        }
+    }
+
+    public bool HasError(uint tokenId)
+    {
+        if (_state == null)
+            return false;
+        return _state.Errors.Any(x => x.TokenId == tokenId);
+    }
+
     protected override Task OnInitializedAsync()
     {
-        Service.OnChangeAsync += StateHasChangedAsync;
+        ParityService.OnChangeAsync += StateHasChangedAsync;
         return Task.CompletedTask;
     }
 
@@ -235,7 +336,13 @@
                         
                         if (!(row.BadPixels > 0)) continue;
 
-                        _state.Errors.Add(new ParityError { TokenId = row.TokenId, Message = $"Found {row.BadPixels} bad pixels in on-chain image"});
+                        _state.Errors.Add(new ParityError
+                        {
+                            Source = ParityService.OnChainSource,
+                            TokenId = row.TokenId, 
+                            Category = ParityErrorCategory.Image,
+                            Message = $"{row.BadPixels} bad pixels"
+                        });
                         if (Model.ContinueOnError) continue;
 
                         await StopAsync();
@@ -258,7 +365,7 @@
 
     public void Dispose()
     {
-        Service.OnChangeAsync -= StateHasChangedAsync;
+        ParityService.OnChangeAsync -= StateHasChangedAsync;
     }
 
     private Task OnSourceChanged(ParitySource source)
@@ -284,6 +391,8 @@
             return;
 
         Error = null;
+        _state?.Rows.Clear();
+        _state?.Errors.Clear();
 
         try
         {
@@ -362,15 +471,13 @@
 
     private async Task<ParityState> DoWorkAsync(CancellationToken cancellationToken)
     {
-        _state = new ParityState();
         cancellationToken.ThrowIfCancellationRequested();
 
-        await Service.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!,
-            onChainRpcUrl: Options.Value.RpcUrl,
-            contractAddress: Options.Value.ContractAddress,
-            logger: Logger,
-            cancellationToken: cancellationToken);
-
+        _state = new ParityState();
+        await ParityService.StartAsync(Model, Options.Value, _state, Http, Logger, cancellationToken);
         return _state;
     }
+
+    private bool CanRunArweave => Model.Source == ParitySource.Mainnet && !string.IsNullOrWhiteSpace(Options.Value.MainnetRpcUrl);
+    private bool CanRunIpfs => Model.Source == ParitySource.IPFS && !string.IsNullOrWhiteSpace(Options.Value.IpfsCid) && !string.IsNullOrWhiteSpace(Options.Value.IpfsUrl);
 }

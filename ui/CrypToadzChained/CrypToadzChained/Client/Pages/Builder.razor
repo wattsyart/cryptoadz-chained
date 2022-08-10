@@ -2,7 +2,7 @@
 @inherits PageBase
 
 <div class="container">
-    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
 </div>
 
 <br />
@@ -432,9 +432,9 @@
                 _ => NumberOfTraits._1
             };
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
+            if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
             {
-                var body = await ToadzService.BuildTokenURIAsync(Toad, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.BuildTokenURIAsync(Toad, Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);
                 WithBody(body);
             }
             else
@@ -466,7 +466,7 @@
     private void WithBody(string body)
     {
         TokenUri = body;
-        if (!TokenUri.StartsWith(Constants.JsonDataUri))
+        if (!TokenUri.StartsWith(DataUri.Json))
         {
             Error = TokenUri;
             TokenUri = null;
@@ -475,7 +475,7 @@
         {
             if (!string.IsNullOrWhiteSpace(TokenUri))
             {
-                var data = TokenUri.Replace(Constants.JsonDataUri, "");
+                var data = TokenUri.Replace(DataUri.Json, "");
                 var buffer = Convert.FromBase64String(data);
                 var json = Encoding.UTF8.GetString(buffer);
 

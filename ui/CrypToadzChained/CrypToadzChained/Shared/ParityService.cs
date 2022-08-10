@@ -1,7 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using Jering.Javascript.NodeJS;
+using System.Text.Json.JsonDiffPatch;
+using System.Text.Json.JsonDiffPatch.Diffs.Formatters;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using Nethereum.Web3;
 using SixLabors.ImageSharp;
@@ -12,44 +15,44 @@ using SixLabors.ImageSharp.Processing;
 
 namespace CrypToadzChained.Shared
 {
-    public sealed class ParityService
+    public static class ParityService
     {
-        private const string CrypToadzContractAddress = "0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6";
+        public const string OnChainSource = "On-Chain";
 
         private static readonly GifDecoder Gif = new();
         private static readonly PngDecoder Png = new();
+        private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web) { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-        public event Func<Task>? OnChangeAsync;
+        public static event Func<Task>? OnChangeAsync;
         
-        public async Task StartAsync(ParityOptions options, ParityState state, HttpClient http, string mainNetRpcUrl, string onChainRpcUrl, string contractAddress, ILogger? logger, CancellationToken cancellationToken)
+        public static async Task StartAsync(ParityOptions parityOptions, Web3Options web3Options, ParityState state, HttpClient http, ILogger? logger, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrWhiteSpace(mainNetRpcUrl))
+            if (parityOptions.Source == ParitySource.Mainnet && string.IsNullOrWhiteSpace(web3Options.MainnetRpcUrl))
             {
                 throw new InvalidOperationException("Must provide MainNet RPC URL (Source)");
             }
 
-            if (string.IsNullOrWhiteSpace(onChainRpcUrl))
+            if (parityOptions.Source == ParitySource.IPFS && string.IsNullOrWhiteSpace(web3Options.IpfsUrl))
             {
-                throw new InvalidOperationException("Must provide Rinkeby RPC URL (Target)");
+                throw new InvalidOperationException("Must provide IPFS Gateway URL (Source)");
             }
 
-            if (string.IsNullOrWhiteSpace(contractAddress))
+            if (string.IsNullOrWhiteSpace(web3Options.OnChainContractAddress))
             {
-                throw new InvalidOperationException("Must provide Rinkeby RPC URL");
+                throw new InvalidOperationException("Must provide CrypToadzChained Contract Address");
             }
 
-            if (options.Source != ParitySource.Arweave)
+            if (string.IsNullOrWhiteSpace(web3Options.OnChainRpcUrl))
             {
-                throw new NotImplementedException("Parity testing currently supports BaseURI only");
+                throw new InvalidOperationException("Must provide CrypToadzChained RPC URL (Target)");
             }
 
             if (cancellationToken.IsCancellationRequested)
                 return;
 
-            var web3 = new Web3(mainNetRpcUrl);
-            var service = web3.Eth.ERC721.GetContractService(CrypToadzContractAddress);
+            var source = Enum.GetName(typeof(ParitySource), parityOptions.Source)!;
 
-            foreach (var tokenId in GetScopeIds(options.Scope))
+            foreach (var tokenId in parityOptions.Scope.TokenIds())
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
@@ -61,31 +64,70 @@ namespace CrypToadzChained.Shared
                         TokenId = tokenId
                     };
 
-                    var sourceTokenUri = await service.TokenURIQueryAsync(tokenId);
+                    string sourceTokenUri;
+                    switch (parityOptions.Source)
+                    {
+                        case ParitySource.IPFS:
+                        {
+                            var cid = $"{web3Options.IpfsCid}/{tokenId}";
+                            var payload = await DownloadFromIpfsAsync(cid, http, web3Options, cancellationToken);
+                            sourceTokenUri = Encoding.UTF8.GetString(payload);
+                            break;
+                        }
+                        case ParitySource.Mainnet:
+                        {
+                            var web3 = new Web3(web3Options.MainnetRpcUrl);
+                            var service = web3.Eth.ERC721.GetContractService(web3Options.MainnetContractAddress);
+                            sourceTokenUri = await service.TokenURIQueryAsync(tokenId);
+                            break;
+                        }
+                        default:
+                            throw new NotSupportedException($"Unsupported source ({parityOptions.Source})");
+                    }
 
                     if (string.IsNullOrWhiteSpace(sourceTokenUri))
                     {
-                        state.Errors.Add($"No Token URI returned for CrypToadz #{tokenId}");
-                        if (!options.ContinueOnError)
+                        state.Errors.Add(source, tokenId, ParityErrorCategory.TokenUri, ParityErrorMessage.MissingTokenUri);
+                        if (!parityOptions.ContinueOnError)
                             return;
                         continue;
                     }
-
-                    if (!Uri.TryCreate(sourceTokenUri, UriKind.Absolute, out var externalUri))
+                    else
                     {
-                        state.Errors.Add($"Token URI for CrypToadz #{tokenId} was not an external service call ({sourceTokenUri})");
-                        if (!options.ContinueOnError)
-                            return;
-                        continue;
+                        if (sourceTokenUri.StartsWith("execution reverted") || sourceTokenUri.StartsWith("ipfs"))
+                        {
+                            state.Errors.Add(source, tokenId, ParityErrorCategory.TokenUri, $"{ParityErrorMessage.ErrorFetchingTokenUri}: {sourceTokenUri}");
+                            if (!parityOptions.ContinueOnError)
+                                return;
+                            continue;
+                        }
                     }
 
-                    var sourceJson = await http.GetStringAsync(externalUri, cancellationToken);
+                    string sourceJson;
+                    switch (parityOptions.Source)
+                    {
+                        case ParitySource.Mainnet:
+                            if (!Uri.TryCreate(sourceTokenUri, UriKind.Absolute, out var externalUri))
+                            {
+                                state.Errors.Add(source, tokenId, ParityErrorCategory.TokenUri, ParityErrorMessage.UriWasNotAnExternalServiceCall);
+                                if (!parityOptions.ContinueOnError)
+                                    return;
+                                continue;
+                            }
+                            sourceJson = await http.GetStringAsync(externalUri, cancellationToken);
+                            break;
+                        case ParitySource.IPFS:
+                            sourceJson = sourceTokenUri;
+                            break;
+                        default:
+                            throw new NotSupportedException($"Unsupported source ({parityOptions.Source})");
+                    }
 
                     var sourceMetadata = JsonSerializer.Deserialize<JsonTokenMetadata?>(sourceJson);
                     if (sourceMetadata == null)
                     {
-                        state.Errors.Add($"Failed to parse JSON metadata for CrypToadz #{tokenId}");
-                        if (!options.ContinueOnError)
+                        state.Errors.Add(source, tokenId, ParityErrorCategory.Metadata, ParityErrorMessage.FailedToParseJsonMetadata);
+                        if (!parityOptions.ContinueOnError)
                             return;
                         continue;
                     }
@@ -94,150 +136,253 @@ namespace CrypToadzChained.Shared
                     {
                         if (!Uri.TryCreate(sourceMetadata.Image, UriKind.Absolute, out var externalImageUrl))
                         {
-                            state.Errors.Add($"Image URI for CrypToadz #{tokenId} was not an external service call ({externalImageUrl})");
-
-                            if (!options.ContinueOnError)
+                            state.Errors.Add(source, tokenId, ParityErrorCategory.Image, ParityErrorMessage.UriWasNotAnExternalServiceCall);
+                            if (!parityOptions.ContinueOnError)
                                 return;
                             continue;
                         }
 
-                        row.SourceImageUri = await GetExternalImageUriAsync(false, http, externalImageUrl, logger, cancellationToken);
+                        var payload = parityOptions.Source switch
+                        {
+                            ParitySource.IPFS => await DownloadFromIpfsAsync(sourceMetadata.Image.Replace("ipfs://", ""), http, web3Options, cancellationToken),
+                            ParitySource.Mainnet => await http.GetByteArrayAsync(externalImageUrl, cancellationToken), 
+                            _ => throw new NotSupportedException($"Unsupported source ({parityOptions.Source})")
+                        };
+
+                        var encoded = Convert.ToBase64String(payload);
+                        var imageUri = LUT.CustomAnimationTokenIds.Contains(tokenId)
+                            ? $"{DataUri.Gif}{encoded}"
+                            : $"{DataUri.Png}{encoded}";
+
+                        row.SourceTokenUri = sourceTokenUri;
+                        row.SourceImageUri = imageUri;
                     }
                     else
                     {
-                        state.Errors.Add($"Missing metadata image URI for CrypToadz #{tokenId}");
-
-                        if (!options.ContinueOnError)
+                        state.Errors.Add(source, tokenId, ParityErrorCategory.Image, ParityErrorMessage.ImageUriMissingFromMetadata);
+                        if (!parityOptions.ContinueOnError)
                             return;
                         continue;
                     }
 
-                    var targetTokenUri = await ToadzService.GetCanonicalTokenURIAsync(tokenId, onChainRpcUrl, contractAddress, logger);
+                    var targetTokenUri = await ToadzService.GetCanonicalTokenURIAsync(tokenId,
+                        web3Options.OnChainRpcUrl,
+                        web3Options.OnChainContractAddress,
+                        logger
+                    );
 
                     if (!string.IsNullOrWhiteSpace(targetTokenUri))
                     {
                         if (targetTokenUri.StartsWith("execution reverted"))
                         {
-                            state.Errors.Add($"Error fetching CrypToadz #{tokenId} from on-chain contract: {targetTokenUri}");
-                            if (!options.ContinueOnError)
+                            state.Errors.Add(OnChainSource, tokenId, ParityErrorCategory.TokenUri, $"{ParityErrorMessage.ErrorFetchingTokenUri}: {targetTokenUri}");
+                            if (!parityOptions.ContinueOnError)
                                 return;
                             continue;
                         }
 
-                        var targetJson =
-                            Encoding.UTF8.GetString(
-                                Convert.FromBase64String(targetTokenUri.Replace(Constants.JsonDataUri, "")));
-
+                        var targetJson = Encoding.UTF8.GetString(Convert.FromBase64String(targetTokenUri.Replace(DataUri.Json, "")));
                         var targetMetadata = JsonSerializer.Deserialize<JsonTokenMetadata?>(targetJson);
                         if (targetMetadata == null)
                         {
-                            state.Errors.Add($"Failed to parse target metadata for CrypToadz #{tokenId}");
-
-                            if (!options.ContinueOnError)
+                            state.Errors.Add(OnChainSource, tokenId, ParityErrorCategory.Metadata, ParityErrorMessage.FailedToParseJsonMetadata);
+                            if (!parityOptions.ContinueOnError)
                                 return;
                             continue;
                         }
 
                         if (!string.IsNullOrWhiteSpace(targetMetadata.Image))
                         {
+                            row.TargetTokenUri = targetTokenUri;
                             row.TargetImageUri = targetMetadata.Image;
                         }
                         else 
                         {
-                            state.Errors.Add($"Missing target metadata image URI for CrypToadz #{tokenId}");
-
-                            if (!options.ContinueOnError)
+                            state.Errors.Add(OnChainSource, tokenId, ParityErrorCategory.Image, ParityErrorMessage.ImageUriMissingFromMetadata);
+                            if (!parityOptions.ContinueOnError)
                                 return;
                             continue;
                         }
-                    }
 
+                        sourceMetadata.Image = null;
+                        sourceJson = JsonSerializer.Serialize(sourceMetadata, JsonOptions);
+
+                        targetMetadata.Image = null;
+                        targetJson = JsonSerializer.Serialize(targetMetadata, JsonOptions);
+
+                        var sourceNode = JsonNode.Parse(sourceJson);
+                        if (sourceNode == null)
+                        {
+                            state.Errors.Add(source, tokenId, ParityErrorCategory.Metadata, ParityErrorMessage.FailedToParseJsonCompare);
+                            if (!parityOptions.ContinueOnError)
+                                return;
+                            continue;
+                        }
+
+                        var targetNode = JsonNode.Parse(targetJson);
+                        if (targetNode == null)
+                        {
+                            state.Errors.Add(OnChainSource, tokenId, ParityErrorCategory.Metadata, ParityErrorMessage.FailedToParseJsonCompare);
+                            if (!parityOptions.ContinueOnError)
+                                return;
+                            continue;
+                        }
+                        
+                        var diff = sourceNode.Diff(targetNode, new JsonPatchDeltaFormatter());
+                        if (diff == null)
+                        {
+                            state.Errors.Add("", tokenId, ParityErrorCategory.Metadata, ParityErrorMessage.FailedToParseJsonDelta);
+                            if (!parityOptions.ContinueOnError)
+                                return;
+                            continue;
+                        }
+
+                        var deltaJson = diff.ToJsonString(JsonOptions);
+                        if (!deltaJson.Equals("[]", StringComparison.Ordinal))
+                        {
+                            row.DeltaJson = deltaJson;
+                            state.Errors.Add("", tokenId, ParityErrorCategory.Metadata, row.DeltaJson);
+                        }
+                    }
                     else
                     {
-                        state.Errors.Add($"Missing target tokenURI for CrypToadz #{tokenId}");
-
-                        if (!options.ContinueOnError)
+                        state.Errors.Add(OnChainSource, tokenId, ParityErrorCategory.TokenUri, ParityErrorMessage.ErrorFetchingTokenUri);
+                        if (!parityOptions.ContinueOnError)
                             return;
                         continue;
                     }
-
 
                     state.Rows.Add(row);
                 }
                 catch (OperationCanceledException)
                 {
-                    state.Errors.Add("Parity check was cancelled by the user");
+                    state.Errors.Add("", tokenId, "", ParityErrorMessage.ParityCheckCancelled);
 
-                    if (!options.ContinueOnError)
+                    if (!parityOptions.ContinueOnError)
                         return;
                 }
                 catch (Exception e)
                 {
-                    logger?.LogError("Error encountered while fetching CrypToadz #{TokenId}: {Error}", tokenId, e);
+                    logger?.LogError("Unknown error while fetching CrypToadz #{TokenId}: {Error}", tokenId, e);
 
-                    state.Errors.Add($"Error encountered while fetching CrypToadz #{tokenId}: ${e}");
-
-                    if (!options.ContinueOnError)
+                    state.Errors.Add("", tokenId, "", $"{ParityErrorMessage.UnknownError}: {e}");
+                    if (!parityOptions.ContinueOnError)
                         return;
                 }
                 finally
                 {
                     OnChangeAsync?.Invoke();
-
                     if (OnChangeAsync == null)
-                    {
                         logger?.LogWarning("OnChange was not registered!");
-                    }
                 }
             }
         }
 
-        public async Task<ParityStateRow> CompareImagesAsync(ParityStateRow row, CancellationToken cancellationToken)
+        private static async Task<byte[]> DownloadFromIpfsAsync(string cid, HttpMessageInvoker http, Web3Options web3Options, CancellationToken cancellationToken)
+        {
+            var host = web3Options.IpfsUrl ?? "https://ipfs.io/ipfs";
+            if (host.EndsWith("/"))
+                host = host.TrimEnd('/');
+
+            var requestUri = $"{host}/api/v0/cat?arg={cid}";
+            var request = new HttpRequestMessage(HttpMethod.Post, requestUri);
+
+            if (!string.IsNullOrWhiteSpace(web3Options.IpfsUsername) &&
+                !string.IsNullOrWhiteSpace(web3Options.IpfsPassword))
+            {
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{web3Options.IpfsUsername}:{web3Options.IpfsPassword}"));
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+            }
+
+            var response = await http.SendAsync(request, cancellationToken);
+            var payload = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            return payload;
+        }
+
+        public static ParityStateRow CompareImages(ParityStateRow row, CancellationToken cancellationToken)
         {
             var source = GetImageInfo(row.SourceImageUri, cancellationToken);
             var target = GetImageInfo(row.TargetImageUri, cancellationToken);
 
-            source.Type = ImageType.Png;
-            target.Type = ImageType.Png;
+            if(string.IsNullOrWhiteSpace(row.SourceTokenUri) || string.IsNullOrWhiteSpace(row.TargetTokenUri))
+                throw new InvalidOperationException($"ID #{row.TokenId}: images are missing token URI provenance");
 
-            if (source.Size != target.Size)
-                ResizeImage(source, target.Size);
+            if (row.SourceTokenUri.Equals(row.TargetTokenUri))
+                throw new InvalidOperationException($"ID #{row.TokenId}: the same token URI was compared to itself");
 
-            var sourcePath = Path.GetTempFileName();
-            await File.WriteAllBytesAsync(sourcePath, Convert.FromBase64String(source.Uri), cancellationToken);
+            if (source.FrameCount != target.FrameCount)
+                throw new InvalidOperationException($"ID #{row.TokenId}: animation frame count mismatch");
 
-            var targetPath = Path.GetTempFileName();
-            await File.WriteAllBytesAsync(targetPath, Convert.FromBase64String(target.Uri), cancellationToken);
-
-            var deltaImagePath = Path.GetTempFileName();
+            var sourceFrames = source.Image.Frames;
+            var targetFrames = target.Image.Frames;
             
-            var badPixels = await StaticNodeJSService.InvokeFromStringAsync<int>(CompareImagesModule, args: new object[]
+            var totalBadPixels = 0;
+            Image<Rgba32>? lastDelta = null;
+
+            for (var i = 0; i < sourceFrames.Count; i++)
             {
-                sourcePath,
-                targetPath,
-                deltaImagePath
-            }, cancellationToken: cancellationToken);
-            
-            row.BadPixels = badPixels;
-            row.DeltaImageUri = Image.Load<Rgba32>(await File.ReadAllBytesAsync(deltaImagePath, cancellationToken), Png).ToBase64String(PngFormat.Instance);
+                var sourceFrame = new ImageInfo
+                {
+                    Image = sourceFrames.CloneFrame(i),
+                    Type = ImageType.Png
+                };
+
+                var targetFrame = new ImageInfo
+                {
+                    Image = targetFrames.CloneFrame(i),
+                    Type = ImageType.Png
+                };
+
+                if (sourceFrame.Size != targetFrame.Size)
+                    ResizeImage(sourceFrame, targetFrame.Size);
+
+                if (sourceFrame.Size != targetFrame.Size)
+                    throw new InvalidOperationException($"ID #{row.TokenId}: failed to resize");
+
+                var deltaImage = sourceFrame.Image.Clone(x => 
+                    x.Lightness(1.7f).Grayscale()
+                );
+
+                var badPixels = 0;
+
+                for (var x = 0; x < sourceFrame.Image.Width; x++)
+                {
+                    for (var y = 0; y < sourceFrame.Image.Height; y++)
+                    {
+                        var sourcePixel = sourceFrame.Image[x, y];
+                        var targetPixel = targetFrame.Image[x, y];
+                        if (sourcePixel.Equals(targetPixel)) continue;
+                        badPixels++;
+                        deltaImage[x, y] = Color.Red;
+                    }
+                }
+
+                totalBadPixels += badPixels;
+                if (badPixels > 0 || lastDelta == null)
+                    lastDelta = deltaImage;
+            }
+
+            row.BadPixels = totalBadPixels;
+            row.DeltaImageUri = lastDelta.ToBase64String(PngFormat.Instance);
+
             return row;
         }
-
-        private ImageInfo GetImageInfo(string? imageUri, CancellationToken cancellationToken)
+        
+        private static ImageInfo GetImageInfo(string? imageUri, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var info = new ImageInfo();
 
-            if (imageUri!.StartsWith(Constants.GifDataUri))
+            if (imageUri!.StartsWith(DataUri.Gif))
             {
-                imageUri = imageUri[Constants.GifDataUri.Length..];
+                imageUri = imageUri[DataUri.Gif.Length..];
                 info.Image = Image.Load<Rgba32>(Convert.FromBase64String(imageUri), Gif);
                 info.Type = ImageType.Gif;
             }
-            else if (imageUri.StartsWith(Constants.PngDataUri))
+            else if (imageUri.StartsWith(DataUri.Png))
             {
-                imageUri = imageUri[Constants.PngDataUri.Length..];
+                imageUri = imageUri[DataUri.Png.Length..];
                 info.Image = Image.Load<Rgba32>(Convert.FromBase64String(imageUri), Png);
                 info.Type = ImageType.Png;
             }
@@ -251,81 +396,5 @@ namespace CrypToadzChained.Shared
                 throw new InvalidOperationException("Image is already the requested size");
             info.Image.Mutate(x => x.Resize(new ResizeOptions { Size = newSize, Sampler = KnownResamplers.NearestNeighbor }));
         }
-
-        public static uint GetScopeIdCount(ParityScope scope)
-        {
-            return (uint) GetScopeIds(scope).Count();
-        }
-
-        public static IEnumerable<uint> GetScopeIds(ParityScope scope)
-        {
-            var tokenIds = scope switch
-            {
-                ParityScope.All => LUT.AllTokenIds,
-                ParityScope.AllGenerated => LUT.AllTokenIds.Except(LUT.CustomImageTokenIds).Except(LUT.CustomAnimationTokenIds),
-                ParityScope.AllCustoms => LUT.CustomImageTokenIds.Concat(LUT.CustomAnimationTokenIds),
-                ParityScope.CustomImages => LUT.CustomImageTokenIds,
-                ParityScope.SmallCustomImages => LUT.CustomImageTokenIds.Except(LUT.LargeImageTokenIds),
-                ParityScope.LargeCustomImages => LUT.LargeImageTokenIds,
-                ParityScope.CustomAnimations => LUT.CustomAnimationTokenIds,
-                ParityScope.LargeCustomAnimations => LUT.LargeAnimationTokenIds,
-                ParityScope.SmallCustomAnimations => LUT.CustomAnimationTokenIds.Except(LUT.LargeAnimationTokenIds),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            return tokenIds;
-        }
-
-        /// <summary> WARNING: This method delegates to the server currently, because it is WAY too slow running in the browser </summary>
-        public async Task<string> GetExternalImageUriAsync(bool runningOnServer, HttpClient http, Uri externalImageUri, ILogger? logger, CancellationToken cancellationToken)
-        {
-            var tokenId = uint.Parse(Path.GetFileNameWithoutExtension(externalImageUri.AbsolutePath));
-            var buffer = await http.GetByteArrayAsync(externalImageUri, cancellationToken);
-            var isGif = LUT.CustomAnimationTokenIds.Contains(tokenId);
-
-            string imageUri;
-
-            if (runningOnServer)
-            {
-                var image = isGif
-                    ? Image.Load<Rgba32>(buffer, Gif)
-                    : Image.Load<Rgba32>(buffer, Png);
-
-                imageUri = isGif
-                    ? image.ToBase64String(GifFormat.Instance)
-                    : image.ToBase64String(PngFormat.Instance);
-            }
-            else
-            {
-                var url = externalImageUri.ToString();
-
-                imageUri = await http.GetStringAsync($"toadz/image/?url={Uri.EscapeDataString(url)}",
-                    CancellationToken.None);
-            }
-
-            return imageUri;
-        }
-
-        #region NodeJS
-
-        private const string CompareImagesModule = @"
-const PNG = require('pngjs').PNG;
-const pixelmatch = require('pixelmatch');
-const fs = require('fs');
-
-module.exports = (callback, sourceImagePath, targetImagePath, deltaImagePath) => {
-
-    const source = PNG.sync.read(fs.readFileSync(sourceImagePath));
-    const target = PNG.sync.read(fs.readFileSync(targetImagePath));
-
-    const { width, height } = source;
-    const diff = new PNG({ width, height });
-    const badPixels = pixelmatch(source.data, target.data, diff.data, width, height, { threshold: 0 });
-    
-    fs.writeFileSync(deltaImagePath, PNG.sync.write(diff));
-    callback(null, badPixels);
-}";
-
-        #endregion
     }
 }

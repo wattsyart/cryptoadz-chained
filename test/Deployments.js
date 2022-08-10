@@ -4,9 +4,12 @@ const utils = require('../scripts/deploy.js');
 describe("Deployments", function () {
   it("deploys all contracts", async function () {
 
+    const { chainId } = await hre.ethers.provider.getNetwork()
+    console.log("network: " + chainId);
+
     // Use explicit gas if running on a real network
     var txOptions;
-    if(network.chainId == 8134646) {      
+    if(chainId == 8134646) {      
       txOptions = null; // privatenode
     } else {
       txOptions = getTxOptions();
