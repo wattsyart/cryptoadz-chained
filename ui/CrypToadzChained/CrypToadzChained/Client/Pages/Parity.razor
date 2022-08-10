@@ -55,10 +55,10 @@
             <InputSelect id="scope" class="form-control"
                          ValueExpression="@(() => Model.Scope)"
                          Value="Model.Scope"
-                         ValueChanged="@((ParityScope value) => @OnScopeChanged(value))">
+                         ValueChanged="@((ParityScope value) => OnScopeChanged(value))">
                 @foreach (var value in EnumExtensions.GetValues<ParityScope>())
                 {
-                    <option value="@value">@value.Describe() (@ParityService.GetScopeIdCount((ParityScope) @value))</option>
+                    <option value="@value">@value.Describe() (@ParityScopeExtensions.Count((ParityScope) @value))</option>
                 }
             </InputSelect>
         </div>
@@ -82,7 +82,14 @@
         {
             if (_state.Errors.Count == 0)
             {
-                <div class="alert alert-success">Tests passed :)</div>
+                if (_state.Rows.Any(x => !x.BadPixels.HasValue))
+                {
+                    <div class="alert alert-warning">Waiting for image deltas...</div>    
+                }
+                else
+                {
+                    <div class="alert alert-success">Tests passed :)</div>    
+                }
             }
             else
             {
@@ -123,9 +130,18 @@
 
     @if(_state != null)
     {
-        <br />
+        <div class="form-group mb-3">
+            <label for="pageSize">Show:</label>
+            <select id="pageSize" class="form-control" @bind="@PageSize">
+                <option value="15">15 rows</option>
+                <option value="25">25 rows</option>
+                <option value="50">50 rows</option>
+                <option value="100">100 rows</option>
+                <option value="@Model.Scope.Count()">All rows</option>
+            </select>
+        </div>
 
-        <Table TableItem="ParityStateRow" Items="@Rows" PageSize="15">
+        <Table TableItem="ParityStateRow" Items="@Rows" PageSize="@PageSize">
             <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" Width="72px"/>
             <Column TableItem="ParityStateRow" Title="@Enum.GetName(Model.Source)" Field="@(x => x.SourceImageUri!)" Width="72px">
                 <Template>
@@ -145,30 +161,37 @@
             </Column>
             <Column TableItem="ParityStateRow" Title="Image" Field="@(x => x.DeltaImageUri!)" Width="72px">
                 <Template>
+                    <div class="imageOverlay">
                     @if (!string.IsNullOrWhiteSpace(context.DeltaImageUri))
                     {
-                        <div class="imageOverlay">
-                            <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
-                            @if (context.BadPixels.GetValueOrDefault() == 0)
-                            {
-                                <div class="centeredOverImage" style="color: green;">
-                                    <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="centeredOverImage" style="color: red;">
-                                    <i class="oi oi-circle-x align-middle" aria-hidden="true"></i>
-                                </div>
-                            }
+                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.DeltaImageUri" alt=""/>
+                        if (context.BadPixels is 0)
+                        {
+                            <div class="centeredOverImage" style="color: green;">
+                                <i class="oi oi-circle-check align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="centeredOverImage" style="color: red;">
+                                <i class="oi oi-circle-x align-middle" aria-hidden="true"></i>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <img style="width: 72px; height: 72px" src="@EmptyImage" alt="Loading..."/>
+                        <div class="centeredOverImage" style="color: darkkhaki;">
+                            <i class="oi oi-reload align-middle" aria-hidden="true"></i>
                         </div>
                     }
+                    </div>
                 </Template>
             </Column>
             <Column TableItem="ParityStateRow" Title="Metadata" Field="@(x => x.DeltaJson!)" Width="72px">
                 <Template>
                     <div class="imageOverlay">
-                        <img style="width: 72px; height: 72px" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt=""/>
+                        <img style="width: 72px; height: 72px" src="@EmptyImage" alt="Loading..."/>
                         @if (string.IsNullOrWhiteSpace(context.DeltaJson))
                         {
                             <div class="centeredOverImage" style="color: green;">
@@ -227,6 +250,8 @@
 
 @code
 {
+    private const string EmptyImage = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+
     [Parameter]
     public ParityOptions Model { get; set; } = new();
 
@@ -238,6 +263,9 @@
 
     [Parameter]
     public bool OnlyShowErrors { get; set; }
+
+    [Parameter]
+    public int PageSize { get; set; } = 15;
 
     private IEnumerable<ParityStateRow> Rows
     {
@@ -349,6 +377,12 @@
     private Task OnScopeChanged(ParityScope scope)
     {
         Model.Scope = scope;
+        return Task.CompletedTask;
+    }
+
+    private Task OnPageSizeChanged(int pageSize)
+    {
+        PageSize = pageSize;
         return Task.CompletedTask;
     }
     
