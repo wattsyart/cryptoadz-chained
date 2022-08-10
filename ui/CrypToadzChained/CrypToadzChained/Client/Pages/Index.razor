@@ -141,13 +141,17 @@
             ImageUri = null;
             Error = null;
 
+            Logger?.LogInformation("OnChainRpcUrl: {OnChainRpcUrl}", Options.Value.OnChainRpcUrl);
+
             if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
             {
+                Logger?.LogInformation("Calling client...");
                 var body = await ToadzService.GetCanonicalTokenURIAsync(tokenId, Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);
                 await WithBodyAsync(body);
             }
             else
             {
+                Logger?.LogInformation("Calling server...");
                 var response = await Http.GetAsync($"toadz/tokenURI/{tokenId}");
                 await WithResponse(response, false);
             }
