@@ -8,7 +8,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: CrypToadzChained/Server/published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: CrypToadzChained/Server
+  WORKING_DIRECTORY: ./ui/CrypToadzChained\CrypToadzChained\Server
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
           node-version: '16.x'
-    - name: npm install, build, and test
+    - name: Install Node Packages
       run: npm --prefix ${{ env.WORKING_DIRECTORY }} install        
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
