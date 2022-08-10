@@ -2,6 +2,9 @@ using CrypToadzChained.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var path = Environment.GetEnvironmentVariable("PATH");
+Environment.SetEnvironmentVariable("PATH", $@"{path};/opt/hostedtoolcache/node/16.16.0/x64/bin/node");
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 
