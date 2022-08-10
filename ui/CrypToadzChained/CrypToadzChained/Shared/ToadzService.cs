@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Nethereum.ABI.Decoders;
 using Nethereum.ABI.FunctionEncoding;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
@@ -172,7 +173,7 @@ namespace CrypToadzChained.Shared
             public byte[] Meta { get; set; } = null!;
         }
 
-        [Function("isTall", "string")]
+        [Function("isTall", "bool")]
         public sealed class IsTallFunction : FunctionMessage
         {
             [Parameter("uint256", "tokenId", 1)]

@@ -207,7 +207,7 @@
                 {
                     uint.TryParse(TokenId, out var tokenId);
 
-                    if (!LUT.CustomAnimationTokenIds.Contains(tokenId) && !LUT.CustomAnimationTokenIds.Contains(tokenId))
+                    if (!ParityScope.AllCustoms.TokenIds().Contains(tokenId))
                     {
                         bool isTall;
                         if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
@@ -219,15 +219,12 @@
                             isTall = await Http.GetFromJsonAsync<bool>($"toadz/tall/{tokenId}");
                         }
 
-                        if (isTall)
+                        var size = new JsonTokenMetadataAttribute
                         {
-                            var size = new JsonTokenMetadataAttribute
-                            {
-                                TraitType = "Size",
-                                Value = isTall ? "Tall" : "Short"
-                            };
-                            Metadata.Attributes.Insert(0, size);
-                        }
+                            TraitType = "Size",
+                            Value = isTall ? "Tall" : "Short"
+                        };
+                        Metadata.Attributes.Insert(0, size);
                     }
                 }
             }
