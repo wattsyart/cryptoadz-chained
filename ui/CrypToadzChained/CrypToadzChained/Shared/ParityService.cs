@@ -303,30 +303,62 @@ namespace CrypToadzChained.Shared
             var source = GetImageInfo(row.SourceImageUri, cancellationToken);
             var target = GetImageInfo(row.TargetImageUri, cancellationToken);
 
-            source.Type = ImageType.Png;
-            target.Type = ImageType.Png;
+            if (source.FrameCount != target.FrameCount)
+                throw new InvalidOperationException($"ID #{row.TokenId}: animation frame count mismatch");
 
-            if (source.Size != target.Size)
-                ResizeImage(source, target.Size);
+            var sourceFrames = source.Image.Frames;
+            var targetFrames = target.Image.Frames;
+            
+            var totalBadPixels = 0;
+            Image<Rgba32>? lastDelta = null;
 
+            for (var i = 0; i < sourceFrames.Count; i++)
+            {
+                var sourceFrame = new ImageInfo
+                {
+                    Image = sourceFrames.CloneFrame(i),
+                    Type = ImageType.Png
+                };
+
+                var targetFrame = new ImageInfo
+                {
+                    Image = targetFrames.CloneFrame(i),
+                    Type = ImageType.Png
+                };
+
+                if (sourceFrame.Size != targetFrame.Size)
+                    ResizeImage(sourceFrame, targetFrame.Size);
+
+                var (deltaImagePath, badPixels) = await CompareFrameAsync(sourceFrame.Uri, targetFrame.Uri, cancellationToken);
+                totalBadPixels += badPixels;
+
+                if (badPixels > 0 || lastDelta == null)
+                    lastDelta = Image.Load<Rgba32>(await File.ReadAllBytesAsync(deltaImagePath, cancellationToken), Png);
+            }
+
+            row.BadPixels = totalBadPixels;
+            row.DeltaImageUri = lastDelta.ToBase64String(PngFormat.Instance);
+
+            return row;
+        }
+
+        private static async Task<(string, int)> CompareFrameAsync(string sourceUri, string targetUri, CancellationToken cancellationToken)
+        {
             var sourcePath = Path.GetTempFileName();
-            await File.WriteAllBytesAsync(sourcePath, Convert.FromBase64String(source.Uri), cancellationToken);
+            await File.WriteAllBytesAsync(sourcePath, Convert.FromBase64String(sourceUri), cancellationToken);
 
             var targetPath = Path.GetTempFileName();
-            await File.WriteAllBytesAsync(targetPath, Convert.FromBase64String(target.Uri), cancellationToken);
+            await File.WriteAllBytesAsync(targetPath, Convert.FromBase64String(targetUri), cancellationToken);
 
             var deltaImagePath = Path.GetTempFileName();
-            
             var badPixels = await StaticNodeJSService.InvokeFromStringAsync<int>(CompareImagesModule, args: new object[]
             {
                 sourcePath,
                 targetPath,
                 deltaImagePath
             }, cancellationToken: cancellationToken);
-            
-            row.BadPixels = badPixels;
-            row.DeltaImageUri = Image.Load<Rgba32>(await File.ReadAllBytesAsync(deltaImagePath, cancellationToken), Png).ToBase64String(PngFormat.Instance);
-            return row;
+
+            return (deltaImagePath, badPixels);
         }
 
         private static ImageInfo GetImageInfo(string? imageUri, CancellationToken cancellationToken)

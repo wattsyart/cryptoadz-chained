@@ -21,4 +21,5 @@ public sealed class ImageInfo
     };
 
     public Size Size => Image.Size();
+    public int FrameCount => Image.Frames.Count;
 }
