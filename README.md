@@ -3,7 +3,7 @@ The same CrypToadz you know and love, preserved on-chain.
 
 ## Where To Find It?
 
-The contracts are currently [live on Rinkeby](https://rinkeby.etherscan.io/address/0x3aA95802dF552896040F063d05CEF7A436fF05e2#code) 
+The contracts are currently [live on Rinkeby](https://rinkeby.etherscan.io/address/0xCD498b79b07B1884CAbF9a67B424aaAd16C44C0f#code) 
 and you can use the [Viewer App](https://cryptoadzchained.com) to play with it. 
 
 The code for the viewer is [in this repository](https://github.com/wattsyart/cryptoadz-chained/tree/main/ui).

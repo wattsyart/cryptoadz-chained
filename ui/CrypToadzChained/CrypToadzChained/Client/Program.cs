@@ -9,12 +9,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddBlazorTable();
-
-#if DEBUG
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-#else
-builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("https://cryptoadzchained.com") });
-#endif
 
 builder.Services.Configure<Web3Options>(o =>
 {
@@ -22,7 +17,7 @@ builder.Services.Configure<Web3Options>(o =>
     o.OnChainRpcUrl = null!;
 
     // contract address for the on-chain project
-    o.OnChainContractAddress = "0x3aA95802dF552896040F063d05CEF7A436fF05e2";
+    o.OnChainContractAddress = "0xCD498b79b07B1884CAbF9a67B424aaAd16C44C0f";
     
     // contract address for mainnet project
     o.MainnetContractAddress = "0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6";
