@@ -16,5 +16,9 @@
     <ProjectReference Include="..\Shared\CrypToadzChained.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	  <Content Include="node_modules\**" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
 
 </Project>
