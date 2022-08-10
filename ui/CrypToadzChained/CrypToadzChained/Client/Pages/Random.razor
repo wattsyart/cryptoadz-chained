@@ -3,11 +3,14 @@
 
 <div class="container">
     
-    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
-    
-    <br/>
+    <div class="form-group mb-3">
+        <label for="contractAddress">On-Chain Contract Address:</label>
+        <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.OnChainContractAddress" />
+    </div>
 
-    <div class="form-group">
+    <ToggleInputText Label="On-Chain RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own RPC URL"/>
+
+    <div class="form-group mb-3">
         <label for="tokenSeed">Token Seed:</label>
         <input id="tokenSeed" type="text" class="form-control" @bind="TokenSeed" placeholder="Enter a random seed for a random, unofficial CrypToadz NFT"/>
         <button class="btn btn-secondary" @onclick="OnRandomClicked">Create From Seed</button>

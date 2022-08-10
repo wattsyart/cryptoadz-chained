@@ -6,12 +6,10 @@
     <EditForm Model="@Model">
         <DataAnnotationsValidator />
         
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="contractAddress">On-Chain Contract Address:</label>
             <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.OnChainContractAddress" />
         </div>
-        
-        <br />
         
         <ToggleInputText Label="On-Chain RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
         

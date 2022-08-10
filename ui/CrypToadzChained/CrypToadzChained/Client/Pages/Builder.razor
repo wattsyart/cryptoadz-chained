@@ -2,7 +2,12 @@
 @inherits PageBase
 
 <div class="container">
-    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+    <div class="form-group mb-3">
+        <label for="contractAddress">On-Chain Contract Address:</label>
+        <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.OnChainContractAddress" />
+    </div>
+
+    <ToggleInputText Label="On-Chain RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own RPC URL"/>
 </div>
 
 <br />
