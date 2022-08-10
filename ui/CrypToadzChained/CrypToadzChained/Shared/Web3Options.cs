@@ -4,10 +4,17 @@ namespace CrypToadzChained.Shared
 {
     public sealed class Web3Options
     {
-        [Required] public string RpcUrl { get; set; } = null!;
-        [Required] public string MainNetRpcUrl { get; set; } = null!;
-        [Required] public string IpfsUrl { get; set; } = null!;
-        [Required] public string ContractAddress { get; set; } = null!;
-        [Required] public bool HideSensitiveFields { get; set; }
+        [Required] public string OnChainRpcUrl { get; set; } = null!;
+        [Required] public string OnChainContractAddress { get; set; } = null!;
+
+        [Required] public string MainnetRpcUrl { get; set; } = null!;
+        [Required] public string MainnetContractAddress { get; set; } = null!;
+
+        public string? IpfsCid { get; set; }
+        public string? IpfsUrl { get; set; }
+        public string? IpfsUsername { get; set; }
+        public string? IpfsPassword { get; set; }
+        
+        public bool HideSensitiveFields { get; set; }
     }
 }

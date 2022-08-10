@@ -23,47 +23,37 @@ namespace CrypToadzChained.Server.Controllers
         [HttpGet("tokenURI/{tokenId}")]
         public async Task<string> GetCanonicalTokenUri(uint tokenId)
         {
-            return await ToadzService.GetCanonicalTokenURIAsync(tokenId, _options.Value.RpcUrl, _options.Value.ContractAddress, _logger);
+            return await ToadzService.GetCanonicalTokenURIAsync(tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         }
 
         [HttpGet("random")]
         public async Task<string> GetRandomTokenURI()
         {
-            return await ToadzService.GetRandomTokenURIAsync(_options.Value.RpcUrl, _options.Value.ContractAddress, _logger);
+            return await ToadzService.GetRandomTokenURIAsync(_options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         }
 
         [HttpGet("random/{seed}")]
         public async Task<string> GetRandomTokenURIFromSeed(string seed)
         {
-            return await ToadzService.GetRandomTokenURIFromSeedAsync(seed, _options.Value.RpcUrl, _options.Value.ContractAddress, _logger);
+            return await ToadzService.GetRandomTokenURIFromSeedAsync(seed, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         }
 
         [HttpGet("tall/{tokenId}")]
         public async Task<bool> GetIsTall(uint tokenId)
         {
-            return await ToadzService.GetIsTallAsync(tokenId, _options.Value.RpcUrl, _options.Value.ContractAddress, _logger);
+            return await ToadzService.GetIsTallAsync(tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         }
 
         [HttpPost("build")]
         public async Task<string> BuildTokenURI([FromBody] Toad toad)
         {
-            return await ToadzService.BuildTokenURIAsync(toad, _options.Value.RpcUrl, _options.Value.ContractAddress, _logger);
+            return await ToadzService.BuildTokenURIAsync(toad, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         }
 
         [HttpPost("compare")]
         public async Task<ParityStateRow> CompareImagesAsync([FromBody] ParityStateRow row, CancellationToken cancellationToken)
         {
             return await ParityService.CompareImagesAsync(row, cancellationToken);
-        }
-
-        [HttpGet("image")]
-        public async Task<string?> GetImageUriAsync([FromQuery(Name = "url")] string url, CancellationToken cancellationToken)
-        {
-            if (Uri.TryCreate(url, UriKind.Absolute, out var externalImageUrl))
-                return await ParityService.GetExternalImageUriAsync(true, _http, externalImageUrl, _logger, cancellationToken);
-
-            _logger.LogError("Invalid URL {Url} passed to image download", url);
-            return null;
         }
     }
 }

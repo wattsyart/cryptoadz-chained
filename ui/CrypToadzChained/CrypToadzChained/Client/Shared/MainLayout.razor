@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject IOptionsSnapshot<Web3Options> Options
+@inject IOptionsSnapshot<Web3Options> _options
 
 <div class="page">
     <div class="sidebar">
@@ -9,7 +9,7 @@
     <main>
         <div class="top-row px-4">
             <a href="https://cryptoadz.io" target="_blank">Visit CrypToadz</a>
-            <a href="https://rinkeby.etherscan.io/address/@Options.Value.ContractAddress#code"
+            <a href="https://rinkeby.etherscan.io/address/@_options.Value.OnChainContractAddress#code"
                data-toggle="tooltip" data-placement="bottom" title="Etherscan currently truncates data URIs, using it directly will produce incorrect results!"
                target="_blank">View On Etherscan</a>
         </div>

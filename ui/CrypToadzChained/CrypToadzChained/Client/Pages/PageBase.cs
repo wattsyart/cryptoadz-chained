@@ -32,15 +32,15 @@ namespace CrypToadzChained.Client.Pages
 
             string extension;
             string data;
-            if (imageUri.StartsWith(Constants.PngDataUri))
+            if (imageUri.StartsWith(DataUri.Png))
             {
                 extension = "png";
-                data = imageUri.Replace(Constants.PngDataUri, "");
+                data = imageUri.Replace(DataUri.Png, "");
             }
             else
             {
                 extension = "gif";
-                data = imageUri.Replace(Constants.GifDataUri, "");
+                data = imageUri.Replace(DataUri.Gif, "");
             }
             
             var buffer = Convert.FromBase64String(data);

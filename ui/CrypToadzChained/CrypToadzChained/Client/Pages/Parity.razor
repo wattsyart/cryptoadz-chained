@@ -7,13 +7,13 @@
         <DataAnnotationsValidator />
         
         <div class="form-group">
-            <label for="contractAddress">CrypToadzChained Address:</label>
-            <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.ContractAddress" placeholder="CrypToadzChained Contract Address" />
+            <label for="contractAddress">On-Chain Contract Address:</label>
+            <input id="contractAddress" type="text" class="form-control" @bind="Options.Value.OnChainContractAddress" />
         </div>
         
         <br />
         
-        <ToggleInputText Label="CrypToadzChained RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+        <ToggleInputText Label="On-Chain RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
         
         <div class="form-group">
             <label for="source">Source:</label>
@@ -32,11 +32,17 @@
         
         @switch (Model.Source)
         {
-            case ParitySource.Provenance:
+            case ParitySource.IPFS:
+                <div class="form-group mb-3">
+                    <label for="ipfsCid">IPFS CID:</label>
+                    <input id="ipfsCid" type="text" class="form-control" @bind="Options.Value.IpfsCid" />
+                </div>
                 <ToggleInputText Label="IPFS Gateway URL" @bind-Text="@Options.Value.IpfsUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+                <ToggleInputText Label="IPFS Username" @bind-Text="@Options.Value.IpfsUsername" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+                <ToggleInputText Label="IPFS Password" @bind-Text="@Options.Value.IpfsPassword" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
-            case ParitySource.Arweave:
-                <ToggleInputText Label="MainNet Web3 RPC URL" @bind-Text="@Options.Value.MainNetRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
+            case ParitySource.Mainnet:
+                <ToggleInputText Label="MainNet RPC URL" @bind-Text="@Options.Value.MainnetRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields"></ToggleInputText>
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -95,7 +101,7 @@
         }
         else
         {
-            if (Model.Source == ParitySource.Arweave && !string.IsNullOrWhiteSpace(Options.Value.MainNetRpcUrl))
+            if (CanRunArweave || CanRunIpfs)
             {
                 <button class="btn btn-dark" @onclick="StartAsync">Start Test</button>
             }
@@ -435,15 +441,13 @@
 
     private async Task<ParityState> DoWorkAsync(CancellationToken cancellationToken)
     {
-        _state = new ParityState();
         cancellationToken.ThrowIfCancellationRequested();
 
-        await ParityService.StartAsync(Model, _state, Http, Options.Value.MainNetRpcUrl!,
-            onChainRpcUrl: Options.Value.RpcUrl,
-            contractAddress: Options.Value.ContractAddress,
-            logger: Logger,
-            cancellationToken: cancellationToken);
-
+        _state = new ParityState();
+        await ParityService.StartAsync(Model, Options.Value, _state, Http, Logger, cancellationToken);
         return _state;
     }
+
+    private bool CanRunArweave => Model.Source == ParitySource.Mainnet && !string.IsNullOrWhiteSpace(Options.Value.MainnetRpcUrl);
+    private bool CanRunIpfs => Model.Source == ParitySource.IPFS && !string.IsNullOrWhiteSpace(Options.Value.IpfsCid) && !string.IsNullOrWhiteSpace(Options.Value.IpfsUrl);
 }

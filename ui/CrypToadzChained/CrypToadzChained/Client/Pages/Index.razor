@@ -3,7 +3,7 @@
 
 <div class="container">
     
-    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.RpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
+    <ToggleInputText Label="Rinkeby Web3 RPC URL" @bind-Text="@Options.Value.OnChainRpcUrl" @bind-HideFields="@Options.Value.HideSensitiveFields" Placeholder="Leave blank to use our server, or paste your own Web3 RPC URL (Rinkeby)" />
     
     <br/>
 
@@ -141,9 +141,9 @@
             ImageUri = null;
             Error = null;
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
+            if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
             {
-                var body = await ToadzService.GetCanonicalTokenURIAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);
+                var body = await ToadzService.GetCanonicalTokenURIAsync(tokenId, Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);
                 await WithBodyAsync(body);
             }
             else
@@ -178,7 +178,7 @@
     private async Task WithBodyAsync(string body)
     {
         TokenUri = body;
-        if (!TokenUri.StartsWith(Constants.JsonDataUri))
+        if (!TokenUri.StartsWith(DataUri.Json))
         {
             Error = TokenUri;
             TokenUri = null;
@@ -187,7 +187,7 @@
         {
             if (!string.IsNullOrWhiteSpace(TokenUri))
             {
-                var data = TokenUri.Replace(Constants.JsonDataUri, "");
+                var data = TokenUri.Replace(DataUri.Json, "");
                 var buffer = Convert.FromBase64String(data);
                 var json = Encoding.UTF8.GetString(buffer);
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
@@ -205,9 +205,9 @@
                     if (!LUT.CustomAnimationTokenIds.Contains(tokenId) && !LUT.CustomAnimationTokenIds.Contains(tokenId))
                     {
                         bool isTall;
-                        if (!string.IsNullOrWhiteSpace(Options.Value.RpcUrl))
+                        if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
                         {
-                            isTall = await ToadzService.GetIsTallAsync(tokenId, Options.Value.RpcUrl, Options.Value.ContractAddress, Logger);                            
+                            isTall = await ToadzService.GetIsTallAsync(tokenId, Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);                            
                         }
                         else
                         {
