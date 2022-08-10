@@ -86,9 +86,10 @@ async function deployContracts(ethers, quiet, trace, txOptions, hid, signerOverr
 
   var output = {};
 
-  if (!fs.existsSync(path)) {
+  const manifestPath = "./scripts/manifest.json";
+  if (!fs.existsSync(manifestPath)) {
     console.log("creating ./scripts/manifest.json");
-    fs.writeFileSync("./scripts/manifest.json", "{}");
+    fs.writeFileSync(manifestPath, "{}");
   }
 
   var manifest = JSON.parse(fs.readFileSync("./scripts/manifest.json").toString('utf8'));

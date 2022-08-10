@@ -8,7 +8,7 @@ public static class ParityErrorMessage
     public const string FailedToParseJsonMetadata = "Failed to parse JSON metadata";
     public const string ImageUriMissingFromMetadata = "Missing metadata for Image URI";
     public const string MissingTokenUri = "Missing Token URI";
-    public const string ParityCheckWasCancelledByTheUser = "Parity check was cancelled by the user";
+    public const string ParityCheckCancelled = "Parity check was cancelled";
     public const string UriWasNotAnExternalServiceCall = "URI was not an external service call";
     public const string UnknownError = "Unknown error";
 }

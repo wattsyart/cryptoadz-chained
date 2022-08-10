@@ -379,12 +379,6 @@
         Model.Scope = scope;
         return Task.CompletedTask;
     }
-
-    private Task OnPageSizeChanged(int pageSize)
-    {
-        PageSize = pageSize;
-        return Task.CompletedTask;
-    }
     
     private CancellationTokenSource? _cancellationTokenSource;
     private CancellationToken? _cancellationToken;
@@ -397,6 +391,8 @@
             return;
 
         Error = null;
+        _state?.Rows.Clear();
+        _state?.Errors.Clear();
 
         try
         {

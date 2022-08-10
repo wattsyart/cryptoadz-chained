@@ -154,6 +154,7 @@ namespace CrypToadzChained.Shared
                             ? $"{DataUri.Gif}{encoded}"
                             : $"{DataUri.Png}{encoded}";
 
+                        row.SourceTokenUri = sourceTokenUri;
                         row.SourceImageUri = imageUri;
                     }
                     else
@@ -192,6 +193,7 @@ namespace CrypToadzChained.Shared
 
                         if (!string.IsNullOrWhiteSpace(targetMetadata.Image))
                         {
+                            row.TargetTokenUri = targetTokenUri;
                             row.TargetImageUri = targetMetadata.Image;
                         }
                         else 
@@ -254,7 +256,7 @@ namespace CrypToadzChained.Shared
                 }
                 catch (OperationCanceledException)
                 {
-                    state.Errors.Add("", tokenId, "", ParityErrorMessage.ParityCheckWasCancelledByTheUser);
+                    state.Errors.Add("", tokenId, "", ParityErrorMessage.ParityCheckCancelled);
 
                     if (!parityOptions.ContinueOnError)
                         return;
@@ -302,6 +304,12 @@ namespace CrypToadzChained.Shared
             var source = GetImageInfo(row.SourceImageUri, cancellationToken);
             var target = GetImageInfo(row.TargetImageUri, cancellationToken);
 
+            if(string.IsNullOrWhiteSpace(row.SourceTokenUri) || string.IsNullOrWhiteSpace(row.TargetTokenUri))
+                throw new InvalidOperationException($"ID #{row.TokenId}: images are missing token URI provenance");
+
+            if (row.SourceTokenUri.Equals(row.TargetTokenUri))
+                throw new InvalidOperationException($"ID #{row.TokenId}: the same token URI was compared to itself");
+
             if (source.FrameCount != target.FrameCount)
                 throw new InvalidOperationException($"ID #{row.TokenId}: animation frame count mismatch");
 
@@ -328,6 +336,8 @@ namespace CrypToadzChained.Shared
                 if (sourceFrame.Size != targetFrame.Size)
                     ResizeImage(sourceFrame, targetFrame.Size);
 
+                if (sourceFrame.Size != targetFrame.Size)
+                    throw new InvalidOperationException($"ID #{row.TokenId}: failed to resize");
 
                 var deltaImage = sourceFrame.Image.Clone(x => 
                     x.Lightness(1.7f).Grayscale()
