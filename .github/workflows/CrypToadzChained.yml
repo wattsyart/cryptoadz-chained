@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App CrypToadzChained
 on:
   push:
     branches:
-    - cleanroom
+    - main
 env:
   AZURE_WEBAPP_NAME: CrypToadzChained
   AZURE_WEBAPP_PACKAGE_PATH: CrypToadzChained/Server/published
