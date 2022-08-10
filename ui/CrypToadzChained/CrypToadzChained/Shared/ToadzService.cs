@@ -76,6 +76,8 @@ namespace CrypToadzChained.Shared
                 {
                     case SmartContractRevertException revert:
                         return revert.RevertMessage;
+                    case SmartContractCustomErrorRevertException customRevert:
+                        return customRevert.Message;
                     case RpcResponseException rpc:
                         return rpc.RpcError.Message;
                     default:
@@ -103,6 +105,11 @@ namespace CrypToadzChained.Shared
                 if (ex is SmartContractRevertException revert)
                 {
                     return revert.RevertMessage;
+                }
+
+                if (ex is SmartContractCustomErrorRevertException customRevert)
+                {
+                    return customRevert.Message;
                 }
 
                 if (ex is RpcResponseException rpc)

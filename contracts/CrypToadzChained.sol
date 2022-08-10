@@ -576,8 +576,27 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         }
 
         if (flags[5]) {
-            while(!_isAccessoryIValid(flags, toad)) {
-                _rollAccessoryI(src, toad);
+            toad.accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
+            if(!_isAccessoryIValid(flags, toad)) {
+                uint8 choice = uint8(PRNG.readLessThan(src, 5 /* only five valid choices left */, 8));
+                if(choice == 0) {
+                    toad.accessoryI == 237;
+                }
+                else if(choice == 1) {
+                    toad.accessoryI == 239;
+                }
+                else if(choice == 2) {
+                    toad.accessoryI == 240;
+                }
+                else if(choice == 3) {
+                    toad.accessoryI == 243;
+                }
+                else if(choice == 4) {
+                    toad.accessoryI == 244;
+                }
+                else {
+                    revert BadTraitChoice(toad.accessoryI);
+                }
             }
             if (toad.accessoryI < 237 || toad.accessoryI > 245)
                 revert TraitOutOfRange(toad.accessoryI);
@@ -617,9 +636,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
         if (flags[1] && toad.accessoryI == 241) {
             return false;
         }
-
-        // if we are short with any of these heads, don't pick explorer
+        
         if (flags[1] && toad.accessoryI == 238) {
+            // if we are short with any of these heads, don't pick explorer
             if (toad.size == 119) {
                 if (
                     toad.head == 65 || // Wizard
@@ -631,7 +650,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                         return false;
                     }
                 }
-            } else if (toad.size == 120) {
+            } else if (toad.size == 120 && toad.accessoryI == 238) {
                 // if we are tall with any of these heads, don't pick explorer
                 if (
                     toad.head == 52 ||  // Swampy Crazy
@@ -665,18 +684,12 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                     toad.head == 101 || // Swept Teal
                     toad.head == 103    // Truffle
                 ) {
-                    if (toad.accessoryI == 238) {
-                        return false;
-                    }
+                    return false;
                 }
             }
         }
 
         return true;
-    }
-
-    function _rollAccessoryI(PRNG.Source src, Toad memory toad) private pure {
-        toad.accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
     }
 
     function _getTokenURI(uint256 tokenId, Presentation presentation)
