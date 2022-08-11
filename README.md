@@ -72,7 +72,25 @@ Run the following in your terminal from the repository root to bring up the serv
 dotnet run --project "./ui/CrypToadzChained/CrypToadzChained/Server/CrypToadzChained.Server.csproj" --configuration Release --urls=http://localhost:7025/
 ```
 
-The app is available at `https://localhost:7025`, or the port you specified.
+Once running, the app is available at `https://localhost:7025`, or the port you specified.
+
+You will need to provide your own values for the `appsettings.json` file:
+
+```json
+{
+  "Web3": {
+    "OnChainRpcUrl": "YOUR_ALCHEMY_OR_INFURA_URL_GOES_HERE",
+    "OnChainContractAddress": "0x60d9d8bc30812fdee9cc5e3fcb630233a924cc97"
+  },
+  "Discord": {
+    "PublicKey": "public-key",
+    "ApplicationID": "application-id",
+    "BotToken": "bot-token"
+  }
+}
+```
+
+_Note: it is safe to leave the Discord values as is, and ignore the related error on startup_
 
 ## How do you know it's a perfect copy of the real CrypToadz metadata and assets?
 
