@@ -9,10 +9,13 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
     public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request, CancellationToken cancellationToken)
     {
+        var seed = message.Data.TryGetIntegerOption("seed", out var seedInt)
+            ? (ulong)seedInt
+            : (ulong)new Random().NextInt64();
+
         var command = new DiscordInteractionResponseBuilder()
             .AddEmbed(embed =>
             {
-                var seed = (ulong)new Random().NextInt64();
                 embed.WithTitle($"CrypToadz #{seed}");
                 embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
                 embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
@@ -21,5 +24,20 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             .Build();
 
         return Task.FromResult(command);
+    }
+
+    // ReSharper disable once UnusedMember.Local (Reflection)
+    [InteractionCommandBuilder]
+    private static DiscordApplicationCommand Build()
+    {
+        return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns a random, fully on-chain toad")
+            .AddOption(option =>
+            {
+                option.Name = "seed";
+                option.Description = "share a specific random toad";
+                option.Type = DiscordApplicationCommandOptionType.Integer;
+                option.IsRequired = false;
+            })
+            .Build();
     }
 }
