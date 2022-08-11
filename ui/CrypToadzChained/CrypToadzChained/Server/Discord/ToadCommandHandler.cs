@@ -9,9 +9,10 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
     public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request, CancellationToken cancellationToken)
     {
-        var seed = message.Data.TryGetIntegerOption("seed", out var seedInt)
-            ? (ulong)seedInt
-            : (ulong)new Random().NextInt64();
+        var seed = (ulong)new Random().NextInt64();
+        
+        if(message is { Data: { } } && message.Data.TryGetIntegerOption("seed", out var seedInt))
+            seed = (ulong) seedInt;
 
         var command = new DiscordInteractionResponseBuilder()
             .AddEmbed(embed =>
