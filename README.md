@@ -25,10 +25,21 @@ On the command line to bring up the private node instance.
 Once deployed, you can run the following commands to compile the project, deploy to the private node, and return the `tokenURI` for CrypToadz #1:
 
 ```bash
+
+# Install hardhat and dev dependencies
 npm install
+
+# Compile the contracts
 npx hardhat compile
+
+# Deploy the contracts to the dev node
 node scripts/deployer.js
+
+# Retried CrypToadz #1's image and metadata from the devnode
 npx hardhat toadz --id 1
+
+# Create one million random toadz, because you deserve it!
+# npx hardhat toadz-random-batch --count 1000000
 ```
 
 The following list shows all available hardhat commands.
