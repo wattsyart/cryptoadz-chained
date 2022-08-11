@@ -2,11 +2,13 @@ const utils = require('./deploy.js');
 const hre = require("hardhat");
 
 async function main() {
-  // Use explicit gas if running on a real network
+  
   var txOptions;
-  if(network.chainId == 8134646) {      
-    txOptions = null; // privatenode
+  if(network.chainId == 8134646) {
+    // no parameters needed on dev node
+    txOptions = null;
   } else {
+    // use explicit gas if running on a real network
     txOptions = getTxOptions();
   }
 
@@ -17,7 +19,7 @@ async function main() {
   // await utils.deployContracts(hre.ethers, 
   //   false /* quiet */, 
   //   false /* trace */, 
-  //   getTxOptions() /* txOptions */, 
+  //   txOptions /* txOptions */, 
   //   "HID_FRESH_ADDRESS_PATH_GOES_HERE" /* hid */, 
   //   null /* signerOverride */
   // );
@@ -30,7 +32,7 @@ async function main() {
   // await utils.deployContracts(hre.ethers, 
   //   false /* quiet */, 
   //   false /* trace */, 
-  //   getTxOptions() /* txOptions */, 
+  //   txOptions /* txOptions */, 
   //   null /* hid */, 
   //   signerOverride /* signerOverride */
   // );
