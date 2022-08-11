@@ -574,25 +574,24 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                 revert TraitOutOfRange(accessoryII);
             meta[index++] = accessoryII;
         }
-
         if (flags[5]) {
             toad.accessoryI = uint8(237) + uint8(PRNG.readLessThan(src, 9, 8));
             if(!_isAccessoryIValid(flags, toad)) {
                 uint8 choice = uint8(PRNG.readLessThan(src, 5 /* only five valid choices left */, 8));
-                if(choice == 0) {
-                    toad.accessoryI == 237;
+                if(choice == 0) {  
+                    toad.accessoryI = 237;
                 }
                 else if(choice == 1) {
-                    toad.accessoryI == 239;
+                    toad.accessoryI = 239;
                 }
                 else if(choice == 2) {
-                    toad.accessoryI == 240;
+                    toad.accessoryI = 240;
                 }
-                else if(choice == 3) {
-                    toad.accessoryI == 243;
+                else if(choice == 3) {                    
+                    toad.accessoryI = 243;
                 }
                 else if(choice == 4) {
-                    toad.accessoryI == 244;
+                    toad.accessoryI = 244;
                 }
                 else {
                     revert BadTraitChoice(toad.accessoryI);
@@ -624,31 +623,26 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     function _isAccessoryIValid(bool[] memory flags, Toad memory toad) private pure returns (bool) {
         // if we have a mouth, don't pick fly lick
         if (flags[0] && toad.accessoryI == 242) {
-            return false;
-        }
+            return false;        }
 
         // if we have a head or clothes, don't pick the hoodie
         if ((flags[1] || flags[3]) && toad.accessoryI == 245) {
             return false;
         }
-
         // if we have a head, don't pick drive-thru
         if (flags[1] && toad.accessoryI == 241) {
             return false;
-        }
-        
+        }        
         if (flags[1] && toad.accessoryI == 238) {
             // if we are short with any of these heads, don't pick explorer
-            if (toad.size == 119) {
+            if (toad.size == 119 && toad.accessoryI == 238) {
                 if (
                     toad.head == 65 || // Wizard
                     toad.head == 71 || // Red Gnome
                     toad.head == 88 || // Teal Gnome
                     toad.head == 94    // Tophat
                 ) {
-                    if (toad.accessoryI == 238) {
-                        return false;
-                    }
+                    return false;
                 }
             } else if (toad.size == 120 && toad.accessoryI == 238) {
                 // if we are tall with any of these heads, don't pick explorer
@@ -688,7 +682,6 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
                 }
             }
         }
-
         return true;
     }
 
