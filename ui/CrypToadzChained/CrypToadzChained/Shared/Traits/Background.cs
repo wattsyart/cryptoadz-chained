@@ -4,6 +4,8 @@ namespace CrypToadzChained.Shared.Traits
 {
 	public enum Background : byte
 	{
+		[Description("None")]
+		None = 17,
 		[Description("95")]
 		_95 = 0,
 		[Description("Violet")]

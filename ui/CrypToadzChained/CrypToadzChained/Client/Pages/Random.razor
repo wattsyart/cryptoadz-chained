@@ -48,7 +48,7 @@
                                 }
                                 
                                 <li class="list-group-item px-4 py-3 d-flex justify-content-between">
-                                    <button class="btn btn-dark" @onclick="OnEditInBuilderClicked">Edit in Builder</button>
+                                    <button class="btn btn-dark" @onclick="EditInBuilderAsync">Edit in Builder</button>
                                 </li>
                             </ul>
 
@@ -244,20 +244,7 @@
                 Nav.NavigateTo($"random/{TokenSeed ?? "/"}");
         }
     }
-
-    private Task OnEditInBuilderClicked()
-    {
-        if (Metadata == null)
-            return Task.CompletedTask;
-            
-        var toad = Metadata.ToToad();
-        var meta = toad.ToMetadataBuffer();
-        var seed = Convert.ToBase64String(meta);
-
-        Nav.NavigateTo($"/builder/?seed={WebUtility.UrlEncode(seed)}");
-        return Task.CompletedTask;
-    }
-
+    
     private async Task DownloadImageAsync() => await base.DownloadImageAsync(ImageUri!, $"TOADZ_{TokenSeed}");
 
     private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenSeed}", false);
@@ -265,4 +252,6 @@
     private async Task ShareImageAsync() => await ShareAsync($"/random/img/{@TokenSeed}");
 
     private async Task ShareMetadataAsync() => await ShareAsync($"/random/json/{@TokenSeed}");
+
+    private async Task EditInBuilderAsync() => await EditInBuilderAsync(Metadata);
 }

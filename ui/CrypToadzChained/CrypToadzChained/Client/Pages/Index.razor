@@ -44,6 +44,10 @@
                                         <div><strong>@metadataAttribute.Value?.ToString()</strong></div>
                                     </li>
                                 }
+                                
+                                <li class="list-group-item px-4 py-3 d-flex justify-content-between">
+                                    <button class="btn btn-dark" @onclick="EditInBuilderAsync">Edit in Builder</button>
+                                </li>
                             </ul>
                             
                             @if (!string.IsNullOrWhiteSpace(TokenId))
@@ -230,10 +234,12 @@
             }
         }
     }
-    
+
     private async Task DownloadImageAsync() => await DownloadImageAsync(ImageUri!, $"TOADZ_{TokenId}");
 
     private async Task DownloadMetadataAsync() => await DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenId}", true);
 
     private async Task ShareAsync() => await ShareAsync($"/{TokenId}");    
+
+    private async Task EditInBuilderAsync() => await EditInBuilderAsync(Metadata);
 }

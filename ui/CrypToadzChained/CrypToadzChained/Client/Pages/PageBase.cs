@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CrypToadzChained.Shared;
@@ -85,5 +86,18 @@ namespace CrypToadzChained.Client.Pages
         }
 
         protected async Task ShareAsync(string url) => await Js.InvokeAsync<object>("open", url, "_blank");
+
+        protected Task EditInBuilderAsync(JsonTokenMetadata? metadata)
+        {
+            if (metadata == null)
+                return Task.CompletedTask;
+            
+            var toad = metadata.ToToad();
+            var meta = toad.ToMetadataBuffer();
+            var seed = Convert.ToBase64String(meta);
+
+            Nav.NavigateTo($"/builder/?seed={WebUtility.UrlEncode(seed)}");
+            return Task.CompletedTask;
+        }
     }
 }
