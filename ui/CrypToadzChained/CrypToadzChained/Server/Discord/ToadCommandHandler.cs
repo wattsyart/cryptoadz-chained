@@ -4,8 +4,8 @@ using TehGM.Discord.Interactions.CommandsHandling;
 
 namespace CrypToadzChained.Server.Discord;
 
-[InteractionCommand(DiscordApplicationCommandType.ChatInput, "toad", "returns a random, fully on-chain toad")]
 // ReSharper disable once UnusedMember.Global (Reflection)
+[InteractionCommand(DiscordApplicationCommandType.ChatInput, "toad", "returns a random, fully on-chain toad")]
 public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
     public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request, CancellationToken cancellationToken)
@@ -14,9 +14,9 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             .AddEmbed(embed =>
             {
                 var seed = (ulong)new Random().NextInt64();
-                embed.WithType(DiscordEmbedType.Rich);
-                embed.WithThumbnail($"https://cryptoadzchained.com/random/img/{seed}");
-                embed.WithURL($"https://cryptoadzchained.com/random/json/{seed}");
+                embed.WithType(DiscordEmbedType.Image);
+                embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
+                embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
             })
             .Build();
 
