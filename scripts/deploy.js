@@ -12,7 +12,7 @@ var signer;
 async function deployContract(manifest, ethers, contractName, quiet, trace, txOptions, hid, signerOverride) {
 
   if (!signer && signerOverride) {
-    console.log("using signer override");
+    if(!quiet) console.log("using signer override");
     signer = signerOverride;
   }
 
@@ -34,12 +34,12 @@ async function deployContract(manifest, ethers, contractName, quiet, trace, txOp
     var factory = await ethers.getContractFactory(contractName);
     var output = factory.attach(manifest[contractName]);
     output = output.connect(signer);
-    console.log(`${contractName} already deployed to ${output.address}`);
+    if(!quiet) console.log(`${contractName} already deployed to ${output.address}`);
     return output;
   }
 
-  console.log("signer:", (await signer.getAddress()).toString());
-  console.log("balance:", (await signer.getBalance()).toString());
+  if(!quiet) console.log("signer:", (await signer.getAddress()).toString());
+  if(!quiet) console.log("balance:", (await signer.getBalance()).toString());
 
   const contract = await (await ethers.getContractFactory(contractName)).connect(signer);
   if (trace) {
@@ -736,7 +736,7 @@ async function deployContracts(ethers, quiet, trace, txOptions, hid, signerOverr
   return output;
 }
 
-async function deployRandomContracts(ethers, quiet, trace, txOptions, hid) {
+async function deployRandomContracts(ethers, quiet, trace, txOptions, hid, signerOverride) {
   if (!txOptions) txOptions = {};
 
   var output = {};
