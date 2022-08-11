@@ -4,7 +4,7 @@ on:
     branches:
     - main
     paths:
-    - ./ui/**/*
+    - 'ui/CrypToadzChained/**/*'
 env:
   AZURE_WEBAPP_NAME: CrypToadzChained
   AZURE_WEBAPP_PACKAGE_PATH: CrypToadzChained/Server/published
