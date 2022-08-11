@@ -14,8 +14,9 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             {
                 var seed = (ulong)new Random().NextInt64();
                 embed.WithTitle($"CrypToadz #{seed}");
-                embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
+                embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
                 embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
+                embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
             })
             .Build();
 
