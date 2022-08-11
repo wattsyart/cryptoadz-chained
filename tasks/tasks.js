@@ -86,26 +86,28 @@ task("toadz-random-token", "Generates a random toadz tokenURI and saves the meta
 
 task("toadz-random-image", "Generates a random toadz imageURI and saves the image to disk")
   .addOptionalParam("seed", "The random seed to use")
+  .addOptionalParam("output", "The output directory to save the new toadz", "./scripts/output/random")
   .setAction(
     async (taskArgs) => {
       var toadz = await getToadz();
 
       if (!taskArgs.seed) {
-        await utils.randomImage(toadz)
+        await utils.randomImage(toadz, null, taskArgs.output);
       } else {
-        await utils.randomImage(toadz, parseInt(taskArgs.seed));
+        await utils.randomImage(toadz, parseInt(taskArgs.seed), taskArgs.output);
       }
     });
 
 task("toadz-random-batch", "Batch-based random generation for stress testing")
   .addOptionalParam("count", "The number of random toadz to generate", "1")
+  .addOptionalParam("output", "The output directory to save the new toadz", "./scripts/output/random")
   .setAction(
     async (taskArgs) => {
       var toadz = await getToadz();
 
       var count = parseInt(taskArgs.count);
       for (var i = 0; i < count; i++) {
-        await utils.random(toadz);
+        await utils.random(toadz, null, taskArgs.output);
       }
     });
 

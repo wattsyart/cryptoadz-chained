@@ -11,15 +11,15 @@ const pixelmatch = require('pixelmatch');
 
 module.exports = {
 
-    random: async function random(contract, seed) {
-        createDirectoryIfNotExists('./scripts/output/random');
+    random: async function random(contract, seed, outputDir) {
+        if(!outputDir) outputDir = './scripts/output/random';
+        createDirectoryIfNotExists(outputDir);
 
         const pattern = /^data:.+\/(.+);base64,(.*)$/;
 
-        // call contract to get tokenURI
-        if(!seed) {
-            seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
-        }
+        if(!seed) seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
+
+        // call contract to get tokenURI        
         var tokenDataUri = await contract.randomTokenURIFromSeed(seed);
         
         // convert base64 tokenURI to JSON
@@ -28,7 +28,7 @@ module.exports = {
         var json = jsonBuffer.toString('utf8');
 
         // save metadata
-        const metadataPath = `./scripts/output/random/${seed}.json`;
+        const metadataPath = `${outputDir}/${seed}.json`;
         fs.writeFileSync(metadataPath, json);
         console.log(gutil.colors.green(metadataPath));
 
@@ -38,20 +38,19 @@ module.exports = {
         let imageBuffer = Buffer.from(imageData, 'base64');
 
         // save image
-        const imagePath = `./scripts/output/random/${seed}.gif`;
+        const imagePath = `${outputDir}/${seed}.gif`;
         fs.writeFileSync(imagePath, imageBuffer);
         console.log(gutil.colors.green(imagePath));
     },
 
-    randomImage: async function randomImage(contract, seed) {
-        createDirectoryIfNotExists('./scripts/output/random');
+    randomImage: async function randomImage(contract, seed, outputDir) {
+        if(!outputDir) outputDir = './scripts/output/random';
+        createDirectoryIfNotExists(outputDir);
 
         const pattern = /^data:.+\/(.+);base64,(.*)$/;
 
         // call contract to get tokenURI
-        if(!seed) {
-            seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
-        }
+        if(!seed) seed = parseInt(Math.floor(Math.random() * 9007199254740990) + 1);
         var imageDataUri = await contract.randomImageURIFromSeed(seed);
         
         // convert image URI to GIF buffer
@@ -59,7 +58,7 @@ module.exports = {
         let imageBuffer = Buffer.from(imageData, 'base64');
 
         // save image
-        const imagePath = `./scripts/output/random/${seed}.gif`;
+        const imagePath = `${outputDir}/${seed}.gif`;
         fs.writeFileSync(imagePath, imageBuffer);
         console.log(gutil.colors.green(imagePath));
     },
