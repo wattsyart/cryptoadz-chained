@@ -3,6 +3,7 @@ using TehGM.Discord.Interactions.CommandsHandling;
 
 namespace CrypToadzChained.Server.Discord
 {
+    // ReSharper disable once UnusedMember.Global (Reflection)
     [InteractionCommand(DiscordApplicationCommandType.ChatInput, "ping", "ping")]
     public class PingCommandHandler : IDiscordInteractionCommandHandler
     {
