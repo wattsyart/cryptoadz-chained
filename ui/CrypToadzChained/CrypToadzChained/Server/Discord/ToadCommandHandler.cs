@@ -29,7 +29,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         {
             var seed = (ulong)new Random().NextInt64();
         
-            if(message is { Data: { } } && message.Data.TryGetIntegerOption("seed", out var seedInt))
+            if(message is { Data.Options: { } } && message.Data.TryGetIntegerOption("seed", out var seedInt))
                 seed = (ulong) seedInt;
 
             command.AddEmbed(embed =>
@@ -42,7 +42,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         }
         catch (Exception e)
         {
-            command.WithText(e.ToString());
+            command.WithText($"Bot error: {e.Message}");
             command.WithEphemeral();
         }
         return Task.FromResult(command.Build());
