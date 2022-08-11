@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core application to Web App CrypToadzChained
+name: Deploy CrypToadzChained to Azure
 on:
   push:
     branches:
