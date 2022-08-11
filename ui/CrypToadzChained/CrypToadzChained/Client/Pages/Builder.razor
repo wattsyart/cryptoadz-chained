@@ -167,9 +167,14 @@
                             <span class="align-middle">Metadata</span>
                         </button>
 
-                        <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareAsync" target="_blank">
+                        <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareImageAsync" target="_blank">
                             <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
-                            <span class="align-middle">Share</span>
+                            <span class="align-middle">Share Image</span>
+                        </button>
+
+                        <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareMetadataAsync" target="_blank">
+                            <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                            <span class="align-middle">Share Metadata</span>
                         </button>
                     }
                 </div>
@@ -507,5 +512,7 @@
 
     private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{BuilderSeed}", false);
 
-    private async Task ShareAsync() => await ShareAsync($"/builder/?seed={@BuilderSeed}");
+    private async Task ShareImageAsync() => await ShareAsync($"/builder/img/?seed={@BuilderSeed}");
+
+    private async Task ShareMetadataAsync() => await ShareAsync($"/builder/json/?seed={@BuilderSeed}");
 }

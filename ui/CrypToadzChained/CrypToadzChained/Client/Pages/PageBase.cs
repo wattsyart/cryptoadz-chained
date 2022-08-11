@@ -78,9 +78,9 @@ namespace CrypToadzChained.Client.Pages
                 if (canonical && size != null)
                     metadata.Attributes.Insert(0, size); // add size attribute back for display purposes
             }
-            
-            var fileStream = new MemoryStream(buffer);
-            using var stream = new DotNetStreamReference(stream: fileStream);
+
+            var ms = new MemoryStream(buffer);
+            using var stream = new DotNetStreamReference(ms);
             await Js.InvokeVoidAsync("downloadFileFromStream", $"{filename}.json", stream);
         }
 

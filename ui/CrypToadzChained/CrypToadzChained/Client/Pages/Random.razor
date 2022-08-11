@@ -1,4 +1,5 @@
 ﻿@page "/random/{TokenSeed?}"
+
 @inherits PageBase
 
 <div class="container">
@@ -65,9 +66,14 @@
                                     <span class="align-middle">Metadata</span>
                                 </button>
 
-                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareAsync" target="_blank">
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareImageAsync" target="_blank">
                                     <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
-                                    <span class="align-middle">Share</span>
+                                    <span class="align-middle">Share Image</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareMetadataAsync" target="_blank">
+                                    <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Share Metadata</span>
                                 </button>
                             }
                         </div>
@@ -117,7 +123,8 @@
 
     [Parameter]
     public string? Error { get; set; }
-    
+
+
     protected override async Task OnInitializedAsync()
     {
         if (!string.IsNullOrWhiteSpace(TokenSeed))
@@ -142,16 +149,7 @@
             ImageUri = null;
             Error = null;
 
-            if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
-            {
-                var body = await ToadzService.GetRandomTokenURIFromSeedAsync(TokenSeed, Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);
-                WithBody(body);
-            }
-            else
-            {
-                var response = await Http.GetAsync($"toadz/random/{TokenSeed}");
-                await WithResponse(response);
-            }
+            await GetRandomTokenUriFromSeedAsync(TokenSeed);
         }
         catch(Exception ex)
         {
@@ -160,6 +158,20 @@
         finally
         {
             IsLoading = false;
+        }
+    }
+
+    private async Task GetRandomTokenUriFromSeedAsync(string seed)
+    {
+        if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))
+        {
+            var body = await ToadzService.GetRandomTokenURIFromSeedAsync(seed, Options.Value.OnChainRpcUrl, Options.Value.OnChainContractAddress, Logger);
+            WithBody(body);
+        }
+        else
+        {
+            var response = await Http.GetAsync($"toadz/random/{seed}");
+            await WithResponse(response);
         }
     }
 
@@ -250,5 +262,7 @@
 
     private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{TokenSeed}", false);
 
-    private async Task ShareAsync() => await ShareAsync($"/random/{@TokenSeed}");
+    private async Task ShareImageAsync() => await ShareAsync($"/random/img/{@TokenSeed}");
+
+    private async Task ShareMetadataAsync() => await ShareAsync($"/random/json/{@TokenSeed}");
 }

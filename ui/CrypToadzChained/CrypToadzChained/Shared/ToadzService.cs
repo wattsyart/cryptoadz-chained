@@ -2,7 +2,6 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using Nethereum.ABI.Decoders;
 using Nethereum.ABI.FunctionEncoding;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
@@ -121,10 +120,10 @@ namespace CrypToadzChained.Shared
             }
         }
 
-        public static async Task<string> BuildTokenURIAsync(Toad toad, string url, string contractAddress, ILogger? logger)
-        {
-            var meta = toad.ToMetadataBuffer();
+        public static async Task<string> BuildTokenURIAsync(Toad toad, string url, string contractAddress, ILogger? logger) => await BuildTokenURIFromBufferAsync(toad.ToMetadataBuffer(), url, contractAddress, logger);
 
+        public static async Task<string> BuildTokenURIFromBufferAsync(byte[] meta, string url, string contractAddress, ILogger? logger)
+        {
             try
             {
                 var web3 = new Web3(url);
@@ -135,20 +134,23 @@ namespace CrypToadzChained.Shared
                 if (tokenUri.StartsWith("data:application/json;base64,"))
                 {
                     var json = tokenUri.Replace("data:application/json;base64,", "");
-                    var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(Encoding.UTF8.GetString(Convert.FromBase64String(json)));
+                    var metadata =
+                        JsonSerializer.Deserialize<JsonTokenMetadata>(Encoding.UTF8.GetString(Convert.FromBase64String(json)));
                     if (metadata == null)
                         return tokenUri;
 
                     var metaString = Convert.ToBase64String(meta);
                     metadata.Name = $"CrypToadz #{metaString}";
-                    tokenUri = $"data:application/json;base64,{Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(metadata)))}";
+                    tokenUri =
+                        $"data:application/json;base64,{Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(metadata)))}";
                 }
 
                 return tokenUri;
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "Failed to fetch builder token with BuilderSeed {BuilderSeed}", Convert.ToBase64String(meta));
+                logger?.LogError(ex, "Failed to fetch builder token with BuilderSeed {BuilderSeed}",
+                    Convert.ToBase64String(meta));
 
                 if (ex is SmartContractRevertException revert)
                 {
@@ -163,7 +165,7 @@ namespace CrypToadzChained.Shared
                 throw;
             }
         }
-        
+
         #region Functions
 
         [Function("randomTokenURIFromSeed", "string")]
