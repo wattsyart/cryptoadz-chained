@@ -5,6 +5,8 @@ on:
     - main
     paths:
     - 'ui/CrypToadzChained/**/*'
+  workflow_dispatch:
+
 env:
   AZURE_WEBAPP_NAME: CrypToadzChained
   AZURE_WEBAPP_PACKAGE_PATH: CrypToadzChained/Server/published
