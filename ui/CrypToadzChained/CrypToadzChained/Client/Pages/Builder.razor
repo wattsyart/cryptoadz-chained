@@ -172,10 +172,13 @@
                             <span class="align-middle">Share Image</span>
                         </button>
 
-                        <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareMetadataAsync" target="_blank">
-                            <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
-                            <span class="align-middle">Share Metadata</span>
-                        </button>
+                        @if (Toad is not {Background: Background.None })
+                        {
+                            <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareMetadataAsync" target="_blank">
+                                <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                                <span class="align-middle">Share Metadata</span>
+                            </button>  
+                        }
                     }
                 </div>
 
