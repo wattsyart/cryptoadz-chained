@@ -3,6 +3,8 @@ on:
   push:
     branches:
     - main
+    paths:
+    - ./ui
 env:
   AZURE_WEBAPP_NAME: CrypToadzChained
   AZURE_WEBAPP_PACKAGE_PATH: CrypToadzChained/Server/published
