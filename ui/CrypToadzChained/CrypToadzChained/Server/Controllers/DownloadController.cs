@@ -25,14 +25,8 @@ public class DownloadController : ControllerBase
     }
 
     [HttpGet("random/img")]
-    public async Task<IActionResult> GetRandomTokenURIImage()
-    {
-        var tokenUri = await ToadzService.GetRandomTokenURIAsync(_options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
-        var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
-        var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-        return StreamImage(metadata);
-    }
-    
+    public IActionResult GetRandomTokenURIImage() => Redirect($"{Request.Path}/{(ulong)new Random().NextInt64()}");
+
     [HttpGet("random/img/{seed}")]
     public async Task<IActionResult> GetRandomTokenURIImageFromSeed(string seed)
     {
