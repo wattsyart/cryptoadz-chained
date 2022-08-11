@@ -160,7 +160,9 @@
 
         <Table TableItem="ParityStateRow" Items="@Rows" PageSize="@PageSize">
             <Column TableItem="ParityStateRow" Title="Token ID" Field="@(r => r.TokenId)" Sortable="true" Filterable="true" Width="72px"/>
-            <Column TableItem="ParityStateRow" Title="Scope" Field="@(r => r.TokenId.Scope())" Sortable="true" Filterable="true" Width="72px" />
+            <Column TableItem="ParityStateRow" Title="Scope" Field="@(r => r.Scope)" Sortable="true" Filterable="true" Width="72px">
+                <Template>@context.Scope.Describe()</Template>
+            </Column>
             <Column TableItem="ParityStateRow" Title="@Enum.GetName(Model.Source)" Field="@(x => x.SourceImageUri!)" Width="72px">
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(context.SourceImageUri))
