@@ -13,9 +13,9 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             .AddEmbed(embed =>
             {
                 var seed = (ulong)new Random().NextInt64();
+                embed.WithTitle($"CrypToadz #{seed}");
                 embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
                 embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
-                embed.WithDescription($"CrypToadz #{seed}");
             })
             .Build();
 
