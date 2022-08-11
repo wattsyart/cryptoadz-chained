@@ -44,7 +44,7 @@
                                         <div><strong>@metadataAttribute.Value?.ToString()</strong></div>
                                     </li>
                                 }
-                                @if (uint.TryParse(TokenId, out var tokenId) && !ParityScope.AllCustoms.TokenIds().Contains(tokenId))
+                                @if (uint.TryParse(TokenId, out var tokenId) && !ParityScope.Custom.TokenIds().Contains(tokenId))
                                 {
                                     <li class="list-group-item px-4 py-3 d-flex justify-content-between">
                                         <button class="btn btn-dark" @onclick="EditInBuilderAsync">Edit in Builder</button>
@@ -213,7 +213,7 @@
                 {
                     uint.TryParse(TokenId, out var tokenId);
 
-                    if (!ParityScope.AllCustoms.TokenIds().Contains(tokenId))
+                    if (!ParityScope.Custom.TokenIds().Contains(tokenId))
                     {
                         bool isTall;
                         if (!string.IsNullOrWhiteSpace(Options.Value.OnChainRpcUrl))

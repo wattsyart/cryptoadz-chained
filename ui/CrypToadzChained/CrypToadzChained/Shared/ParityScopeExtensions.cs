@@ -1,4 +1,6 @@
-﻿namespace CrypToadzChained.Shared;
+﻿using System.ComponentModel;
+
+namespace CrypToadzChained.Shared;
 
 public static class ParityScopeExtensions
 {
@@ -12,8 +14,8 @@ public static class ParityScopeExtensions
         var tokenIds = scope switch
         {
             ParityScope.All => LUT.AllTokenIds,
-            ParityScope.AllGenerated => LUT.AllTokenIds.Except(LUT.CustomImageTokenIds).Except(LUT.CustomAnimationTokenIds),
-            ParityScope.AllCustoms => LUT.CustomImageTokenIds.Concat(LUT.CustomAnimationTokenIds),
+            ParityScope.Generated => LUT.AllTokenIds.Except(LUT.CustomImageTokenIds).Except(LUT.CustomAnimationTokenIds),
+            ParityScope.Custom => LUT.CustomImageTokenIds.Concat(LUT.CustomAnimationTokenIds),
             ParityScope.CustomImages => LUT.CustomImageTokenIds,
             ParityScope.SmallCustomImages => LUT.CustomImageTokenIds.Except(LUT.LargeImageTokenIds),
             ParityScope.LargeCustomImages => LUT.LargeImageTokenIds,
@@ -24,5 +26,25 @@ public static class ParityScopeExtensions
         };
 
         return tokenIds;
+    }
+
+    public static ParityScope Scope(this uint tokenId)
+    {
+        if (ParityScope.SmallCustomAnimations.TokenIds().Contains(tokenId))
+            return ParityScope.SmallCustomAnimations;
+
+        if (ParityScope.LargeCustomAnimations.TokenIds().Contains(tokenId))
+            return ParityScope.LargeCustomAnimations;
+
+        if (ParityScope.LargeCustomImages.TokenIds().Contains(tokenId))
+            return ParityScope.LargeCustomImages;
+
+        if (ParityScope.SmallCustomImages.TokenIds().Contains(tokenId))
+            return ParityScope.SmallCustomImages;
+
+        if (ParityScope.Generated.TokenIds().Contains(tokenId))
+            return ParityScope.Generated;
+
+        throw new ArgumentOutOfRangeException($"{tokenId} has no scope");
     }
 }

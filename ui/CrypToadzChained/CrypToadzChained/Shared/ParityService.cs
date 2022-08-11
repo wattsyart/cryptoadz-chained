@@ -61,7 +61,8 @@ namespace CrypToadzChained.Shared
                 {
                     var row = new ParityStateRow
                     {
-                        TokenId = tokenId
+                        TokenId = tokenId,
+                        Scope = tokenId.Scope()
                     };
 
                     string sourceTokenUri;

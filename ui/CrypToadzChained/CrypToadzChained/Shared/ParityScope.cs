@@ -7,11 +7,11 @@ public enum ParityScope
     [Description("All")]
     All,
 
-    [Description("All Generated")]
-    AllGenerated,
+    [Description("Generated")]
+    Generated,
 
-    [Description("All Customs")]
-    AllCustoms,
+    [Description("Custom")]
+    Custom,
 
     [Description("Custom Images")]
     CustomImages,
