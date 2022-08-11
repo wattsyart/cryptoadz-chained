@@ -4,9 +4,23 @@ using TehGM.Discord.Interactions.CommandsHandling;
 namespace CrypToadzChained.Server.Discord;
 
 // ReSharper disable once UnusedMember.Global (Reflection)
-[InteractionCommand(DiscordApplicationCommandType.ChatInput, "toad", "returns a random, fully on-chain toad")]
 public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
+    // ReSharper disable once UnusedMember.Global
+    [InteractionCommandBuilder]
+    public static DiscordApplicationCommand Build()
+    {
+        return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns a random, fully on-chain toad")
+            .AddOption(option =>
+            {
+                option.Name = "seed";
+                option.Description = "share a specific random toad";
+                option.Type = DiscordApplicationCommandOptionType.Integer;
+                option.IsRequired = false;
+            })
+            .Build();
+    }
+
     public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request, CancellationToken cancellationToken)
     {
         var seed = (ulong)new Random().NextInt64();
@@ -27,18 +41,4 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return Task.FromResult(command);
     }
 
-    // ReSharper disable once UnusedMember.Local (Reflection)
-    [InteractionCommandBuilder]
-    private static DiscordApplicationCommand Build()
-    {
-        return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns a random, fully on-chain toad")
-            .AddOption(option =>
-            {
-                option.Name = "seed";
-                option.Description = "share a specific random toad";
-                option.Type = DiscordApplicationCommandOptionType.Integer;
-                option.IsRequired = false;
-            })
-            .Build();
-    }
 }
