@@ -23,22 +23,29 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
     public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request, CancellationToken cancellationToken)
     {
-        var seed = (ulong)new Random().NextInt64();
-        
-        if(message is { Data: { } } && message.Data.TryGetIntegerOption("seed", out var seedInt))
-            seed = (ulong) seedInt;
+        var command = new DiscordInteractionResponseBuilder();
 
-        var command = new DiscordInteractionResponseBuilder()
-            .AddEmbed(embed =>
+        try
+        {
+            var seed = (ulong)new Random().NextInt64();
+        
+            if(message is { Data: { } } && message.Data.TryGetIntegerOption("seed", out var seedInt))
+                seed = (ulong) seedInt;
+
+            command.AddEmbed(embed =>
             {
                 embed.WithTitle($"CrypToadz #{seed}");
                 embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
                 embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
                 embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
-            })
-            .Build();
-
-        return Task.FromResult(command);
+            });
+        }
+        catch (Exception e)
+        {
+            command.WithText(e.ToString());
+            command.WithEphemeral();
+        }
+        return Task.FromResult(command.Build());
     }
 
 }
