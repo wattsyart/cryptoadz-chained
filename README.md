@@ -39,7 +39,7 @@ node scripts/deployer.js
 npx hardhat toadz --id 1
 
 # Create one million random toadz, because you deserve it!
-# npx hardhat toadz-random-batch --count 1000000
+# npx hardhat toadz-random-token-batch --count 1000000
 ```
 
 The following list shows all available hardhat commands.
@@ -54,9 +54,10 @@ npx hardhat toadz-custom-images       Validates correctness of CrypToadz custom 
 npx hardhat toadz-deploy-bundle       Produces a JSON file containing unsigned transactions for all deployments at a set price budget
 npx hardhat toadz-gas                 Produces ETH cost breakdown for deployment by component
 npx hardhat toadz-image-deltas        Validates correctness of CrypToadz token images that have deltas
-npx hardhat toadz-random-batch        Batch-based random generation for stress testing
 npx hardhat toadz-random-image        Generates a random toadz imageURI and saves the image to disk
 npx hardhat toadz-random-token        Generates a random toadz tokenURI and saves the metadata and image to disk
+npx hardhat toadz-random-image-batch  Batch-based random token generation for stress testing
+npx hardhat toadz-random-token-batch  Batch-based random image generation for stress testing
 npx hardhat toadz-wrapped             Validates correctness of a single, wrapped CrypToadz
 ```
 

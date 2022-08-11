@@ -98,7 +98,7 @@ task("toadz-random-image", "Generates a random toadz imageURI and saves the imag
       }
     });
 
-task("toadz-random-batch", "Batch-based random generation for stress testing")
+task("toadz-random-token-batch", "Batch-based random token generation for stress testing")
   .addOptionalParam("count", "The number of random toadz to generate", "1")
   .addOptionalParam("output", "The output directory to save the new toadz", "./scripts/output/random")
   .setAction(
@@ -108,6 +108,19 @@ task("toadz-random-batch", "Batch-based random generation for stress testing")
       var count = parseInt(taskArgs.count);
       for (var i = 0; i < count; i++) {
         await utils.random(toadz, null, taskArgs.output);
+      }
+    });
+
+task("toadz-random-image-batch", "Batch-based random image generation for stress testing")
+  .addOptionalParam("count", "The number of random toadz to generate", "1")
+  .addOptionalParam("output", "The output directory to save the new toadz", "./scripts/output/random")
+  .setAction(
+    async (taskArgs) => {
+      var toadz = await getToadz();
+
+      var count = parseInt(taskArgs.count);
+      for (var i = 0; i < count; i++) {
+        await utils.randomImage(toadz, null, taskArgs.output);
       }
     });
 
