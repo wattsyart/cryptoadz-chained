@@ -6,6 +6,7 @@ const deploy = require('../scripts/deploy.js');
 const fs = require('fs');
 const readline = require('readline');
 const gutil = require('gulp-util');
+const { int } = require("hardhat/internal/core/params/argumentTypes.js");
 
 const CrypToadzChainedAddress = "0x7b62D26EfB24E95334D52dEe696F79D89bb7411F";
 
@@ -30,39 +31,45 @@ task("toadz-wrapped", "Validates correctness of a single, wrapped CrypToadz")
     });
 
 task("toadz-custom-images", "Validates correctness of CrypToadz custom images")
+  .addOptionalParam("from", "Start comparison on this token ID")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/customImageIds.txt', null, true, true);
+      await checkToadz('./scripts/customImageIds.txt', null, true, true, taskArgs.from);
     });
 
 task("toadz-custom-animations", "Validates correctness of CrypToadz custom animations")
+  .addOptionalParam("from", "Start comparison on this token ID")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/customAnimationIds.txt', null, true, true);
+      await checkToadz('./scripts/customAnimationIds.txt', null, true, true, taskArgs.from);
     });
 
 task("toadz-image-deltas", "Validates correctness of CrypToadz token images that have deltas")
+  .addOptionalParam("from", "Start comparison on this token ID")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/deltaIds.txt', null, false, true);
+      await checkToadz('./scripts/deltaIds.txt', null, false, true, taskArgs.from);
     });
 
 task("toadz-all", "Validates correctness of all CrypToadz tokens")
+  .addOptionalParam("from", "Start comparison on this token ID")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, true, true);
+      await checkToadz('./scripts/tokenIds.txt', null, true, true, taskArgs.from);
     });
 
 task("toadz-all-images", "Validates correctness of all CrypToadz token images")
+  .addOptionalParam("from", "Start comparison on this token ID")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, false, true);
+      await checkToadz('./scripts/tokenIds.txt', null, false, true, taskArgs.from);
     });
 
 task("toadz-all-metadata", "Validates correctness of all CrypToadz token metadata")
+  .addOptionalParam("from", "Start comparison on this token ID")
   .setAction(
     async (taskArgs) => {
-      await checkToadz('./scripts/tokenIds.txt', null, true, false);
+      await checkToadz('./scripts/tokenIds.txt', null, true, false, taskArgs.from);
     });
 
 task("toadz-random-token", "Generates a random toadz tokenURI and saves the metadata and image to disk")
@@ -102,7 +109,7 @@ task("toadz-random-batch", "Batch-based random generation for stress testing")
       }
     });
 
-async function checkToadz(idFilePath, logger, checkMetadata, checkImage) {
+async function checkToadz(idFilePath, logger, checkMetadata, checkImage, startFrom) {
   var toadz = await getToadz();
 
   const fileStream = fs.createReadStream(idFilePath);
@@ -111,8 +118,18 @@ async function checkToadz(idFilePath, logger, checkMetadata, checkImage) {
     crlfDelay: Infinity
   });
 
-  for await (const line of lines) {
-    await utils.collect(toadz, parseInt(line), logger, checkMetadata, checkImage);
+  if (startFrom) {
+    for await (const line of lines) {
+      var tokenId = parseInt(line);
+      if (tokenId < startFrom) {
+        continue;
+      }
+      await utils.collect(toadz, tokenId, logger, checkMetadata, checkImage);
+    }
+  } else {
+    for await (const line of lines) {
+      await utils.collect(toadz, parseInt(line), logger, checkMetadata, checkImage);
+    }
   }
 }
 
@@ -125,13 +142,13 @@ task("toadz-deploy-bundle", "Produces a JSON file containing unsigned transactio
       var baseFeePerGas = ethers.BigNumber.from(parseInt(taskArgs.gwei)).mul(hre.ethers.BigNumber.from(1000000000));
       var priorityFeeInWei = ethers.BigNumber.from(parseInt(taskArgs.priorityFee)).mul(hre.ethers.BigNumber.from(1000000000));
 
-      const txOptions = {        
+      const txOptions = {
         maxPriorityFeePerGas: priorityFeeInWei,
         maxFeePerGas: baseFeePerGas.add(priorityFeeInWei)
       }
 
       var output = await deploy.deployContracts(hre.ethers, true, true, txOptions);
-      var json = JSON.stringify(output);      
+      var json = JSON.stringify(output);
       fs.writeFileSync(`./scripts/output/deploy.js`, json);
     }
   );
@@ -236,7 +253,7 @@ task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
       var totalGas = ethers.BigNumber.from(0);
 
       for await (const line of lines) {
-        if(line.includes("setRenderer") || line.includes("setAddresses") || line.includes("setEncoder")) {
+        if (line.includes("setRenderer") || line.includes("setAddresses") || line.includes("setEncoder")) {
           continue;
         }
         var name;
@@ -344,7 +361,7 @@ function setDeploymentCost(gasPriceInWei, components, name, line, preamble) {
   }
 
   const pattern = new RegExp(`\\|  ${preamble}\\S*\\s*.\\s*-\\s*\\·\\s*-\\s*\\·\\s*`);
-  
+
   const gas = parseInt(line.replace(line.match(pattern)[0], "").match(/\d*/)[0]);
   components[name]["gas"] = gas;
 
