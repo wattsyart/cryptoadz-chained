@@ -14,12 +14,15 @@ namespace CrypToadzChained.Shared
         public static IEnumerable<object> GetValues<T>() where T : Enum
         {
             var values = Enum.GetValues(typeof(T));
-            var list = new HashSet<object>();
+            var list = new List<object>();
             foreach (var value in values)
             {
-                list.Add(value);
+                if(Enum.GetName(typeof(T), value) == "None")
+                    list.Insert(0, value);
+                else
+                    list.Add(value);
             }
-            return list;
+            return list.Distinct();
         }
     }
 }

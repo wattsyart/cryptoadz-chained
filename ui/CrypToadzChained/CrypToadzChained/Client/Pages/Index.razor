@@ -44,10 +44,12 @@
                                         <div><strong>@metadataAttribute.Value?.ToString()</strong></div>
                                     </li>
                                 }
-                                
-                                <li class="list-group-item px-4 py-3 d-flex justify-content-between">
-                                    <button class="btn btn-dark" @onclick="EditInBuilderAsync">Edit in Builder</button>
-                                </li>
+                                @if (uint.TryParse(TokenId, out var tokenId) && !ParityScope.AllCustoms.TokenIds().Contains(tokenId))
+                                {
+                                    <li class="list-group-item px-4 py-3 d-flex justify-content-between">
+                                        <button class="btn btn-dark" @onclick="EditInBuilderAsync">Edit in Builder</button>
+                                    </li>
+                                }
                             </ul>
                             
                             @if (!string.IsNullOrWhiteSpace(TokenId))
