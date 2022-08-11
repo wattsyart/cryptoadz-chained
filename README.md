@@ -49,6 +49,15 @@ npx hardhat toadz-random-token            Generates a random toadz tokenURI and 
 npx hardhat toadz-wrapped                 Validates correctness of a single, wrapped CrypToadz
 ```
 
+## How do you know it's a perfect copy of the real CrypToadz metadata and assets?
+
+Every metadata JSON file and each frame of every image is checked in the validation commands, written in NodeJS and based on `pngjs` and `pixelmatch` libraries.
+
+In addition, the [Viewer App](https://cryptoadzchained.com) performs a completely separate implementation of the same verification
+on both the current BaseURI assets (Arweave) and the provenance images (IPFS), written in C# and based on the `ImageSharp` library.
+
+This means we have two completely distinct validators to confirm the results. You are also welcome to write your own validator :)
+
 ## Design Notes
 
 Note that this project is NOT an ERC-721 token in its own right, and only contains the `tokenURI` method from ERC-721
