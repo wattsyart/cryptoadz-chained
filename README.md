@@ -60,6 +60,19 @@ npx hardhat toadz-random-token        Generates a random toadz tokenURI and save
 npx hardhat toadz-wrapped             Validates correctness of a single, wrapped CrypToadz
 ```
 
+## Running the Viewer App
+
+To run the app locally:
+
+Install the [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) for your environment
+
+Run the following in your terminal from the repository root to bring up the server
+```
+dotnet run --project "./ui/CrypToadzChained/CrypToadzChained/Server/CrypToadzChained.Server.csproj" --configuration Release --urls=http://localhost:7025/
+```
+
+The app is available at `https://localhost:7025`, or the port you specified.
+
 ## How do you know it's a perfect copy of the real CrypToadz metadata and assets?
 
 Every metadata JSON file and each frame of every image is checked in the validation commands, written in NodeJS and based on `pngjs` and `pixelmatch` libraries.
