@@ -74,7 +74,7 @@ dotnet run --project "./ui/CrypToadzChained/CrypToadzChained/Server/CrypToadzCha
 
 Once running, the app is available at `https://localhost:7025`, or the port you specified.
 
-You will need to provide your own values for the `appsettings.json` file:
+You will need to [provide your own values](https://github.com/wattsyart/cryptoadz-chained/blob/main/ui/CrypToadzChained/CrypToadzChained/Server/appsettings.json) for the `appsettings.json` file:
 
 ```json
 {
@@ -100,6 +100,10 @@ In addition, the [Viewer App](https://cryptoadzchained.com) performs a completel
 on both the current BaseURI assets (Arweave) and the provenance images (IPFS), written in C# and based on the `ImageSharp` library.
 
 This means we have two completely distinct validators to confirm the results. You are also welcome to write your own validator :)
+
+_**Note**:
+All generated toadz and pixel-art animated toadz are rendered at 36x36 on-chain, while the originals are 1440x1440. To compare them, you will need to resize the on-chain toad to 1440x1440, or the off-chain toad to 36x36, using [nearest-neighbor interpolation](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation), no smoothing or anti-aliasing of any kind, and, depending on your graphics package, a half-step pixel offset. This is possible, because pixel art is safely scalable to any size
+in powers of two. If you want an on-chain image that is "wrapped" with an SVG wrapper that will display at any size, use the tokenURI function that provides the Presentation parameter, and select `Presentation.ImageData` or `Presentation.Both`_
 
 ## Design Notes
 
