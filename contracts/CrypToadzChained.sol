@@ -358,9 +358,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
          - The third byte must be between 17 and 50, and defines the Body
          - The next (up to 5) bytes must define traits in this order: 
            Mouth: between 121 and 139
-           Head: between 51 and  104
+           Head: between 51 and 104
            Eyes: between 139 and 170
-           Clothes: between 246 and clothes 248
+           Clothes: between 246 and 248
            Accessory II: between 104 and 111
            Accessory I: between 237 and 245
          - Trait values can be determined by checking comments in `CrypToadzStrings.sol`
@@ -396,9 +396,9 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
          - The third byte must be between 17 and 50, and defines the Body
          - The next (up to 5) bytes must define traits in this order: 
            Mouth: between 121 and 139
-           Head: between 51 and  104
+           Head: between 51 and 104
            Eyes: between 139 and 170
-           Clothes: between 246 and clothes 248
+           Clothes: between 246 and 248
            Accessory II: between 104 and 111
            Accessory I: between 237 and 245
          - Trait values can be determined by checking comments in `CrypToadzStrings.sol`
