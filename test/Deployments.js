@@ -50,12 +50,15 @@ describe("Deployments", function () {
   });
 });
 
-function getTxOptions() {
+function getTxOptions(gasLimit) {
   var baseFeePerGas = ethers.BigNumber.from(4).mul(hre.ethers.BigNumber.from(1000000000));
   var priorityFeeInWei = ethers.BigNumber.from(2).mul(hre.ethers.BigNumber.from(1000000000));
   const txOptions = {        
       maxPriorityFeePerGas: priorityFeeInWei,
       maxFeePerGas: baseFeePerGas.add(priorityFeeInWei)        
+  }
+  if(gasLimit) {
+    txOptions.gasLimit = gasLimit;
   }
   return txOptions;
 }
