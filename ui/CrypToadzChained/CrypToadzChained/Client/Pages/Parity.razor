@@ -175,7 +175,7 @@
                 <Template>
                     @if (!string.IsNullOrWhiteSpace(context.TargetImageUri))
                     {
-                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.SourceImageUri" alt=""/>
+                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 72px; height: 72px" src="@context.TargetImageUri" alt=""/>
                     }
                 </Template>
             </Column>
