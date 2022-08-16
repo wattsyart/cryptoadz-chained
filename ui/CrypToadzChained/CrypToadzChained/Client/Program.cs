@@ -20,10 +20,10 @@ builder.Services.Configure<Web3Options>(o =>
     o.OnChainContractAddress = "0xE8D8C0A6f174e08C44aB399b7CE810Bc4Dce096A";
     
     // contract address for mainnet project
-    o.MainnetContractAddress = "0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6";
+    o.SourceContractAddress = "0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6";
 
     // RPC URL pointing to mainnet (used in parity testing)
-    o.MainnetRpcUrl = null!;
+    o.SourceRpcUrl = null!;
     
     // IPFS CID (used in parity testing)
     o.IpfsCid = "QmWEFSMku6yGLQ9TQr66HjSd9kay8ZDYKbBEfjNi4pLtrr";

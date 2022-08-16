@@ -27,7 +27,7 @@ namespace CrypToadzChained.Shared
         
         public static async Task StartAsync(ParityOptions parityOptions, Web3Options web3Options, ParityState state, HttpClient http, ILogger? logger, CancellationToken cancellationToken)
         {
-            if (parityOptions.Source == ParitySource.Mainnet && string.IsNullOrWhiteSpace(web3Options.MainnetRpcUrl))
+            if (parityOptions.Source == ParitySource.Mainnet && string.IsNullOrWhiteSpace(web3Options.SourceRpcUrl))
             {
                 throw new InvalidOperationException("Must provide MainNet RPC URL (Source)");
             }
@@ -77,8 +77,8 @@ namespace CrypToadzChained.Shared
                         }
                         case ParitySource.Mainnet:
                         {
-                            var web3 = new Web3(web3Options.MainnetRpcUrl);
-                            var service = web3.Eth.ERC721.GetContractService(web3Options.MainnetContractAddress);
+                            var web3 = new Web3(web3Options.SourceRpcUrl);
+                            var service = web3.Eth.ERC721.GetContractService(web3Options.SourceContractAddress);
                             sourceTokenUri = await service.TokenURIQueryAsync(tokenId);
                             break;
                         }
