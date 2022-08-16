@@ -947,7 +947,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
     }
 
     /**
-    @notice Adds ERC2981 interface to the set of already-supported interfaces.
+    @notice Adds IERC721 interface to the set of already-supported interfaces.
      */
     function supportsInterface(bytes4 interfaceId)
         public
