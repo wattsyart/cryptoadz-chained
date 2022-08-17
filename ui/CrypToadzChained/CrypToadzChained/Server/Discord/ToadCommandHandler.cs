@@ -52,7 +52,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         {
             command.WithText(JsonSerializer.Serialize(message.Data.Options));
             command.WithEphemeral();
-            return;
+            return Task.FromResult(command.Build());
 
             ulong? tokenId = null;
             if (message is { Data.Options: { } } && message.Data.TryGetIntegerOption("id", out var tokenInt))
