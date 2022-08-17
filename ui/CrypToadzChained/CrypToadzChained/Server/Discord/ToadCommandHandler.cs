@@ -22,7 +22,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             {
                 option.Name = "tokenId";
                 option.Description = "token ID of the toad";
-                option.Type = DiscordApplicationCommandOptionType.String;
+                option.Type = DiscordApplicationCommandOptionType.Integer;
                 option.IsRequired = false;
             })
             
@@ -37,9 +37,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         try
         {
             ulong? tokenId = null;
-            if (message is { Data.Options: { } } && message.Data.TryGetStringOption("tokenId", out var tokenString) &&
-                !string.IsNullOrWhiteSpace(tokenString) && long.TryParse(tokenString, out var tokenLong))
-                tokenId = (ulong)tokenLong;
+            if (message is { Data.Options: { } } && message.Data.TryGetIntegerOption("tokenId", out var tokenInt))
+                tokenId = (ulong)tokenInt;
 
             if (tokenId.HasValue)
             {
