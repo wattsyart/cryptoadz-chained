@@ -16,14 +16,13 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 option.Name = "random";
                 option.Description = "returns a random on-chain toad";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
-
-                option.NestedOptions.Add(new DiscordApplicationCommandOptionBuilder
+                option.AddNestedOption(n =>
                 {
-                    Name = "seed",
-                    Type = DiscordApplicationCommandOptionType.String,
-                    Description = "use a specific random toad",
-                    IsRequired = false
-                }.Build());
+                    n.Name = "seed";
+                    n.Type = DiscordApplicationCommandOptionType.String;
+                    n.Description = "use a specific random toad";
+                    n.IsRequired = false;
+                });
             })
             .AddOption(option =>
             {
@@ -31,13 +30,13 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 option.Description = "returns a canonical on-chain toad";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
 
-                option.NestedOptions.Add(new DiscordApplicationCommandOptionBuilder
+                option.AddNestedOption(n =>
                 {
-                    Name = "id",
-                    Type = DiscordApplicationCommandOptionType.Integer,
-                    Description = "the token ID for the desired toad",
-                    IsRequired = true
-                }.Build());
+                    n.Name = "id";
+                    n.Type = DiscordApplicationCommandOptionType.Integer;
+                    n.Description = "the token ID for the desired toad";
+                    n.IsRequired = true;
+                });
             })
             .Build();
     }
