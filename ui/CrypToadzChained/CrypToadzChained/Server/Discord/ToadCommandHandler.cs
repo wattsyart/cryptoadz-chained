@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using CrypToadzChained.Shared;
 using TehGM.Discord.Interactions;
 using TehGM.Discord.Interactions.CommandsHandling;
 
@@ -50,23 +51,41 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         try
         {
-            //command.WithText(JsonSerializer.Serialize(message));
-            //command.WithEphemeral();
-            //return Task.FromResult(command.Build());
-
-            ulong? tokenId = null;
+            uint? tokenId = null;
             if (message is { Data.Options: { } } && message.Data.TryGetIntegerOption("id", out var tokenInt))
-                tokenId = (ulong)tokenInt;
+                tokenId = (uint)tokenInt;
 
             if (tokenId.HasValue)
             {
-                command.AddEmbed(embed =>
+                var scope = tokenId.Value.Scope();
+                switch (scope)
                 {
-                    embed.WithTitle($"CrypToadz #{tokenId}");
-                    embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                    embed.WithURL($"https://cryptoadzchained.com/{tokenId}");
-                    embed.WithImage($"https://cryptoadzchained.com/canonical/img/{tokenId}");
-                });
+                    case ParityScope.Generated:
+                    {
+                        command.AddEmbed(embed =>
+                        {
+                            embed.WithTitle($"CrypToadz #{tokenId}");
+                            embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
+                            embed.WithURL($"https://cryptoadzchained.com/{tokenId}");
+                            embed.WithImage($"https://cryptoadzchained.com/canonical/img/{tokenId}");
+                        });
+                        break;
+                    }
+                    case ParityScope.All:
+                    case ParityScope.Custom:
+                    case ParityScope.CustomImages:
+                    case ParityScope.SmallCustomImages:
+                    case ParityScope.LargeCustomImages:
+                    case ParityScope.CustomAnimations:
+                    case ParityScope.LargeCustomAnimations:
+                    case ParityScope.SmallCustomAnimations:
+                    default:
+                    {
+                        command.WithText("Sorry, customs are too intense for this little bot!");
+                        command.WithEphemeral();
+                        break;
+                    }
+                }
             }
             else
             {
