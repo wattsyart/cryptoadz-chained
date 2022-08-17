@@ -1,4 +1,5 @@
-﻿using TehGM.Discord.Interactions;
+﻿using System.Text.Json;
+using TehGM.Discord.Interactions;
 using TehGM.Discord.Interactions.CommandsHandling;
 
 namespace CrypToadzChained.Server.Discord;
@@ -49,6 +50,10 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         try
         {
+            command.WithText(JsonSerializer.Serialize(message.Data.Options));
+            command.WithEphemeral();
+            return;
+
             ulong? tokenId = null;
             if (message is { Data.Options: { } } && message.Data.TryGetIntegerOption("id", out var tokenInt))
                 tokenId = (ulong)tokenInt;
