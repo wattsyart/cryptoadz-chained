@@ -13,17 +13,32 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns an on-chain toad")
             .AddOption(option =>
             {
-                option.Name = "seed";
-                option.Description = "share a specific random toad";
-                option.Type = DiscordApplicationCommandOptionType.String;
-                option.IsRequired = false;
+                option.Name = "random";
+                option.Description = "returns a random on-chain toad";
+                option.Type = DiscordApplicationCommandOptionType.SubCommand;
+
+                option.NestedOptions.Add(new DiscordApplicationCommandOptionBuilder
+                {
+                    Name = "seed",
+                    Type = DiscordApplicationCommandOptionType.String,
+                    Description = "use a specific random toad",
+                    IsRequired = false
+                }.Build());
+
             })
             .AddOption(option =>
             {
-                option.Name = "tokenId";
-                option.Description = "token ID of the toad";
-                option.Type = DiscordApplicationCommandOptionType.Integer;
-                option.IsRequired = false;
+                option.Name = "real";
+                option.Description = "returns a canonical on-chain toad";
+                option.Type = DiscordApplicationCommandOptionType.SubCommand;
+
+                option.NestedOptions.Add(new DiscordApplicationCommandOptionBuilder
+                {
+                    Name = "tokenId",
+                    Type = DiscordApplicationCommandOptionType.Integer,
+                    Description = "the token ID for the desired toad",
+                    IsRequired = true
+                }.Build());
             })
             
             .Build();
