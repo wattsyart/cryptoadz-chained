@@ -1,5 +1,4 @@
 using CrypToadzChained.Shared;
-using Microsoft.Extensions.DependencyInjection;
 using TehGM.Discord.Interactions;
 
 var builder = WebApplication.CreateBuilder(args);

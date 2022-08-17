@@ -29,23 +29,43 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             .Build();
     }
 
-    public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request, CancellationToken cancellationToken)
+    public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request,
+        CancellationToken cancellationToken)
     {
         var command = new DiscordInteractionResponseBuilder();
 
         try
         {
             ulong? tokenId = null;
-            if (message is { Data.Options: { } } && message.Data.TryGetStringOption("seed", out var tokenString) && !string.IsNullOrWhiteSpace(tokenString) && long.TryParse(tokenString, out var tokenLong))
+            if (message is { Data.Options: { } } && message.Data.TryGetStringOption("tokenId", out var tokenString) &&
+                !string.IsNullOrWhiteSpace(tokenString) && long.TryParse(tokenString, out var tokenLong))
                 tokenId = (ulong)tokenLong;
 
             if (tokenId.HasValue)
             {
-                EmbedRealToad(message, command);
+                command.AddEmbed(embed =>
+                {
+                    embed.WithTitle($"CrypToadz #{tokenId}");
+                    embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
+                    embed.WithURL($"https://cryptoadzchained.com/{tokenId}");
+                    embed.WithImage($"https://cryptoadzchained.com/canonical/img/{tokenId}");
+                });
             }
             else
             {
-                EmbedRandomToad(message, command);
+                var seed = (ulong)new Random().NextInt64();
+
+                if (message is { Data.Options: { } } && message.Data.TryGetStringOption("seed", out var seedString) &&
+                    !string.IsNullOrWhiteSpace(seedString) && long.TryParse(seedString, out var seedLong))
+                    seed = (ulong)seedLong;
+
+                command.AddEmbed(embed =>
+                {
+                    embed.WithTitle($"CrypToadz #{seed}");
+                    embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
+                    embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
+                    embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
+                });
             }
         }
         catch (Exception e)
@@ -53,38 +73,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             command.WithText($"Bot error: {e.Message}");
             command.WithEphemeral();
         }
+
         return Task.FromResult(command.Build());
-    }
-
-    private static void EmbedRealToad(DiscordInteraction message, DiscordInteractionResponseBuilder command)
-    {
-        ulong tokenId = 1;
-
-        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("tokenId", out var tokenString) && !string.IsNullOrWhiteSpace(tokenString) && long.TryParse(tokenString, out var tokenLong))
-            tokenId = (ulong)tokenLong;
-
-        command.AddEmbed(embed =>
-        {
-            embed.WithTitle($"CrypToadz #{tokenId}");
-            embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-            embed.WithURL($"https://cryptoadzchained.com/{tokenId}");
-            embed.WithImage($"https://cryptoadzchained.com/canonical/img/{tokenId}");
-        });
-    }
-
-    private static void EmbedRandomToad(DiscordInteraction message, DiscordInteractionResponseBuilder command)
-    {
-        var seed = (ulong)new Random().NextInt64();
-
-        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("seed", out var seedString) && !string.IsNullOrWhiteSpace(seedString) && long.TryParse(seedString, out var seedLong))
-            seed = (ulong)seedLong;
-
-        command.AddEmbed(embed =>
-        {
-            embed.WithTitle($"CrypToadz #{seed}");
-            embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-            embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
-            embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
-        });
     }
 }
