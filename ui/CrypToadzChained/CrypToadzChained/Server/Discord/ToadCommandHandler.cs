@@ -16,6 +16,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 option.Name = "random";
                 option.Description = "returns a random on-chain toad";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
+
                 option.AddNestedOption(n =>
                 {
                     n.Name = "seed";
