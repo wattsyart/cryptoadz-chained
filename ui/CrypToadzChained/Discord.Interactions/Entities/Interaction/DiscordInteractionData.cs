@@ -38,8 +38,19 @@ namespace TehGM.Discord.Interactions
         // OPTIONS RETRIEVAL
         private bool TryGetOption<T>(string key, out T value, Func<object, T> parser)
         {
-            DiscordInteractionDataOption option = this.Options?.FirstOrDefault(o => o.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
-            if (option == null || option.Value == null)
+            if (Options == null)
+            {
+                value = default;
+                return false;
+            }
+
+            // get all options regardless of sub-command
+            var options = Options
+                .SelectMany(x => x.Options ?? Enumerable.Empty<DiscordInteractionDataOption>())
+                .Concat(Options);
+
+            var option = options.FirstOrDefault(o => o.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
+            if (option?.Value == null)
             {
                 value = default;
                 return false;
