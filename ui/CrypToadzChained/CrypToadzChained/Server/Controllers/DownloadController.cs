@@ -8,6 +8,7 @@ using Microsoft.Net.Http.Headers;
 using Nethereum.Hex.HexConvertors.Extensions;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
+using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 
 namespace CrypToadzChained.Server.Controllers;
@@ -34,6 +35,23 @@ public class DownloadController : ControllerBase
         var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
         var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
         return StreamImage(metadata);
+    }
+    
+    [HttpGet("canonical/img/{tokenId}")]
+    public async Task<IActionResult> GetCanonicalTokenURIImageAsync(uint tokenId)
+    {
+        var tokenUri = await ToadzService.GetCanonicalTokenURIAsync(tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
+        var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
+        var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
+        return StreamImage(metadata);
+    }
+
+    [HttpGet("canonical/json/{tokenId}")]
+    public async Task<IActionResult> GetCanonicalTokenURIAsync(uint tokenId)
+    {
+        var tokenUri = await ToadzService.GetCanonicalTokenURIAsync(tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
+        var buffer = Convert.FromBase64String(tokenUri.Replace(DataUri.Json, ""));
+        return File(buffer, "application/json", DateTimeOffset.Now, ETag(buffer));
     }
 
     [HttpGet("random/json")]
@@ -69,28 +87,55 @@ public class DownloadController : ControllerBase
         return File(buffer, "application/json", DateTimeOffset.Now, ETag(buffer));
     }
 
-
     private static EntityTagHeaderValue ETag(byte[] buffer) => new($"\"{MD5.HashData(buffer).ToHex()}\"");
     
     private static readonly GifEncoder GifEncoder = new();
     private static readonly GifDecoder GifDecoder = new();
 
-    private IActionResult StreamImage(JsonTokenMetadata? metadata)
-    {
-        var buffer = Convert.FromBase64String(metadata!.Image!.Replace(DataUri.Gif, ""));
+    private static readonly PngEncoder PngEncoder = new();
+    private static readonly PngDecoder PngDecoder = new();
 
+    private IActionResult StreamImage(JsonTokenMetadata? metadata) => metadata!.Image!.StartsWith(DataUri.Gif) ? StreamGif(metadata) : StreamPng(metadata);
+
+    private IActionResult StreamGif(JsonTokenMetadata metadata)
+    {
+        var buffer = Convert.FromBase64String(metadata.Image!.Replace(DataUri.Gif, ""));
         var image = Image.Load(buffer, GifDecoder);
 
-        image.Mutate(x => x.Resize(new ResizeOptions
+        if (image.Size().Width == 36)
         {
-            Size = new Size(1440, 1440),
-            Sampler = KnownResamplers.NearestNeighbor
-        }));
+            image.Mutate(x => x.Resize(new ResizeOptions
+            {
+                Size = new Size(1440, 1440),
+                Sampler = KnownResamplers.NearestNeighbor
+            }));
+        }
 
         var ms = new MemoryStream();
         image.Save(ms, GifEncoder);
         ms.Position = 0;
 
         return File(ms, "image/gif", DateTimeOffset.Now, ETag(buffer));
+    }
+
+    private IActionResult StreamPng(JsonTokenMetadata metadata)
+    {
+        var buffer = Convert.FromBase64String(metadata.Image!.Replace(DataUri.Png, ""));
+        var image = Image.Load(buffer, PngDecoder);
+
+        if (image.Size().Width == 36)
+        {
+            image.Mutate(x => x.Resize(new ResizeOptions
+            {
+                Size = new Size(1440, 1440),
+                Sampler = KnownResamplers.NearestNeighbor
+            }));
+        }
+
+        var ms = new MemoryStream();
+        image.Save(ms, PngEncoder);
+        ms.Position = 0;
+
+        return File(ms, "image/png", DateTimeOffset.Now, ETag(buffer));
     }
 }

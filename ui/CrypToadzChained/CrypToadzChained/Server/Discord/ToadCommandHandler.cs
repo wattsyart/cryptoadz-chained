@@ -10,14 +10,22 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
     [InteractionCommandBuilder]
     public static DiscordApplicationCommand Build()
     {
-        return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns a random, fully on-chain toad")
+        return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns an on-chain toad")
             .AddOption(option =>
             {
                 option.Name = "seed";
                 option.Description = "share a specific random toad";
-                option.Type = DiscordApplicationCommandOptionType.Integer;
+                option.Type = DiscordApplicationCommandOptionType.String;
                 option.IsRequired = false;
             })
+            .AddOption(option =>
+            {
+                option.Name = "tokenId";
+                option.Description = "token ID of the toad";
+                option.Type = DiscordApplicationCommandOptionType.String;
+                option.IsRequired = false;
+            })
+            
             .Build();
     }
 
@@ -27,18 +35,18 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         try
         {
-            var seed = (ulong)new Random().NextInt64();
-        
-            if(message is { Data.Options: { } } && message.Data.TryGetIntegerOption("seed", out var seedInt))
-                seed = (ulong) seedInt;
+            ulong? tokenId = null;
+            if (message is { Data.Options: { } } && message.Data.TryGetStringOption("seed", out var tokenString) && !string.IsNullOrWhiteSpace(tokenString) && long.TryParse(tokenString, out var tokenLong))
+                tokenId = (ulong)tokenLong;
 
-            command.AddEmbed(embed =>
+            if (tokenId.HasValue)
             {
-                embed.WithTitle($"CrypToadz #{seed}");
-                embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
-                embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
-            });
+                EmbedRealToad(message, command);
+            }
+            else
+            {
+                EmbedRandomToad(message, command);
+            }
         }
         catch (Exception e)
         {
@@ -48,4 +56,35 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return Task.FromResult(command.Build());
     }
 
+    private static void EmbedRealToad(DiscordInteraction message, DiscordInteractionResponseBuilder command)
+    {
+        ulong tokenId = 1;
+
+        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("tokenId", out var tokenString) && !string.IsNullOrWhiteSpace(tokenString) && long.TryParse(tokenString, out var tokenLong))
+            tokenId = (ulong)tokenLong;
+
+        command.AddEmbed(embed =>
+        {
+            embed.WithTitle($"CrypToadz #{tokenId}");
+            embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
+            embed.WithURL($"https://cryptoadzchained.com/{tokenId}");
+            embed.WithImage($"https://cryptoadzchained.com/canonical/img/{tokenId}");
+        });
+    }
+
+    private static void EmbedRandomToad(DiscordInteraction message, DiscordInteractionResponseBuilder command)
+    {
+        var seed = (ulong)new Random().NextInt64();
+
+        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("seed", out var seedString) && !string.IsNullOrWhiteSpace(seedString) && long.TryParse(seedString, out var seedLong))
+            seed = (ulong)seedLong;
+
+        command.AddEmbed(embed =>
+        {
+            embed.WithTitle($"CrypToadz #{seed}");
+            embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
+            embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
+            embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
+        });
+    }
 }
