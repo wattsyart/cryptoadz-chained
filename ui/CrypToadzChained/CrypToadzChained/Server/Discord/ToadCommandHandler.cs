@@ -50,7 +50,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         try
         {
-            command.WithText(JsonSerializer.Serialize(message.Data.Options));
+            command.WithText(JsonSerializer.Serialize(message));
             command.WithEphemeral();
             return Task.FromResult(command.Build());
 
