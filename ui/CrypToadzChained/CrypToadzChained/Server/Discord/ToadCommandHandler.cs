@@ -24,23 +24,21 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     Description = "use a specific random toad",
                     IsRequired = false
                 }.Build());
-
             })
             .AddOption(option =>
             {
-                option.Name = "real";
+                option.Name = "token";
                 option.Description = "returns a canonical on-chain toad";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
 
                 option.NestedOptions.Add(new DiscordApplicationCommandOptionBuilder
                 {
-                    Name = "tokenId",
+                    Name = "id",
                     Type = DiscordApplicationCommandOptionType.Integer,
                     Description = "the token ID for the desired toad",
                     IsRequired = true
                 }.Build());
             })
-            
             .Build();
     }
 
@@ -52,7 +50,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         try
         {
             ulong? tokenId = null;
-            if (message is { Data.Options: { } } && message.Data.TryGetIntegerOption("tokenId", out var tokenInt))
+            if (message is { Data.Options: { } } && message.Data.TryGetIntegerOption("id", out var tokenInt))
                 tokenId = (ulong)tokenInt;
 
             if (tokenId.HasValue)
