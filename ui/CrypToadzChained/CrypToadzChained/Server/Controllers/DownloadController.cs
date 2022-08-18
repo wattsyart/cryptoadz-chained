@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Nethereum.Hex.HexConvertors.Extensions;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
@@ -99,43 +100,43 @@ public class DownloadController : ControllerBase
 
     private IActionResult StreamGif(JsonTokenMetadata metadata)
     {
-        var buffer = Convert.FromBase64String(metadata.Image!.Replace(DataUri.Gif, ""));
-        var image = Image.Load(buffer, GifDecoder);
-
-        if (image.Size().Width == 36)
-        {
-            image.Mutate(x => x.Resize(new ResizeOptions
-            {
-                Size = new Size(1440, 1440),
-                Sampler = KnownResamplers.NearestNeighbor
-            }));
-        }
-
-        var ms = new MemoryStream();
-        image.Save(ms, GifEncoder);
-        ms.Position = 0;
-
-        return File(ms, "image/gif", DateTimeOffset.Now, ETag(buffer));
+        return StreamImageImpl(metadata, "image/gif", DataUri.Gif, GifEncoder, GifDecoder);
     }
 
     private IActionResult StreamPng(JsonTokenMetadata metadata)
     {
-        var buffer = Convert.FromBase64String(metadata.Image!.Replace(DataUri.Png, ""));
-        var image = Image.Load(buffer, PngDecoder);
+        return StreamImageImpl(metadata, "image/png", DataUri.Png, PngEncoder, PngDecoder);
+    }
 
-        if (image.Size().Width == 36)
+    private IActionResult StreamImageImpl(JsonTokenMetadata metadata, string mediaType, string dataUri, IImageEncoder encoder, IImageDecoder decoder)
+    {
+        var buffer = Convert.FromBase64String(metadata.Image!.Replace(dataUri, string.Empty));
+
+        var identifier = metadata.Name?.Replace("CrypToadz #", string.Empty);
+
+        if (ulong.TryParse(identifier, out var tokenId) && tokenId.IsLargeImage())
+            return File(buffer, mediaType, DateTimeOffset.Now, ETag(buffer));
+
+        var cachePath = $"{identifier}_cache.png";
+
+        if (System.IO.File.Exists(cachePath))
+            return File(System.IO.File.OpenRead(cachePath), mediaType, DateTimeOffset.Now, ETag(buffer));
+
+        var image = Image.Load(buffer, decoder);
+
+        image.Mutate(x => x.Resize(new ResizeOptions
         {
-            image.Mutate(x => x.Resize(new ResizeOptions
-            {
-                Size = new Size(1440, 1440),
-                Sampler = KnownResamplers.NearestNeighbor
-            }));
-        }
+            Size = new Size(1440, 1440),
+            Sampler = KnownResamplers.NearestNeighbor
+        }));
 
-        var ms = new MemoryStream();
-        image.Save(ms, PngEncoder);
+        using var ms = new MemoryStream();
+        image.Save(ms, encoder);
         ms.Position = 0;
 
-        return File(ms, "image/png", DateTimeOffset.Now, ETag(buffer));
+        var resized = ms.ToArray();
+        System.IO.File.WriteAllBytes(cachePath, resized);
+
+        return File(resized, mediaType, DateTimeOffset.Now, ETag(buffer));
     }
 }

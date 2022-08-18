@@ -47,4 +47,16 @@ public static class ParityScopeExtensions
 
         throw new ArgumentOutOfRangeException($"{tokenId} has no scope");
     }
+
+    public static bool IsLargeImage(this uint tokenId) => ParityScope.LargeCustomAnimations.TokenIds().Contains(tokenId) || ParityScope.LargeCustomImages.TokenIds().Contains(tokenId);
+
+    public static bool IsLargeImage(this ulong tokenId)
+    {
+        if (tokenId > uint.MaxValue)
+            return false;
+
+        var id = (uint) tokenId;
+
+        return IsLargeImage(id);
+    }
 }
