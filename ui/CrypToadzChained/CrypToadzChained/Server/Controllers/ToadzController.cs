@@ -56,7 +56,7 @@ namespace CrypToadzChained.Server.Controllers
         [HttpGet("patch/tokenURI/{tokenId}")]
         public async Task<string> GetPatchTokenURI(uint tokenId)
         {
-            return await ToadzService.GetTokenURIWithPresentationAsync(tokenId, 1, _options.Value.OnChainRpcUrl, _options.Value.PatchContractAddress, _logger);
+            return await ToadzService.GetTokenURIWithPresentationAsync(tokenId, 1, _options.Value.PatchRpcUrl, _options.Value.PatchContractAddress, _logger);
         }
     }
 }
