@@ -83,7 +83,17 @@
                                 <p class="mb-5">
                                     @if (!IsLargeAnimation)
                                     {
-                                        <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 100%; height: 100%" src="@ImageUri" alt="@Metadata.Name"/>
+                                        if (ImageUri!.StartsWith(DataUri.Svg))
+                                        {
+                                            @(new MarkupString(Encoding.UTF8.GetString(
+                                                Convert.FromBase64String(ImageUri!.Replace(DataUri.Svg, ""))
+                                                )))
+                                        }
+                                        else
+                                        {
+                                            <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 100%; height: 100%" src="@ImageUri" alt="@Metadata.Name" />
+                                        }
+                                        
                                     }
                                     else
                                     {
@@ -165,7 +175,7 @@
             {
                 Logger?.LogInformation("Calling server...");
                 var response = await Http.GetAsync($"toadz/patch/tokenURI/{tokenId}");
-                await WithResponse(response, false);
+                await WithResponse(response);
             }
         }
         catch(Exception ex)
@@ -178,7 +188,7 @@
         }
     }
 
-    private async Task WithResponse(HttpResponseMessage response, bool random)
+    private async Task WithResponse(HttpResponseMessage response)
     {
         if (response.IsSuccessStatusCode)
         {
@@ -207,7 +217,7 @@
                 var buffer = Convert.FromBase64String(data);
                 var json = Encoding.UTF8.GetString(buffer);
                 Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-                ImageUri = Metadata?.Image;
+                ImageUri = Metadata?.Image ?? Metadata?.ImageData;
                 Nav.NavigateTo(TokenId ?? "/");
 
                 //
