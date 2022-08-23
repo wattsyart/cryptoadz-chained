@@ -177,8 +177,8 @@ contract CrypToadzChainedPatch {
     {
         string memory imageData = string(
             abi.encodePacked(
-                '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" x="0" y="0" width="1440" height="1440" style="',
-                'image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:-webkit-optimize-contrast;-ms-interpolation-mode:nearest-neighbor;',
+                '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" x="0" y="0" width="100%" height="100%" style="',
+                'image-rendering:pixelated;image-rendering:-moz-crisp-edges;-ms-interpolation-mode:nearest-neighbor;',
                 'background-color:#00FFFFFF;background-repeat:no-repeat;background-size:100%;background-image:url(',
                 imageUri, 
                 ');"></svg>'
