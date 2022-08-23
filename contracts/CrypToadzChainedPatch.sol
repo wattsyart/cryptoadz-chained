@@ -63,11 +63,10 @@ contract CrypToadzChainedPatch {
         );
         require(meta.length > 0, string(LEGACY_URI_NOT_FOUND));
 
-        // ignore requests to wrap non-pixelated custom assets, and present as-is
-        bool ignoreWrapRequest = isCustomImage(tokenId) ||
-            isCustomAnimation(tokenId);
+        bool ignoreWrapRequest = false;
+        bool isCustom = isCustomImage(tokenId) || isCustomAnimation(tokenId);
 
-        if (ignoreWrapRequest) {
+        if (isCustom) {
             if (
                 // large images (34)
                 tokenId == 316 ||
@@ -115,7 +114,7 @@ contract CrypToadzChainedPatch {
                 tokenId == 5086
             ) {
                 // cancel the wrap request for large rasters
-                ignoreWrapRequest = false;
+                ignoreWrapRequest = true;
             }
         }
 
