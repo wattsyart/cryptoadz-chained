@@ -12,14 +12,16 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  @notice A contract proxy to fix issues with the original contract. Also makes additional patches (i.e. as-yet unidentified browser issues) cheaper, by making core methods public.
  */
 contract CrypToadzChainedPatch {
-    bytes public constant LEGACY_URI_NOT_FOUND = "ERC721Metadata: URI query for nonexistent token";
+    bytes public constant LEGACY_URI_NOT_FOUND =
+        "ERC721Metadata: URI query for nonexistent token";
 
     bytes public constant JSON_URI_PREFIX = "data:application/json;base64,";
     bytes public constant PNG_URI_PREFIX = "data:image/png;base64,";
     bytes public constant GIF_URI_PREFIX = "data:image/gif;base64,";
     bytes public constant SVG_URI_PREFIX = "data:image/svg+xml;base64,";
 
-    bytes public constant DESCRIPTION = "A small, warty, amphibious creature that resides in the metaverse.";
+    bytes public constant DESCRIPTION =
+        "A small, warty, amphibious creature that resides in the metaverse.";
     bytes public constant EXTERNAL_URL = "https://cryptoadz.io";
     bytes public constant NAME = "CrypToadz";
 
@@ -61,9 +63,61 @@ contract CrypToadzChainedPatch {
         );
         require(meta.length > 0, string(LEGACY_URI_NOT_FOUND));
 
-        // ignore requests to wrap custom assets, and present as-is
+        // ignore requests to wrap non-pixelated custom assets, and present as-is
         bool ignoreWrapRequest = isCustomImage(tokenId) ||
             isCustomAnimation(tokenId);
+
+        if (ignoreWrapRequest) {
+            if (
+                // large images (34)
+                tokenId == 316 ||
+                tokenId == 703 ||
+                tokenId == 916 ||
+                tokenId == 936 ||
+                tokenId == 1005 ||
+                tokenId == 1793 ||
+                tokenId == 1812 ||
+                tokenId == 1975 ||
+                tokenId == 2232 ||
+                tokenId == 2327 ||
+                tokenId == 2489 ||
+                tokenId == 2521 ||
+                tokenId == 2709 ||
+                tokenId == 2825 ||
+                tokenId == 2846 ||
+                tokenId == 2959 ||
+                tokenId == 3196 ||
+                tokenId == 3309 ||
+                tokenId == 3382 ||
+                tokenId == 4096 ||
+                tokenId == 4152 ||
+                tokenId == 4238 ||
+                tokenId == 4580 ||
+                tokenId == 4714 ||
+                tokenId == 4773 ||
+                tokenId == 4896 ||
+                tokenId == 5128 ||
+                tokenId == 5471 ||
+                tokenId == 5902 ||
+                tokenId == 6214 ||
+                tokenId == 6382 ||
+                tokenId == 6491 ||
+                tokenId == 6572 ||
+                tokenId == 6631 ||
+                // large animations (8)
+                tokenId == 37 ||
+                tokenId == 318 ||
+                tokenId == 466 ||
+                tokenId == 1943 ||
+                tokenId == 3661 ||
+                tokenId == 4035 ||
+                tokenId == 4911 ||
+                tokenId == 5086
+            ) {
+                // cancel the wrap request for large rasters
+                ignoreWrapRequest = false;
+            }
+        }
 
         string memory imageUri = getImageURI(tokenId, meta);
         string memory imageDataUri;
@@ -78,7 +132,7 @@ contract CrypToadzChainedPatch {
 
         if (
             (presentation == Presentation.Image ||
-            presentation == Presentation.Both) || ignoreWrapRequest
+                presentation == Presentation.Both) || ignoreWrapRequest
         ) {
             json = string(abi.encodePacked(json, '"image":"', imageUri, '",'));
         }
@@ -178,9 +232,9 @@ contract CrypToadzChainedPatch {
         string memory imageData = string(
             abi.encodePacked(
                 '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" x="0" y="0" width="100%" height="100%" style="',
-                'image-rendering:pixelated;image-rendering:-moz-crisp-edges;-ms-interpolation-mode:nearest-neighbor;',
-                'background-color:#00FFFFFF;background-repeat:no-repeat;background-size:100%;background-image:url(',
-                imageUri, 
+                "image-rendering:pixelated;image-rendering:-moz-crisp-edges;-ms-interpolation-mode:nearest-neighbor;",
+                "background-color:#00FFFFFF;background-repeat:no-repeat;background-size:100%;background-image:url(",
+                imageUri,
                 ');"></svg>'
             )
         );
