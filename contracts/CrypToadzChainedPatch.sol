@@ -61,7 +61,7 @@ contract CrypToadzChainedPatch {
         );
         require(meta.length > 0, string(LEGACY_URI_NOT_FOUND));
 
-        // FIX: ignore requests to wrap custom assets, and present as-is
+        // ignore requests to wrap custom assets, and present as-is
         bool ignoreWrapRequest = isCustomImage(tokenId) ||
             isCustomAnimation(tokenId);
 
@@ -175,13 +175,13 @@ contract CrypToadzChainedPatch {
         virtual
         returns (string memory imageDataUri)
     {
-        // FIX: Safari displays images embedded in SVGs incorrectly when width and height aren't set explicity
         string memory imageData = string(
             abi.encodePacked(
-                '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="1440px" y="1440px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">',
-                '<image style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100" height="100" xlink:href="',
+                '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="100%" height="100%" viewBox="0 0 36 36">',
+                '<foreignObject x="0" y="0" width="100%" height="100%">',
+                '<img style="image-rendering:-moz-crisp-edges;image-rendering:-webkit-crisp-edges;image-rendering:pixelated;" width="100%" height="100%" src="', 
                 imageUri,
-                '"/></svg>'
+                '"/></foreignObject></svg>'
             )
         );
 
