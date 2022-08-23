@@ -16,5 +16,8 @@ namespace CrypToadzChained.Shared
         public string? IpfsPassword { get; set; }
         
         public bool HideSensitiveFields { get; set; }
+
+        [Required] public string PatchRpcUrl { get; set; } = null!;
+        [Required] public string PatchContractAddress { get; set; } = null!;
     }
 }

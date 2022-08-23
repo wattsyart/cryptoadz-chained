@@ -166,6 +166,33 @@ namespace CrypToadzChained.Shared
             }
         }
 
+        public static async Task<string> GetTokenURIWithPresentationAsync(uint tokenId, byte presentation, string url, string contractAddress, ILogger? logger)
+        {
+            var web3 = new Web3(url);
+            var contract = web3.Eth.ERC721.GetContractService(contractAddress);
+
+            try
+            {
+                var function = new TokenURIWithPresentationFunction { TokenId = tokenId, Presentation = presentation };
+                var tokenUri = await contract.ContractHandler.QueryAsync<TokenURIWithPresentationFunction, string>(function);
+                return tokenUri;
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, "Failed to fetch presentational token ID {TokenID}", tokenId);
+
+                switch (ex)
+                {
+                    case SmartContractRevertException revert:
+                        return revert.RevertMessage;
+                    case RpcResponseException rpc:
+                        return rpc.RpcError.Message;
+                    default:
+                        throw;
+                }
+            }
+        }
+
         #region Functions
 
         [Function("randomTokenURIFromSeed", "string")]
@@ -187,6 +214,16 @@ namespace CrypToadzChained.Shared
         {
             [Parameter("uint256", "tokenId", 1)]
             public BigInteger TokenId { get; set; }
+        }
+
+        [Function("tokenURIWithPresentation", "string")]
+        public sealed class TokenURIWithPresentationFunction : FunctionMessage
+        {
+            [Parameter("uint256", "tokenId", 1)]
+            public BigInteger TokenId { get; set; }
+
+            [Parameter("uint8", "presentation", 2)]
+            public byte Presentation { get; set; }
         }
 
         #endregion

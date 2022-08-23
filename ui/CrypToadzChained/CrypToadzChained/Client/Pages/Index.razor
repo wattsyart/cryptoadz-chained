@@ -164,7 +164,7 @@
             else
             {
                 Logger?.LogInformation("Calling server...");
-                var response = await Http.GetAsync($"toadz/tokenURI/{tokenId}");
+                var response = await Http.GetAsync($"toadz/patch/tokenURI/{tokenId}");
                 await WithResponse(response, false);
             }
         }
