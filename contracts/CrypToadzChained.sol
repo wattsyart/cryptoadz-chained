@@ -228,7 +228,7 @@ contract CrypToadzChained is Ownable, IERC721, IERC165 {
      */
     function lockEncoder() external onlyOwner {
         require(
-            address(builder).supportsInterface(type(IGIFEncoder).interfaceId),
+            address(encoder).supportsInterface(type(IGIFEncoder).interfaceId),
             "Not IGIFEncoder"
         );
         encoderLocked = true;
