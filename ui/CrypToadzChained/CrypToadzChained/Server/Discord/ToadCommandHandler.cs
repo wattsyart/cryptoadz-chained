@@ -1,10 +1,12 @@
 ﻿using CrypToadzChained.Server.Models;
 using CrypToadzChained.Shared;
+using Discord.Interactions.AspNetCore;
 using Discord.Interactions.AspNetCore.CommandsHandling;
 using Discord.Interactions.Entities.Builders;
 using Discord.Interactions.Entities.Commands;
 using Discord.Interactions.Entities.Interaction;
 using Discord.Interactions.Entities.InteractionResponse;
+using Microsoft.Extensions.Options;
 
 namespace CrypToadzChained.Server.Discord;
 
@@ -12,8 +14,6 @@ namespace CrypToadzChained.Server.Discord;
 public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
     public const int CommandVersion = 1;
-
-    private const string ServerUrl = "https://cryptoadzonchain.com";
 
     private static readonly List<uint> TokenIds;
     private static readonly Random Random;
@@ -88,12 +88,15 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
     {
         var command = new DiscordInteractionResponseBuilder();
         var logger = serviceProvider.GetRequiredService<ILogger<ToadCommandHandler>>();
+        var options = serviceProvider.GetRequiredService<IOptionsSnapshot<DiscordInteractionsOptions>>();
+
+        var serverUrl = options.Value.ServerUrl;
 
         try
         {
             if (IsGameRequest(message))
             {
-                PlayGame(message, command, logger);
+                PlayGame(message, command, options.Value, logger);
             }
             else
             {
@@ -107,8 +110,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     {
                         embed.WithTitle($"CrypToadz #{tokenId}");
                         embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                        embed.WithURL($"{ServerUrl}/{tokenId}");
-                        embed.WithImage($"{ServerUrl}/canonical/img/{tokenId}", width: 1440, height: 1440);
+                        embed.WithURL($"{serverUrl}/{tokenId}");
+                        embed.WithImage($"{serverUrl}/canonical/img/{tokenId}", width: 1440, height: 1440);
                     });
                 }
                 else
@@ -122,8 +125,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     {
                         embed.WithTitle($"CrypToadz #{seed}");
                         embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                        embed.WithURL($"{ServerUrl}/random/{seed}");
-                        embed.WithImage($"{ServerUrl}/random/img/{seed}", width: 1440, height: 1440);
+                        embed.WithURL($"{serverUrl}/random/{seed}");
+                        embed.WithImage($"{serverUrl}/random/img/{seed}", width: 1440, height: 1440);
                     });
                 }
             }
@@ -137,7 +140,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return Task.FromResult(command.Build());
     }
 
-    private static void PlayGame(DiscordInteraction message, DiscordInteractionResponseBuilder command, ILogger<ToadCommandHandler> logger)
+    private static void PlayGame(DiscordInteraction message, DiscordInteractionResponseBuilder command, DiscordInteractionsOptions options, ILogger<ToadCommandHandler> logger)
     {
         // See: https://stackoverflow.com/a/72613602
 
@@ -162,7 +165,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         var random = new Random(id);
 
-        var options = new List<ulong>
+        var choices = new List<ulong>
         {
             (ulong)random.NextInt64(),
             (ulong)random.NextInt64(),
@@ -170,13 +173,13 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             TokenIds[random.Next(TokenIds.Count)]
         };
 
-        var realTokenId = options[4];
+        var realTokenId = choices[4];
 
-        Shuffle(random, options);
+        Shuffle(random, choices);
 
-        for (var i = 0; i < options.Count; i++)
+        for (var i = 0; i < choices.Count; i++)
         {
-            var option = options[i];
+            var option = choices[i];
             if (option == realTokenId)
             {
                 session.Index = i;
@@ -206,16 +209,16 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             {
                 embed.WithTitle($"Among Lilies #{id}");
                 embed.WithDescription($"{session.Winner} won this game!");
-                embed.WithURL(ServerUrl);
-                embed.WithImage($"{ServerUrl}/game/img/{realTokenId}/{session.Index}", width: 1440, height: 1440);
+                embed.WithURL(options.ServerUrl);
+                embed.WithImage($"{options.ServerUrl}/game/img/{realTokenId}/{session.Index}", width: 1440, height: 1440);
             });
 
             return;
         }
         
-        for (var i = 0; i < options.Count; i++)
+        for (var i = 0; i < choices.Count; i++)
         {
-            var index = options[i];
+            var index = choices[i];
             var number = i;
 
             if (i == 0)
@@ -224,16 +227,16 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 {
                     embed.WithTitle($"Among Lilies #{id}");
                     embed.WithDescription("Which is the real toad, and not an imposter?");
-                    embed.WithURL(ServerUrl);
-                    embed.WithImage($"{ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
+                    embed.WithURL(options.ServerUrl);
+                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
                 });
             }
             else
             {
                 command.AddEmbed(embed =>
                 {
-                    embed.WithURL(ServerUrl);
-                    embed.WithImage($"{ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
+                    embed.WithURL(options.ServerUrl);
+                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
                 });
             }
         }

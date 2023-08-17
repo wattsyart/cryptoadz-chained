@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Reflection;
 using Discord.Interactions.AspNetCore.CommandsHandling;
@@ -33,6 +34,8 @@ namespace Discord.Interactions.AspNetCore
         /// <summary>Set of assemblies interaction commands should be automatically loaded from.</summary>
         /// <remarks>Entry assembly is included by default.</remarks>
         public ICollection<Assembly> CommandAssemblies { get; set; } = new List<Assembly>() { Assembly.GetEntryAssembly() };
+
+        [Required] public string ServerUrl { get; set; } = null!;
 
         public int Version { get; set; }
 
