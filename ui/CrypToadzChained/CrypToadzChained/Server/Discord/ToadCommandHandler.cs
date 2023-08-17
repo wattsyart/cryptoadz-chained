@@ -98,7 +98,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                         command.AddEmbed(embed =>
                         {
                             embed.WithURL("https://cryptoadzonchain.com");
-                            embed.WithImage($"https://cryptoadzonchain.com/random/img/{index}");
+                            embed.WithImage($"https://cryptoadzonchain.com/random/img/{index}", width: 1440, height: 1440);
                         });
                     }
                 }
@@ -116,7 +116,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                         embed.WithTitle($"CrypToadz #{tokenId}");
                         embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
                         embed.WithURL($"https://cryptoadzonchain.com/{tokenId}");
-                        embed.WithImage($"https://cryptoadzonchain.com/canonical/img/{tokenId}");
+                        embed.WithImage($"https://cryptoadzonchain.com/canonical/img/{tokenId}", width: 1440, height: 1440);
                     });
                 }
                 else
@@ -132,7 +132,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                         embed.WithTitle($"CrypToadz #{seed}");
                         embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
                         embed.WithURL($"https://cryptoadzonchain.com/random/{seed}");
-                        embed.WithImage($"https://cryptoadzonchain.com/random/img/{seed}");
+                        embed.WithImage($"https://cryptoadzonchain.com/random/img/{seed}", width: 1440, height: 1440);
                     });
                 }
             }
@@ -146,13 +146,9 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return Task.FromResult(command.Build());
     }
 
-    private static bool IsGameRequest(DiscordInteraction message)
+    private bool IsGameRequest(DiscordInteraction interaction)
     {
-        if(message is { Data.Options: { } } && message.Data.TryGetStringOption("game", out  _))
-            return true;
-
-        return message.Message != null && !string.IsNullOrWhiteSpace(message.Message.Content) &&
-               message.Message.Content.Contains("game");
+        return FindOptionByName(interaction, "game") != null;
     }
 
     public static void Shuffle<T>(List<T> list)
@@ -164,5 +160,28 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             var k = Random.Next(n + 1);
             (list[k], list[n]) = (list[n], list[k]);
         }
+    }
+
+    public DiscordInteractionDataOption? FindOptionByName(DiscordInteraction interaction, string nameToFind)
+    {
+        return interaction?.Data?.Options == null ? null : FindOptionInOptions(interaction.Data.Options, nameToFind);
+    }
+
+    public DiscordInteractionDataOption? FindOptionInOptions(IEnumerable<DiscordInteractionDataOption>? options, string nameToFind)
+    {
+        if (options == null)
+            return null;
+
+        foreach (var option in options)
+        {
+            if (option.Name == nameToFind)
+                return option;
+
+            var foundNestedOption = FindOptionInOptions(option.Options, nameToFind);
+            if (foundNestedOption != null)
+                return foundNestedOption;
+        }
+
+        return null;
     }
 }
