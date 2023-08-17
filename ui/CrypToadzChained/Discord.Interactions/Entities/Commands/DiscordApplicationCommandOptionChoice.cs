@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Commands
 {
     /// <summary>Represents a selectable choice for a <see cref="DiscordApplicationCommandOption"/>.</summary>
     public class DiscordApplicationCommandOptionChoice : ICloneable

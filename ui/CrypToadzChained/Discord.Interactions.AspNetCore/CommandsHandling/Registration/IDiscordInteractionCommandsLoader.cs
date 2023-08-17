@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace TehGM.Discord.Interactions.CommandsHandling.Registration
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Registration
 {
     /// <summary>A service that can load <see cref="IDiscordInteractionCommandsLoader"/> from assemblies.</summary>
     public interface IDiscordInteractionCommandsLoader

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities
 {
     /// <summary>Represents a Discord message.</summary>
     /// <remarks>This class does not yet support all properties.</remarks>

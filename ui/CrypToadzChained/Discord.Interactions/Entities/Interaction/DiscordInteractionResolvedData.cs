@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Interaction
 {
     /// <summary>Represents resolved data of entities related to a Discord Interaction.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data-structure"/>

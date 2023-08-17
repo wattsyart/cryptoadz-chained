@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TehGM.Discord.Interactions.CommandsHandling
+namespace Discord.Interactions.AspNetCore.CommandsHandling
 {
     /// <summary>Specifies lifetime of command handler.</summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]

@@ -2,32 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>TehGM.Discord.Interactions</RootNamespace>
-    <PackageId>TehGM.Discord.Interactions.AspNetCore</PackageId>
     <Authors>TehGM</Authors>
     <Description>An ASP.NET Core library for enabling Discord Interactions support</Description>
     <Copyright>Copyright (c) 2021 TehGM</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/TehGM/Discord.Interactions.AspNetCore</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/TehGM/Discord.Interactions.AspNetCore</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>discord aspnetcore interaction slash command</PackageTags>
     <Version>0.1.2</Version>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageIconUrl />
-    <PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageReleaseNotes>- Added IDiscordInteractionCommandsRegistrar interface;
-- Added multiple protected and virtual methods to DiscordInteractionCommandsRegistrar;
-- Renamed some (mostly internal docs) uses of "command" with "handler";
-- DiscordAllowedMentions now has [JsonConverter(typeof(DiscordAllowedMentionsConverter))] attribute;
-- DiscordInteractionCommandsMiddleware now will only be registered once.</PackageReleaseNotes>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,17 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Discord.Interactions\Discord.Interactions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\logo.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\NUGET_README.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

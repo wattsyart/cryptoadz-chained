@@ -1,10 +1,11 @@
 ﻿using System;
+using Discord.Interactions.Entities.Commands;
 
-namespace TehGM.Discord.Interactions.CommandsHandling
+namespace Discord.Interactions.AspNetCore.CommandsHandling
 {
     /// <summary>Marks the class as an interaction command.</summary>
     /// <remarks>Note that the class still needs to implement <see cref="IDiscordInteractionCommandHandler"/> to work.</remarks>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class InteractionCommandAttribute : Attribute
     {
         /// <summary>Type of the command.</summary>

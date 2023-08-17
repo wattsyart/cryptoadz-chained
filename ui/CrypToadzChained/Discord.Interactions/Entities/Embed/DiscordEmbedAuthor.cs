@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities.Embed
 {
     /// <summary>Discord Embed Author information.</summary>
     /// <seealso href="https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure"/>

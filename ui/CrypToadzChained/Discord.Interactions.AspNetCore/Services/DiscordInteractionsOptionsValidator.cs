@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace TehGM.Discord.Interactions.Services
+namespace Discord.Interactions.AspNetCore.Services
 {
     /// <summary>Validates instances of <see cref="DiscordInteractionsOptions"/>.</summary>
     public class DiscordInteractionsOptionsValidator : IValidateOptions<DiscordInteractionsOptions>
@@ -11,7 +11,6 @@ namespace TehGM.Discord.Interactions.Services
             if (string.IsNullOrWhiteSpace(options.PublicKey))
                 return ValidateOptionsResult.Fail($"{nameof(options.PublicKey)} is required and cannot be null or empty.");
 
-            // commands registration
             if (options.RegisterCommands)
             {
                 if (string.IsNullOrWhiteSpace(options.ApplicationID))
@@ -24,7 +23,6 @@ namespace TehGM.Discord.Interactions.Services
                     return ValidateOptionsResult.Fail($"Either {nameof(options.BearerToken)} or {nameof(options.BotToken)} is required when {nameof(options.RegisterCommands)} is enabled.");
             }
 
-            // all passed? great!
             return ValidateOptionsResult.Success;
         }
     }

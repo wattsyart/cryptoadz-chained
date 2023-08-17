@@ -3,10 +3,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
-namespace TehGM.Discord.Interactions.AspNetCore
+namespace Discord.Interactions.AspNetCore.Middlewares
 {
     /// <summary>A middleware that automatically validates Discord's signature.</summary>
     /// <remarks><para>Discord sends all interactions with a signature, and requires that signature is validated to prevent bad actors interacting with your endpoints. 

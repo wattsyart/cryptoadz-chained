@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace TehGM.Discord.Interactions.AspNetCore.Authentication
+namespace Discord.Interactions.AspNetCore.Authentication
 {
     /// <summary>Allows subscribing to events raised during Discord Interactions authentication.</summary>
     public class DiscordInteractionsAuthenticationEvents

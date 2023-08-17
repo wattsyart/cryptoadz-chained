@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TehGM.Discord.Interactions.CommandsHandling.Services
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Services.Implementations
 {
     /// <inheritdoc/>
     /// <remarks>This class should be registered as scoped, so it can effectively resolve scoped services. 

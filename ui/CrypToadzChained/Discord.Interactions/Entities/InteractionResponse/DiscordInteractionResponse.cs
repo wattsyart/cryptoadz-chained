@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.InteractionResponse
 {
     /// <summary>Represents a response to a Discord Interaction.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction"/>

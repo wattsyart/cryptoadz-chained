@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities
 {
     /// <summary>Represents a Discord Channel.</summary>
     /// <remarks>This is partial object - interactions only include a few properties.</remarks>

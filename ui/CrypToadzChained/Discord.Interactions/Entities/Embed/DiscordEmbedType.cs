@@ -1,4 +1,4 @@
-﻿namespace TehGM.Discord
+﻿namespace Discord.Interactions.Entities.Embed
 {
     /// <summary>Type of a Discord Embed.</summary>
     /// <seealso href="https://discord.com/developers/docs/resources/channel#embed-object-embed-types"/>

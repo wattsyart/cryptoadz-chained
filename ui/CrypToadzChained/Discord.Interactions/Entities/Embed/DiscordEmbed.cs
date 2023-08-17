@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities.Embed
 {
     /// <summary>A Discord embed.</summary>
     /// <seealso href="https://discord.com/developers/docs/resources/channel#embed-object"/>

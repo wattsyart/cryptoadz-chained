@@ -1,13 +1,18 @@
 ﻿using CrypToadzChained.Server.Models;
 using CrypToadzChained.Shared;
-using TehGM.Discord.Interactions;
-using TehGM.Discord.Interactions.CommandsHandling;
+using Discord.Interactions.AspNetCore.CommandsHandling;
+using Discord.Interactions.Entities.Builders;
+using Discord.Interactions.Entities.Commands;
+using Discord.Interactions.Entities.Interaction;
+using Discord.Interactions.Entities.InteractionResponse;
 
 namespace CrypToadzChained.Server.Discord;
 
 // ReSharper disable once UnusedMember.Global (Reflection)
 public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
+    public const int CommandVersion = 1;
+
     private const string ServerUrl = "https://cryptoadzonchain.com";
 
     private static readonly List<uint> TokenIds;

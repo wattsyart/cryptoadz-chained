@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace TehGM.Discord.Interactions.AspNetCore.Authentication
+namespace Discord.Interactions.AspNetCore.Authentication
 {
     /// <summary>Names of claims used during Discord Interactions authentication.</summary>
     public static class DiscordInteractionsAuthenticationClaims

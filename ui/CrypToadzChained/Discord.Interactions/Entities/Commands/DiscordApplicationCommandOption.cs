@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Commands
 {
     /// <summary>Represents an option for a Discord Application Command that is settable by a Discord user when invoking the command.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure"/>

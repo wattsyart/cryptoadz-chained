@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.AspNetCore.Services.Extensions
 {
     /// <summary>Extensions for <see cref="IDiscordHttpClient"/>.</summary>
     public static class DiscordHttpClientExtensions

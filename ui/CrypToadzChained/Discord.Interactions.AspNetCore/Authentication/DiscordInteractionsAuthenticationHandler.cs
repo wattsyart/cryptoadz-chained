@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
-namespace TehGM.Discord.Interactions.AspNetCore.Authentication
+namespace Discord.Interactions.AspNetCore.Authentication
 {
     /// <summary>Authentication handler that authenticates Discord users based on Discord Interaction data.</summary>
     public class DiscordInteractionsAuthenticationHandler : AuthenticationHandler<DiscordInteractionsAuthenticationOptions>

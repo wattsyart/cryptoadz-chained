@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Commands
 {
     /// <summary>Represents a Discord Application Command.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/application-commands"/>

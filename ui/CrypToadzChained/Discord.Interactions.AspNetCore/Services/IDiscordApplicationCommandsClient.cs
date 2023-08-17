@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord.Interactions.Entities.Commands;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.AspNetCore.Services
 {
     /// <summary>Represents a Discord API client that can register application commands.</summary>
     public interface IDiscordApplicationCommandsClient

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord.Interactions.Entities.Commands;
 
-namespace TehGM.Discord.Interactions.CommandsHandling.Registration
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Registration
 {
     /// <summary>Builds <see cref="DiscordApplicationCommand"/> from given type.</summary>
     public interface IDiscordInteractionCommandBuilder

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities
 {
     /// <summary>Represents a Discord guild member.</summary>
     public class DiscordGuildMember

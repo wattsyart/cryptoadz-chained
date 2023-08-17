@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using Microsoft.AspNetCore.Builder;
-using TehGM.Discord.Interactions.AspNetCore;
-using TehGM.Discord.Interactions.CommandsHandling;
+using Discord.Interactions.AspNetCore.CommandsHandling;
+using Discord.Interactions.AspNetCore.Middlewares;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.AspNetCore
 {
     /// <summary>Application options for Discord Interactions.</summary>
     public class DiscordInteractionsOptions
@@ -17,7 +16,7 @@ namespace TehGM.Discord.Interactions
         /// <seealso href="https://discord.com/developers/applications"/>
         public string ApplicationID { get; set; }
         /// <summary>The user agent to use when making requests to Discord API servers. Required for commands registration.</summary>
-        public string UserAgent { get; set; } = $"Discord.Interactions.AspNetCore (v{GetVersion()})";
+        public string UserAgent { get; set; }
         /// <summary>The bot token to authenticate with when making requests to Discord API servers. Used when <see cref="BearerToken"/> is null. Required for commands registration.</summary>
         /// <seealso href="https://discord.com/developers/applications"/>
         public string BotToken { get; set; }
@@ -35,6 +34,7 @@ namespace TehGM.Discord.Interactions
         /// <remarks>Entry assembly is included by default.</remarks>
         public ICollection<Assembly> CommandAssemblies { get; set; } = new List<Assembly>() { Assembly.GetEntryAssembly() };
 
+        public int Version { get; set; }
 
         // MIDDLEWARES
         /// <summary>Discord application Public Key.</summary>
@@ -51,22 +51,9 @@ namespace TehGM.Discord.Interactions
         /// <seealso cref="DiscordSignatureVerificationMiddleware"/>
         public ICollection<string> Routes { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "/api/discord/interactions" };
         /// <summary>Whether middleware for ping message handling should be registered. Defaults to true.</summary>
-        /// <remarks>This value directly determines if <see cref="DiscordPingHandlingMiddleware"/> should be added to pipeline when calling <see cref="DiscordInteractionsMiddlewareExtensions.UseDiscordInteractions(IApplicationBuilder)"/>.
+        /// <remarks>This value directly determines if <see cref="DiscordPingHandlingMiddleware"/> should be added to pipeline when calling <see cref="DiscordInteractionsMiddlewareExtensions.UseDiscordInteractions(Microsoft.AspNetCore.Builder.IApplicationBuilder)"/>.
         /// After that method is called, changing this property will have no effect.</remarks>
         /// <seealso href="https://discord.com/developers/docs/interactions/receiving-and-responding#receiving-an-interaction"/>
         public bool HandlePings { get; set; } = true;
-
-
-        // UTILS
-        private static string GetVersion()
-        {
-            FileVersionInfo version = FileVersionInfo.GetVersionInfo(typeof(DiscordInteractionsOptions).Assembly.Location);
-
-            string result = $"{version.ProductMajorPart}.{version.ProductMinorPart}.{version.ProductBuildPart}";
-            if (version.FilePrivatePart != 0)
-                result += $" r{version.FilePrivatePart}";
-
-            return result;
-        }
     }
 }

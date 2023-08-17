@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TehGM.Discord.Interactions.CommandsHandling.Services
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Services.Implementations
 {
     /// <inheritdoc/>
     public class DiscordInteractionCommandHandlerFactory : IDiscordInteractionCommandHandlerFactory

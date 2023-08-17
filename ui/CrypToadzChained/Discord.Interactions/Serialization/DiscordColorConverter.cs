@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord.Serialization
+namespace Discord.Interactions.Serialization
 {
     /// <summary>Manages conversion of <see cref="DiscordColor"/> so it's always serialized as a field, not as a JSON object.</summary>
     public class DiscordColorConverter : JsonConverter<DiscordColor>

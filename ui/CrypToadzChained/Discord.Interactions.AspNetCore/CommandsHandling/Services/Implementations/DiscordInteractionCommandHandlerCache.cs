@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TehGM.Discord.Interactions.CommandsHandling.Services
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Services.Implementations
 {
     /// <summary>Caches interaction command handlers.</summary>
     /// <remarks><para>This service is designed to be a part of <see cref="DiscordInteractionCommandHandlerProvider"/>.

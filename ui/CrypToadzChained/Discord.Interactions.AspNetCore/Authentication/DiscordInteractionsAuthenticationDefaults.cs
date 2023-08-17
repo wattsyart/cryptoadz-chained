@@ -1,4 +1,4 @@
-﻿namespace TehGM.Discord.Interactions.AspNetCore.Authentication
+﻿namespace Discord.Interactions.AspNetCore.Authentication
 {
     /// <summary>Contains the default values for Discord Interactions authentication.</summary>
     public class DiscordInteractionsAuthenticationDefaults

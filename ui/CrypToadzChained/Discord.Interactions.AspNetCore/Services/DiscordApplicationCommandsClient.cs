@@ -3,40 +3,35 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord.Interactions.AspNetCore.Services.Extensions;
+using Discord.Interactions.Entities.Commands;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
-namespace TehGM.Discord.Interactions.Services
+namespace Discord.Interactions.AspNetCore.Services
 {
-    /// <inheritdoc/>
-    public class DiscordApplicationCommandsClient : IDiscordApplicationCommandsClient
+    public sealed class DiscordApplicationCommandsClient : IDiscordApplicationCommandsClient
     {
         private readonly IDiscordHttpClient _client;
         private readonly DiscordInteractionsOptions _options;
         private readonly ILogger<DiscordApplicationCommandsClient> _logger;
-
-        /// <summary>Creates a new instance of the client.</summary>
-        /// <param name="client">Base Discord API HTTP client to use for making requests.</param>
-        /// <param name="options">Discord interaction options with config for requests.</param>
-        /// <param name="logger"></param>
+        
         public DiscordApplicationCommandsClient(IDiscordHttpClient client, IOptions<DiscordInteractionsOptions> options, ILogger<DiscordApplicationCommandsClient> logger)
         {
             _client = client;
             _options = options.Value;
             _logger = logger;
         }
-
-        /// <inheritdoc/>
+        
         public Task<IEnumerable<DiscordApplicationCommand>> RegisterGlobalCommandsAsync(IEnumerable<DiscordApplicationCommand> commands, CancellationToken cancellationToken = default)
         {
-            if (commands?.Any() != true)
-                return Task.FromResult(Enumerable.Empty<DiscordApplicationCommand>());
-
-            return this.SendAndParseAsync<IEnumerable<DiscordApplicationCommand>>(HttpMethod.Put, $"applications/{_options.ApplicationID}/commands", commands, cancellationToken);
+            return commands?.Any() != true
+                ? Task.FromResult(Enumerable.Empty<DiscordApplicationCommand>())
+                : SendAndParseAsync<IEnumerable<DiscordApplicationCommand>>(HttpMethod.Put,
+                    $"applications/{_options.ApplicationID}/commands", commands, cancellationToken);
         }
-
-        /// <inheritdoc/>
+        
         public Task<IEnumerable<DiscordApplicationCommand>> RegisterGuildCommandsAsync(ulong guildId, IEnumerable<DiscordApplicationCommand> commands, CancellationToken cancellationToken = default)
         {
             return commands?.Any() != true ? Task.FromResult(Enumerable.Empty<DiscordApplicationCommand>()) : SendAndParseAsync<IEnumerable<DiscordApplicationCommand>>(HttpMethod.Put, $"applications/{_options.ApplicationID}/guilds/{guildId}/commands", commands, cancellationToken);

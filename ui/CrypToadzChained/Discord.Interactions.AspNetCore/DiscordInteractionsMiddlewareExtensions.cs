@@ -1,10 +1,10 @@
 ﻿using System;
+using Discord.Interactions.AspNetCore.Middlewares;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using TehGM.Discord.Interactions;
-using TehGM.Discord.Interactions.AspNetCore;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Discord.Interactions.AspNetCore
 {
     /// <summary>Extension methods for adding Discord Interactions middlewares.</summary>
     public static class DiscordInteractionsMiddlewareExtensions

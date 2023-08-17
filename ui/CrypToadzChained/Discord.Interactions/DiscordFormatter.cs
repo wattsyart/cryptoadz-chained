@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TehGM.Discord.Serialization;
+using Discord.Interactions.Serialization;
 
-namespace TehGM.Discord
+namespace Discord.Interactions
 {
-    /// <summary>A set of simple utilties for formatting Discord messages.</summary>
+    /// <summary>A set of simple utilities for formatting Discord messages.</summary>
     public static class DiscordFormatter
     {
         // ESCAPING

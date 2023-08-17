@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TehGM.Discord.Interactions.CommandsHandling
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Services
 {
     /// <summary>Factory service that can create <see cref="IDiscordInteractionCommandHandler"/> instances.</summary>
     public interface IDiscordInteractionCommandHandlerFactory

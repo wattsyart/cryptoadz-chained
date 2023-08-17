@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Discord.Interactions.Entities.Commands;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Builders
 {
     /// <summary>A builder that helps with creating a new <see cref="DiscordApplicationCommandOption"/> instance.</summary>
     public class DiscordApplicationCommandOptionBuilder

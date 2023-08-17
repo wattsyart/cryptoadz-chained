@@ -4,12 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord.Interactions.AspNetCore.CommandsHandling.Services;
+using Discord.Interactions.AspNetCore.Services;
+using Discord.Interactions.Entities.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace TehGM.Discord.Interactions.CommandsHandling.Registration.Services
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Registration
 {
     /// <summary>A service that handles registration of new Discord Application Commands.</summary>
     public class DiscordInteractionCommandsRegistrar : IDiscordInteractionCommandsRegistrar, IHostedService
@@ -46,9 +49,9 @@ namespace TehGM.Discord.Interactions.CommandsHandling.Registration.Services
         /// <inheritdoc/>
         async Task IHostedService.StartAsync(CancellationToken cancellationToken)
         {
-            if (!this.Options.RegisterCommands)
+            if (!Options.RegisterCommands)
             {
-                this.Log.LogDebug("Registering Discord Application Commands is disabled");
+                Log.LogDebug("Registering Discord Application Commands is disabled");
                 return;
             }
 
@@ -107,12 +110,12 @@ namespace TehGM.Discord.Interactions.CommandsHandling.Registration.Services
         private Task RegisterGlobalCommandsAsync(IEnumerable<TypeInfo> handlerTypes, CancellationToken cancellationToken)
         {
             // filter out guild commands
-            handlerTypes = this.GetGlobalHandlerTypes(handlerTypes);
+            handlerTypes = GetGlobalHandlerTypes(handlerTypes);
             if (handlerTypes?.Any() != true)
                 return Task.CompletedTask;
 
-            this.Log.LogDebug("Registering global Discord Application commands");
-            return this.BuildAndRegisterCommandsAsync(handlerTypes, null, cancellationToken);
+            Log.LogDebug("Registering global Discord Application commands");
+            return BuildAndRegisterCommandsAsync(handlerTypes, null, cancellationToken);
         }
 
         private async Task RegisterGuildCommandsAsync(IEnumerable<TypeInfo> handlerTypes, CancellationToken cancellationToken)
@@ -170,22 +173,21 @@ namespace TehGM.Discord.Interactions.CommandsHandling.Registration.Services
                 ServiceDescriptor descriptor = new ServiceDescriptor(type, type, lifetime);
 
                 // build command
-                DiscordApplicationCommand builtCmd = await this._builder.BuildAsync(type, cancellationToken).ConfigureAwait(false);
+                DiscordApplicationCommand builtCmd = await _builder.BuildAsync(type, cancellationToken).ConfigureAwait(false);
                 builtCommands.Add(builtCmd);
 
                 // store result
                 commandNames.Add(CommandKey.FromCommand(builtCmd), descriptor);
-                this.Log.LogTrace("Built Discord Application command: {Name}", builtCmd.Name);
+                Log.LogTrace("Built Discord Application command: {Name}", builtCmd.Name);
             }
 
-            // resolve client. Use scope to limit client's lifetime
-            using IServiceScope scope = this.Services.CreateScope();
-            IDiscordApplicationCommandsClient client = scope.ServiceProvider.GetRequiredService<IDiscordApplicationCommandsClient>();
+            using var scope = Services.CreateScope();
+            var client = scope.ServiceProvider.GetRequiredService<IDiscordApplicationCommandsClient>();
 
             try
             {
                 // register commands with the client
-                this.Log.LogTrace("Sending Discord request to register {Count} commands", builtCommands.Count);
+                Log.LogTrace("Sending Discord request to register {Count} commands", builtCommands.Count);
                 IEnumerable<DiscordApplicationCommand> results;
                 if (guildID != null)
                     results = await client.RegisterGuildCommandsAsync(guildID.Value, builtCommands, cancellationToken).ConfigureAwait(false);

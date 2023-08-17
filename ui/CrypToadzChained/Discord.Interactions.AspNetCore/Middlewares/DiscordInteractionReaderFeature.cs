@@ -1,7 +1,8 @@
 ﻿using System;
+using Discord.Interactions.Entities.Interaction;
 using Newtonsoft.Json.Linq;
 
-namespace TehGM.Discord.Interactions.AspNetCore
+namespace Discord.Interactions.AspNetCore.Middlewares
 {
     /// <summary>A <see href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/request-features?view=aspnetcore-5.0">Request Feature</see> that serves purpose of caching the read
     /// interaction request body between middleware calls.</summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities.Embed
 {
     /// <summary>Information for Discord Embed media, such as <see cref="DiscordEmbed.Image"/>, <see cref="DiscordEmbed.Thumbnail"/> or <see cref="DiscordEmbed.Video"/>.</summary>
     /// <seealso href="https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure"/>

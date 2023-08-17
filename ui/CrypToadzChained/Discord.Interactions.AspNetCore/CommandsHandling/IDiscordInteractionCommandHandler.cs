@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord.Interactions.Entities.Interaction;
+using Discord.Interactions.Entities.InteractionResponse;
 using Microsoft.AspNetCore.Http;
 
-namespace TehGM.Discord.Interactions.CommandsHandling
+namespace Discord.Interactions.AspNetCore.CommandsHandling
 {
     /// <summary>Represents an instance of a class that can be invoked by a Discord Interaction.</summary>
     public interface IDiscordInteractionCommandHandler

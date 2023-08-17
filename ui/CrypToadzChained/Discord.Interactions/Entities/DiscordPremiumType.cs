@@ -1,4 +1,4 @@
-﻿namespace TehGM.Discord
+﻿namespace Discord.Interactions.Entities
 {
     /// <summary>Type of Discord premium subscription.</summary>
     public enum DiscordPremiumType

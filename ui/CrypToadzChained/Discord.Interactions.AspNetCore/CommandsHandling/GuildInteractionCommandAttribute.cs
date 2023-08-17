@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TehGM.Discord.Interactions.CommandsHandling
+namespace Discord.Interactions.AspNetCore.CommandsHandling
 {
     /// <summary>Specifies that the command should be registered for specific guilds, instead of globally.</summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]

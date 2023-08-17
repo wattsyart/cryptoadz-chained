@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Interaction
 {
     /// <summary>Represents Application command interaction data option.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure"/>

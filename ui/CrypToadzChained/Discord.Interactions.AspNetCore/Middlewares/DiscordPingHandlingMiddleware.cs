@@ -1,12 +1,13 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using Discord.Interactions.Entities.Interaction;
+using Discord.Interactions.Entities.InteractionResponse;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace TehGM.Discord.Interactions.AspNetCore
+namespace Discord.Interactions.AspNetCore.Middlewares
 {
     /// <summary>A middleware that automatically handles ping messages sent by Discord.</summary>
     /// <remarks><para>Discord periodically sends a ping and requires a response. This middleware automatically handles responding to Discord's pings.</para>

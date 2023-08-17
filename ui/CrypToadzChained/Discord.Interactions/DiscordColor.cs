@@ -2,7 +2,7 @@
 using System.Drawing;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord
+namespace Discord.Interactions
 {
     /// <summary>Color wrapper to be easily used with Discord API.</summary>
     /// <remarks>Discord's API requires color to be sent as integer value. This structure is designed to simplify

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Discord.Interactions.Entities.Embed;
+using Discord.Interactions.Serialization;
 using Newtonsoft.Json;
-using TehGM.Discord.Serialization;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.InteractionResponse
 {
     /// <summary>Data for <see cref="DiscordInteractionResponse"/>.</summary>
     /// <remarks>This class currently doesn't support message components.</remarks>

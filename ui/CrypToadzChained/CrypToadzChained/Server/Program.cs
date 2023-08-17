@@ -1,15 +1,14 @@
 using CrypToadzChained.Shared;
-using TehGM.Discord.Interactions;
+using Discord.Interactions.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient();
 builder.Services.Configure<Web3Options>(builder.Configuration.GetSection("Web3"));
-
-builder.Services.AddDiscordInteractions(o => { o.RegisterCommands = true; });
 builder.Services.Configure<DiscordInteractionsOptions>(builder.Configuration.GetSection("Discord"));
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+builder.Services.AddDiscordInteractions();
 
 var app = builder.Build();
 

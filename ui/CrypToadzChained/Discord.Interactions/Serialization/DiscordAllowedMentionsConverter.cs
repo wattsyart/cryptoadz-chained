@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Discord.Interactions.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace TehGM.Discord.Serialization
+namespace Discord.Interactions.Serialization
 {
     /// <summary>A special converter for <see cref="DiscordAllowedMentions"/> object that ensures the object is serialized in a way that is accepted by Discord servers.</summary>
     /// <remarks>According to <see href="https://discord.com/developers/docs/resources/channel#allowed-mentions-object">Discord Documentation</see>, Discord server is pretty restrictive

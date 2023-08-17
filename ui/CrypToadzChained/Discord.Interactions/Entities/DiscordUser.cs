@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities
 {
     /// <summary>Represents a Discord User.</summary>
     /// <seealso href="https://discord.com/developers/docs/resources/user"/>

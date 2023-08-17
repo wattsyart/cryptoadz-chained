@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Discord.Interactions.Serialization;
 using Newtonsoft.Json;
-using TehGM.Discord.Serialization;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities
 {
     /// <summary>Discord allowed mentions object.</summary>
     /// <remarks>Do NOT serialize manually. Use <see cref="DiscordAllowedMentionsConverter"/>, which will handle any invalid state of the object.</remarks>

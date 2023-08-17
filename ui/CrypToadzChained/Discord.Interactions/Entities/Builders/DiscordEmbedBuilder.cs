@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Discord.Interactions.Entities.Embed;
 
-namespace TehGM.Discord
+namespace Discord.Interactions.Entities.Builders
 {
     /// <summary>A builder that helps with creating a new <see cref="DiscordEmbed"/> instance.</summary>
     public class DiscordEmbedBuilder

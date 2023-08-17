@@ -5,38 +5,31 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord.Interactions.Entities.Commands;
 
-namespace TehGM.Discord.Interactions.CommandsHandling.Registration.Services
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Registration
 {
     /// <inheritdoc/>
     public class DiscordInteractionCommandBuilder : IDiscordInteractionCommandBuilder
     {
-        /// <summary>Services that can be used for invoking the build method.</summary>
         protected IServiceProvider Services { get; }
 
         /// <summary>Initializes a new instance of the class.</summary>
         /// <param name="services">Services that can be used for invoking the build method.</param>
         public DiscordInteractionCommandBuilder(IServiceProvider services)
         {
-            this.Services = services;
+            Services = services;
         }
 
-        /// <inheritdoc/>
-        /// <summary>Builds the command by invoking method marked with <see cref="InteractionCommandBuilderAttribute"/> or using <see cref="InteractionCommandAttribute"/>.</summary>
-        /// <param name="cancellationToken">Cancellation token that will be passed to the build method.</param>
-        /// <param name="type">Handler type to look for attributes in.</param>
         public Task<DiscordApplicationCommand> BuildAsync(Type type, CancellationToken cancellationToken)
         {
-            // try to use the builder method first
-            // bind instance methods as well, to do validation for the user
-            IEnumerable<MethodInfo> methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).Where(method =>
-                !Attribute.IsDefined(method, typeof(CompilerGeneratedAttribute)) && Attribute.IsDefined(method, typeof(InteractionCommandBuilderAttribute)));
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).Where(method => !Attribute.IsDefined(method, typeof(CompilerGeneratedAttribute)) && Attribute.IsDefined(method, typeof(InteractionCommandBuilderAttribute))).ToList();
             if (methods.Any())
             {
-                // only allow one method to be marked
-                if (methods.Count() > 1)
+                if (methods.Count > 1)
                     throw new InvalidOperationException($"Command handler {type.FullName} cannot be built - only 1 method can be marked with {nameof(InteractionCommandBuilderAttribute)}.");
-                MethodInfo method = methods.First();
+
+                var method = methods.First();
 
                 // disallow non-static
                 if (!method.IsStatic)
@@ -66,12 +59,13 @@ namespace TehGM.Discord.Interactions.CommandsHandling.Registration.Services
             }
         }
 
-        private static object[] _emptyParams = new object[] { };
+        private static readonly object[] EmptyParams = { };
+
         private object[] BuildMethodParameters(MethodInfo method, CancellationToken cancellationToken)
         {
             ParameterInfo[] parameters = method.GetParameters();
             if (!parameters.Any())
-                return _emptyParams;
+                return EmptyParams;
 
             object[] results = new object[parameters.Length];
             for (int i = 0; i < parameters.Length; i++)

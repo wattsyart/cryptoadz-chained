@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Discord.Interactions.Entities.Commands;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Builders
 {
     /// <summary>A builder that helps with creating a new <see cref="DiscordApplicationCommand"/> instance.</summary>
     public class DiscordApplicationCommandBuilder
@@ -23,11 +24,11 @@ namespace TehGM.Discord.Interactions
         public DiscordApplicationCommandBuilder(DiscordApplicationCommand existingCommand)
         {
             DiscordApplicationCommand clone = (DiscordApplicationCommand)existingCommand.Clone();
-            this.Name = clone.Name;
-            this.Description = clone.Description;
-            this.Type = clone.Type;
-            this.EnabledByDefault = clone.EnabledByDefault ?? true;
-            this.Options = clone.Options;
+            Name = clone.Name;
+            Description = clone.Description;
+            Type = clone.Type;
+            EnabledByDefault = clone.EnabledByDefault ?? true;
+            Options = clone.Options;
         }
 
         /// <summary>Creates a builder for a new Discord Application Command.</summary>
@@ -37,10 +38,10 @@ namespace TehGM.Discord.Interactions
         /// <param name="description">Description of the command.</param>
         public DiscordApplicationCommandBuilder(DiscordApplicationCommandType type, string name, string description)
         {
-            this.Type = type;
-            this.Name = name;
-            this.Description = description;
-            this.EnabledByDefault = true;
+            Type = type;
+            Name = name;
+            Description = description;
+            EnabledByDefault = true;
         }
 
         private DiscordApplicationCommandBuilder Modify(Action<DiscordApplicationCommandBuilder> builder)
@@ -114,9 +115,9 @@ namespace TehGM.Discord.Interactions
         /// <returns>A new instance of a Discord Application Command.</returns>
         public DiscordApplicationCommand Build()
         {
-            DiscordApplicationCommand result = new DiscordApplicationCommand(this.Type, this.Name, this.Description, this.EnabledByDefault);
-            if (this.Options?.Any() == true)
-                result.Options = this.Options;
+            var result = new DiscordApplicationCommand(Type, this.Name, this.Description, this.EnabledByDefault);
+            if (Options?.Any() == true)
+                result.Options = Options;
             return result;
         }
     }

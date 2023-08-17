@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Discord.Interactions.AspNetCore.Middlewares.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using TehGM.Discord.Interactions.AspNetCore.Services;
 
-namespace TehGM.Discord.Interactions.AspNetCore
+namespace Discord.Interactions.AspNetCore.Middlewares
 {
     /// <summary>A middleware that reads Discord Interaction from request and stores as a request feature so it can be easily used later in the pipeline.</summary>
     /// <remarks><para>Discord Interaction data is used by multiple middlewares in the pipeline. Each of these middlewares needs to access request body in various forms.</para>

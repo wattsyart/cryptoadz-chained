@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Discord.Interactions.Entities.Commands;
 using Newtonsoft.Json;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Interaction
 {
     /// <summary>Represents data of a Discord Interaction.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data-structure"/>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TehGM.Discord.Interactions.CommandsHandling
+namespace Discord.Interactions.AspNetCore.CommandsHandling.Services.Extensions
 {
     /// <summary>Extension methods for <see cref="IDiscordInteractionCommandHandlerFactory"/>.</summary>
     public static class DiscordInteractionCommandHandlerFactoryExtensions

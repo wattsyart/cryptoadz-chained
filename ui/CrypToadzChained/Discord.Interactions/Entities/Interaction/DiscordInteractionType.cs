@@ -1,4 +1,4 @@
-﻿namespace TehGM.Discord.Interactions
+﻿namespace Discord.Interactions.Entities.Interaction
 {
     /// <summary>Type of Discord Interaction.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type"/>

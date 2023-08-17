@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace TehGM.Discord.Serialization
+namespace Discord.Interactions.Serialization
 {
     /// <summary>A JSON converter for converting between DateTime and Unix timestamp (in seconds).</summary>
     /// <remarks>This class also contains non-JSON static converting methods.</remarks>

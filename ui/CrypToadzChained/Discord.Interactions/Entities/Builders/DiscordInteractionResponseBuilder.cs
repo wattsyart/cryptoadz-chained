@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Discord.Interactions.Entities.Embed;
+using Discord.Interactions.Entities.InteractionResponse;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.Entities.Builders
 {
     /// <summary>A builder that helps with creating a new <see cref="DiscordInteractionResponse"/> instance.</summary>
     public class DiscordInteractionResponseBuilder

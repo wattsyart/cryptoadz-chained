@@ -1,4 +1,4 @@
-﻿namespace TehGM.Discord.Interactions
+﻿namespace Discord.Interactions.Entities.InteractionResponse
 {
     /// <summary>Flags for a Discord Interaction response.</summary>
     /// <seealso href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-data-flags"/>

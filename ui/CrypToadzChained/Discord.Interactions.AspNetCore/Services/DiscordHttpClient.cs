@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace TehGM.Discord.Interactions.Services
+namespace Discord.Interactions.AspNetCore.Services
 {
     /// <inheritdoc/>
     public class DiscordHttpClient : IDiscordHttpClient
@@ -22,17 +20,17 @@ namespace TehGM.Discord.Interactions.Services
         /// <summary>Creates a new instance of the HTTP Client wrapper.</summary>
         /// <param name="client">Base HTTP client.</param>
         /// <param name="options">Discord interaction options with config for requests.</param>
+        /// <param name="logger"></param>
         public DiscordHttpClient(HttpClient client, IOptionsSnapshot<DiscordInteractionsOptions> options, ILogger<DiscordHttpClient> logger)
         {
             _logger = logger;
-            this.Client = client;
-            this._options = options.Value;
-
-            this.Client.DefaultRequestHeaders.Add("User-Agent", this._options.UserAgent);
-            if (!string.IsNullOrWhiteSpace(this._options.BearerToken))
-                this.Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {this._options.BearerToken}");
-            else if (!string.IsNullOrWhiteSpace(this._options.BotToken))
-                this.Client.DefaultRequestHeaders.Add("Authorization", $"Bot {this._options.BotToken}");
+            Client = client;
+            _options = options.Value;
+            Client.DefaultRequestHeaders.Add("User-Agent", _options.UserAgent);
+            if (!string.IsNullOrWhiteSpace(_options.BearerToken))
+                Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_options.BearerToken}");
+            else if (!string.IsNullOrWhiteSpace(_options.BotToken))
+                Client.DefaultRequestHeaders.Add("Authorization", $"Bot {_options.BotToken}");
             else
                 throw new ArgumentException($"Please provide either {nameof(DiscordInteractionsOptions.BearerToken)} or {nameof(DiscordInteractionsOptions.BotToken)}", nameof(options));
         }

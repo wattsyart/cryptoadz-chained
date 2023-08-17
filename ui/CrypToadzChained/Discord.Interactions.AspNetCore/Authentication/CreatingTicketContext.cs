@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 
-namespace TehGM.Discord.Interactions.AspNetCore.Authentication
+namespace Discord.Interactions.AspNetCore.Authentication
 {
     /// <summary>Provides context information to Discord Interaction authentication events.</summary>
     public class CreatingTicketContext : ResultContext<DiscordInteractionsAuthenticationOptions>

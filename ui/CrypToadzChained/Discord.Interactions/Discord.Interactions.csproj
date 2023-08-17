@@ -2,45 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>TehGM.Discord.Interactions</RootNamespace>
-    <Version>0.1.2</Version>
-    <PackageId>TehGM.Discord.Interactions</PackageId>
-    <Authors>TehGM</Authors>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) 2021 TehGM</Copyright>
+	<Version>0.1.2</Version>
+	<Authors>TehGM</Authors>
+	<Copyright>Copyright (c) 2021 TehGM</Copyright>
     <Description>Core library for Discord Interactions support</Description>
     <PackageTags>discord interaction slash command</PackageTags>
-    <RepositoryUrl>https://github.com/TehGM/Discord.Interactions.AspNetCore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/TehGM/Discord.Interactions.AspNetCore</PackageProjectUrl>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageIconUrl />
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageReleaseNotes>- Renamed some (mostly internal or docs) uses of "command" with "handler";
-- DiscordAllowedMentions now has [JsonConverter(typeof(DiscordAllowedMentionsConverter))] attribute;
-- Compatibility patch for TehGM.Discord.Interactions.AspNetCore 0.1.2</PackageReleaseNotes>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\logo.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\NUGET_README.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

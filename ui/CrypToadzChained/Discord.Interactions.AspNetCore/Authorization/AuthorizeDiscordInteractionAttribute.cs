@@ -1,6 +1,7 @@
-﻿using TehGM.Discord.Interactions.AspNetCore.Authentication;
+﻿using Discord.Interactions.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
-namespace Microsoft.AspNetCore.Authorization
+namespace Discord.Interactions.AspNetCore.Authorization
 {
     /// <summary>Specifies that the class or method that this attribute is applied to requires Discord Interactions authorization.</summary>
     public class AuthorizeDiscordInteractionAttribute : AuthorizeAttribute

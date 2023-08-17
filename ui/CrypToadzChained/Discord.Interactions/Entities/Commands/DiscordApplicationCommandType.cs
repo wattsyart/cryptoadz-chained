@@ -1,4 +1,4 @@
-﻿namespace TehGM.Discord.Interactions
+﻿namespace Discord.Interactions.Entities.Commands
 {
     /// <summary>Type of a Discord Application Command.</summary>
     public enum DiscordApplicationCommandType

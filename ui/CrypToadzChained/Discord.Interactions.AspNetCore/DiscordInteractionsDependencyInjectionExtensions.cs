@@ -1,18 +1,17 @@
 ﻿using System;
+using Discord.Interactions.AspNetCore.Authentication;
+using Discord.Interactions.AspNetCore.CommandsHandling.Registration;
+using Discord.Interactions.AspNetCore.CommandsHandling.Services;
+using Discord.Interactions.AspNetCore.CommandsHandling.Services.Implementations;
+using Discord.Interactions.AspNetCore.Middlewares;
+using Discord.Interactions.AspNetCore.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using TehGM.Discord.Interactions;
-using TehGM.Discord.Interactions.AspNetCore;
-using TehGM.Discord.Interactions.AspNetCore.Authentication;
-using TehGM.Discord.Interactions.CommandsHandling;
-using TehGM.Discord.Interactions.CommandsHandling.Registration;
-using TehGM.Discord.Interactions.CommandsHandling.Registration.Services;
-using TehGM.Discord.Interactions.CommandsHandling.Services;
-using TehGM.Discord.Interactions.Services;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Discord.Interactions.AspNetCore
 {
     /// <summary>Extension methods for registering services for Discord Interactions.</summary>
     public static class DiscordInteractionsDependencyInjectionExtensions

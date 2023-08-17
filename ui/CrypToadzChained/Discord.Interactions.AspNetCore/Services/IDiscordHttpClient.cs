@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TehGM.Discord.Interactions
+namespace Discord.Interactions.AspNetCore.Services
 {
     /// <summary>A base client for Discord API operations.</summary>
     public interface IDiscordHttpClient
