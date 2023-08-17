@@ -55,6 +55,14 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 option.Name = "game";
                 option.Description = "play the 'Among Lilies' game";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
+
+                option.AddNestedOption(n =>
+                {
+                    n.Name = "id";
+                    n.Type = DiscordApplicationCommandOptionType.Integer;
+                    n.Description = "the game ID";
+                    n.IsRequired = false;
+                });
             })
             .Build();
     }
@@ -68,44 +76,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         {
             if (IsGameRequest(message))
             {
-                // See: https://stackoverflow.com/a/72613602
-
-                var options = new List<ulong>
-                {
-                    (ulong)Random.NextInt64(),
-                    (ulong)Random.NextInt64(),
-                    (ulong)Random.NextInt64(),
-                    TokenIds[Random.Next(TokenIds.Count)]
-                };
-
-                Shuffle(options);
-                
-                for (var i = 0; i < options.Count; i++)
-                {
-                    var index = options[i];
-                    var number = i;
-
-                    if (i == 0)
-                    {
-                        
-                        command.AddEmbed(embed =>
-                        {
-                            embed.WithTitle("Among Lilies");
-                            embed.WithDescription("Which is the real toad, and not an imposter?");
-                            embed.WithURL(ServerUrl);
-                            embed.WithImage($"{ServerUrl}/random/img/{index}/{number}");
-                        });
-                    }
-                    else
-                    {
-
-                        command.AddEmbed(embed =>
-                        {
-                            embed.WithURL(ServerUrl);
-                            embed.WithImage($"{ServerUrl}/random/img/{index}/{number}", width: 1440, height: 1440);
-                        });
-                    }
-                }
+                PlayGame(message, command);
             }
             else
             {
@@ -127,8 +98,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 {
                     var seed = (ulong)Random.NextInt64();
 
-                    if (message is { Data.Options: { } } && message.Data.TryGetStringOption("seed", out var seedString) &&
-                        !string.IsNullOrWhiteSpace(seedString) && long.TryParse(seedString, out var seedLong))
+                    if (message is { Data.Options: { } } && message.Data.TryGetStringOption("seed", out var seedString) && !string.IsNullOrWhiteSpace(seedString) && long.TryParse(seedString, out var seedLong))
                         seed = (ulong)seedLong;
 
                     command.AddEmbed(embed =>
@@ -150,18 +120,66 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return Task.FromResult(command.Build());
     }
 
+    private static void PlayGame(DiscordInteraction message, DiscordInteractionResponseBuilder command)
+    {
+        // See: https://stackoverflow.com/a/72613602
+
+        int id;
+        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("id", out var idString) && !string.IsNullOrWhiteSpace(idString) && int.TryParse(idString, out var idNumber))
+            id = idNumber;
+        else 
+            id = Random.Next();
+
+        var random = new Random(id);
+
+        var options = new List<ulong>
+        {
+            (ulong)random.NextInt64(),
+            (ulong)random.NextInt64(),
+            (ulong)random.NextInt64(),
+            TokenIds[random.Next(TokenIds.Count)]
+        };
+
+        Shuffle(random, options);
+
+        for (var i = 0; i < options.Count; i++)
+        {
+            var index = options[i];
+            var number = i;
+
+            if (i == 0)
+            {
+                command.AddEmbed(embed =>
+                {
+                    embed.WithTitle("Among Lilies");
+                    embed.WithDescription("Which is the real toad, and not an imposter?");
+                    embed.WithURL(ServerUrl);
+                    embed.WithImage($"{ServerUrl}/random/img/{index}/{number}", width: 1440, height: 1440);
+                });
+            }
+            else
+            {
+                command.AddEmbed(embed =>
+                {
+                    embed.WithURL(ServerUrl);
+                    embed.WithImage($"{ServerUrl}/random/img/{index}/{number}", width: 1440, height: 1440);
+                });
+            }
+        }
+    }
+
     private bool IsGameRequest(DiscordInteraction interaction)
     {
         return FindOptionByName(interaction, "game") != null;
     }
 
-    public static void Shuffle<T>(List<T> list)
+    public static void Shuffle<T>(Random random, List<T> list)
     {
         var n = list.Count;
         while (n > 1)
         {
             n--;
-            var k = Random.Next(n + 1);
+            var k = random.Next(n + 1);
             (list[k], list[n]) = (list[n], list[k]);
         }
     }
