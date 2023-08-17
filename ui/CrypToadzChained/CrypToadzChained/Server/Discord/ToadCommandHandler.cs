@@ -1,4 +1,5 @@
-﻿using CrypToadzChained.Shared;
+﻿using CrypToadzChained.Server.Models;
+using CrypToadzChained.Shared;
 using TehGM.Discord.Interactions;
 using TehGM.Discord.Interactions.CommandsHandling;
 
@@ -8,13 +9,16 @@ namespace CrypToadzChained.Server.Discord;
 public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
     private const string ServerUrl = "https://cryptoadzonchain.com";
+
     private static readonly List<uint> TokenIds;
     private static readonly Random Random;
+    private static readonly LruCache<int, GameSession> Sessions;
 
     static ToadCommandHandler()
     {
-        TokenIds = ParityScope.Generated.TokenIds().ToList();
         Random = new Random();
+        TokenIds = ParityScope.Generated.TokenIds().ToList();
+        Sessions = new LruCache<int, GameSession>(10_000);
     }
 
     // ReSharper disable once UnusedMember.Global
@@ -58,9 +62,17 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
                 option.AddNestedOption(n =>
                 {
-                    n.Name = "id";
+                    n.Name = "gameID";
                     n.Type = DiscordApplicationCommandOptionType.Integer;
                     n.Description = "the game ID";
+                    n.IsRequired = false;
+                });
+
+                option.AddNestedOption(n =>
+                {
+                    n.Name = "guess";
+                    n.Type = DiscordApplicationCommandOptionType.Integer;
+                    n.Description = "your guess";
                     n.IsRequired = false;
                 });
             })
@@ -125,10 +137,17 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         // See: https://stackoverflow.com/a/72613602
 
         int id;
-        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("id", out var idString) && !string.IsNullOrWhiteSpace(idString) && int.TryParse(idString, out var idNumber))
+        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("gameID", out var idString) && !string.IsNullOrWhiteSpace(idString) && int.TryParse(idString, out var idNumber))
             id = idNumber;
         else 
             id = Random.Next();
+
+        var session = Sessions.Get(id);
+        if (session == null)
+        {
+            session = new GameSession { Id = id };
+            Sessions.Add(id, session);
+        }
 
         var random = new Random(id);
 
@@ -140,8 +159,49 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             TokenIds[random.Next(TokenIds.Count)]
         };
 
+        var realTokenId = options[4];
+
         Shuffle(random, options);
 
+        for (var i = 0; i < options.Count; i++)
+        {
+            var option = options[i];
+            if (option == realTokenId)
+            {
+                session.Index = i;
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(session.Winner))
+        {
+            if (message is { Data.Options: { } } && message.Data.TryGetStringOption("guess", out var guessString) && !string.IsNullOrWhiteSpace(guessString) && int.TryParse(guessString, out var guess))
+            {
+                if (guess == session.Index)
+                {
+                    session.Winner = message.User?.Username ?? "Unknown User";
+                }
+                else
+                {
+                    command.WithText("You have guessed... poorly.");
+                    command.WithEphemeral();
+                    return;
+                }
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(session.Winner))
+        {
+            command.AddEmbed(embed =>
+            {
+                embed.WithTitle($"Among Lilies #{id}");
+                embed.WithDescription($"{session.Winner} won this game!");
+                embed.WithURL(ServerUrl);
+                embed.WithImage($"{ServerUrl}/game/img/{realTokenId}/{session.Index}", width: 1440, height: 1440);
+            });
+
+            return;
+        }
+        
         for (var i = 0; i < options.Count; i++)
         {
             var index = options[i];
@@ -206,4 +266,6 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         return null;
     }
+
+
 }
