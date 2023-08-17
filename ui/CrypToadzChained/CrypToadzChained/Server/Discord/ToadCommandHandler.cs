@@ -7,6 +7,7 @@ namespace CrypToadzChained.Server.Discord;
 // ReSharper disable once UnusedMember.Global (Reflection)
 public class ToadCommandHandler : IDiscordInteractionCommandHandler
 {
+    private const string ServerUrl = "https://cryptoadzonchain.com";
     private static readonly List<uint> TokenIds;
     private static readonly Random Random;
 
@@ -52,7 +53,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             .AddOption(option =>
             {
                 option.Name = "game";
-                option.Description = "play the 'among lilies' game";
+                option.Description = "play the 'Among Lilies' game";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
             })
             .Build();
@@ -82,23 +83,26 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 for (var i = 0; i < options.Count; i++)
                 {
                     var index = options[i];
+                    var number = i;
 
                     if (i == 0)
                     {
+                        
                         command.AddEmbed(embed =>
                         {
                             embed.WithTitle("Among Lilies");
-                            embed.WithDescription("Is this the real toad, or an imposter?");
-                            embed.WithURL("https://cryptoadzonchain.com");
-                            embed.WithImage($"https://cryptoadzonchain.com/random/img/{index}");
+                            embed.WithDescription("Which is the real toad, and not an imposter?");
+                            embed.WithURL(ServerUrl);
+                            embed.WithImage($"{ServerUrl}/random/img/{index}/{number}");
                         });
                     }
                     else
                     {
+
                         command.AddEmbed(embed =>
                         {
-                            embed.WithURL("https://cryptoadzonchain.com");
-                            embed.WithImage($"https://cryptoadzonchain.com/random/img/{index}", width: 1440, height: 1440);
+                            embed.WithURL(ServerUrl);
+                            embed.WithImage($"{ServerUrl}/random/img/{index}/{number}", width: 1440, height: 1440);
                         });
                     }
                 }
@@ -115,8 +119,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     {
                         embed.WithTitle($"CrypToadz #{tokenId}");
                         embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                        embed.WithURL($"https://cryptoadzonchain.com/{tokenId}");
-                        embed.WithImage($"https://cryptoadzonchain.com/canonical/img/{tokenId}", width: 1440, height: 1440);
+                        embed.WithURL($"{ServerUrl}/{tokenId}");
+                        embed.WithImage($"{ServerUrl}/canonical/img/{tokenId}", width: 1440, height: 1440);
                     });
                 }
                 else
@@ -131,8 +135,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     {
                         embed.WithTitle($"CrypToadz #{seed}");
                         embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                        embed.WithURL($"https://cryptoadzonchain.com/random/{seed}");
-                        embed.WithImage($"https://cryptoadzonchain.com/random/img/{seed}", width: 1440, height: 1440);
+                        embed.WithURL($"{ServerUrl}/random/{seed}");
+                        embed.WithImage($"{ServerUrl}/random/img/{seed}", width: 1440, height: 1440);
                     });
                 }
             }
