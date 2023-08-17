@@ -28,7 +28,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
     // ReSharper disable once UnusedMember.Global
     [InteractionCommandBuilder]
-    public static DiscordApplicationCommand Build(IServiceProvider serviceProvider)
+    public static DiscordApplicationCommand Build()
     {
         return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns an on-chain toad")
             .AddOption(option =>
@@ -59,28 +59,28 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     n.IsRequired = true;
                 });
             })
-            .AddOption(option =>
-            {
-                option.Name = "game";
-                option.Description = "play among lilies";
-                option.Type = DiscordApplicationCommandOptionType.SubCommand;
+            //.AddOption(option =>
+            //{
+            //    option.Name = "game";
+            //    option.Description = "play among lilies";
+            //    option.Type = DiscordApplicationCommandOptionType.SubCommand;
 
-                option.AddNestedOption(n =>
-                {
-                    n.Name = "id";
-                    n.Type = DiscordApplicationCommandOptionType.Integer;
-                    n.Description = "the game id";
-                    n.IsRequired = false;
-                });
+            //    option.AddNestedOption(n =>
+            //    {
+            //        n.Name = "id";
+            //        n.Type = DiscordApplicationCommandOptionType.Integer;
+            //        n.Description = "the game id";
+            //        n.IsRequired = false;
+            //    });
 
-                option.AddNestedOption(n =>
-                {
-                    n.Name = "guess";
-                    n.Type = DiscordApplicationCommandOptionType.Integer;
-                    n.Description = "your guess";
-                    n.IsRequired = false;
-                });
-            })
+            //    option.AddNestedOption(n =>
+            //    {
+            //        n.Name = "guess";
+            //        n.Type = DiscordApplicationCommandOptionType.Integer;
+            //        n.Description = "your guess";
+            //        n.IsRequired = false;
+            //    });
+            //})
             .Build();
     }
 
@@ -260,7 +260,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
     public DiscordInteractionDataOption? FindOptionByName(DiscordInteraction interaction, string nameToFind)
     {
-        return interaction?.Data?.Options == null ? null : FindOptionInOptions(interaction.Data.Options, nameToFind);
+        return interaction.Data?.Options == null ? null : FindOptionInOptions(interaction.Data.Options, nameToFind);
     }
 
     public DiscordInteractionDataOption? FindOptionInOptions(IEnumerable<DiscordInteractionDataOption>? options, string nameToFind)
