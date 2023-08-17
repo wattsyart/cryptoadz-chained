@@ -29,7 +29,11 @@ public class DownloadController : ControllerBase
     {
         _options = options;
         _logger = logger;
-        _text = new RichTextOptions(SystemFonts.CreateFont("Arial", 16, FontStyle.Bold))
+        
+        FontCollection collection = new();
+        var family = collection.Add("PressStart2P-Regular.ttf");
+        var font = family.CreateFont(12, FontStyle.Bold);
+        _text = new RichTextOptions(font)
         {
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Top,
