@@ -1,7 +1,6 @@
 ﻿@page "/random/{TokenSeed?}"
 
 @inherits PageBase
-@implements IDisposable
 
 <div class="container">
     
@@ -128,30 +127,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Nav.LocationChanged += OnLocationChanged;
-
         if (!string.IsNullOrWhiteSpace(TokenSeed))
         {
             await OnRandomClicked();
-        }
-    }
-
-    public bool IsRenderingFromBackButton { get; set; }
-
-    private async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
-    {
-        if (!string.IsNullOrWhiteSpace(TokenSeed) && !e.IsNavigationIntercepted && !IsRenderingFromBackButton)
-        {
-            IsRenderingFromBackButton = true;
-            
-            try
-            {
-                await OnRandomClicked();
-            }
-            finally
-            {
-                IsRenderingFromBackButton = false;
-            }
         }
     }
 
@@ -276,9 +254,4 @@
     private async Task ShareMetadataAsync() => await ShareAsync($"/random/json/{@TokenSeed}");
 
     private async Task EditInBuilderAsync() => await EditInBuilderAsync(Metadata);
-
-    void IDisposable.Dispose()
-    {
-        Nav.LocationChanged -= OnLocationChanged;
-    }
 }
