@@ -6,6 +6,8 @@ namespace CrypToadzChained.Shared
     {
         [Required] public string OnChainRpcUrl { get; set; } = null!;
         [Required] public string OnChainContractAddress { get; set; } = null!;
+        [Required] public string PatchRpcUrl { get; set; } = null!;
+        [Required] public string PatchContractAddress { get; set; } = null!;
 
         [Required] public string SourceRpcUrl { get; set; } = null!;
         [Required] public string SourceContractAddress { get; set; } = null!;
