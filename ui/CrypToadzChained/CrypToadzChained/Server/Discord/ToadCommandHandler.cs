@@ -57,7 +57,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             .AddOption(option =>
             {
                 option.Name = "game";
-                option.Description = "play the 'Among Lilies' game";
+                option.Description = "play among lilies";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
 
                 option.AddNestedOption(n =>
