@@ -117,18 +117,22 @@ public class DownloadController : ControllerBase
     private static readonly PngEncoder PngEncoder = new();
     private static readonly PngDecoder PngDecoder = new();
 
-    private IActionResult StreamImage(JsonTokenMetadata? metadata, int? number) => metadata!.Image!.StartsWith(DataUri.Gif) ? StreamGif(metadata, number) : StreamPng(metadata, number);
+    [NonAction]
+    private IActionResult StreamImage(JsonTokenMetadata? metadata, int? number = null) => metadata!.Image!.StartsWith(DataUri.Gif) ? StreamGif(metadata, number) : StreamPng(metadata, number);
 
+    [NonAction]
     private IActionResult StreamGif(JsonTokenMetadata metadata, int? number)
     {
         return StreamImageImpl(metadata, "image/gif", number, DataUri.Gif, GifEncoder, GifDecoder);
     }
 
+    [NonAction]
     private IActionResult StreamPng(JsonTokenMetadata metadata, int? number)
     {
         return StreamImageImpl(metadata, "image/png", number, DataUri.Png, PngEncoder, PngDecoder);
     }
-
+    
+    [NonAction]
     private IActionResult StreamImageImpl(JsonTokenMetadata metadata, string mediaType, int? number, string dataUri,
         IImageEncoder encoder, IImageDecoder decoder)
     {
@@ -147,6 +151,7 @@ public class DownloadController : ControllerBase
         return PrepareAndCacheImage(mediaType, encoder, decoder, buffer, cachePath, number);
     }
 
+    [NonAction]
     private IActionResult PrepareAndCacheImage(string mediaType, IImageEncoder encoder, IImageDecoder decoder, byte[] buffer, string cachePath, int? number)
     {
         var image = Image.Load(buffer, decoder);
