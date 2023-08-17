@@ -18,7 +18,7 @@ namespace TehGM.Discord.Interactions
         /// <summary>the type of the invoked command</summary>
         [JsonProperty("type")]
         public DiscordApplicationCommandType CommandType { get; private set; }
-        /// <summary>id the of user or message targetted by a user or message command</summary>
+        /// <summary>id the of user or message targeted by a user or message command</summary>
         /// <remarks>Only applicable for User (UI) Command and Message Command.</remarks>
         [JsonProperty("target_id", NullValueHandling = NullValueHandling.Ignore)]
         public ulong? TargetID { get; private set; }
