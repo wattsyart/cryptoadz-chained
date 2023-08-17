@@ -4,7 +4,7 @@ The same CrypToadz you know and love, preserved on-chain.
 ## Where To Find It?
 
 The contracts are [live on Mainnet](https://etherscan.io/address/0xE8D8C0A6f174e08C44aB399b7CE810Bc4Dce096A#code) 
-and you can use the [Viewer App](https://cryptoadzchained.com) to play with it. 
+and you can use the [Viewer App](https://cryptoadzonchain.com) to play with it. 
 
 The code for the viewer is [in this repository](https://github.com/wattsyart/cryptoadz-chained/tree/main/ui).
 
@@ -96,7 +96,7 @@ _Note: it is safe to leave the Discord values as is, and ignore the related erro
 
 Every metadata JSON file and each frame of every image is checked in the validation commands, written in NodeJS and based on `pngjs` and `pixelmatch` libraries.
 
-In addition, the [Viewer App](https://cryptoadzchained.com) performs a completely separate implementation of the same verification
+In addition, the [Viewer App](https://cryptoadzonchain.com) performs a completely separate implementation of the same verification
 on both the current BaseURI assets (Arweave) and the provenance images (IPFS), written in C# and based on the `ImageSharp` library.
 
 This means we have two completely distinct validators to confirm the results. You are also welcome to write your own validator :)

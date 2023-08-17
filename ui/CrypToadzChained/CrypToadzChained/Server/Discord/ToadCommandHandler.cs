@@ -59,8 +59,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 {
                     embed.WithTitle($"CrypToadz #{tokenId}");
                     embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                    embed.WithURL($"https://cryptoadzchained.com/{tokenId}");
-                    embed.WithImage($"https://cryptoadzchained.com/canonical/img/{tokenId}");
+                    embed.WithURL($"https://cryptoadzonchain.com/{tokenId}");
+                    embed.WithImage($"https://cryptoadzonchain.com/canonical/img/{tokenId}");
                 });
             }
             else
@@ -75,8 +75,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 {
                     embed.WithTitle($"CrypToadz #{seed}");
                     embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                    embed.WithURL($"https://cryptoadzchained.com/random/{seed}");
-                    embed.WithImage($"https://cryptoadzchained.com/random/img/{seed}");
+                    embed.WithURL($"https://cryptoadzonchain.com/random/{seed}");
+                    embed.WithImage($"https://cryptoadzonchain.com/random/img/{seed}");
                 });
             }
         }
