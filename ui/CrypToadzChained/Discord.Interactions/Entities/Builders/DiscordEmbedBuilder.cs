@@ -105,12 +105,20 @@ namespace TehGM.Discord
         /// <returns>Current builder.</returns>
         public DiscordEmbedBuilder WithImage(DiscordEmbedMedia image)
             => this.Modify(embed => embed.Image = image);
+
         /// <summary>Sets image of the embed.</summary>
         /// <param name="imageURL">Source URL of the image.</param>
         /// <param name="proxyImageURL">Proxied URL of the image.</param>
+        /// <param name="height">The height of the image</param>
+        /// <param name="width">The width of the image.</param>
         /// <returns>Current builder.</returns>
-        public DiscordEmbedBuilder WithImage(string imageURL, string proxyImageURL = null)
-            => this.WithImage(new DiscordEmbedMedia(imageURL) { ProxyURL = proxyImageURL });
+        public DiscordEmbedBuilder WithImage(string imageURL, string proxyImageURL = null, int? width = null, int? height = null)
+            => this.WithImage(new DiscordEmbedMedia(imageURL)
+            {
+                ProxyURL = proxyImageURL,
+                Width = width,
+                Height = height
+            });
 
         /// <summary>Sets thumbnail of the embed.</summary>
         /// <param name="thumbnail">Embed thumbnail.</param>
