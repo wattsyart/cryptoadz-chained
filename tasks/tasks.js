@@ -168,6 +168,21 @@ task("toadz-deploy-bundle", "Produces a JSON file containing unsigned transactio
     }
   );
 
+  task("toadz-deploy-patch", "Deploys SVG visualization patch")
+  .addOptionalParam("gwei", "The gas budget in gwei to base ETH cost calculations on", "40")
+  .addOptionalParam("priorityFee", "The priority fee in gwei", "2")
+  .setAction(
+    async (taskArgs, hre) => {
+      var baseFeePerGas = ethers.BigNumber.from(parseInt(taskArgs.gwei)).mul(hre.ethers.BigNumber.from(1000000000));
+      var priorityFeeInWei = ethers.BigNumber.from(parseInt(taskArgs.priorityFee)).mul(hre.ethers.BigNumber.from(1000000000));
+      const txOptions = {
+        maxPriorityFeePerGas: priorityFeeInWei,
+        maxFeePerGas: baseFeePerGas.add(priorityFeeInWei)
+      }
+      await deploy.deployPatch(hre.ethers, false, false, txOptions);
+    }
+  );
+
 task("toadz-gas", "Produces ETH cost breakdown for deployment by component")
   .addOptionalParam("gwei", "The gas price in gwei to base ETH cost calculations on", "10")
   .setAction(

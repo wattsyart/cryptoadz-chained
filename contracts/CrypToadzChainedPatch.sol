@@ -29,8 +29,8 @@ contract CrypToadzChainedPatch {
 
     address public immutable stop;
 
-    constructor(address _parent) {
-        parent = CrypToadzChained(_parent);
+    constructor() {
+        parent = CrypToadzChained(0xE8D8C0A6f174e08C44aB399b7CE810Bc4Dce096A);
         stop = SSTORE2.write(
             hex"7b2274726169745f74797065223a22437573746f6d222c2276616c7565223a22312f31227d2c7b2274726169745f74797065223a224e616d65222c2276616c7565223a22467265616b792046726f677a227d2c7b2274726169745f74797065223a222320547261697473222c2276616c7565223a327d"
         );
