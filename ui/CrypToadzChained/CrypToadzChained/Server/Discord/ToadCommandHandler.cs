@@ -62,9 +62,9 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
                 option.AddNestedOption(n =>
                 {
-                    n.Name = "gameID";
+                    n.Name = "id";
                     n.Type = DiscordApplicationCommandOptionType.Integer;
-                    n.Description = "the game ID";
+                    n.Description = "the game id";
                     n.IsRequired = false;
                 });
 
@@ -138,11 +138,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         logger.LogInformation("Starting game request");
 
-        int id;
-        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("gameID", out var idString) &&
-            !string.IsNullOrWhiteSpace(idString) && int.TryParse(idString, out var idNumber))
+        if (message is { Data.Options: { } } && message.Data.TryGetIntegerOption("id", out var id))
         {
-            id = idNumber;
             logger.LogInformation("Resuming existing game #{Id}", id);
         }
         else
