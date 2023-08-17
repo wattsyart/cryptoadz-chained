@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace TehGM.Discord.Interactions.Services
@@ -11,6 +12,8 @@ namespace TehGM.Discord.Interactions.Services
     /// <inheritdoc/>
     public class DiscordHttpClient : IDiscordHttpClient
     {
+        private readonly ILogger<DiscordHttpClient> _logger;
+
         /// <summary>Underlying HTTP client.</summary>
         public HttpClient Client { get; }
 
@@ -19,8 +22,9 @@ namespace TehGM.Discord.Interactions.Services
         /// <summary>Creates a new instance of the HTTP Client wrapper.</summary>
         /// <param name="client">Base HTTP client.</param>
         /// <param name="options">Discord interaction options with config for requests.</param>
-        public DiscordHttpClient(HttpClient client, IOptionsSnapshot<DiscordInteractionsOptions> options)
+        public DiscordHttpClient(HttpClient client, IOptionsSnapshot<DiscordInteractionsOptions> options, ILogger<DiscordHttpClient> logger)
         {
+            _logger = logger;
             this.Client = client;
             this._options = options.Value;
 
@@ -34,19 +38,25 @@ namespace TehGM.Discord.Interactions.Services
         }
 
         /// <inheritdoc/>
-        public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string relativeURL, HttpContent content, CancellationToken cancellationToken = default)
+        public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string relativeUrl, HttpContent content, CancellationToken cancellationToken = default)
         {
-            string url = $"{this._options.BaseApiURL}/{relativeURL}";
-            using HttpRequestMessage request = new HttpRequestMessage(method, url);
+            var url = $"{_options.BaseApiURL}/{relativeUrl}";
+            using var request = new HttpRequestMessage(method, url);
             if (content != null)
                 request.Content = content;
-            return await this.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            return await SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
-            HttpResponseMessage response = await this.Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            var response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode && response.Content != null)
+            {
+                var error = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!string.IsNullOrWhiteSpace(error))
+                    _logger.LogError("Discord API Error: {Error}", error);
+            }
             response.EnsureSuccessStatusCode();
             return response;
         }

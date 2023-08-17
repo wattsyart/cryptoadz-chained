@@ -23,7 +23,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
     // ReSharper disable once UnusedMember.Global
     [InteractionCommandBuilder]
-    public static DiscordApplicationCommand Build()
+    public static DiscordApplicationCommand Build(IServiceProvider serviceProvider)
     {
         return DiscordApplicationCommandBuilder.CreateSlashCommand("toad", "returns an on-chain toad")
             .AddOption(option =>
@@ -79,16 +79,16 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             .Build();
     }
 
-    public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request,
-        CancellationToken cancellationToken)
+    public Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, IServiceProvider serviceProvider, HttpRequest request, CancellationToken cancellationToken)
     {
         var command = new DiscordInteractionResponseBuilder();
+        var logger = serviceProvider.GetRequiredService<ILogger<ToadCommandHandler>>();
 
         try
         {
             if (IsGameRequest(message))
             {
-                PlayGame(message, command);
+                PlayGame(message, command, logger);
             }
             else
             {
@@ -132,15 +132,24 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return Task.FromResult(command.Build());
     }
 
-    private static void PlayGame(DiscordInteraction message, DiscordInteractionResponseBuilder command)
+    private static void PlayGame(DiscordInteraction message, DiscordInteractionResponseBuilder command, ILogger<ToadCommandHandler> logger)
     {
         // See: https://stackoverflow.com/a/72613602
 
+        logger.LogInformation("Starting game request");
+
         int id;
-        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("gameID", out var idString) && !string.IsNullOrWhiteSpace(idString) && int.TryParse(idString, out var idNumber))
+        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("gameID", out var idString) &&
+            !string.IsNullOrWhiteSpace(idString) && int.TryParse(idString, out var idNumber))
+        {
             id = idNumber;
-        else 
+            logger.LogInformation("Resuming existing game #{Id}", id);
+        }
+        else
+        {
             id = Random.Next();
+            logger.LogInformation("Starting new game #{Id}", id);
+        }
 
         var session = Sessions.Get(id);
         if (session == null)

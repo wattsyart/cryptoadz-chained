@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -9,9 +10,10 @@ namespace TehGM.Discord.Interactions.CommandsHandling
     {
         /// <summary>Invokes the command's code.</summary>
         /// <param name="message">Received interaction.</param>
+        /// <param name="serviceProvider"></param>
         /// <param name="request">HTTP Request of the interaction.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel operations.</param>
         /// <returns>Response to the interaction.</returns>
-        Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, HttpRequest request, CancellationToken cancellationToken);
+        Task<DiscordInteractionResponse> InvokeAsync(DiscordInteraction message, IServiceProvider serviceProvider, HttpRequest request, CancellationToken cancellationToken);
     }
 }
