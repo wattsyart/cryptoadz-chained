@@ -50,7 +50,7 @@ public class DownloadController : ControllerBase
         return StreamImage(metadata, null);
     }
 
-    [HttpGet("random/img/{seed}/{number}")]
+    [HttpGet("game/img/{seed}/{number}")]
     public async Task<IActionResult> GetRandomTokenURIImageFromSeed(string seed, int number)
     {
         var tokenUri = await ToadzService.GetRandomTokenURIFromSeedAsync(seed, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);

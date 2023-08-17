@@ -151,10 +151,10 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             {
                 command.AddEmbed(embed =>
                 {
-                    embed.WithTitle("Among Lilies");
+                    embed.WithTitle($"Among Lilies #{id}");
                     embed.WithDescription("Which is the real toad, and not an imposter?");
                     embed.WithURL(ServerUrl);
-                    embed.WithImage($"{ServerUrl}/random/img/{index}/{number}", width: 1440, height: 1440);
+                    embed.WithImage($"{ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
                 });
             }
             else
@@ -162,7 +162,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 command.AddEmbed(embed =>
                 {
                     embed.WithURL(ServerUrl);
-                    embed.WithImage($"{ServerUrl}/random/img/{index}/{number}", width: 1440, height: 1440);
+                    embed.WithImage($"{ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
                 });
             }
         }
