@@ -12,15 +12,10 @@ namespace Discord.Interactions.AspNetCore.Services
     {
         private readonly ILogger<DiscordHttpClient> _logger;
 
-        /// <summary>Underlying HTTP client.</summary>
         public HttpClient Client { get; }
 
         private readonly DiscordInteractionsOptions _options;
 
-        /// <summary>Creates a new instance of the HTTP Client wrapper.</summary>
-        /// <param name="client">Base HTTP client.</param>
-        /// <param name="options">Discord interaction options with config for requests.</param>
-        /// <param name="logger"></param>
         public DiscordHttpClient(HttpClient client, IOptionsSnapshot<DiscordInteractionsOptions> options, ILogger<DiscordHttpClient> logger)
         {
             _logger = logger;
@@ -34,18 +29,16 @@ namespace Discord.Interactions.AspNetCore.Services
             else
                 throw new ArgumentException($"Please provide either {nameof(DiscordInteractionsOptions.BearerToken)} or {nameof(DiscordInteractionsOptions.BotToken)}", nameof(options));
         }
-
-        /// <inheritdoc/>
+        
         public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string relativeUrl, HttpContent content, CancellationToken cancellationToken = default)
         {
-            var url = $"{_options.BaseApiURL}/{relativeUrl}";
+            var url = $"{_options.BaseApiURL}{relativeUrl}";
             using var request = new HttpRequestMessage(method, url);
             if (content != null)
                 request.Content = content;
             return await SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <inheritdoc/>
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
             var response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);

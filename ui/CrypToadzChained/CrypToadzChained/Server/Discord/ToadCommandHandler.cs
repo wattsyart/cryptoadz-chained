@@ -65,21 +65,21 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 option.Description = "play among lilies";
                 option.Type = DiscordApplicationCommandOptionType.SubCommand;
 
-                //option.AddNestedOption(n =>
-                //{
-                //    n.Name = "id";
-                //    n.Type = DiscordApplicationCommandOptionType.Integer;
-                //    n.Description = "the game id";
-                //    n.IsRequired = false;
-                //});
+                option.AddNestedOption(n =>
+                {
+                    n.Name = "id";
+                    n.Type = DiscordApplicationCommandOptionType.Integer;
+                    n.Description = "the game id";
+                    n.IsRequired = false;
+                });
 
-                //option.AddNestedOption(n =>
-                //{
-                //    n.Name = "guess";
-                //    n.Type = DiscordApplicationCommandOptionType.Integer;
-                //    n.Description = "your guess";
-                //    n.IsRequired = false;
-                //});
+                option.AddNestedOption(n =>
+                {
+                    n.Name = "guess";
+                    n.Type = DiscordApplicationCommandOptionType.Integer;
+                    n.Description = "your guess";
+                    n.IsRequired = false;
+                });
             })
             .Build();
     }
