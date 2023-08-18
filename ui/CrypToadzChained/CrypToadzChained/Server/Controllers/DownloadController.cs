@@ -13,6 +13,7 @@ using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Drawing.Processing;
+using Nethereum.Contracts.Standards.ERC20.TokenList;
 
 namespace CrypToadzChained.Server.Controllers;
 
@@ -24,6 +25,13 @@ public class DownloadController : ControllerBase
 
     private readonly RichTextOptions _text;
     private readonly RectangleF _box;
+
+    private static readonly List<ulong> TokenIds;
+
+    static DownloadController()
+    {
+        TokenIds = ParityScope.Generated.TokenIds().Select(x => (ulong) x).ToList();
+    }
 
     public DownloadController(IOptionsSnapshot<Web3Options> options, ILogger<Web3Options> logger)
     {
@@ -40,6 +48,7 @@ public class DownloadController : ControllerBase
         };
         var box = TextMeasurer.MeasureSize("4", _text);
         _box = new RectangleF(new PointF(0, 0), new SizeF(box.Width + 1, box.Height + 1));
+
     }
 
     [HttpGet("random/img")]
@@ -55,9 +64,18 @@ public class DownloadController : ControllerBase
     }
 
     [HttpGet("game/img/{seed}/{number}")]
-    public async Task<IActionResult> GetRandomTokenURIImageFromSeed(string seed, int number)
+    public async Task<IActionResult> GetGameTokenURIImageFromSeed(string seed, int number)
     {
-        var tokenUri = await ToadzService.GetRandomTokenURIFromSeedAsync(seed, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
+        string tokenUri;
+        if (ulong.TryParse(seed, out var tokenId) && TokenIds.Contains(tokenId))
+        {
+            tokenUri = await ToadzService.GetCanonicalTokenURIAsync((uint) tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
+        }
+        else
+        {
+            tokenUri = await ToadzService.GetRandomTokenURIFromSeedAsync(seed, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);    
+        }
+
         var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
         var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
         return StreamImage(metadata, number);

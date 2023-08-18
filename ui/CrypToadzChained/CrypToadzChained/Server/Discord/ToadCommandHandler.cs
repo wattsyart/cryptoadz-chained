@@ -7,6 +7,7 @@ using Discord.Interactions.Entities.Commands;
 using Discord.Interactions.Entities.Interaction;
 using Discord.Interactions.Entities.InteractionResponse;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace CrypToadzChained.Server.Discord;
 
@@ -184,8 +185,14 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             TokenIds[random.Next(TokenIds.Count)]
         };
 
+        logger.LogInformation("Fake Toad #1: {Seed}", choices[0]);
+        logger.LogInformation("Fake Toad #2: {Seed}", choices[1]);
+        logger.LogInformation("Fake Toad #3: {Seed}", choices[2]);
+        logger.LogInformation("Real Toad #4: {Seed}", choices[3]);
+        
         var realTokenId = choices[3];
 
+        logger.LogInformation("Shuffling toads...");
         Shuffle(random, choices);
 
         for (var i = 0; i < choices.Count; i++)
@@ -193,11 +200,15 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             var option = choices[i];
             if (option == realTokenId)
             {
+                
+                logger.LogInformation("Winning toad is #{Index}", i + 1);
                 session.Index = i;
             }
         }
         
         var user = (message.Message?.Author ?? message.GetUser())?.Username ?? "Unknown User";
+
+        logger.LogInformation("Message: {Json}", JsonConvert.SerializeObject(message));
 
         if (string.IsNullOrWhiteSpace(session.Winner))
         {
