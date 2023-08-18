@@ -265,31 +265,17 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             LastSession = null;
             return;
         }
-        
-        for (var i = 0; i < choices.Count; i++)
-        {
-            var index = choices[i];
-            var number = i;
 
-            if (i == 0)
-            {
-                command.AddEmbed(embed =>
-                {
-                    embed.WithTitle($"Among Lilies #{id}");
-                    embed.WithDescription("Which is the real toad, and not an imposter?");
-                    embed.WithURL(options.ServerUrl);
-                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number + 1}", width: 1440, height: 1440);
-                });
-            }
-            else
-            {
-                command.AddEmbed(embed =>
-                {
-                    embed.WithURL(options.ServerUrl);
-                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number + 1}", width: 1440, height: 1440);
-                });
-            }
-        }
+        var seedList = string.Join(",", choices);
+        var imageUrl = $"{options.ServerUrl}/game/imgs/?seeds={seedList}";
+
+        command.AddEmbed(embed =>
+        {
+            embed.WithTitle($"Among Lilies #{id}");
+            embed.WithDescription("Which is the real toad, and not an imposter?");
+            embed.WithURL(imageUrl);
+            embed.WithImage(imageUrl, width: 2880, height: 2880);
+        });
     }
 
     private bool IsGameRequest(DiscordInteraction interaction)

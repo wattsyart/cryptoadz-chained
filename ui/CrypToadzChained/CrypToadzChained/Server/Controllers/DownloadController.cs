@@ -13,6 +13,7 @@ using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace CrypToadzChained.Server.Controllers;
 
@@ -77,6 +78,99 @@ public class DownloadController : ControllerBase
         var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
         var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
         return StreamImage(metadata, number);
+    }
+
+    [HttpGet("game/imgs")]
+    public async Task<IActionResult> GetGameTokenURIImagesFromSeed([FromQuery] string seeds)
+    {
+        var seedList = seeds.Split(",", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+            .ToList();
+
+        var gameCachePath = $"{string.Join("_", seedList)}_cache.png";
+        if (System.IO.File.Exists(gameCachePath))
+        {
+            return File(System.IO.File.OpenRead(gameCachePath), "image/gif", DateTimeOffset.Now, ETag(Encoding.UTF8.GetBytes(gameCachePath)));
+        }
+
+        var metadataList = new List<JsonTokenMetadata>();
+
+        foreach (var seed in seedList)
+        {
+            string tokenUri;
+            if (ulong.TryParse(seed, out var tokenId) && TokenIds.Contains(tokenId))
+            {
+                tokenUri = await ToadzService.GetCanonicalTokenURIAsync((uint) tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
+            }
+            else
+            {
+                tokenUri = await ToadzService.GetRandomTokenURIFromSeedAsync(seed, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);    
+            }
+
+            var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
+            var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
+            if (metadata != null)
+            {
+                metadataList.Add(metadata);
+            }
+        }
+
+        if (metadataList.Count != 4)
+        {
+            return BadRequest();
+        }
+
+        var imageList = new List<Image>();
+
+        for (var i = 0; i < metadataList.Count; i++)
+        {
+            var number = i + 1;
+            var metadata = metadataList[i];
+            var buffer = Convert.FromBase64String(metadata.Image!.Replace(DataUri.Gif, string.Empty));
+            var identifier = metadata.Name?.Replace("CrypToadz #", string.Empty);
+            var cachePath = $"{identifier}_{number}_cache.png";
+
+            if (System.IO.File.Exists(cachePath))
+            {
+                imageList.Add(await Image.LoadAsync(System.IO.File.OpenRead(cachePath), GifDecoder));
+            }
+            else
+            {
+                var image = PrepareImage(GifDecoder, buffer, number);
+                await using var ms = new MemoryStream();
+                await image.SaveAsync(ms, GifEncoder);
+                ms.Position = 0;
+
+                var resized = ms.ToArray();
+                await System.IO.File.WriteAllBytesAsync(cachePath, resized);
+                imageList.Add(image);
+            }
+        }
+
+        if (imageList.Count != 4)
+        {
+            return BadRequest(); 
+        }
+        
+        const int width = 2880;
+        const int height = 2880;
+        using var combined = new Image<Rgba32>(width, height);
+        {
+            combined.Mutate(x => 
+            {
+                x.DrawImage(imageList[0], new Point(0, 0), 1);
+                x.DrawImage(imageList[1], new Point(1440, 0), 1);
+                x.DrawImage(imageList[2], new Point(0, 1440), 1);
+                x.DrawImage(imageList[3], new Point(1440, 1440), 1);
+            });
+
+            await using var ms = new MemoryStream();
+            await combined.SaveAsync(ms, GifEncoder);
+            ms.Position = 0;
+
+            var buffer = ms.ToArray();
+            await System.IO.File.WriteAllBytesAsync(gameCachePath, buffer);
+            return File(buffer, "image/gif", DateTimeOffset.Now, ETag(buffer));
+        }
     }
     
     [HttpGet("canonical/img/{tokenId}")]
@@ -168,11 +262,25 @@ public class DownloadController : ControllerBase
         if (System.IO.File.Exists(cachePath))
             return File(System.IO.File.OpenRead(cachePath), mediaType, DateTimeOffset.Now, ETag(buffer));
 
-        return PrepareAndCacheImage(mediaType, encoder, decoder, buffer, cachePath, number);
+        return PrepareAndCacheImageFile(mediaType, encoder, decoder, buffer, cachePath, number);
     }
 
     [NonAction]
-    private IActionResult PrepareAndCacheImage(string mediaType, IImageEncoder encoder, IImageDecoder decoder, byte[] buffer, string cachePath, int? number)
+    private IActionResult PrepareAndCacheImageFile(string mediaType, IImageEncoder encoder, IImageDecoder decoder, byte[] buffer, string cachePath, int? number)
+    {
+        var image = PrepareImage(decoder, buffer, number);
+
+        using var ms = new MemoryStream();
+        image.Save(ms, encoder);
+        ms.Position = 0;
+
+        var resized = ms.ToArray();
+        System.IO.File.WriteAllBytes(cachePath, resized);
+
+        return File(resized, mediaType, DateTimeOffset.Now, ETag(buffer));
+    }
+
+    private static Image PrepareImage(IImageDecoder decoder, byte[] buffer, int? number)
     {
         var image = Image.Load(buffer, decoder);
 
@@ -192,14 +300,6 @@ public class DownloadController : ControllerBase
             Size = new Size(1440, 1440),
             Sampler = KnownResamplers.NearestNeighbor
         }));
-
-        using var ms = new MemoryStream();
-        image.Save(ms, encoder);
-        ms.Position = 0;
-
-        var resized = ms.ToArray();
-        System.IO.File.WriteAllBytes(cachePath, resized);
-
-        return File(resized, mediaType, DateTimeOffset.Now, ETag(buffer));
+        return image;
     }
 }
