@@ -153,24 +153,25 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         }
         else
         {
-            id = Random.Next();
-            logger.LogInformation("Starting new game #{Id}", id);
+            if (LastSession.HasValue)
+            {
+                id = LastSession.Value;
+                logger.LogInformation("Resuming last game #{Id}", id);
+            }
+            else
+            {
+                id = Random.Next();    
+                logger.LogInformation("Starting new game #{Id}", id);
+            }
         }
 
         var session = Sessions.Get(id);
         if (session == null)
         {
-            if (LastSession.HasValue)
-            {
-                session = Sessions.Get(LastSession.Value);
-                if (session == null)
-                {
-                    logger.LogInformation("Adding game #{Id} to cache", id);
-                    session = new GameSession { Id = id };
-                    Sessions.Add(id, session);
-                    LastSession = id;
-                }
-            }
+            logger.LogInformation("Adding game #{Id} to cache", id);
+            session = new GameSession { Id = id };
+            Sessions.Add(id, session);
+            LastSession = id;
         }
 
         var random = new Random(id);
@@ -195,8 +196,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 session.Index = i;
             }
         }
-
-        var user = message.User?.Username ?? "Unknown User";
+        
+        var user = (message.Message.Author ?? message.GetUser())?.Username ?? "Unknown User";
 
         if (string.IsNullOrWhiteSpace(session.Winner))
         {
