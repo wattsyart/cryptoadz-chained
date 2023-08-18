@@ -5,4 +5,5 @@ public sealed class GameSession
     public int Id { get; set; }
     public int Index { get; set; }
     public string? Winner { get; set; }
+    public HashSet<string> Players { get; set; } = new();
 }

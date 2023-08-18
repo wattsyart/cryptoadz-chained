@@ -212,6 +212,13 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
         if (string.IsNullOrWhiteSpace(session.Winner))
         {
+            if (session.Players.Contains(user))
+            {
+                command.WithText("You already guessed for this game. :(");
+                command.WithEphemeral();
+                return;
+            }
+
             if (message is { Data.Options: { } } && message.Data.TryGetStringOption("guess", out var guessString) && !string.IsNullOrWhiteSpace(guessString) && int.TryParse(guessString, out var guess))
             {
                 if (guess is < 1 or > 4)
@@ -220,6 +227,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     command.WithEphemeral();
                     return;
                 }
+
+                session.Players.Add(user);
 
                 guess--;
 
