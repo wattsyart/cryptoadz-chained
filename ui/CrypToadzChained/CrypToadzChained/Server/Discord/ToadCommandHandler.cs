@@ -273,7 +273,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         {
             embed.WithTitle($"Among Lilies #{id}");
             embed.WithDescription("Which is the real toad, and not an imposter?");
-            embed.WithURL(imageUrl);
+            embed.WithURL(options.ServerUrl);
             embed.WithImage(imageUrl, width: 2880, height: 2880);
         });
     }
