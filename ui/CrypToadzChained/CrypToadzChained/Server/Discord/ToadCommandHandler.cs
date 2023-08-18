@@ -197,8 +197,11 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 }
                 else
                 {
-                    command.WithText("You have guessed... poorly.");
-                    command.WithEphemeral();
+                    command.AddEmbed(embed =>
+                    {
+                        embed.WithTitle($"Among Lilies #{id}");
+                        embed.WithDescription($"{session.Winner} chose the wrong toad. It was an imposter!");
+                    });
                     return;
                 }
             }
