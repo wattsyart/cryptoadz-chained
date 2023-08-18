@@ -187,20 +187,35 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             }
         }
 
+        var user = message.User?.Username ?? "Unknown User";
+
         if (string.IsNullOrWhiteSpace(session.Winner))
         {
             if (message is { Data.Options: { } } && message.Data.TryGetStringOption("guess", out var guessString) && !string.IsNullOrWhiteSpace(guessString) && int.TryParse(guessString, out var guess))
             {
+                if (guess is < 1 or > 4)
+                {
+                    command.WithText("You must choose a number between 1 and 4.");
+                    command.WithEphemeral();
+                    return;
+                }
+
+                guess--;
+
                 if (guess == session.Index)
                 {
-                    session.Winner = message.User?.Username ?? "Unknown User";
+                    session.Winner = user;
                 }
                 else
                 {
+                    var imposterTokenId = choices[guess];
+
                     command.AddEmbed(embed =>
                     {
                         embed.WithTitle($"Among Lilies #{id}");
-                        embed.WithDescription($"{session.Winner} chose the wrong toad. It was an imposter!");
+                        embed.WithDescription($"{user} chose the wrong toad. It was an imposter!");
+                        embed.WithURL($"{options.ServerUrl}/random/{imposterTokenId}");
+                        embed.WithImage($"{options.ServerUrl}/game/img/{imposterTokenId}/{guess + 1}", width: 1440, height: 1440);
                     });
                     return;
                 }
@@ -213,8 +228,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             {
                 embed.WithTitle($"Among Lilies #{id}");
                 embed.WithDescription($"{session.Winner} won this game!");
-                embed.WithURL(options.ServerUrl);
-                embed.WithImage($"{options.ServerUrl}/game/img/{realTokenId}/{session.Index}", width: 1440, height: 1440);
+                embed.WithURL($"{options.ServerUrl}/{realTokenId}");
+                embed.WithImage($"{options.ServerUrl}/game/img/{realTokenId}/{session.Index + 1}", width: 1440, height: 1440);
             });
 
             return;
