@@ -13,7 +13,6 @@ using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Drawing.Processing;
-using Nethereum.Contracts.Standards.ERC20.TokenList;
 
 namespace CrypToadzChained.Server.Controllers;
 
@@ -23,32 +22,31 @@ public class DownloadController : ControllerBase
     private readonly IOptionsSnapshot<Web3Options> _options;
     private readonly ILogger<Web3Options> _logger;
 
-    private readonly RichTextOptions _text;
-    private readonly RectangleF _box;
+    private static readonly RichTextOptions Text;
+    private static readonly RectangleF Box;
 
     private static readonly List<ulong> TokenIds;
 
     static DownloadController()
     {
         TokenIds = ParityScope.Generated.TokenIds().Select(x => (ulong) x).ToList();
+
+        FontCollection collection = new();
+        var family = collection.Add("PressStart2P-Regular.ttf");
+        var font = family.CreateFont(12, FontStyle.Bold);
+        Text = new RichTextOptions(font)
+        {
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Top,
+        };
+        var box = TextMeasurer.MeasureSize("4", Text);
+        Box = new RectangleF(new PointF(0, 0), new SizeF(box.Width + 1, box.Height + 1));
     }
 
     public DownloadController(IOptionsSnapshot<Web3Options> options, ILogger<Web3Options> logger)
     {
         _options = options;
         _logger = logger;
-        
-        FontCollection collection = new();
-        var family = collection.Add("PressStart2P-Regular.ttf");
-        var font = family.CreateFont(12, FontStyle.Bold);
-        _text = new RichTextOptions(font)
-        {
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Top,
-        };
-        var box = TextMeasurer.MeasureSize("4", _text);
-        _box = new RectangleF(new PointF(0, 0), new SizeF(box.Width + 1, box.Height + 1));
-
     }
 
     [HttpGet("random/img")]
@@ -60,7 +58,7 @@ public class DownloadController : ControllerBase
         var tokenUri = await ToadzService.GetRandomTokenURIFromSeedAsync(seed, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
         var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-        return StreamImage(metadata, null);
+        return StreamImage(metadata);
     }
 
     [HttpGet("game/img/{seed}/{number}")]
@@ -87,7 +85,7 @@ public class DownloadController : ControllerBase
         var tokenUri = await ToadzService.GetCanonicalTokenURIAsync(tokenId, _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
         var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-        return StreamImage(metadata, null);
+        return StreamImage(metadata);
     }
 
     [HttpGet("canonical/json/{tokenId}")]
@@ -120,7 +118,7 @@ public class DownloadController : ControllerBase
         var tokenUri = await ToadzService.BuildTokenURIFromBufferAsync(Convert.FromBase64String(seed), _options.Value.OnChainRpcUrl, _options.Value.OnChainContractAddress, _logger);
         var json = Encoding.UTF8.GetString(Convert.FromBase64String(tokenUri.Replace(DataUri.Json, "")));
         var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-        return StreamImage(metadata, null);
+        return StreamImage(metadata);
     }
 
     [HttpGet("builder/json")]
@@ -184,8 +182,8 @@ public class DownloadController : ControllerBase
             image.Mutate(x =>
             {
                 x.SetGraphicsOptions(o => { o.Antialias = false; });
-                x.Fill(Color.Black, _box);
-                x.DrawText(_text, text, Color.White);
+                x.Fill(Color.Black, Box);
+                x.DrawText(Text, text, Color.White);
             });
         }
 
