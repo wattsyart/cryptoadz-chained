@@ -77,7 +77,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 {
                     n.Name = "guess";
                     n.Type = DiscordApplicationCommandOptionType.Integer;
-                    n.Description = "your guess";
+                    n.Description = "your guess: choose 1, 2, 3, or 4";
                     n.IsRequired = false;
                 });
             })
