@@ -253,6 +253,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 embed.WithImage($"{options.ServerUrl}/game/img/{realTokenId}/{session.Index + 1}", width: 1440, height: 1440);
             });
 
+            LastSession = null;
             return;
         }
         
