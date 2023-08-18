@@ -247,7 +247,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     embed.WithTitle($"Among Lilies #{id}");
                     embed.WithDescription("Which is the real toad, and not an imposter?");
                     embed.WithURL(options.ServerUrl);
-                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
+                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number + 1}", width: 1440, height: 1440);
                 });
             }
             else
@@ -255,7 +255,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 command.AddEmbed(embed =>
                 {
                     embed.WithURL(options.ServerUrl);
-                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number}", width: 1440, height: 1440);
+                    embed.WithImage($"{options.ServerUrl}/game/img/{index}/{number + 1}", width: 1440, height: 1440);
                 });
             }
         }
