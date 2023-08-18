@@ -197,7 +197,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             }
         }
         
-        var user = (message.Message.Author ?? message.GetUser())?.Username ?? "Unknown User";
+        var user = (message.Message?.Author ?? message.GetUser())?.Username ?? "Unknown User";
 
         if (string.IsNullOrWhiteSpace(session.Winner))
         {
