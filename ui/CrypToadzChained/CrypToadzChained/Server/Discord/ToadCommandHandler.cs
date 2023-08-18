@@ -257,7 +257,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             command.AddEmbed(embed =>
             {
                 embed.WithTitle($"Among Lilies #{id}");
-                embed.WithDescription($"{session.Winner} won this game!");
+                embed.WithDescription($"{session.Winner} won this game! This is Cryptoad #{realTokenId}.");
                 embed.WithURL($"{options.ServerUrl}/{realTokenId}");
                 embed.WithImage($"{options.ServerUrl}/game/img/{realTokenId}/{session.Index + 1}", width: 1440, height: 1440);
             });
