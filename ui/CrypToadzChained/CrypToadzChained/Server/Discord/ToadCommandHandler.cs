@@ -18,6 +18,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
     private static readonly List<uint> TokenIds;
     private static readonly Random Random;
     private static readonly LruCache<int, GameSession> Sessions;
+    private static int? LastSession;
 
     static ToadCommandHandler()
     {
@@ -159,9 +160,17 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         var session = Sessions.Get(id);
         if (session == null)
         {
-            logger.LogInformation("Adding game #{Id} to cache", id);
-            session = new GameSession { Id = id };
-            Sessions.Add(id, session);
+            if (LastSession.HasValue)
+            {
+                session = Sessions.Get(LastSession.Value);
+                if (session == null)
+                {
+                    logger.LogInformation("Adding game #{Id} to cache", id);
+                    session = new GameSession { Id = id };
+                    Sessions.Add(id, session);
+                    LastSession = id;
+                }
+            }
         }
 
         var random = new Random(id);
