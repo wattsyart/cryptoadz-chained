@@ -133,7 +133,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         }
         catch (Exception e)
         {
-            command.WithText($"Bot error: {e.Message}");
+            command.WithText($"Bot error: {e.Message} {e.StackTrace}");
             command.WithEphemeral();
         }
 
@@ -159,6 +159,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         var session = Sessions.Get(id);
         if (session == null)
         {
+            logger.LogInformation("Adding game #{Id} to cache", id);
             session = new GameSession { Id = id };
             Sessions.Add(id, session);
         }
@@ -173,7 +174,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             TokenIds[random.Next(TokenIds.Count)]
         };
 
-        var realTokenId = choices[4];
+        var realTokenId = choices[3];
 
         Shuffle(random, choices);
 
