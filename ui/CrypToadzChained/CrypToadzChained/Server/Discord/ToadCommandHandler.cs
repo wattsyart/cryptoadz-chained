@@ -180,9 +180,10 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
                 var imagineRequest = new ImagineRequest { Prompt = prompt };
                 var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, options, CancellationToken.None);
+                var body = await response.Content.ReadAsStringAsync(CancellationToken.None);
+
                 if (response.IsSuccessStatusCode)
                 {
-                    var body = await response.Content.ReadAsStringAsync(cancellationToken);
                     logger.LogInformation("Received response from ToadGPT: {Body}", body);
 
                     var data = body.Replace(DataUri.Json, "");
@@ -201,7 +202,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 }
                 else
                 {
-                    command.WithText($"Bot error: StatusCode={response.StatusCode} {await response.Content.ReadAsStringAsync(cancellationToken)}");
+                    command.WithText($"Bot error: StatusCode={response.StatusCode} {body}");
                     command.WithEphemeral();
                 }
             }
