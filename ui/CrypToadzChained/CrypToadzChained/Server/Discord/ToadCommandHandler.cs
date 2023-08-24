@@ -189,8 +189,13 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     var data = body.Replace(DataUri.Json, "");
                     var buffer = Convert.FromBase64String(data);
                     var json = Encoding.UTF8.GetString(buffer);
+
+                    logger.LogInformation("JSON: {Json}", json);
+
                     var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json, options);
                     var seed = metadata?.Name?.Replace("CrypToadz #", "");
+
+                    logger.LogInformation("Seed: {Seed}", seed);
 
                     command.AddEmbed(embed =>
                     {
