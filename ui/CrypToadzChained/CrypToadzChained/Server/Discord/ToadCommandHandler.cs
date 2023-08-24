@@ -119,7 +119,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             }
             else if (IsImagineRequest(message))
             {
-                await ImagineAsync(message, serviceProvider, cancellationToken, logger, serverUrl, command);
+                await ImagineAsync(message, serviceProvider, serverUrl, command, logger, cancellationToken);
             }
             else
             {
@@ -164,7 +164,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
     }
 
     private static async Task ImagineAsync(DiscordInteraction message, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken, ILogger<ToadCommandHandler> logger, string serverUrl, DiscordInteractionResponseBuilder command)
+        string serverUrl, DiscordInteractionResponseBuilder command, ILogger<ToadCommandHandler> logger,
+        CancellationToken cancellationToken)
     {
         logger.LogInformation("Starting imagine request");
 
@@ -173,19 +174,20 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             try
             {
                 var user = (message.Message?.Author ?? message.GetUser())?.Username ?? "Unknown User";
-                logger.LogInformation("User '{User}' imagined prompt {Prompt}", user, prompt);
+                logger.LogInformation("User '{User}' imagined prompt: '{Prompt}'", user, prompt);
 
                 var http = serviceProvider.GetRequiredService<HttpClient>();
+                var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
                 var imagineRequest = new ImagineRequest { Prompt = prompt };
-                var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, cancellationToken);
+                var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, options, CancellationToken.None);
                 if (response.IsSuccessStatusCode)
                 {
-                    var tokenUri = await response.Content.ReadAsStringAsync(cancellationToken);
-                    var data = tokenUri.Replace(DataUri.Json, "");
+                    var body = await response.Content.ReadAsStringAsync(cancellationToken);
+                    logger.LogInformation("Received response from ToadGPT: {Body}", body);
+
+                    var data = body.Replace(DataUri.Json, "");
                     var buffer = Convert.FromBase64String(data);
                     var json = Encoding.UTF8.GetString(buffer);
-
-                    var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
                     var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json, options);
                     var seed = metadata?.Name?.Replace("CrypToadz #", "");
 
@@ -199,7 +201,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 }
                 else
                 {
-                    command.WithText($"Bot error: {await response.Content.ReadAsStringAsync(cancellationToken)}");
+                    command.WithText($"Bot error: StatusCode={response.StatusCode} {await response.Content.ReadAsStringAsync(cancellationToken)}");
                     command.WithEphemeral();
                 }
             }
