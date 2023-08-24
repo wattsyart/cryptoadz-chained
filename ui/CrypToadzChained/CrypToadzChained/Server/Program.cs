@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<Web3Options>(builder.Configuration.GetSection("Web3"));
 builder.Services.Configure<DiscordInteractionsOptions>(builder.Configuration.GetSection("Discord"));
+builder.Services.Configure<OpenAiOptions>(builder.Configuration.GetSection("OpenAi"));
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();

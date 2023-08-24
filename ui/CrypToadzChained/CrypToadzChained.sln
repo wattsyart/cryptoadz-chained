@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discord.Interactions", "Dis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discord.Interactions.AspNetCore", "Discord.Interactions.AspNetCore\Discord.Interactions.AspNetCore.csproj", "{6A731CB1-EE85-4CBB-827F-AA975A118B03}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI", "OpenAI\OpenAI.csproj", "{417557F2-C4D2-4173-89CC-3038169AB126}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{6A731CB1-EE85-4CBB-827F-AA975A118B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A731CB1-EE85-4CBB-827F-AA975A118B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A731CB1-EE85-4CBB-827F-AA975A118B03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{417557F2-C4D2-4173-89CC-3038169AB126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{417557F2-C4D2-4173-89CC-3038169AB126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{417557F2-C4D2-4173-89CC-3038169AB126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{417557F2-C4D2-4173-89CC-3038169AB126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,216 @@
+﻿@page "/imagine/{BuilderSeed?}"
+
+@inherits PageBase
+
+<div class="container">
+    <div class="form-group mb-3">
+        <label for="tokenSeed">ToadGPT:</label>
+        <input id="tokenSeed" type="text" class="form-control" @bind="Prompt" placeholder="Imagine a toad that..."/>
+        <button class="btn btn-secondary" @onclick="OnImagineClicked">Imagine</button>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div>
+    <section>
+        <div class="container">
+            
+            @if (!string.IsNullOrWhiteSpace(Error))
+            {
+                <div class="alert alert-danger">@Error</div>
+            }
+            else
+            {
+                @if (Metadata != null)
+                {
+                    <div class="row align-items-start justify-content-around">
+                        <div class="col-md-9 col-lg col-xl-4 sticky-lg-top mb-5 mb-lg-0">
+                            <ul class="list-group">
+                                @foreach (var metadataAttribute in Metadata.Attributes)
+                                {
+                                    <li class="list-group-item px-4 py-3 d-flex justify-content-between">
+                                        <h6 class="mb-0">@metadataAttribute.TraitType</h6>
+                                        <div><strong>@metadataAttribute.Value?.ToString()</strong></div>
+                                    </li>
+                                }
+                                
+                                <li class="list-group-item px-4 py-3 d-flex justify-content-between">
+                                    <button class="btn btn-dark" @onclick="EditInBuilderAsync">Edit in Builder</button>
+                                </li>
+                            </ul>
+
+                            @if (!string.IsNullOrWhiteSpace(BuilderSeed))
+                            {
+                                <br />
+                    
+                                <button class="btn btn-dark" @onclick="DownloadImageAsync">
+                                    <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Image</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="DownloadMetadataAsync">
+                                    <i class="oi oi-data-transfer-download align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Metadata</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareImageAsync" target="_blank">
+                                    <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Share Image</span>
+                                </button>
+
+                                <button style="margin-left: 5px" class="btn btn-dark" @onclick="ShareMetadataAsync" target="_blank">
+                                    <i class="oi oi-external-link align-middle" aria-hidden="true"></i>
+                                    <span class="align-middle">Share Metadata</span>
+                                </button>
+                            }
+                        </div>
+                        <div class="col-xl-7 col-lg-8 col-md-9">
+                            <article>
+                                <h2 class="h2">@Metadata.Name</h2>
+                                <p class="mb-5">
+                                    <img style="image-rendering: -moz-crisp-edges; image-rendering: -webkit-crisp-edges; image-rendering: pixelated; width: 100%; height: 100%" src="@ImageUri" alt="@Metadata.Name" />
+                                </p>
+                                <p class="lead text-center">
+                                    @Metadata.Description
+                                </p>
+                            </article>
+                        </div>
+                    </div>
+                }
+                else if (IsLoading)
+                {
+                    <div class="spinner"></div>
+                }
+            }
+
+            
+        </div>
+    </section>
+</div>
+
+@code
+{
+    [Parameter]
+    public string? TokenUri { get; set; }
+
+    [Parameter]
+    public string? BuilderSeed { get; set; }
+
+    [Parameter]
+    public string? Prompt { get; set; } = "Imagine a toad that loves the beach";
+
+    [Parameter]
+    public string? ImageUri { get; set; }
+
+    [Parameter]
+    public string? ImageDataUri { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public JsonTokenMetadata? Metadata { get; set; }
+
+    [Parameter]
+    public string? Error { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        var uri = Nav.ToAbsoluteUri(Nav.Uri);
+        var query = QueryHelpers.ParseQuery(uri.Query);
+        if (query.TryGetValue("seed", out var seed))
+            BuilderSeed = seed;
+
+        return Task.CompletedTask;
+    }
+    
+    private async Task OnImagineClicked()
+    {
+        if (string.IsNullOrWhiteSpace(Prompt))
+            return;
+
+        IsLoading = true;
+
+        try
+        {
+            Metadata = null;
+            ImageUri = null;
+            Error = null;
+
+            await GetImaginedTokenUriAsync(Prompt);
+        }
+        catch(Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to fetch imagined tokenURI");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task GetImaginedTokenUriAsync(string prompt)
+    {
+        var response = await Http.PostAsJsonAsync("toadz/imagine", new ImagineRequest
+        {
+            Prompt = prompt
+        });
+        await WithResponse(response);
+    }
+
+    private async Task WithResponse(HttpResponseMessage response)
+    {
+        if (response.IsSuccessStatusCode)
+        {
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (body == "Error")
+            {
+                Error = "Prompt generation failed!";
+            }
+            else
+            {
+                WithBody(body);
+            }
+        }
+        else
+        {
+            Error = $"{(int) response.StatusCode} {response.ReasonPhrase}";
+        }
+    }
+
+    private void WithBody(string body)
+    {
+        TokenUri = body;
+        if (!TokenUri.StartsWith(DataUri.Json))
+        {
+            Error = TokenUri;
+            TokenUri = null;
+        }
+        else
+        {
+            if (string.IsNullOrWhiteSpace(TokenUri))
+                return;
+
+            var data = TokenUri.Replace(DataUri.Json, "");
+            var buffer = Convert.FromBase64String(data);
+            var json = Encoding.UTF8.GetString(buffer);
+
+            Metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
+            ImageUri = Metadata?.Image;
+            BuilderSeed = Metadata?.Name?.Replace("CrypToadz #", "");
+        }
+    }
+    
+    private async Task DownloadImageAsync() => await base.DownloadImageAsync(ImageUri!, $"TOADZ_{BuilderSeed}");
+
+    private async Task DownloadMetadataAsync() => await base.DownloadMetadataAsync(Metadata!, $"TOADZ_{BuilderSeed}", false);
+
+    private async Task ShareImageAsync() => await ShareAsync($"/builder/img/?seed={@BuilderSeed}");
+
+    private async Task ShareMetadataAsync() => await ShareAsync($"/builder/json/?seed={@BuilderSeed}");
+
+    private async Task EditInBuilderAsync() => await EditInBuilderAsync(Metadata);
+}
