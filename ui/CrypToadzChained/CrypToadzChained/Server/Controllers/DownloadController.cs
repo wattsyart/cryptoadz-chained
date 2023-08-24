@@ -252,7 +252,7 @@ public class DownloadController : ControllerBase
     {
         var buffer = Convert.FromBase64String(metadata.Image!.Replace(dataUri, string.Empty));
 
-        var identifier = metadata.Name?.Replace("CrypToadz #", string.Empty);
+        var identifier = metadata.Name?.Replace("CrypToadz #", string.Empty).Replace("/", "_");
 
         if (ulong.TryParse(identifier, out var tokenId) && tokenId.IsLargeImage())
             return File(buffer, mediaType, DateTimeOffset.Now, ETag(buffer));

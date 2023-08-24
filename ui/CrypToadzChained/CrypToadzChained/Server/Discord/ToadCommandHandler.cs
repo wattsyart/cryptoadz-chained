@@ -194,6 +194,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
                     var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json, options);
                     var seed = metadata?.Name?.Replace("CrypToadz #", "");
+                    var url = $"{serverUrl}/builder/?seed={seed}";
+                    var imageUrl = $"{serverUrl}/builder/img/?seed={seed}";
 
                     logger.LogInformation("Seed: {Seed}", seed);
 
@@ -201,8 +203,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     {
                         embed.WithTitle("An Imagined Toad");
                         embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                        embed.WithURL($"{serverUrl}/builder/?seed={seed}");
-                        embed.WithImage($"{serverUrl}/builder/img/?seed={seed}", width: 1440, height: 1440);
+                        embed.WithURL(url);
+                        embed.WithImage(imageUrl, width: 1440, height: 1440);
                     });
                 }
                 else
