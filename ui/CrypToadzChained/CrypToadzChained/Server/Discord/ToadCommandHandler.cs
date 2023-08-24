@@ -177,7 +177,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
 
                 var http = serviceProvider.GetRequiredService<HttpClient>();
                 var imagineRequest = new ImagineRequest { Prompt = prompt };
-                var response = await http.PostAsJsonAsync($"{serverUrl}/imagine", imagineRequest, cancellationToken);
+                var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, cancellationToken);
                 if (response.IsSuccessStatusCode)
                 {
                     var tokenUri = await response.Content.ReadAsStringAsync(cancellationToken);
