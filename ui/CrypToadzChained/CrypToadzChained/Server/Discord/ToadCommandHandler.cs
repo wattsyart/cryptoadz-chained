@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using System.Text.Json;
 using CrypToadzChained.Server.Models;
 using CrypToadzChained.Shared;
 using Discord.Interactions.AspNetCore;
@@ -9,6 +8,8 @@ using Discord.Interactions.Entities.Commands;
 using Discord.Interactions.Entities.Interaction;
 using Discord.Interactions.Entities.InteractionResponse;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace CrypToadzChained.Server.Discord;
 
