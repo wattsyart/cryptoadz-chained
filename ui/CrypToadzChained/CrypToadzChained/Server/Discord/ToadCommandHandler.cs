@@ -196,7 +196,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     var imageUrl = $"{serverUrl}/builder/img/?seed={seed}";
 
                     logger.LogInformation("URL: {Url}", url);
-                    logger.LogInformation("ImageURL: {ImageUrl}", url);
+                    logger.LogInformation("ImageURL: {ImageUrl}", imageUrl);
 
                     command.AddEmbed(embed =>
                     {
