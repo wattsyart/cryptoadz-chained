@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 using CrypToadzChained.Server.Models;
 using CrypToadzChained.Shared;
 using Discord.Interactions.AspNetCore;
@@ -118,47 +119,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             }
             else if (IsImagineRequest(message))
             {
-                logger.LogInformation("Starting imagine request");
-
-                if (message is { Data.Options: { } } && message.Data.TryGetStringOption("prompt", out var prompt))
-                {
-                    try
-                    {
-                        var user = (message.Message?.Author ?? message.GetUser())?.Username ?? "Unknown User";
-                        logger.LogInformation("User '{User}' imagined prompt {Prompt}", user, prompt);
-
-                        var http = serviceProvider.GetRequiredService<HttpClient>();
-                        var imagineRequest = new ImagineRequest { Prompt = prompt };
-                        var response = await http.PostAsJsonAsync($"{serverUrl}/imagine", imagineRequest, cancellationToken);
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var tokenUri = await response.Content.ReadAsStringAsync(cancellationToken);
-                            var data = tokenUri.Replace(DataUri.Json, "");
-                            var buffer = Convert.FromBase64String(data);
-                            var json = Encoding.UTF8.GetString(buffer);
-                            var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json);
-                            var seed = metadata?.Name?.Replace("CrypToadz #", "");
-
-                            command.AddEmbed(embed =>
-                            {
-                                embed.WithTitle("An Imagined Toad");
-                                embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
-                                embed.WithURL($"{serverUrl}/builder/?seed={seed}");
-                                embed.WithImage($"{serverUrl}/builder/img/?seed={seed}", width: 1440, height: 1440);
-                            });
-                        }
-                        else
-                        {
-                            command.WithText($"Bot error: {await response.Content.ReadAsStringAsync(cancellationToken)}");
-                            command.WithEphemeral();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        command.WithText($"Bot error: {e.Message} {e.StackTrace}");
-                        command.WithEphemeral();
-                    }
-                }
+                await ImagineAsync(message, serviceProvider, cancellationToken, logger, serverUrl, command);
             }
             else
             {
@@ -200,6 +161,54 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         }
 
         return command.Build();
+    }
+
+    private static async Task ImagineAsync(DiscordInteraction message, IServiceProvider serviceProvider,
+        CancellationToken cancellationToken, ILogger<ToadCommandHandler> logger, string serverUrl, DiscordInteractionResponseBuilder command)
+    {
+        logger.LogInformation("Starting imagine request");
+
+        if (message is { Data.Options: { } } && message.Data.TryGetStringOption("prompt", out var prompt))
+        {
+            try
+            {
+                var user = (message.Message?.Author ?? message.GetUser())?.Username ?? "Unknown User";
+                logger.LogInformation("User '{User}' imagined prompt {Prompt}", user, prompt);
+
+                var http = serviceProvider.GetRequiredService<HttpClient>();
+                var imagineRequest = new ImagineRequest { Prompt = prompt };
+                var response = await http.PostAsJsonAsync($"{serverUrl}/imagine", imagineRequest, cancellationToken);
+                if (response.IsSuccessStatusCode)
+                {
+                    var tokenUri = await response.Content.ReadAsStringAsync(cancellationToken);
+                    var data = tokenUri.Replace(DataUri.Json, "");
+                    var buffer = Convert.FromBase64String(data);
+                    var json = Encoding.UTF8.GetString(buffer);
+
+                    var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+                    var metadata = JsonSerializer.Deserialize<JsonTokenMetadata>(json, options);
+                    var seed = metadata?.Name?.Replace("CrypToadz #", "");
+
+                    command.AddEmbed(embed =>
+                    {
+                        embed.WithTitle("An Imagined Toad");
+                        embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
+                        embed.WithURL($"{serverUrl}/builder/?seed={seed}");
+                        embed.WithImage($"{serverUrl}/builder/img/?seed={seed}", width: 1440, height: 1440);
+                    });
+                }
+                else
+                {
+                    command.WithText($"Bot error: {await response.Content.ReadAsStringAsync(cancellationToken)}");
+                    command.WithEphemeral();
+                }
+            }
+            catch (Exception e)
+            {
+                command.WithText($"Bot error: {e.Message} {e.StackTrace}");
+                command.WithEphemeral();
+            }
+        }
     }
 
     private static void PlayGame(DiscordInteraction message, DiscordInteractionResponseBuilder command, DiscordInteractionsOptions options, ILogger<ToadCommandHandler> logger)
