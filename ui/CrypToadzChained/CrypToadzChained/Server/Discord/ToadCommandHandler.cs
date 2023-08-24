@@ -119,7 +119,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
             }
             else if (IsImagineRequest(message))
             {
-                await ImagineAsync(message, serviceProvider, serverUrl, command, logger, cancellationToken);
+                await ImagineAsync(message, serviceProvider, serverUrl, command, logger);
             }
             else
             {
@@ -163,9 +163,7 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
         return command.Build();
     }
 
-    private static async Task ImagineAsync(DiscordInteraction message, IServiceProvider serviceProvider,
-        string serverUrl, DiscordInteractionResponseBuilder command, ILogger<ToadCommandHandler> logger,
-        CancellationToken cancellationToken)
+    private static async Task ImagineAsync(DiscordInteraction message, IServiceProvider serviceProvider, string serverUrl, DiscordInteractionResponseBuilder command, ILogger<ToadCommandHandler> logger)
     {
         logger.LogInformation("Starting imagine request");
 
@@ -179,8 +177,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 var http = serviceProvider.GetRequiredService<HttpClient>();
                 var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
                 var imagineRequest = new ImagineRequest { Prompt = prompt };
-                var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, options, cancellationToken);
-                var body = await response.Content.ReadAsStringAsync(cancellationToken);
+                var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, options, CancellationToken.None);
+                var body = await response.Content.ReadAsStringAsync(CancellationToken.None);
 
                 if (response.IsSuccessStatusCode)
                 {
