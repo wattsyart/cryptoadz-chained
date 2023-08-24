@@ -179,8 +179,8 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                 var http = serviceProvider.GetRequiredService<HttpClient>();
                 var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
                 var imagineRequest = new ImagineRequest { Prompt = prompt };
-                var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, options, CancellationToken.None);
-                var body = await response.Content.ReadAsStringAsync(CancellationToken.None);
+                var response = await http.PostAsJsonAsync($"{serverUrl}/toadz/imagine", imagineRequest, options, cancellationToken);
+                var body = await response.Content.ReadAsStringAsync(cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -202,9 +202,10 @@ public class ToadCommandHandler : IDiscordInteractionCommandHandler
                     command.AddEmbed(embed =>
                     {
                         embed.WithTitle("An Imagined Toad");
-                        embed.WithDescription("A small, warty, amphibious creature that resides in the metaverse.");
+                        embed.WithDescription($"A small, warty, amphibious creature that resides in the metaverse, imagined by {user}");
                         embed.WithURL(url);
                         embed.WithImage(imageUrl, width: 1440, height: 1440);
+                        embed.WithFooter($"Prompt: \"{prompt}\"");
                     });
                 }
                 else
